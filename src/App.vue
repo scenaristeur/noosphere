@@ -5,6 +5,7 @@
       <router-link to="/about">About</router-link>
     </nav>
     <router-view/>
+    <b-alert variant="success" show>Noosphere</b-alert>
   </div>
 </template>
 
