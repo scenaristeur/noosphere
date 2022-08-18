@@ -1,8 +1,9 @@
 <template>
-  <div class="room-card">
+  <div class="room-card" id="room-card">
+
 
     <b-card
-    title="Room card"
+    title="Open a room"
     :img-src="QRsrc"
     img-alt="Image"
     img-top
@@ -10,48 +11,70 @@
     style="max-width: 20rem;"
     class="mb-2"
     >
-    <b-header v-if="this.url != null">
+    <div id="reader" ref="reader" width="600px"></div>
+    <!-- <b-header>
+    <h2></h2>
+  </b-header> -->
+  <b-card-text>
+
+
+
+    <div v-if="roomId.length ==0">
+      <b-button  size="sm" variant="info" @click="generateId">Randomize roomId</b-button> or
+      <b-button size="sm" variant="outline-info" @click="toggle_qr_scanner">Join with QR</b-button>
+    </div>
+    <div v-else>
+      <b-button size="sm" variant="outline-info" @click="roomId = ''">Clear</b-button>
+
+    </div>
+
+
+
+
+    <b-input v-model="roomId" placeholder="roomId" />
+
+    <div v-if="roomId.length !=0">
+      <b-button size="sm" variant="info" @click="openRoom">Go</b-button> and
+      <b-button size="sm" variant="info" @click="generateQR">Share with QR</b-button>
+
+    </div>
+
+
+
+
+
+    <div v-if="this.url != null">
       {{ this.url}}
-    </b-header>
-    <b-card-text>
-      <h3>create or join a room:</h3>
-      <b-input v-model="roomId" placeholder="roomId" />
-      <div v-if="roomId.length ==0">
-        <b-button  size="sm" variant="info" @click="generateId">Generate room Id</b-button> or
-        <b-button size="sm" variant="outline-info" @click="open_qr_scanner">Scan Qr</b-button>
-      </div>
-      <div v-else>
-        <b-button size="sm" variant="info" @click="openRoom">Go</b-button> and
-        <b-button size="sm" variant="info" @click="generateQR">Share with QR</b-button>
-      </div>
-
-      <hr>
-      <!-- room : {{room}} -->
-      <hr>
-      ymap : {{ymap}}
-      <hr>
-      nodes : {{nodes}}
-      rooms: {{JSON.stringify(rooms)}}
-
-      <!-- ymapNodes : {{ymap.map.nodes}} -->
-      <hr>
-      <input v-model="newName" placeholder="name of the new node" />
-      <button @click="addNodeToMap">Add node to map</button>
-      <button @click="clearMap">clear map</button>
-      <button @click="populateMap">populate map</button>
-      <input v-model="newStuff" placeholder="name of the stuff" />
-      <button @click="changeStuff">change stuff</button>
-    </b-card-text>
-    <hr><hr>
-    yarray : {{yarray}}
-    <button @click="clear">clear</button>
+    </div>
     <hr>
-    <input v-model="newVal" type="number" placeholder="number, ex: 0 or 10" />
-    <button @click="addToArray">Add</button>
+    <!-- room : {{room}} -->
+    <hr>
+    ymap : {{ymap}}
+    <hr>
+    nodes : {{nodes}}
+    rooms: {{JSON.stringify(rooms)}}
+
+    <!-- ymapNodes : {{ymap.map.nodes}} -->
+    <hr>
+    <input v-model="newName" placeholder="name of the new node" />
+    <button @click="addNodeToMap">Add node to map</button>
+    <button @click="clearMap">clear map</button>
+    <button @click="populateMap">populate map</button>
+    <input v-model="newStuff" placeholder="name of the stuff" />
+    <button @click="changeStuff">change stuff</button>
+  </b-card-text>
+  <hr><hr>
+  yarray : {{yarray}}
+  <button @click="clear">clear</button>
+  <hr>
+  <input v-model="newVal" type="number" placeholder="number, ex: 0 or 10" />
+  <button @click="addToArray">Add</button>
 
 
-    <b-button href="#" variant="primary">Go somewhere</b-button>
-  </b-card>
+
+
+  <b-button href="#" variant="primary">Go somewhere</b-button>
+</b-card>
 
 </div>
 </template>
@@ -63,6 +86,7 @@ import { WebsocketProvider } from 'y-websocket'
 import { IndexeddbPersistence } from 'y-indexeddb'
 import { v4 as uuidv4 } from 'uuid';
 import QRCode from 'qrcode'
+import {Html5QrcodeScanner} from "html5-qrcode"
 
 let calls = 0
 export default {
@@ -77,7 +101,8 @@ export default {
       nodes: [],
       newName: '',
       QRsrc: null,
-      url: null
+      url: null,
+      scanner: null
     }
   },
   created(){
@@ -129,110 +154,149 @@ export default {
       console.log ("short", this.shorturl)
       this.QRsrc = await QRCode.toDataURL(this.url, {color: {light: '#98faf5'}})
     },
-    openRoom(){
-      this.ymap = this.ydoc.getMap(this.roomId)
+    toggle_qr_scanner(){
+      if(this.$refs.reader.innerHTML == ""){
+        this.scanner = new Html5QrcodeScanner(
+          "reader",
+          { fps: 10, qrbox: {width: 250, height: 250} },
+          /* verbose= */ false);
+          this.scanner.render(this.onScanSuccess, this.onScanFailure);
+        }else{
+          console.log(this.scanner)
+          this.scanner.stop().then(() => {
+            // QR Code scanning is stopped.
+            this.$refs.reader.innerHTML == ""
+          }).catch((err) => {
+            console.log(err)
+            // Stop failed, handle it.
+          });
+        }
 
-      // observe changes of the sum
-      // let app = this
 
-      let calls = 0
-      this.ymap.observeDeep(events => {
-        events.forEach(event => {
-          calls++
-          console.log('calls', calls)
-          // @ts-ignore
-          console.log(event.keysChanged.has('deepmap'))
-          console.log(event.path.length === 1)
-          console.log(event.path[0] === 'map')
-          // @ts-ignore
-          // let dmapid = event.target.get('deepmap')._item.id
-          // console.log(dmapid)
-          console.log(event, event)
-          // console.log("nodes",event.target.get('nodes').toJSON())
-          // this.nodes = event.target.get('nodes').toJSON()
+      },
+      onScanSuccess(decodedText, decodedResult) {
+        // handle the scanned code as you like, for example:
+        console.log(`Code matched = ${decodedText}`, decodedResult);
+        let eq_splitted = decodedText.split('=')
+        if(eq_splitted[0] == 'https://scenaristeur.github.io/noosphere/?room'){
+          this.roomId=eq_splitted[1]
+          this.openRoom()
+          this.toggle_qr_scanner()
+        }else{
+          console.log("i don't know what to do with", eq_splitted)
+        }
+      },
+
+      onScanFailure(error) {
+        // handle scan failure, usually better to ignore and keep scanning.
+        // for example:
+        console.warn(`Code scan error = ${error}`);
+        this.scanner = error
+      },
+      openRoom(){
+        this.ymap = this.ydoc.getMap(this.roomId)
+
+        // observe changes of the sum
+        // let app = this
+
+        let calls = 0
+        this.ymap.observeDeep(events => {
+          events.forEach(event => {
+            calls++
+            console.log('calls', calls)
+            // @ts-ignore
+            console.log(event.keysChanged.has('deepmap'))
+            console.log(event.path.length === 1)
+            console.log(event.path[0] === 'map')
+            // @ts-ignore
+            // let dmapid = event.target.get('deepmap')._item.id
+            // console.log(dmapid)
+            console.log(event, event)
+            // console.log("nodes",event.target.get('nodes').toJSON())
+            // this.nodes = event.target.get('nodes').toJSON()
+          })
+          this.$forceUpdate();
+        })
+
+        // add 1 to the sum
+        this.yarray.push([2]) // => "new sum: 1"
+        if(this.ymap.get('map') == undefined){
+          this.populateMap()
+        }
+
+      },
+      addToArray(){
+        this.yarray.push([this.newVal])
+        this.newVal = '1'
+      },
+      clear(){
+        this.yarray.delete(0, this.yarray.length)
+      },
+      addNodeToMap(){
+        const _mapNodes = this.ymap.get('nodes')
+
+        let node = {id: uuidv4(), name: this.newName, created: Date.now()}
+        _mapNodes.set(node.id, new Y.Map())
+        this.ymap.set(node.id, node)
+        this.newName = ''
+        this.$forceUpdate();
+      },
+      clearMap(){
+        this.ymap.clear()
+        this.$forceUpdate();
+      },
+      populateMap(){
+        this.ymap.set('map', new Y.Map())
+        this.ymap.set('nodes', new Y.Map())
+        this.ymap.set('links', new Y.Map())
+        const _map3 = this.ymap.get('map')
+        _map3.set('deepmap', new Y.Map())
+        this.ymap.set('stuff one', 'c2')
+        _map3.set('stuff', 'c3')
+      },
+      changeStuff(){
+        const _map3 = this.ymap.get('map')
+        _map3.set('stuff', this.newStuff)
+        this.newStuff= 'c4'
+        this.$forceUpdate();
+      }
+    },
+    watch:{
+      room(){
+        console.log("room", this.room)
+        this.room.observeDeep(events => {
+          events.forEach(event => {
+            calls++
+            console.log('calls', calls)
+            // @ts-ignore
+            console.log(event.keysChanged.has('deepmap'))
+            console.log(event.path.length === 1)
+            console.log(event.path[0] === 'map')
+            // @ts-ignore
+            // let dmapid = event.target.get('deepmap')._item.id
+            // console.log(dmapid)
+            console.log(event, event)
+          })
+          // this.$forceUpdate();
         })
         this.$forceUpdate();
-      })
-
-      // add 1 to the sum
-      this.yarray.push([2]) // => "new sum: 1"
-      if(this.ymap.get('map') == undefined){
-        this.populateMap()
       }
-
     },
-    addToArray(){
-      this.yarray.push([this.newVal])
-      this.newVal = '1'
-    },
-    clear(){
-      this.yarray.delete(0, this.yarray.length)
-    },
-    addNodeToMap(){
-      const _mapNodes = this.ymap.get('nodes')
-
-      let node = {id: uuidv4(), name: this.newName, created: Date.now()}
-      _mapNodes.set(node.id, new Y.Map())
-      this.ymap.set(node.id, node)
-      this.newName = ''
-      this.$forceUpdate();
-    },
-    clearMap(){
-      this.ymap.clear()
-      this.$forceUpdate();
-    },
-    populateMap(){
-      this.ymap.set('map', new Y.Map())
-      this.ymap.set('nodes', new Y.Map())
-      this.ymap.set('links', new Y.Map())
-      const _map3 = this.ymap.get('map')
-      _map3.set('deepmap', new Y.Map())
-      this.ymap.set('stuff one', 'c2')
-      _map3.set('stuff', 'c3')
-    },
-    changeStuff(){
-      const _map3 = this.ymap.get('map')
-      _map3.set('stuff', this.newStuff)
-      this.newStuff= 'c4'
-      this.$forceUpdate();
+    computed: {
+      room() {
+        return this.$store.state.core.room
+      },
+      rooms() {
+        return this.$store.state.core.rooms
+      },
     }
-  },
-  watch:{
-    room(){
-      console.log("room", this.room)
-      this.room.observeDeep(events => {
-        events.forEach(event => {
-          calls++
-          console.log('calls', calls)
-          // @ts-ignore
-          console.log(event.keysChanged.has('deepmap'))
-          console.log(event.path.length === 1)
-          console.log(event.path[0] === 'map')
-          // @ts-ignore
-          // let dmapid = event.target.get('deepmap')._item.id
-          // console.log(dmapid)
-          console.log(event, event)
-        })
-        // this.$forceUpdate();
-      })
-      this.$forceUpdate();
-    }
-  },
-  computed: {
-    room() {
-      return this.$store.state.core.room
-    },
-    rooms() {
-      return this.$store.state.core.rooms
-    },
+
+
   }
+  </script>
 
+  <style lang="css" scoped>
+  .room-card {
 
-}
-</script>
-
-<style lang="css" scoped>
-.room-card {
-
-}
-</style>
+  }
+  </style>
