@@ -10,8 +10,11 @@
     style="max-width: 20rem;"
     class="mb-2"
     >
+    <b-header v-if="this.url != null">
+      {{ this.url}}
+    </b-header>
     <b-card-text>
-      create or join a room:
+      <h3>create or join a room:</h3>
       <b-input v-model="roomId" placeholder="roomId" />
       <div v-if="roomId.length ==0">
         <b-button  size="sm" variant="info" @click="generateId">Generate room Id</b-button> or
@@ -73,7 +76,8 @@ export default {
       newStuff: 'c4',
       nodes: [],
       newName: '',
-      QRsrc: null
+      QRsrc: null,
+      url: null
     }
   },
   created(){
@@ -110,7 +114,20 @@ export default {
       this.roomId = uuidv4()
     },
     async generateQR(){
-      this.QRsrc = await QRCode.toDataURL('https://scenaristeur.github.io/noosphere/?room='+this.roomId, {color: {light: '#98faf5'}})
+
+      this.url = 'https://scenaristeur.github.io/noosphere/?room='+this.roomId
+      // var myHeaders = new Headers();
+      //
+      // var myInit = { method: 'GET',
+      // headers: myHeaders,
+      // mode: 'cors',
+      // cache: 'default' };
+      // this.shorturl = await fetch("https://is.gd/create.php?format=simple&url="+this.url,myInit)
+      // .then(function(response) {
+      //   return response.text();
+      // })
+      console.log ("short", this.shorturl)
+      this.QRsrc = await QRCode.toDataURL(this.url, {color: {light: '#98faf5'}})
     },
     openRoom(){
       this.ymap = this.ydoc.getMap(this.roomId)
