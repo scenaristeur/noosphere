@@ -9,6 +9,24 @@
   </div>
 </template>
 
+
+<script>
+// @ is an alias to /src
+// import HelloWorld from '@/components/HelloWorld.vue'
+export default {
+  name: 'App',
+  // components: {
+  //   'NavBar': ()=>import('@/views/NavBar'),
+  //   // 'DataCaching': ()=>import('@/views/experiments/DataCaching'),
+  //   // 'LevelgraphJsonld': ()=>import('@/views/experiments/LevelgraphJsonld'),
+  // },
+  created(){
+    this.$coreInit({name: "SuperCore"})
+  },
+
+}
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
