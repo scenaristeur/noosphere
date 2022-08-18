@@ -4,14 +4,11 @@
 
     <b-card
     title="Open a room"
-    :img-src="QRsrc"
-    img-alt="Image"
-    img-top
     tag="article"
     style="max-width: 20rem;"
     class="mb-2"
     >
-    <div id="reader" ref="reader" width="600px"></div>
+
     <!-- <b-header>
     <h2></h2>
   </b-header> -->
@@ -31,37 +28,49 @@
 
 
 
-    <b-input v-model="roomId" placeholder="roomId" />
+    <b-input v-model="roomId" placeholder="roomId | random | QR" />
 
     <div v-if="roomId.length !=0">
       <b-button size="sm" variant="info" @click="openRoom">Go</b-button> and
-      <b-button size="sm" variant="info" @click="generateQR">Share with QR</b-button>
+      <b-button size="sm" variant="info" @click="generateQR">Share</b-button>
 
     </div>
 
+    <div id="reader" ref="reader" width="600px"></div>
+    <div  v-if="QRsrc">
+      <small>{{ this.url}}</small><br>
+      <b-button @click="saveQR" disabled size="sm" variant="info">save QR</b-button>
+
+      <b-button @click="saveQR" disabled size="sm" variant="info">copy url</b-button>
+      <b-button @click="QRsrc=null" size="sm" variant="info">hide</b-button>
+      <img :src="QRsrc" width="280px" /><br>
 
 
+
+    </div>
 
 
     <div v-if="this.url != null">
-      {{ this.url}}
-    </div>
-    <hr>
-    <!-- room : {{room}} -->
-    <hr>
-    ymap : {{ymap}}
-    <hr>
-    nodes : {{nodes}}
-    rooms: {{JSON.stringify(rooms)}}
 
-    <!-- ymapNodes : {{ymap.map.nodes}} -->
-    <hr>
-    <input v-model="newName" placeholder="name of the new node" />
-    <button @click="addNodeToMap">Add node to map</button>
-    <button @click="clearMap">clear map</button>
-    <button @click="populateMap">populate map</button>
-    <input v-model="newStuff" placeholder="name of the stuff" />
-    <button @click="changeStuff">change stuff</button>
+    </div>
+  
+    <div id="ymap_div" v-if="ymap!=null">
+
+      <input v-model="newName" placeholder="name of the new node" />
+      <button @click="addNodeToMap">Add node to map</button>
+      <button @click="clearMap">clear map</button>
+      <button @click="populateMap">populate map</button>
+      <input v-model="newStuff" placeholder="name of the stuff" />
+      <button @click="changeStuff">change stuff</button>
+      <hr>
+      ymap : {{ymap}}
+      <hr>
+      <!-- nodes : {{ymap.nodes}}
+      rooms: {{JSON.stringify(rooms)}} -->
+
+      <!-- ymapNodes : {{ymap.map.nodes}} -->
+      <hr>
+    </div>
   </b-card-text>
   <hr><hr>
   yarray : {{yarray}}
@@ -70,10 +79,6 @@
   <input v-model="newVal" type="number" placeholder="number, ex: 0 or 10" />
   <button @click="addToArray">Add</button>
 
-
-
-
-  <b-button href="#" variant="primary">Go somewhere</b-button>
 </b-card>
 
 </div>
@@ -193,6 +198,9 @@ export default {
         console.warn(`Code scan error = ${error}`);
         this.scanner = error
       },
+      saveQR(){
+        console.log('todo', this.QRsrc)
+      },
       openRoom(){
         this.ymap = this.ydoc.getMap(this.roomId)
 
@@ -216,6 +224,9 @@ export default {
             // this.nodes = event.target.get('nodes').toJSON()
           })
           this.$forceUpdate();
+          var url = location.href;               //Save down the URL without hash.
+          location.href = "#ymap_div";                 //Go to the target element.
+          history.replaceState(null,null,url);
         })
 
         // add 1 to the sum
@@ -280,8 +291,12 @@ export default {
           // this.$forceUpdate();
         })
         this.$forceUpdate();
+        var url = location.href;               //Save down the URL without hash.
+        location.href = "?room="+this.room+"#room-card";                 //Go to the target element.
+        history.replaceState(null,null,url);
       }
     },
+
     computed: {
       room() {
         return this.$store.state.core.room
