@@ -2,8 +2,8 @@
   <div class="room-card">
 
     <b-card
-    title="Card Title"
-    img-src="https://picsum.photos/600/300/?image=25"
+    title="Room card"
+    :img-src="QRsrc"
     img-alt="Image"
     img-top
     tag="article"
@@ -11,10 +11,24 @@
     class="mb-2"
     >
     <b-card-text>
+      create or join a room:
+      <b-input v-model="roomId" placeholder="roomId" />
+      <div v-if="roomId.length ==0">
+        <b-button  size="sm" variant="info" @click="generateId">Generate room Id</b-button> or
+        <b-button size="sm" variant="outline-info" @click="open_qr_scanner">Scan Qr</b-button>
+      </div>
+      <div v-else>
+        <b-button size="sm" variant="info" @click="openRoom">Go</b-button> and
+        <b-button size="sm" variant="info" @click="generateQR">Share with QR</b-button>
+      </div>
+
+      <hr>
       <!-- room : {{room}} -->
       <hr>
       ymap : {{ymap}}
+      <hr>
       nodes : {{nodes}}
+      rooms: {{JSON.stringify(rooms)}}
 
       <!-- ymapNodes : {{ymap.map.nodes}} -->
       <hr>
@@ -32,10 +46,6 @@
     <input v-model="newVal" type="number" placeholder="number, ex: 0 or 10" />
     <button @click="addToArray">Add</button>
 
-    <hr>
-    <input v-model="newName" placeholder="name of the new node" />
-    <button @click="addNode">Add Node (does not work adding an object to an array)</button>
-
 
     <b-button href="#" variant="primary">Go somewhere</b-button>
   </b-card>
@@ -49,91 +59,97 @@ import { WebrtcProvider } from 'y-webrtc'
 import { WebsocketProvider } from 'y-websocket'
 import { IndexeddbPersistence } from 'y-indexeddb'
 import { v4 as uuidv4 } from 'uuid';
+import QRCode from 'qrcode'
 
 let calls = 0
 export default {
   name: 'RoomCard',
   data(){
     return{
+      roomId: null,
       yarray: null,
       newVal: 3,
-      newName: '',
       ymap: null,
       newStuff: 'c4',
-      nodes: []
+      nodes: [],
+      newName: '',
+      QRsrc: null
     }
   },
   created(){
-    const ydoc = new Y.Doc()
+    this.roomId = this.$route.query.room || uuidv4()
+    this.ydoc = new Y.Doc()
 
     // this allows you to instantly get the (cached) documents data
-    const indexeddbProvider = new IndexeddbPersistence('count-demo', ydoc)
+    const indexeddbProvider = new IndexeddbPersistence('noosphere-demo', this.ydoc)
     indexeddbProvider.whenSynced.then(() => {
       console.log('loaded data from indexed db')
     })
 
     // Sync clients with the y-webrtc provider.
-    const webrtcProvider = new WebrtcProvider('count-demo', ydoc)
+    const webrtcProvider = new WebrtcProvider('noosphere-demo', this.ydoc)
 
     // Sync clients with the y-websocket provider
     const websocketProvider = new WebsocketProvider(
-      'wss://demos.yjs.dev', 'count-demo', ydoc
+      'wss://demos.yjs.dev', 'noosphere-demo', this.ydoc
     )
     console.log("providers", webrtcProvider, websocketProvider)
 
     // array of numbers which produce a sum
-    this.yarray = ydoc.getArray('count')
+    this.yarray = this.ydoc.getArray('count')
 
-    this.ymap = ydoc.getMap('test-map2')
-
-    // observe changes of the sum
-    // let app = this
     this.yarray.observe(event => {
       console.log(event)
       // print updates when the data changes
       console.log(this.yarray.toJSON())
       // console.log('new sum: ' + this.yarray.toArray().reduce((a,b) => a + b))
     })
-    let calls = 0
-    this.ymap.observeDeep(events => {
-      events.forEach(event => {
-        calls++
-        console.log('calls', calls)
-        // @ts-ignore
-        console.log(event.keysChanged.has('deepmap'))
-        console.log(event.path.length === 1)
-        console.log(event.path[0] === 'map')
-        // @ts-ignore
-        // let dmapid = event.target.get('deepmap')._item.id
-        // console.log(dmapid)
-        console.log(event, event)
-        // console.log("nodes",event.target.get('nodes').toJSON())
-        // this.nodes = event.target.get('nodes').toJSON()
-      })
-      this.$forceUpdate();
-    })
-
-    // add 1 to the sum
-    this.yarray.push([2]) // => "new sum: 1"
-    this.ymap.set('map', new Y.Map())
-    this.ymap.set('nodes', new Y.Map())
-    this.populateMap()
-
   },
   methods:{
+    generateId(){
+      this.roomId = uuidv4()
+    },
+    async generateQR(){
+      this.QRsrc = await QRCode.toDataURL('https://scenaristeur.github.io/noosphere/?room='+this.roomId, {color: {light: '#98faf5'}})
+    },
+    openRoom(){
+      this.ymap = this.ydoc.getMap(this.roomId)
+
+      // observe changes of the sum
+      // let app = this
+
+      let calls = 0
+      this.ymap.observeDeep(events => {
+        events.forEach(event => {
+          calls++
+          console.log('calls', calls)
+          // @ts-ignore
+          console.log(event.keysChanged.has('deepmap'))
+          console.log(event.path.length === 1)
+          console.log(event.path[0] === 'map')
+          // @ts-ignore
+          // let dmapid = event.target.get('deepmap')._item.id
+          // console.log(dmapid)
+          console.log(event, event)
+          // console.log("nodes",event.target.get('nodes').toJSON())
+          // this.nodes = event.target.get('nodes').toJSON()
+        })
+        this.$forceUpdate();
+      })
+
+      // add 1 to the sum
+      this.yarray.push([2]) // => "new sum: 1"
+      if(this.ymap.get('map') == undefined){
+        this.populateMap()
+      }
+
+    },
     addToArray(){
       this.yarray.push([this.newVal])
       this.newVal = '1'
     },
     clear(){
       this.yarray.delete(0, this.yarray.length)
-    },
-    addNode(){
-      let node = {id: "ered", name: "er", created: "frt"}
-      console.log("does not work!", node)
-      this.yarray.push(node)
-      this.populate()
-      this.newName = ''
     },
     addNodeToMap(){
       const _mapNodes = this.ymap.get('nodes')
@@ -149,7 +165,9 @@ export default {
       this.$forceUpdate();
     },
     populateMap(){
-
+      this.ymap.set('map', new Y.Map())
+      this.ymap.set('nodes', new Y.Map())
+      this.ymap.set('links', new Y.Map())
       const _map3 = this.ymap.get('map')
       _map3.set('deepmap', new Y.Map())
       this.ymap.set('stuff one', 'c2')

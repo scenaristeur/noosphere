@@ -52,7 +52,9 @@ then open your website  https://scenaristeur.github.io/noosphere
 next modifs, just run ```npm run git -- "my modif"```
 
 
-
+# Tools
+- pwa share api https://web.dev/web-share-target/
+- qr generate https://www.npmjs.com/package/qrcode
 
 
 ## Project setup

@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunknoosphere"]=self["webpackChunknoosphere"]||[]).push([[557],{3351:function(e,r,u){u.r(r),u.d(r,{default:function(){return h}});var s=function(){var e=this,r=e._self._c;return r("div",{staticClass:"about"},[r("h1",[e._v("This is a share page")]),e._v(" -"+e._s(e.query)+"-query ")])},t=[],n={name:"ShareView",data(){return{query:null}},created(){console.log(this.$route.query),this.query=this.$route.query}},a=n,l=u(1001),o=(0,l.Z)(a,s,t,!1,null,null,null),h=o.exports}}]);
-//# sourceMappingURL=share.2dc6814f.js.map

@@ -10,18 +10,19 @@
     "postgit": "git push && git subtree push --prefix dist origin gh-pages"
   },
   "dependencies": {
-    "core-js": "^3.8.3",
-    "register-service-worker": "^1.7.2",
-    "vue": "^2.6.14",
-    "vue-router": "^3.5.1",
-    "vuex": "^3.6.2",
     "@editorjs/editorjs": "^2.25.0",
     "@editorjs/header": "^2.6.2",
     "@editorjs/list": "^1.7.0",
     "@editorjs/paragraph": "^2.8.0",
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.22.0",
+    "core-js": "^3.8.3",
+    "qrcode": "^1.5.1",
+    "register-service-worker": "^1.7.2",
     "uuid": "^8.3.2",
+    "vue": "^2.6.14",
+    "vue-router": "^3.5.1",
+    "vuex": "^3.6.2",
     "y-indexeddb": "^9.0.9",
     "y-webrtc": "^10.2.3",
     "y-websocket": "^1.4.3",
@@ -30,6 +31,9 @@
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
+    "@editorjs/delimiter": "^1.2.0",
+    "@editorjs/quote": "^2.4.0",
+    "@editorjs/warning": "^1.2.0",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-pwa": "~5.0.0",
@@ -38,9 +42,6 @@
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
-    "vue-template-compiler": "^2.6.14",
-    "@editorjs/delimiter": "^1.2.0",
-    "@editorjs/quote": "^2.4.0",
-    "@editorjs/warning": "^1.2.0"
+    "vue-template-compiler": "^2.6.14"
   }
 }

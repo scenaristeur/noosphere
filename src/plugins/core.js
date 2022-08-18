@@ -4,13 +4,10 @@ const plugin = {
     let store = opts.store
 
     Vue.prototype.$coreInit = async function(/*options = {}*/){
-      // console.log(options)
-      // store.commit('core/initRooms')
-      let query = this.$route.query
-      console.log("query", query)
-      if (query.room != undefined){
 
-        store.commit('core/setRoom', query.room)
+      if (this.$route.query!= undefined){
+        console.log("this.$route.query", this.$route.query)
+        store.commit('core/setQuery', this.$route.query)
 
       }
     }

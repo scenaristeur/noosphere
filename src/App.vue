@@ -5,7 +5,7 @@
       <router-link to="/about">About</router-link>
     </nav>
     <router-view/>
-    <b-alert variant="success" show>Noosphere 0 - shar</b-alert>
+    <b-alert variant="success" show>Noosphere 0 - qr share</b-alert>
   </div>
 </template>
 
