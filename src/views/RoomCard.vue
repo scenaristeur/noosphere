@@ -11,9 +11,12 @@
     class="mb-2"
     >
     <b-card-text>
-      room : {{room}}
+      <!-- room : {{room}} -->
       <hr>
       ymap : {{ymap}}
+      nodes : {{nodes}}
+
+      <!-- ymapNodes : {{ymap.map.nodes}} -->
       <hr>
       <input v-model="newName" placeholder="name of the new node" />
       <button @click="addNodeToMap">Add node to map</button>
@@ -22,6 +25,17 @@
       <input v-model="newStuff" placeholder="name of the stuff" />
       <button @click="changeStuff">change stuff</button>
     </b-card-text>
+    <hr><hr>
+    yarray : {{yarray}}
+    <button @click="clear">clear</button>
+    <hr>
+    <input v-model="newVal" type="number" placeholder="number, ex: 0 or 10" />
+    <button @click="addToArray">Add</button>
+
+    <hr>
+    <input v-model="newName" placeholder="name of the new node" />
+    <button @click="addNode">Add Node (does not work adding an object to an array)</button>
+
 
     <b-button href="#" variant="primary">Go somewhere</b-button>
   </b-card>
@@ -41,9 +55,12 @@ export default {
   name: 'RoomCard',
   data(){
     return{
+      yarray: null,
+      newVal: 3,
       newName: '',
       ymap: null,
-      newStuff: 'c4'
+      newStuff: 'c4',
+      nodes: []
     }
   },
   created(){
@@ -90,12 +107,16 @@ export default {
         // let dmapid = event.target.get('deepmap')._item.id
         // console.log(dmapid)
         console.log(event, event)
+        // console.log("nodes",event.target.get('nodes').toJSON())
+        // this.nodes = event.target.get('nodes').toJSON()
       })
       this.$forceUpdate();
     })
 
     // add 1 to the sum
     this.yarray.push([2]) // => "new sum: 1"
+    this.ymap.set('map', new Y.Map())
+    this.ymap.set('nodes', new Y.Map())
     this.populateMap()
 
   },
@@ -111,10 +132,14 @@ export default {
       let node = {id: "ered", name: "er", created: "frt"}
       console.log("does not work!", node)
       this.yarray.push(node)
+      this.populate()
       this.newName = ''
     },
     addNodeToMap(){
+      const _mapNodes = this.ymap.get('nodes')
+
       let node = {id: uuidv4(), name: this.newName, created: Date.now()}
+      _mapNodes.set(node.id, new Y.Map())
       this.ymap.set(node.id, node)
       this.newName = ''
       this.$forceUpdate();
@@ -124,7 +149,7 @@ export default {
       this.$forceUpdate();
     },
     populateMap(){
-      this.ymap.set('map', new Y.Map())
+
       const _map3 = this.ymap.get('map')
       _map3.set('deepmap', new Y.Map())
       this.ymap.set('stuff one', 'c2')
