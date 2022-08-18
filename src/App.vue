@@ -6,7 +6,7 @@
       <router-link to="/about">About</router-link>
     </nav>
     <router-view/>
-    <b-alert variant="success" show>Noosphere 0 - reorg3</b-alert>
+    <b-alert variant="success" show>Noosphere 0 - configView</b-alert>
   </div>
 </template>
 
