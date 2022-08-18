@@ -4,8 +4,8 @@ module.exports = defineConfig({
   publicPath: publicPath,
   pwa: {
     name: 'Noosphere',
-     themeColor: '#4dbab5',
-     msTileColor: '#000000',
+     // themeColor: '#4dbab5',
+     // msTileColor: '#000000',
     appleMobileWebAppCapable: 'yes',
     appleMobileWebAppStatusBarStyle: 'black',
     manifestOptions: {
