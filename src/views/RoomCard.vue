@@ -75,7 +75,7 @@
           <hr>
           Users :
           <!-- {{ users }} -->
-          <div :style="'color:'+u.color" 
+          <div :style="'color:'+u.color"
           v-for="u in users" :key="u.clientID" >
           <!-- <div :style="'color'+u.color;">• {{u.name}}</div> -->
           {{u.name}} ({{u.way}})
@@ -356,6 +356,15 @@ export default {
       openRoom(){
         this.ymap = this.ydoc.getMap(this.roomId)
 
+
+        let editorData = this.ymap.get('editor_map')
+        console.log(editorData)
+        if (editorData != undefined){
+          console.log(editorData)
+          this.editorData = editorData//.toJSON()
+          console.log(this.editorData)
+          yService.log(this.editorData)
+        }
         // observe changes of the sum
         // let app = this
 
@@ -378,6 +387,7 @@ export default {
             // if (event.keysChanged.has('editor_map')){
             // yService.log('editor_map changed')
             let editorData = this.ymap.get('editor_map')
+            console.log(editorData)
             if (editorData != undefined){
               console.log(editorData)
               this.editorData = editorData//.toJSON()
