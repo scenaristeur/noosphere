@@ -56,7 +56,7 @@ next modifs, just run ```npm run git -- "my modif"```
 - pwa share api https://web.dev/web-share-target/
 - qr generate https://www.npmjs.com/package/qrcode
 - ajouter le scanner https://github.com/mebjas/html5-qrcode
-
+- manyverse https://www.manyver.se/ reseau social bluetooth
 
 ## Project setup
 ```

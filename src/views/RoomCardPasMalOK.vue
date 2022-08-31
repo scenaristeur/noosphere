@@ -1,102 +1,90 @@
 <template>
-  <b-row>
-    <b-col>
-
-      <div class="room-card" id="room-card">
+  <div class="room-card" id="room-card">
 
 
-        <b-card
-        title="Open a room"
-        tag="article"
-        style="max-width: 20rem;"
-        class="mb-2"
-        >
+    <b-card
+    title="Open a room"
+    tag="article"
+    style="max-width: 20rem;"
+    class="mb-2"
+    >
 
-        <!-- <b-header>
-        <h2></h2>
-      </b-header> -->
-      <b-card-text>
+    <!-- <b-header>
+    <h2></h2>
+  </b-header> -->
+  <b-card-text>
 
 
 
-        <div v-if="roomId.length ==0">
-          <b-button  size="sm" variant="info" @click="generateId">Randomize roomId</b-button> or
-          <b-button size="sm" variant="outline-info" @click="toggle_qr_scanner">Join with QR</b-button>
-        </div>
-        <div v-else>
-          <b-button size="sm" variant="outline-info" @click="roomId = ''">Clear</b-button>
+    <div v-if="roomId.length ==0">
+      <b-button  size="sm" variant="info" @click="generateId">Randomize roomId</b-button> or
+      <b-button size="sm" variant="outline-info" @click="toggle_qr_scanner">Join with QR</b-button>
+    </div>
+    <div v-else>
+      <b-button size="sm" variant="outline-info" @click="roomId = ''">Clear</b-button>
 
-        </div>
+    </div>
 
 
 
 
-        <b-input v-model="roomId" placeholder="roomId | random | QR" />
+    <b-input v-model="roomId" placeholder="roomId | random | QR" />
 
-        <div v-if="roomId.length !=0">
-          <b-button size="sm" variant="info" @click="openRoom">Go</b-button> and
-          <b-button size="sm" variant="info" @click="generateQR">Share</b-button>
+    <div v-if="roomId.length !=0">
+      <b-button size="sm" variant="info" @click="openRoom">Go</b-button> and
+      <b-button size="sm" variant="info" @click="generateQR">Share</b-button>
 
-        </div>
+    </div>
 
-        <div id="reader" ref="reader" width="600px"></div>
-        <div  v-if="QRsrc">
-          <small>{{ this.url}}</small><br>
-          <b-button @click="saveQR" disabled size="sm" variant="info">save QR</b-button>
+    <div id="reader" ref="reader" width="600px"></div>
+    <div  v-if="QRsrc">
+      <small>{{ this.url}}</small><br>
+      <b-button @click="saveQR" disabled size="sm" variant="info">save QR</b-button>
 
-          <b-button @click="saveQR" disabled size="sm" variant="info">copy url</b-button>
-          <b-button @click="QRsrc=null" size="sm" variant="info">hide</b-button>
-          <img :src="QRsrc" width="280px" /><br>
-
-
-
-        </div>
+      <b-button @click="saveQR" disabled size="sm" variant="info">copy url</b-button>
+      <b-button @click="QRsrc=null" size="sm" variant="info">hide</b-button>
+      <img :src="QRsrc" width="280px" /><br>
 
 
-        <div v-if="this.url != null">
 
-        </div>
+    </div>
 
-        <div id="ymap_div" v-if="ymap!=null">
 
-          <input v-model="newName" placeholder="name of the new node" />
-          <button @click="addNodeToMap">Add node to map</button>
-          <button @click="clearMap">clear map</button>
-          <button @click="populateMap">populate map</button>
-          <input v-model="newStuff" placeholder="name of the stuff" />
-          <button @click="changeStuff">change stuff</button>
-          <hr>
-          ymap : {{ymap}}
-          <hr>
-          <!-- nodes : {{ymap.nodes}}
-          rooms: {{JSON.stringify(rooms)}} -->
+    <div v-if="this.url != null">
 
-          <!-- ymapNodes : {{ymap.map.nodes}} -->
-          <hr>
-        </div>
-      </b-card-text>
-      <hr><hr>
-      yarray : {{yarray}}
-      <button @click="clear">clear</button>
+    </div>
+  
+    <div id="ymap_div" v-if="ymap!=null">
+
+      <input v-model="newName" placeholder="name of the new node" />
+      <button @click="addNodeToMap">Add node to map</button>
+      <button @click="clearMap">clear map</button>
+      <button @click="populateMap">populate map</button>
+      <input v-model="newStuff" placeholder="name of the stuff" />
+      <button @click="changeStuff">change stuff</button>
       <hr>
-      <input v-model="newVal" type="number" placeholder="number, ex: 0 or 10" />
-      <button @click="addToArray">Add</button>
+      ymap : {{ymap}}
+      <hr>
+      <!-- nodes : {{ymap.nodes}}
+      rooms: {{JSON.stringify(rooms)}} -->
 
-    </b-card>
+      <!-- ymapNodes : {{ymap.map.nodes}} -->
+      <hr>
+    </div>
+  </b-card-text>
+  <hr><hr>
+  yarray : {{yarray}}
+  <button @click="clear">clear</button>
+  <hr>
+  <input v-model="newVal" type="number" placeholder="number, ex: 0 or 10" />
+  <button @click="addToArray">Add</button>
 
-  </div>
+</b-card>
 
-</b-col>
-
-<b-col>
-  <EditorView @saveEditor="onSaveEditor" :editorData="editorData"/>
-</b-col>
-
-</b-row>
+</div>
 </template>
 
 <script>
-import yService from '@/services/y-service';
 import * as Y from 'yjs'
 import { WebrtcProvider } from 'y-webrtc'
 import { WebsocketProvider } from 'y-websocket'
@@ -108,9 +96,6 @@ import {Html5QrcodeScanner} from "html5-qrcode"
 let calls = 0
 export default {
   name: 'RoomCard',
-  components: {
-    'EditorView': ()=>import('@/views/EditorView'),
-  },
   data(){
     return{
       roomId: null,
@@ -122,36 +107,10 @@ export default {
       newName: '',
       QRsrc: null,
       url: null,
-      scanner: null,
-      editorData: {
-          "time" : 1550476186479,
-          "blocks" : [
-              {
-                  "type" : "paragraph",
-                  "data" : {
-                      "text" : "The example of text that was written in <b>one of popular</b> text editors."
-                  }
-              },
-              {
-                  "type" : "header",
-                  "data" : {
-                      "text" : "With the header of course",
-                      "level" : 2
-                  }
-              },
-              {
-                  "type" : "paragraph",
-                  "data" : {
-                      "text" : "So what do we have?"
-                  }
-              }
-          ],
-          "version" : "2.8.1"
-      }
+      scanner: null
     }
   },
   created(){
-    yService.log("RoomCard created")
     this.roomId = this.$route.query.room || uuidv4()
     this.ydoc = new Y.Doc()
 
@@ -179,8 +138,6 @@ export default {
       console.log(this.yarray.toJSON())
       // console.log('new sum: ' + this.yarray.toArray().reduce((a,b) => a + b))
     })
-
-    this.openRoom()
   },
   methods:{
     generateId(){
@@ -259,24 +216,12 @@ export default {
             console.log(event.keysChanged.has('deepmap'))
             console.log(event.path.length === 1)
             console.log(event.path[0] === 'map')
-            yService.log(event.keysChanged.has('editor_map'))
             // @ts-ignore
             // let dmapid = event.target.get('deepmap')._item.id
             // console.log(dmapid)
-            console.log(event)
+            console.log(event, event)
             // console.log("nodes",event.target.get('nodes').toJSON())
             // this.nodes = event.target.get('nodes').toJSON()
-            // if (event.keysChanged.has('editor_map')){
-            // yService.log('editor_map changed')
-            let editorData = this.ymap.get('editor_map')
-            if (editorData != undefined){
-              console.log(editorData)
-              this.editorData = editorData//.toJSON()
-              console.log(this.editorData)
-              yService.log(this.editorData)
-            }
-            // this.populateEditor(this.editorData)
-            // }
           })
           this.$forceUpdate();
           var url = location.href;               //Save down the URL without hash.
@@ -313,33 +258,18 @@ export default {
       },
       populateMap(){
         this.ymap.set('map', new Y.Map())
-      //  this.ymap.set('editor_map', new Y.Map())
         this.ymap.set('nodes', new Y.Map())
         this.ymap.set('links', new Y.Map())
         const _map3 = this.ymap.get('map')
         _map3.set('deepmap', new Y.Map())
         this.ymap.set('stuff one', 'c2')
         _map3.set('stuff', 'c3')
-
-        // const _editorMap = this.ymap.get('editor_map')
-
-
-        //let data= { "time": 1661945860245, "blocks": [ { "id": "6tUGo3YdzP", "type": "paragraph", "data": { "text": "dfsg" } }, { "id": "4K-n_v3Ppg", "type": "paragraph", "data": { "text": "sdf" } } ], "version": "2.25.0" }
-
-        this.ymap.set('editor_map', this.editorData)
       },
       changeStuff(){
         const _map3 = this.ymap.get('map')
         _map3.set('stuff', this.newStuff)
         this.newStuff= 'c4'
         this.$forceUpdate();
-      },
-      onSaveEditor(data){
-        console.log('saveEditor', data)
-        // const _editorMap = this.ymap.get('editor_map')
-        // _editorMap.set('data', data)
-        this.ymap.set('editor_map', data)
-        this.$forceUpdate()
       }
     },
     watch:{
