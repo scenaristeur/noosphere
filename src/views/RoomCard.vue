@@ -60,33 +60,35 @@
 
         <div id="ymap_div" v-if="ymap!=null">
 
-          <input v-model="newName" placeholder="name of the new node" />
+          <!-- <input v-model="newName" placeholder="name of the new node" />
           <button @click="addNodeToMap">Add node to map</button>
           <button @click="clearMap">clear map</button>
           <button @click="populateMap">populate map</button>
           <input v-model="newStuff" placeholder="name of the stuff" />
-          <button @click="changeStuff">change stuff</button>
+          <button @click="changeStuff">change stuff</button> -->
 
-          <hr>
+          <!-- <hr> -->
           User<br>
           Choose a <b-input v-model="username" placeholder="username" />
           and a color <b-input v-model="usercolor" type="color" />
           <b-button @click="updateUser" variant="info" size="sm">Update user</b-button>
 
           <hr>
+          Me : {{ clientID }} <br>
           Users :
           <!-- {{ users }} -->
           <div :style="'color:'+u.color"
           v-for="u in users" :key="u.clientID" >
           <!-- <div :style="'color'+u.color;">• {{u.name}}</div> -->
           {{u.name}} ({{u.way}})
-
+          <a :href="'https://scenaristeur.github.io/noosphere/?room='+u.roomId">{{u.roomId}}</a>
+          <!-- {{u}} -->
         </div>
         <!-- strings.push(`<div style="color:${state.user.color};">• ${state.user.name}</div>`) -->
 
-        <hr>
+        <!-- <hr>
         ymap : {{ymap}}
-        <hr>
+        <hr> -->
         <!-- nodes : {{ymap.nodes}}
         rooms: {{JSON.stringify(rooms)}} -->
 
@@ -108,7 +110,12 @@
 </b-col>
 
 <b-col>
-  <EditorView @saveEditor="onSaveEditor" :editorData="editorData"/>
+  <EditorView
+  @saveEditor="onSaveEditor"
+  :editorData="editorData"
+  @userEvent="onUserEvent"
+  @editorEvent="onEditorEvent"
+  />
 </b-col>
 
 </b-row>
@@ -205,6 +212,12 @@ export default {
     this.openRoom()
   },
   methods:{
+    onUserEvent(e){
+      console.log("userEVent", e)
+    },
+    onEditorEvent(e){
+      console.log("editorEvent",e)
+    },
     manageAwareness(){
 
       // see https://stackblitz.com/edit/y-quill-awareness?file=index.ts
@@ -218,6 +231,16 @@ export default {
       // this.indexeddbAwareness = this.indexeddbProvider.awareness
 
       this.clientID = this.websocketAwareness.clientID
+
+      let user = JSON.parse(localStorage.getItem('noosphere-user'))
+      console.log(user)
+      if (user != undefined){
+        this.username = user.name
+        this.usercolor = user.color
+        this.roomId = user.roomId
+        this.updateUser()
+      }
+
 
       // // All of our network providers implement the awareness crdt
       // const awareness = provider.awareness
@@ -276,22 +299,19 @@ export default {
 
     },
     updateUser(){
-      this.webrtcAwareness.setLocalStateField('user', {
-        // Define a print name that should be displayed
-        name: this.username,
+
+      let user = {name: this.username,
         // Define a color that should be associated to the user:
         color: this.usercolor, // should be a hex color
         clientID: this.clientID,
-        way: 'webrtc'
-      })
-      this.websocketAwareness.setLocalStateField('user', {
-        // Define a print name that should be displayed
-        name: this.username,
-        // Define a color that should be associated to the user:
-        color: this.usercolor,// '#ffb61e' // should be a hex color
-        clientID: this.clientID,
-        way: "websocket"
-      })
+        roomId: this.roomId
+      }
+      console.log(user)
+      localStorage.setItem('noosphere-user', JSON.stringify(user));
+      user.way = 'webrtc'
+      this.webrtcAwareness.setLocalStateField('user', user)
+      user.way = 'websocket'
+      this.websocketAwareness.setLocalStateField('user', user)
     },
     generateId(){
       this.roomId = uuidv4()
@@ -353,7 +373,7 @@ export default {
           // this.scanner = null
           // this.$refs.reader.innerHTML = ""
           // this.$refs.reader.style = ""
-        //  this.openRoom()
+          //  this.openRoom()
 
 
           // this.scanner.stop().then((ignore) => {
@@ -380,6 +400,7 @@ export default {
       openRoom(){
         this.ymap = this.ydoc.getMap(this.roomId)
 
+        this.updateUser()
 
         let editorData = this.ymap.get('editor_map')
         console.log(editorData)
@@ -398,10 +419,10 @@ export default {
             calls++
             console.log('calls', calls)
             // @ts-ignore
-            console.log(event.keysChanged.has('deepmap'))
-            console.log(event.path.length === 1)
-            console.log(event.path[0] === 'map')
-            yService.log(event.keysChanged.has('editor_map'))
+            // console.log(event.keysChanged.has('deepmap'))
+            // console.log(event.path.length === 1)
+            // console.log(event.path[0] === 'map')
+            // yService.log(event.keysChanged.has('editor_map'))
             // @ts-ignore
             // let dmapid = event.target.get('deepmap')._item.id
             // console.log(dmapid)
@@ -412,7 +433,7 @@ export default {
             // yService.log('editor_map changed')
             let editorData = this.ymap.get('editor_map')
             console.log(editorData)
-            if (editorData != undefined){
+            if (editorData != undefined && editorData.clientID != this.clientID){
               console.log(editorData)
               this.editorData = editorData//.toJSON()
               console.log(this.editorData)
@@ -423,7 +444,7 @@ export default {
           })
           this.$forceUpdate();
           var url = location.href;               //Save down the URL without hash.
-          location.href = "#ymap_div";                 //Go to the target element.
+          //location.href = "#ymap_div";                 //Go to the target element.
           history.replaceState(null,null,url);
         })
 
@@ -479,6 +500,7 @@ export default {
       },
       onSaveEditor(data){
         console.log('saveEditor', data)
+        data.clientID = this.clientID
         // const _editorMap = this.ymap.get('editor_map')
         // _editorMap.set('data', data)
         this.ymap.set('editor_map', data)

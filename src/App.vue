@@ -6,7 +6,7 @@
       <router-link to="/about">About</router-link>
     </nav>
     <router-view/>
-    <b-alert variant="success" show>Noosphere 0 - editorjs sync awareness users</b-alert>
+    <b-alert variant="success" show>Noosphere 0 - editorjs plugins</b-alert>
   </div>
 </template>
 
