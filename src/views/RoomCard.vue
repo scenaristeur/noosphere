@@ -65,26 +65,44 @@
           <button @click="populateMap">populate map</button>
           <input v-model="newStuff" placeholder="name of the stuff" />
           <button @click="changeStuff">change stuff</button>
-          <hr>
-          ymap : {{ymap}}
-          <hr>
-          <!-- nodes : {{ymap.nodes}}
-          rooms: {{JSON.stringify(rooms)}} -->
 
-          <!-- ymapNodes : {{ymap.map.nodes}} -->
           <hr>
+          User<br>
+          Choose a <b-input v-model="username" placeholder="username" />
+          and a color <b-input v-model="usercolor" type="color" />
+          <b-button @click="updateUser" variant="info" size="sm">Update user</b-button>
+
+          <hr>
+          Users :
+          <!-- {{ users }} -->
+          <div :style="'color:'+u.color" 
+          v-for="u in users" :key="u.clientID" >
+          <!-- <div :style="'color'+u.color;">• {{u.name}}</div> -->
+          {{u.name}} ({{u.way}})
+
         </div>
-      </b-card-text>
-      <hr><hr>
-      yarray : {{yarray}}
-      <button @click="clear">clear</button>
-      <hr>
-      <input v-model="newVal" type="number" placeholder="number, ex: 0 or 10" />
-      <button @click="addToArray">Add</button>
+        <!-- strings.push(`<div style="color:${state.user.color};">• ${state.user.name}</div>`) -->
 
-    </b-card>
+        <hr>
+        ymap : {{ymap}}
+        <hr>
+        <!-- nodes : {{ymap.nodes}}
+        rooms: {{JSON.stringify(rooms)}} -->
 
-  </div>
+        <!-- ymapNodes : {{ymap.map.nodes}} -->
+        <hr>
+      </div>
+    </b-card-text>
+    <hr><hr>
+    yarray : {{yarray}}
+    <button @click="clear">clear</button>
+    <hr>
+    <input v-model="newVal" type="number" placeholder="number, ex: 0 or 10" />
+    <button @click="addToArray">Add</button>
+
+  </b-card>
+
+</div>
 
 </b-col>
 
@@ -113,6 +131,9 @@ export default {
   },
   data(){
     return{
+      users: {},
+      username: "",
+      usercolor: null,
       roomId: null,
       yarray: null,
       newVal: 3,
@@ -124,29 +145,29 @@ export default {
       url: null,
       scanner: null,
       editorData: {
-          "time" : 1550476186479,
-          "blocks" : [
-              {
-                  "type" : "paragraph",
-                  "data" : {
-                      "text" : "The example of text that was written in <b>one of popular</b> text editors."
-                  }
-              },
-              {
-                  "type" : "header",
-                  "data" : {
-                      "text" : "With the header of course",
-                      "level" : 2
-                  }
-              },
-              {
-                  "type" : "paragraph",
-                  "data" : {
-                      "text" : "So what do we have?"
-                  }
-              }
-          ],
-          "version" : "2.8.1"
+        "time" : 1550476186479,
+        "blocks" : [
+          {
+            "type" : "paragraph",
+            "data" : {
+              "text" : "The example of text that was written in <b>one of popular</b> text editors."
+            }
+          },
+          {
+            "type" : "header",
+            "data" : {
+              "text" : "With the header of course",
+              "level" : 2
+            }
+          },
+          {
+            "type" : "paragraph",
+            "data" : {
+              "text" : "So what do we have?"
+            }
+          }
+        ],
+        "version" : "2.8.1"
       }
     }
   },
@@ -156,19 +177,19 @@ export default {
     this.ydoc = new Y.Doc()
 
     // this allows you to instantly get the (cached) documents data
-    const indexeddbProvider = new IndexeddbPersistence('noosphere-demo', this.ydoc)
-    indexeddbProvider.whenSynced.then(() => {
+    this.indexeddbProvider = new IndexeddbPersistence('noosphere-demo', this.ydoc)
+    this.indexeddbProvider.whenSynced.then(() => {
       console.log('loaded data from indexed db')
     })
 
     // Sync clients with the y-webrtc provider.
-    const webrtcProvider = new WebrtcProvider('noosphere-demo', this.ydoc)
+    this.webrtcProvider = new WebrtcProvider('noosphere-demo', this.ydoc)
 
     // Sync clients with the y-websocket provider
-    const websocketProvider = new WebsocketProvider(
+    this.websocketProvider = new WebsocketProvider(
       'wss://demos.yjs.dev', 'noosphere-demo', this.ydoc
     )
-    console.log("providers", webrtcProvider, websocketProvider)
+    console.log("providers", this.webrtcProvider, this.websocketProvider)
 
     // array of numbers which produce a sum
     this.yarray = this.ydoc.getArray('count')
@@ -179,10 +200,98 @@ export default {
       console.log(this.yarray.toJSON())
       // console.log('new sum: ' + this.yarray.toArray().reduce((a,b) => a + b))
     })
-
+    this.manageAwareness()
     this.openRoom()
   },
   methods:{
+    manageAwareness(){
+
+      // see https://stackblitz.com/edit/y-quill-awareness?file=index.ts
+      this.webrtcAwareness = this.webrtcProvider.awareness
+      this.websocketAwareness = this.websocketProvider.awareness
+      let app = this
+
+
+      console.log("CLIENTS ID", "webrtc", this.webrtcAwareness.clientID)
+      console.log("CLIENTS ID", "websocket", this.websocketAwareness.clientID)
+      // this.indexeddbAwareness = this.indexeddbProvider.awareness
+
+      this.clientID = this.websocketAwareness.clientID
+
+      // // All of our network providers implement the awareness crdt
+      // const awareness = provider.awareness
+
+      // You can observe when a user updates their awareness information
+      this.webrtcAwareness.on('change', changes => {
+        // Whenever somebody updates their awareness information,
+        // we log all awareness information from all users.
+        this.webrtcAwareness.getStates().forEach(state => {
+          console.log(state)
+          if (state.user) {
+            console.log(state.user)
+            app.users[state.user.clientID]= state.user
+            //strings.push(`<div style="color:${state.user.color};">• ${state.user.name}</div>`)
+          }
+        })
+
+        console.log("[webrtcAwareness]",Array.from(this.webrtcAwareness.getStates().values()), changes)
+        console.log('[app users]',app.users)
+        this.$forceUpdate();
+      })
+
+      this.websocketAwareness.on('change', changes => {
+        // Whenever somebody updates their awareness information,
+        // we log all awareness information from all users.
+        this.websocketAwareness.getStates().forEach(state => {
+          console.log(state)
+          if (state.user) {
+            console.log(state.user)
+            app.users[state.user.clientID]= state.user
+            //strings.push(`<div style="color:${state.user.color};">• ${state.user.name}</div>`)
+          }
+
+        })
+        console.log("[websocketAwareness]",Array.from(this.websocketAwareness.getStates().values()), changes)
+        console.log('[app users]',app.users)
+        this.$forceUpdate();
+      })
+
+      // this.indexeddbAwareness.on('change', changes => {
+      //   // Whenever somebody updates their awareness information,
+      //   // we log all awareness information from all users.
+      //   console.log("[indexeddbAwareness]",Array.from(this.indexeddbAwareness.getStates().values()), changes)
+      // })
+
+      // // You can think of your own awareness information as a key-value store.
+      // // We update our "user" field to propagate relevant user information.
+      // awareness.setLocalStateField('user', {
+      //   // Define a print name that should be displayed
+      //   name: 'Emmanuelle Charpentier',
+      //   // Define a color that should be associated to the user:
+      //   color: '#ffb61e' // should be a hex color
+      // })
+
+
+
+    },
+    updateUser(){
+      this.webrtcAwareness.setLocalStateField('user', {
+        // Define a print name that should be displayed
+        name: this.username,
+        // Define a color that should be associated to the user:
+        color: this.usercolor, // should be a hex color
+        clientID: this.clientID,
+        way: 'webrtc'
+      })
+      this.websocketAwareness.setLocalStateField('user', {
+        // Define a print name that should be displayed
+        name: this.username,
+        // Define a color that should be associated to the user:
+        color: this.usercolor,// '#ffb61e' // should be a hex color
+        clientID: this.clientID,
+        way: "websocket"
+      })
+    },
     generateId(){
       this.roomId = uuidv4()
     },
@@ -313,7 +422,7 @@ export default {
       },
       populateMap(){
         this.ymap.set('map', new Y.Map())
-      //  this.ymap.set('editor_map', new Y.Map())
+        //  this.ymap.set('editor_map', new Y.Map())
         this.ymap.set('nodes', new Y.Map())
         this.ymap.set('links', new Y.Map())
         const _map3 = this.ymap.get('map')

@@ -1,10 +1,10 @@
 <template>
-  <div class="editor-view">
+  <b-container fluid class="editor-view">
     Editor
     <b-button @click="save">Save</b-button>
     <div id="editorjs" ></div>
     --  {{editorData}}--
-  </div>
+  </b-container>
 </template>
 
 <script>
