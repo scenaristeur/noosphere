@@ -60,15 +60,32 @@ export default {
     })
 
     yService.log(this.editor)
+
+
     // this.editor.onReady
 
   },
-  // mounted(){
-  //   if (this.editorData != null){
-  //     this.editor.blocks.render(this.editorData)
-  //   }
-  //
-  // },
+  mounted(){
+    // if (this.editorData != null){
+    //   this.editor.blocks.render(this.editorData)
+    // }
+    const editorElement = document.getElementById('editorjs') // your "holder" ID
+
+    editorElement.addEventListener('focusin', (e) => {
+      // your logic
+      console.log("focusin",e)
+    })
+    editorElement.addEventListener('focusout', (e) => {
+      // your logic
+      console.log("focusout",e)
+    })
+
+    editorElement.addEventListener('click', (e) => {
+      // your logic
+      console.log("click",e)
+    })
+
+  },
   methods:{
     save(){
       this.editor.save().then((outputData) => {

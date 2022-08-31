@@ -21,7 +21,7 @@
 
         <div v-if="roomId.length ==0">
           <b-button  size="sm" variant="info" @click="generateId">Randomize roomId</b-button> or
-          <b-button size="sm" variant="outline-info" @click="toggle_qr_scanner">Join with QR</b-button>
+
         </div>
         <div v-else>
           <b-button size="sm" variant="outline-info" @click="roomId = ''">Clear</b-button>
@@ -31,13 +31,14 @@
 
 
 
+
         <b-input v-model="roomId" placeholder="roomId | random | QR" />
 
-        <div v-if="roomId.length !=0">
+        <span v-if="roomId.length !=0">
           <b-button size="sm" variant="info" @click="openRoom">Go</b-button> and
-          <b-button size="sm" variant="info" @click="generateQR">Share</b-button>
-
-        </div>
+          <b-button size="sm" variant="info" @click="generateQR">Share</b-button> or
+        </span>
+        <b-button size="sm" variant="outline-info" @click="toggle_qr_scanner">QR scan</b-button>
 
         <div id="reader" ref="reader" width="600px"></div>
         <div  v-if="QRsrc">
@@ -318,15 +319,21 @@ export default {
           { fps: 10, qrbox: {width: 250, height: 250} },
           /* verbose= */ false);
           this.scanner.render(this.onScanSuccess, this.onScanFailure);
-        }else{
+        }
+        else{
           console.log(this.scanner)
-          this.scanner.stop().then(() => {
-            // QR Code scanning is stopped.
-            this.$refs.reader.innerHTML == ""
-          }).catch((err) => {
-            console.log(err)
-            // Stop failed, handle it.
-          });
+          this.scanner = null
+          // this.scanner.stop().then(() => {
+          //   // QR Code scanning is stopped.
+          this.$refs.reader.innerHTML = ""
+          this.$refs.reader.style = ""
+          // // .removeProperty("border");
+          // // this.$refs.reader.style.removeProperty("position");
+          // // this.$refs.reader.style.removeProperty("padding");
+          // }).catch((err) => {
+          //   console.log(err)
+          //   // Stop failed, handle it.
+          // });
         }
 
 
@@ -337,8 +344,25 @@ export default {
         let eq_splitted = decodedText.split('=')
         if(eq_splitted[0] == 'https://scenaristeur.github.io/noosphere/?room'){
           this.roomId=eq_splitted[1]
-          this.openRoom()
-          this.toggle_qr_scanner()
+          // this.$refs.reader.innerHTML = ""
+          // this.$refs.reader.style = ""
+          // this.toggle_qr_scanner()
+
+          // this.scanner.stop().then(() => {
+          //   // QR Code scanning is stopped.
+          // this.scanner = null
+          // this.$refs.reader.innerHTML = ""
+          // this.$refs.reader.style = ""
+        //  this.openRoom()
+
+
+          // this.scanner.stop().then((ignore) => {
+          //   // QR Code scanning is stopped.
+          //   console.log(ignore)
+          // }).catch((err) => {
+          //   console.log(err)
+          //   // Stop failed, handle it.
+          // });
         }else{
           console.log("i don't know what to do with", eq_splitted)
         }
@@ -348,7 +372,7 @@ export default {
         // handle scan failure, usually better to ignore and keep scanning.
         // for example:
         console.warn(`Code scan error = ${error}`);
-        this.scanner = error
+        //this.scanner = error
       },
       saveQR(){
         console.log('todo', this.QRsrc)
