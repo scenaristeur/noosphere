@@ -58,6 +58,10 @@ next modifs, just run ```npm run git -- "my modif"```
 - ajouter le scanner https://github.com/mebjas/html5-qrcode
 - manyverse https://www.manyver.se/ reseau social bluetooth
 
+# decentralized databases
+- web3.storage / filecoin https://web3.storage/docs/reference/js-client-library/
+- https://www.dolthub.com/blog/2022-05-27-decentralized-database/
+
 ## Project setup
 ```
 npm install
