@@ -19,19 +19,22 @@
 
 
 
-        <div v-if="user.roomId.length ==0">
+        <div v-if="roomId.length ==0">
           <b-button  size="sm" variant="info" @click="generateId">Randomize roomId</b-button> or
 
         </div>
         <div v-else>
-          <b-button size="sm" variant="outline-info" @click="user.roomId = ''">Clear</b-button>
+          <b-button size="sm" variant="outline-info" @click="roomId = ''">Clear</b-button>
 
         </div>
 
 
-        <b-input v-model="user.roomId" placeholder="roomId | random | QR" />
 
-        <span v-if="user.roomId.length !=0">
+
+
+        <b-input v-model="roomId" placeholder="roomId | random | QR" />
+
+        <span v-if="roomId.length !=0">
           <b-button size="sm" variant="info" @click="openRoom">Go</b-button> and
           <b-button size="sm" variant="info" @click="generateQR">Share</b-button> or
         </span>
@@ -50,61 +53,59 @@
 
         </div>
 
-        <hr>
-        <QrView />
 
+        <div v-if="this.url != null">
 
-        <hr>
-        <UserView />
-        <hr>
-        <!-- <div id="ymap_div" v-if="ymap!=null"> -->
+        </div>
 
-        <!-- <input v-model="newName" placeholder="name of the new node" />
-        <button @click="addNodeToMap">Add node to map</button>
-        <button @click="clearMap">clear map</button>
-        <button @click="populateMap">populate map</button>
-        <input v-model="newStuff" placeholder="name of the stuff" />
-        <button @click="changeStuff">change stuff</button> -->
+        <div id="ymap_div" v-if="ymap!=null">
 
-        <!-- <hr> -->
-        User<br>
-        Choose a <b-input v-model="user.name" placeholder="username" />
-        and a color <b-input v-model="user.color" type="color" />
-        <b-button @click="userChanged" variant="info" size="sm">Update user</b-button>
-        <b-button @click="randomUser" variant="info" size="sm">Random user</b-button>
-        <hr>
-        <table>
-          <thead><th>user</th><th>room</th></thead>
-          <tr v-for="u in users" :key="u.clientID" >
-            <td>  <div :style="'color:'+u.color"><b><span v-if="u.clientID == user.clientID">-></span>{{u.name}}</b></div> </td>
-              <td><a :href="'?room='+u.roomId">{{u.roomId}}</a></td>
-            </tr>
-          </table>
+          <!-- <input v-model="newName" placeholder="name of the new node" />
+          <button @click="addNodeToMap">Add node to map</button>
+          <button @click="clearMap">clear map</button>
+          <button @click="populateMap">populate map</button>
+          <input v-model="newStuff" placeholder="name of the stuff" />
+          <button @click="changeStuff">change stuff</button> -->
 
-
-          <!-- nodes : {{ymap.nodes}}
-          rooms: {{JSON.stringify(rooms)}} -->
-
-          <!-- ymapNodes : {{ymap.map.nodes}} -->
           <!-- <hr> -->
-        <!-- </div> -->
-      </b-card-text>
-      <!-- <hr>
+          User<br>
+          Choose a <b-input v-model="username" placeholder="username" />
+          and a color <b-input v-model="usercolor" type="color" />
+          <b-button @click="updateUser" variant="info" size="sm">Update user</b-button>
 
-      <hr>
-      ymap : {{ymap}}
-      <hr>
+          <hr>
+          Me : {{ clientID }} <br>
+          Users :
+          <!-- {{ users }} -->
+          <div :style="'color:'+u.color"
+          v-for="u in users" :key="u.clientID" >
+          <!-- <div :style="'color'+u.color;">• {{u.name}}</div> -->
+          {{u.name}} ({{u.way}})
+          <a :href="'https://scenaristeur.github.io/noosphere/?room='+u.roomId">{{u.roomId}}</a>
+          <!-- {{u}} -->
+        </div>
+        <!-- strings.push(`<div style="color:${state.user.color};">• ${state.user.name}</div>`) -->
 
-      <hr> -->
-      yarray : {{yarray}}
-      <button @click="clear">clear</button>
-      <hr>
-      <input v-model="newVal" type="number" placeholder="number, ex: 0 or 10" />
-      <button @click="addToArray">Add</button>
+        <!-- <hr>
+        ymap : {{ymap}}
+        <hr> -->
+        <!-- nodes : {{ymap.nodes}}
+        rooms: {{JSON.stringify(rooms)}} -->
 
-    </b-card>
+        <!-- ymapNodes : {{ymap.map.nodes}} -->
+        <hr>
+      </div>
+    </b-card-text>
+    <hr><hr>
+    yarray : {{yarray}}
+    <button @click="clear">clear</button>
+    <hr>
+    <input v-model="newVal" type="number" placeholder="number, ex: 0 or 10" />
+    <button @click="addToArray">Add</button>
 
-  </div>
+  </b-card>
+
+</div>
 
 </b-col>
 
@@ -129,25 +130,19 @@ import { IndexeddbPersistence } from 'y-indexeddb'
 import { v4 as uuidv4 } from 'uuid';
 import QRCode from 'qrcode'
 import {Html5QrcodeScanner} from "html5-qrcode"
-// sharing a single Awareness instance (per space) over several providers:
-
-import {Awareness} from 'y-protocols/awareness'
 
 let calls = 0
 export default {
   name: 'RoomCard',
   components: {
     'EditorView': ()=>import('@/views/EditorView'),
-    'QrView': ()=>import('@/views/QrView'),
-    'UserView': ()=>import('@/views/UserView'),
   },
   data(){
     return{
-      user: {},
       users: {},
-      // username: "",
-      // usercolor: null,
-      // roomId: null,
+      username: "",
+      usercolor: null,
+      roomId: null,
       yarray: null,
       newVal: 3,
       ymap: null,
@@ -185,53 +180,24 @@ export default {
     }
   },
   created(){
-    let app = this
-    this.user = JSON.parse(localStorage.getItem('noosphere-user'))
-    console.log('[user]',this.user)
-
+    yService.log("RoomCard created")
+    this.roomId = this.$route.query.room || uuidv4()
     this.ydoc = new Y.Doc()
-    let awareness = this.awareness = new Awareness(this.ydoc)
-
-    if (this.user == null){
-      this.randomUser()
-    }else{
-      awareness.clientID = this.user.clientID
-    }
-
-
-    this.user.roomId = this.$route.query.room || this.user.roomId || uuidv4()
-
-
-
-    awareness.on('change', changes => {
-      // Whenever somebody updates their awareness information,
-      // we log all awareness information from all users.
-      awareness.getStates().forEach(state => {
-        //  console.log(state)
-        if (state.user) {
-          console.log('[state.user]',state.user)
-          app.users[state.user.clientID]= state.user
-          //strings.push(`<div style="color:${state.user.color};">• ${state.user.name}</div>`)
-        }
-      })
-
-      console.log("[awareness]",Array.from(awareness.getStates().values()), changes)
-      console.log('[app users]',app.users)
-      this.$forceUpdate();
-    })
 
     // this allows you to instantly get the (cached) documents data
     this.indexeddbProvider = new IndexeddbPersistence('noosphere-demo', this.ydoc)
     this.indexeddbProvider.whenSynced.then(() => {
-      console.log('[indexeddbProvider] loaded data from indexed db')
+      console.log('loaded data from indexed db')
     })
 
     // Sync clients with the y-webrtc provider.
-    let webrtcProvider = new WebrtcProvider('noosphere-demo', this.ydoc, {awareness})
+    this.webrtcProvider = new WebrtcProvider('noosphere-demo', this.ydoc)
 
     // Sync clients with the y-websocket provider
-    let websocketProvider = new WebsocketProvider('wss://demos.yjs.dev', 'noosphere-demo', this.ydoc, {awareness})
-    console.log("[providers]", webrtcProvider, websocketProvider)
+    this.websocketProvider = new WebsocketProvider(
+      'wss://demos.yjs.dev', 'noosphere-demo', this.ydoc
+    )
+    console.log("providers", this.webrtcProvider, this.websocketProvider)
 
     // array of numbers which produce a sum
     this.yarray = this.ydoc.getArray('count')
@@ -242,67 +208,117 @@ export default {
       console.log(this.yarray.toJSON())
       // console.log('new sum: ' + this.yarray.toArray().reduce((a,b) => a + b))
     })
-    //this.manageAwareness()
-
-  },
-  mounted(){
+    this.manageAwareness()
     this.openRoom()
   },
   methods:{
-    randomUser(){
-      let awareness = this.awareness
-
-      this.user = {
-        name: 'User_'+Date.now(),
-        color: '#'+Math.floor(Math.random()*16777215).toString(16),
-        clientID: awareness.clientID,
-        roomId: '',
-        rooms: []
-      }
-
-    },
     onUserEvent(e){
       console.log("userEVent", e)
     },
     onEditorEvent(e){
       console.log("editorEvent",e)
     },
-    // manageAwareness(){
-    //
-    //   // see https://stackblitz.com/edit/y-quill-awareness?file=index.ts
-    //   // this.webrtcAwareness = this.webrtcProvider.awareness
-    //   // this.websocketAwareness = this.websocketProvider.awareness
-    //   let app = this
-    //
-    //   // this.clientID = this.awareness.clientID
-    //   // console.log("CLIENTS ID", this.awareness, this.clientID)
-    //   //
-    //
-    //
-    //   // if (user != undefined){
-    //   //   this.username = user.name
-    //   //   this.usercolor = user.color
-    //   //   this.roomId = user.roomId
-    //   //   this.updateUser()
-    //   // }
-    //
-    //
-    //   // // All of our network providers implement the awareness crdt
-    //
-    //   // You can observe when a user updates their awareness information
-    //
-    // },
-    userChanged(){
-      localStorage.setItem('noosphere-user', JSON.stringify(this.user));
-      this.awareness.setLocalStateField('user', this.user)
-      console.log("CLIENTS ID", this.awareness, this.user)
+    manageAwareness(){
+
+      // see https://stackblitz.com/edit/y-quill-awareness?file=index.ts
+      this.webrtcAwareness = this.webrtcProvider.awareness
+      this.websocketAwareness = this.websocketProvider.awareness
+      let app = this
+
+
+      console.log("CLIENTS ID", "webrtc", this.webrtcAwareness.clientID)
+      console.log("CLIENTS ID", "websocket", this.websocketAwareness.clientID)
+      // this.indexeddbAwareness = this.indexeddbProvider.awareness
+
+      this.clientID = this.websocketAwareness.clientID
+
+      let user = JSON.parse(localStorage.getItem('noosphere-user'))
+      console.log(user)
+      if (user != undefined){
+        this.username = user.name
+        this.usercolor = user.color
+        this.roomId = user.roomId
+        this.updateUser()
+      }
+
+
+      // // All of our network providers implement the awareness crdt
+      // const awareness = provider.awareness
+
+      // You can observe when a user updates their awareness information
+      this.webrtcAwareness.on('change', changes => {
+        // Whenever somebody updates their awareness information,
+        // we log all awareness information from all users.
+        this.webrtcAwareness.getStates().forEach(state => {
+          console.log(state)
+          if (state.user) {
+            console.log(state.user)
+            app.users[state.user.clientID]= state.user
+            //strings.push(`<div style="color:${state.user.color};">• ${state.user.name}</div>`)
+          }
+        })
+
+        console.log("[webrtcAwareness]",Array.from(this.webrtcAwareness.getStates().values()), changes)
+        console.log('[app users]',app.users)
+        this.$forceUpdate();
+      })
+
+      this.websocketAwareness.on('change', changes => {
+        // Whenever somebody updates their awareness information,
+        // we log all awareness information from all users.
+        this.websocketAwareness.getStates().forEach(state => {
+          console.log(state)
+          if (state.user) {
+            console.log(state.user)
+            app.users[state.user.clientID]= state.user
+            //strings.push(`<div style="color:${state.user.color};">• ${state.user.name}</div>`)
+          }
+
+        })
+        console.log("[websocketAwareness]",Array.from(this.websocketAwareness.getStates().values()), changes)
+        console.log('[app users]',app.users)
+        this.$forceUpdate();
+      })
+
+      // this.indexeddbAwareness.on('change', changes => {
+      //   // Whenever somebody updates their awareness information,
+      //   // we log all awareness information from all users.
+      //   console.log("[indexeddbAwareness]",Array.from(this.indexeddbAwareness.getStates().values()), changes)
+      // })
+
+      // // You can think of your own awareness information as a key-value store.
+      // // We update our "user" field to propagate relevant user information.
+      // awareness.setLocalStateField('user', {
+      //   // Define a print name that should be displayed
+      //   name: 'Emmanuelle Charpentier',
+      //   // Define a color that should be associated to the user:
+      //   color: '#ffb61e' // should be a hex color
+      // })
+
+
+
+    },
+    updateUser(){
+
+      let user = {name: this.username,
+        // Define a color that should be associated to the user:
+        color: this.usercolor, // should be a hex color
+        clientID: this.clientID,
+        roomId: this.roomId
+      }
+      console.log(user)
+      localStorage.setItem('noosphere-user', JSON.stringify(user));
+      user.way = 'webrtc'
+      this.webrtcAwareness.setLocalStateField('user', user)
+      user.way = 'websocket'
+      this.websocketAwareness.setLocalStateField('user', user)
     },
     generateId(){
-      this.user.roomId = uuidv4()
+      this.roomId = uuidv4()
     },
     async generateQR(){
 
-      this.url = 'https://scenaristeur.github.io/noosphere/?room='+this.user.roomId
+      this.url = 'https://scenaristeur.github.io/noosphere/?room='+this.roomId
       // var myHeaders = new Headers();
       //
       // var myInit = { method: 'GET',
@@ -331,14 +347,42 @@ export default {
           //   // QR Code scanning is stopped.
           this.$refs.reader.innerHTML = ""
           this.$refs.reader.style = ""
+          // // .removeProperty("border");
+          // // this.$refs.reader.style.removeProperty("position");
+          // // this.$refs.reader.style.removeProperty("padding");
+          // }).catch((err) => {
+          //   console.log(err)
+          //   // Stop failed, handle it.
+          // });
         }
+
+
       },
       onScanSuccess(decodedText, decodedResult) {
         // handle the scanned code as you like, for example:
         console.log(`Code matched = ${decodedText}`, decodedResult);
         let eq_splitted = decodedText.split('=')
         if(eq_splitted[0] == 'https://scenaristeur.github.io/noosphere/?room'){
-          this.user.roomId=eq_splitted[1]
+          this.roomId=eq_splitted[1]
+          // this.$refs.reader.innerHTML = ""
+          // this.$refs.reader.style = ""
+          // this.toggle_qr_scanner()
+
+          // this.scanner.stop().then(() => {
+          //   // QR Code scanning is stopped.
+          // this.scanner = null
+          // this.$refs.reader.innerHTML = ""
+          // this.$refs.reader.style = ""
+          //  this.openRoom()
+
+
+          // this.scanner.stop().then((ignore) => {
+          //   // QR Code scanning is stopped.
+          //   console.log(ignore)
+          // }).catch((err) => {
+          //   console.log(err)
+          //   // Stop failed, handle it.
+          // });
         }else{
           console.log("i don't know what to do with", eq_splitted)
         }
@@ -354,10 +398,9 @@ export default {
         console.log('todo', this.QRsrc)
       },
       openRoom(){
-        this.ymap = this.ydoc.getMap(this.user.roomId)
+        this.ymap = this.ydoc.getMap(this.roomId)
 
-        console.log("[openRoom]", this.user.roomId)
-        //this.updateUser()
+        this.updateUser()
 
         let editorData = this.ymap.get('editor_map')
         console.log(editorData)
@@ -390,7 +433,7 @@ export default {
             // yService.log('editor_map changed')
             let editorData = this.ymap.get('editor_map')
             console.log(editorData)
-            if (editorData != undefined && editorData.clientID != this.user.clientID){
+            if (editorData != undefined && editorData.clientID != this.clientID){
               console.log(editorData)
               this.editorData = editorData//.toJSON()
               console.log(this.editorData)
@@ -403,7 +446,6 @@ export default {
           var url = location.href;               //Save down the URL without hash.
           //location.href = "#ymap_div";                 //Go to the target element.
           history.replaceState(null,null,url);
-          this.userChanged()
         })
 
         // add 1 to the sum
@@ -458,7 +500,7 @@ export default {
       },
       onSaveEditor(data){
         console.log('saveEditor', data)
-        data.clientID = this.user.clientID
+        data.clientID = this.clientID
         // const _editorMap = this.ymap.get('editor_map')
         // _editorMap.set('data', data)
         this.ymap.set('editor_map', data)
@@ -490,14 +532,14 @@ export default {
       }
     },
 
-    // computed: {
-    //   room() {
-    //     return this.$store.state.core.room
-    //   },
-    //   rooms() {
-    //     return this.$store.state.core.rooms
-    //   },
-    // }
+    computed: {
+      room() {
+        return this.$store.state.core.room
+      },
+      rooms() {
+        return this.$store.state.core.rooms
+      },
+    }
 
 
   }
@@ -506,10 +548,5 @@ export default {
   <style lang="css" scoped>
   .room-card {
 
-  }
-  table, th, td {
-    padding: 3px;
-    border: 1px solid black;
-    border-collapse: collapse;
   }
   </style>
