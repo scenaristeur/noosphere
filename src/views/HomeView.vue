@@ -22,9 +22,9 @@
     </b-jumbotron>
   </div>
 
+  <StorageView />
 
-
-      <RoomCard />
+  <RoomCard />
 
 
 </div>
@@ -36,6 +36,7 @@ export default {
   name: 'HomeView',
   components: {
     'RoomCard': ()=>import('@/views/RoomCard'),
+    'StorageView': ()=>import('@/views/StorageView'),
     //'EditorView': ()=>import('@/views/EditorView'),
     // 'NavBar': ()=>import('@/views/NavBar'),
   },
