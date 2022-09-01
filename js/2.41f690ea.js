@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunknoosphere"]=self["webpackChunknoosphere"]||[]).push([[2],{2:function(e,n,s){s.r(n),s.d(n,{default:function(){return a}});var r=function(){var e=this,n=e._self._c;return n("div",{staticClass:"user-view"},[e._v(" UUUUUS ")])},u=[],t={name:"UserView"},c=t,i=s(1001),l=(0,i.Z)(c,r,u,!1,null,"0783bc35",null),a=l.exports}}]);
-//# sourceMappingURL=2.41f690ea.js.map
