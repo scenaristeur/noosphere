@@ -6,7 +6,7 @@
       <router-link to="/about">About</router-link>
     </nav>
     <router-view/>
-    <b-alert variant="success" show>Noosphere 0 - fix users</b-alert>
+    <b-alert variant="success" show>Noosphere 0 - <i><small>this.user is null</small></i></b-alert>
   </div>
 </template>
 

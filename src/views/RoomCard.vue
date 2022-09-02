@@ -29,7 +29,9 @@
         </div>
 
 
-        <b-input v-model="user.roomId" placeholder="roomId | random | QR" />
+        <b-input v-model="user.roomId" placeholder="roomId | random | QR"
+        @keyup.enter="openRoom"
+         />
 
         <span v-if="this.user.roomId.length !=0">
           <b-button size="sm" variant="info" @click="openRoom">Go</b-button> and
@@ -55,10 +57,10 @@
         <!-- <hr> -->
 
         <hr>
-        {{user}}
+        <!-- {{user}}
         <b-button v-b-modal.modal-me size="sm"
         variant="outline-primary">
-        {{user.name}}</b-button>
+        {{user.name}}</b-button> -->
         <table>
           <thead><th>user</th><th>room</th></thead>
           <tr v-for="u in users" :key="u.clientID" >
@@ -198,7 +200,7 @@ export default {
 
 
     let awareness = this.awareness = new Awareness(this.ydoc)
-    console.log("awareness",awareness, awareness.getStates().has(this.user.clientID))
+    //console.log("awareness",awareness, awareness.getStates().has(this.user.clientID))
     if (this.user == null){
 
       this.randomUser()
