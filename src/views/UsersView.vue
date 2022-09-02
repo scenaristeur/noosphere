@@ -28,6 +28,14 @@
 
 
 </b-table>
+<b-modal id="modal-me" title="Change your username and color" @ok="userChanged">
+  <p class="my-4">
+    username<b-input v-model="user.name" placeholder="username" />
+    color <b-input v-model="user.color" type="color" />
+    <!-- <b-button @click="userChanged" variant="info" size="sm">Update user</b-button> -->
+    <b-button @click="randomUser" variant="outline-info" size="sm">Random user</b-button>
+  </p>
+</b-modal>
 </div>
 </template>
 
@@ -56,6 +64,13 @@ export default {
           console.log("should open room")
         }
       },
+      userChanged(){
+        this.$store.commit('core/setUser', this.user)
+        this.$userChanged()
+      },
+      randomUser(){
+        this.$randomUser()
+      }
     },
     watch:{
       usersUpdateDate(){
@@ -65,11 +80,11 @@ export default {
     },
     computed: {
       users: {
-          cache: false,
-          get() {
-            return this.$store.state.core.users;
-          },
+        cache: false,
+        get() {
+          return this.$store.state.core.users;
         },
+      },
       user() {
         return this.$store.state.core.user
       },

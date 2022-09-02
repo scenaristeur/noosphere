@@ -51,7 +51,7 @@ const plugin = {
             //console.log('[state.user]',state.user)
             // app.users[state.user.clientID]= state.user
             // store.state.core.users[state.user.clientID] = state.user
-            store.commit('core/setUserById', user)
+            store.commit('core/setUserById', state.user)
             store.commit('core/setUsersUpdateDate', Date.now())
 
             //strings.push(`<div style="color:${state.user.color};">• ${state.user.name}</div>`)

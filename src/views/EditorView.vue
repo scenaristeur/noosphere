@@ -205,7 +205,7 @@ export default {
       save(){
         this.editor.save().then((outputData) => {
           //  console.log('Article data: ', outputData)
-          this.$emit('saveEditor', outputData)
+          this.$saveEditor(outputData)
         }).catch((error) => {
           console.log('Saving failed: ', error)
         });
