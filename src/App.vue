@@ -9,7 +9,7 @@
       <router-link to="/config" class="m-2"><b-icon font-scale="1.5" icon="gear" aria-hidden="true"></b-icon></router-link>
       <router-link to="/about" class="m-2"><b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
       <router-link to=""  class="m-2"><b-icon @click="share" font-scale="1.5" icon="share" aria-hidden="true"></b-icon></router-link>
-
+      <router-link to=""  class="m-2"><b-icon @click="openPinModal" font-scale="1.5" icon="pin" aria-hidden="true"></b-icon></router-link>
     </nav>
 
     <router-view/>
@@ -34,6 +34,18 @@
 
   <b-alert variant="success" show>Noosphere 0 - <i><small>menu</small></i></b-alert>
 
+  <b-modal id="modal-pin" title="Pin Data on Web3.storage" @ok="pin">
+    <p class="my-4">
+      <b-input v-model="web3Token" placeholder="web3token" />
+      <b-input v-model="fileName" placeholder="filename" />
+
+      {{data}}
+
+
+
+    </p>
+  </b-modal>
+
 </div>
 </template>
 
@@ -52,7 +64,9 @@ export default {
     return {
       dismissSecs: 10,
       dismissCountDown: 0,
-      showDismissibleAlert: false
+      showDismissibleAlert: false,
+      data: null,
+      fileName: ""
     }
   },
 
@@ -70,7 +84,19 @@ export default {
       }, function(err) {
         console.error('Async: Could not copy text: ', err);
       });
+    },
+    openPinModal(){
+      let data = this.$store.state.core.editorData
+      delete data.clientID
+      this.data = data
+      this.fileName = this.user.roomId
 
+      this.$bvModal.show("modal-pin")
+    },
+    pin(){
+      console.log(this.user.roomId, this.data)
+      this.file = new File([this.data], this.user.roomId+'.json')
+      console.log(this.file)
     },
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown
@@ -86,6 +112,9 @@ export default {
     users() {
       return this.$store.state.core.users
     },
+    web3Token(){
+      return this.$store.state.core.web3Token
+    }
   }
 
 }

@@ -8,6 +8,7 @@ const state = () => ({
   usersUpdateDate: null,
   yDoc: null,
   yMap: null,
+  web3Token: null,
   editorData: null,
   editorDataDefault: {
     "time" : 1550476186479,
@@ -64,7 +65,10 @@ const mutations = {
   },
   setUsersUpdateDate(state, d){
     state.usersUpdateDate = d
-  }
+  },
+  setWeb3Token(state, t){
+    state.web3Token = t
+  },
 
 }
 
