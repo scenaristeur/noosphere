@@ -58,47 +58,24 @@
         {{user.name}}</b-button> -->
 
 
-        <b-table
-        small
-        selectable
-        select-mode="single"
-        responsive="sm"
-        :items="Object.values(users)"
-        :fields="fields"
-        @row-selected="onRowSelected" >
-        <template #cell(name)="data">
-          <template v-if="data.item.clientID == user.clientID">
-            <b-button v-b-modal.modal-me size="sm"
-            variant="outline-primary">
-            <span :style="'color:'+data.item.color">{{data.item.name}}
-            </span>
-          </b-button>
-          <!-- <span aria-hidden="true">&check;</span> -->
-        </template>
-        <template v-else>
-          <small :style="'color:'+data.item.color"><i>{{data.item.name}}</i></small>
-        </template>
-      </template>
 
 
-    </b-table>
 
-
-    <!-- <table>
-    <thead><th>user</th><th>room</th></thead>
-    <tr v-for="u in users" :key="u.clientID" >
-    <td v-if="u.clientID == user.clientID" ><b-button v-b-modal.modal-me size="sm"
-    variant="outline-primary">
-    <div :style="'color:'+u.color"><b>{{u.name}}</b>
-  </div>
-</b-button></td>
-<td v-else>  <div :style="'color:'+u.color"><b>{{u.name}}</b></div> </td>
-<td>
-<b-button
-size="sm"
-variant="light"
-@click="onRoomIdChanged(u.roomId)">{{u.roomId}}</b-button>
-</td>
+        <!-- <table>
+        <thead><th>user</th><th>room</th></thead>
+        <tr v-for="u in users" :key="u.clientID" >
+        <td v-if="u.clientID == user.clientID" ><b-button v-b-modal.modal-me size="sm"
+        variant="outline-primary">
+        <div :style="'color:'+u.color"><b>{{u.name}}</b>
+      </div>
+    </b-button></td>
+    <td v-else>  <div :style="'color:'+u.color"><b>{{u.name}}</b></div> </td>
+    <td>
+    <b-button
+    size="sm"
+    variant="light"
+    @click="onRoomIdChanged(u.roomId)">{{u.roomId}}</b-button>
+  </td>
 </tr>
 </table> -->
 
@@ -139,8 +116,6 @@ ymap : {{ymap}}
 
 <b-col>
   <EditorView
-  @saveEditor="onSaveEditor"
-  :editorData="editorData"
   @userEvent="onUserEvent"
   @editorEvent="onEditorEvent"
   />
@@ -173,359 +148,342 @@ export default {
     return{
       //user: {},
       users: {},
-      fields: [       {
-        key: 'name',
-        sortable: true
-      },
-      {
-        key: 'roomId',
-        label: 'room',
-        sortable: true
-      },],
-      // username: "",
-      // usercolor: null,
-      // roomId: null,
-      yarray: null,
-      newVal: 3,
-      ymap: null,
-      newStuff: 'c4',
-      nodes: [],
-      newName: '',
+      fields: [
+        {
+          key: 'name',
+          sortable: true
+        },
+        {
+          key: 'roomId',
+          label: 'room',
+          sortable: true
+        },],
+        // username: "",
+        // usercolor: null,
+        // roomId: null,
+        yarray: null,
+        newVal: 3,
+        ymap: null,
+        newStuff: 'c4',
+        nodes: [],
+        newName: '',
 
-      url: null,
-      scanner: null,
-      editorData: null,
-      editorDataDefault: {
-        "time" : 1550476186479,
-        "blocks" : [
-          {
-            "type" : "paragraph",
-            "data" : {
-              "text" : "You have just opened a new room in the"
+        url: null,
+        scanner: null,
+        editorData: null,
+        editorDataDefault: {
+          "time" : 1550476186479,
+          "blocks" : [
+            {
+              "type" : "paragraph",
+              "data" : {
+                "text" : "You have just opened a new room in the"
+              }
+            },
+            {
+              "type" : "header",
+              "data" : {
+                "text" : "Noosphere",
+                "level" : 2
+              }
+            },
+            {
+              "type" : "paragraph",
+              "data" : {
+                "text" : "Feel free to click on this text to edit, and don't forget to share this collaborative knowledge tool. You can open a new window of this app and see how rooms are realtime synced."
+              }
             }
-          },
-          {
-            "type" : "header",
-            "data" : {
-              "text" : "Noosphere",
-              "level" : 2
-            }
-          },
-          {
-            "type" : "paragraph",
-            "data" : {
-              "text" : "Feel free to click on this text to edit, and don't forget to share this collaborative knowledge tool. You can open a new window of this app and see how rooms are realtime synced."
-            }
-          }
-        ],
-        "version" : "2.8.1"
-      }
-    }
-  },
-  created(){
-    // let app = this
-    // this.user = JSON.parse(localStorage.getItem('noosphere-user'))
-    // //console.log('[user]',this.user)
-    //
-    // this.ydoc = new Y.Doc()
-    // // this allows you to instantly get the (cached) documents data
-    // this.indexeddbProvider = new IndexeddbPersistence('noosphere-demo', this.ydoc)
-    // this.indexeddbProvider.whenSynced.then((data) => {
-    //   console.log('[indexeddbProvider] loaded data from indexed db', data)
-    //   this.openRoom()
-    // })
-    //
-    //
-    // let awareness = this.awareness = new Awareness(this.ydoc)
-    // //console.log("awareness",awareness, awareness.getStates().has(this.user.clientID))
-    // if (this.user == null){
-    //   this.randomUser()
-    // }else{
-    //   //awareness.clientID = this.user.clientID
-    // }
-
-
-    //  this.user.roomId = this.$route.query.room || this.user.roomId || uuidv4()
-    // this.ymap = this.ydoc.getMap(this.user.roomId)
-
-
-    // awareness.on('change', ()/*changes*/ => {
-    //
-    //   // Whenever somebody updates their awareness information,
-    //   // we log all awareness information from all users.
-    //   awareness.getStates().forEach(state => {
-    //     console.log(state)
-    //     if (state.user) {
-    //       //console.log('[state.user]',state.user)
-    //       app.users[state.user.clientID]= state.user
-    //       //strings.push(`<div style="color:${state.user.color};">• ${state.user.name}</div>`)
-    //     }
-    //   })
-    //
-    //   //console.log("[awareness]",Array.from(awareness.getStates().values()), changes)
-    //   //console.log('[app users]',app.users)
-    //   this.$forceUpdate();
-    // })
-    //
-    //
-    //
-    // // Sync clients with the y-webrtc provider.
-    // let webrtcProvider = new WebrtcProvider('noosphere-demo', this.ydoc, {awareness})
-    //
-    // // Sync clients with the y-websocket provider
-    // let websocketProvider = new WebsocketProvider('wss://demos.yjs.dev', 'noosphere-demo', this.ydoc, {awareness})
-    // console.log("[providers]", webrtcProvider, websocketProvider)
-
-    // array of numbers which produce a sum
-    // this.yarray = this.ydoc.getArray('count')
-    //
-    // this.yarray.observe(event => {
-    //   console.log(event)
-    //   // print updates when the data changes
-    //   console.log(this.yarray.toJSON())
-    //   // console.log('new sum: ' + this.yarray.toArray().reduce((a,b) => a + b))
-    // })
-    //this.manageAwareness()
-
-  },
-  mounted(){
-    //this.openRoom()
-  },
-  methods:{
-    onRowSelected(r){
-      if(r[0]!= undefined){
-        this.user.roomId = r[0].roomId
-        this.openRoom()
+          ],
+          "version" : "2.8.1"
+        }
       }
     },
-    randomUser(){
-      this.$randomUser()
-
-    },
-    onUserEvent(e){
-      console.log("userEVent", e)
-    },
-    onEditorEvent(e){
-      console.log("editorEvent",e)
-    },
-    // manageAwareness(){
-    //
-    //   // see https://stackblitz.com/edit/y-quill-awareness?file=index.ts
-    //   // this.webrtcAwareness = this.webrtcProvider.awareness
-    //   // this.websocketAwareness = this.websocketProvider.awareness
-    //   let app = this
-    //
-    //   // this.clientID = this.awareness.clientID
-    //   // console.log("CLIENTS ID", this.awareness, this.clientID)
-    //   //
-    //
-    //
-    //   // if (user != undefined){
-    //   //   this.username = user.name
-    //   //   this.usercolor = user.color
-    //   //   this.roomId = user.roomId
-    //   //   this.updateUser()
-    //   // }
-    //
-    //
-    //   // // All of our network providers implement the awareness crdt
-    //
-    //   // You can observe when a user updates their awareness information
-    //
-    // },
-    userChanged(){
-      localStorage.setItem('noosphere-user', JSON.stringify(this.user));
-      this.awareness.setLocalStateField('user', this.user)
-      console.log("[user changed]"/*, this.awareness*/, this.user)
-    },
-    generateId(){
-      this.user.roomId = uuidv4()
-      this.openRoom()
-    },
-    nowId(){
-      this.user.roomId = Date.now()
-      this.openRoom()
-    },
-
-    async openRoom(){
-      //  this.editorData = null
-      this.userChanged()
-      this.ymap = this.ydoc.getMap(this.user.roomId)
-
-      console.log("[openRoom]", this.user.roomId)
-      //this.updateUser()
-
-      let editorData = await this.ymap.get('editor_map')
-      console.log(editorData)
-      if (editorData != undefined){
-        //   console.log(editorData)
-        this.editorData = editorData //|| this.editorDataDefault//.toJSON()
-        // //  console.log(this.editorData)
-        // //  yService.log(this.editorData)
-      }else{
-        this.ymap.set('editor_map', this.editorDataDefault)
-        this.editorData = Object.assign({}, this.editorDataDefault)
-      }
-      // observe changes of the sum
+    created(){
       // let app = this
-
-      // let calls = 0
-      this.ymap.observeDeep(events => {
-        events.forEach(event => {
-          // calls++
-          // console.log('calls', calls)
-          // @ts-ignore
-          // console.log(event.keysChanged.has('deepmap'))
-          // console.log(event.path.length === 1)
-          // console.log(event.path[0] === 'map')
-          console.log('[event]',event)
-          let editor_map_changed = event.keysChanged.has('editor_map')
-          console.log('[editor_map_changed]', editor_map_changed)
-          // @ts-ignore
-          // let dmapid = event.target.get('deepmap')._item.id
-          // console.log(dmapid)
-
-          // console.log("nodes",event.target.get('nodes').toJSON())
-          // this.nodes = event.target.get('nodes').toJSON()
-          // if (event.keysChanged.has('editor_map')){
-          // yService.log('editor_map changed')
-          //  let editorData = this.ymap.get('editor_map')
-
-
-
-          if (editor_map_changed == true ){
-            //console.log(editorData)
-            let editorData = this.ymap.get('editor_map')
-            if (editorData.clientID != this.user.clientID){
-              this.editorData =  editorData//.toJSON()
-              console.log("[update editorData]", this.editorData)
-            }else{
-              console.log("[same clientID]")
-            }
-
-          }
-          //  yService.log(this.editorData)
-          //}
-          // this.populateEditor(this.editorData)
-          // }
-        })
-        this.$forceUpdate();
-        var url = location.href;               //Save down the URL without hash.
-        //location.href = "#ymap_div";                 //Go to the target element.
-        history.replaceState(null,null,url);
-
-      })
-
-      // add 1 to the sum
-      // this.yarray.push([2]) // => "new sum: 1"
-      // if(this.ymap.get('editor_map') == undefined){
-      //   this.populateMap()
+      // this.user = JSON.parse(localStorage.getItem('noosphere-user'))
+      // //console.log('[user]',this.user)
+      //
+      // this.ydoc = new Y.Doc()
+      // // this allows you to instantly get the (cached) documents data
+      // this.indexeddbProvider = new IndexeddbPersistence('noosphere-demo', this.ydoc)
+      // this.indexeddbProvider.whenSynced.then((data) => {
+      //   console.log('[indexeddbProvider] loaded data from indexed db', data)
+      //   this.openRoom()
+      // })
+      //
+      //
+      // let awareness = this.awareness = new Awareness(this.ydoc)
+      // //console.log("awareness",awareness, awareness.getStates().has(this.user.clientID))
+      // if (this.user == null){
+      //   this.randomUser()
+      // }else{
+      //   //awareness.clientID = this.user.clientID
       // }
 
+
+      //  this.user.roomId = this.$route.query.room || this.user.roomId || uuidv4()
+      // this.ymap = this.ydoc.getMap(this.user.roomId)
+
+
+      // awareness.on('change', ()/*changes*/ => {
+      //
+      //   // Whenever somebody updates their awareness information,
+      //   // we log all awareness information from all users.
+      //   awareness.getStates().forEach(state => {
+      //     console.log(state)
+      //     if (state.user) {
+      //       //console.log('[state.user]',state.user)
+      //       app.users[state.user.clientID]= state.user
+      //       //strings.push(`<div style="color:${state.user.color};">• ${state.user.name}</div>`)
+      //     }
+      //   })
+      //
+      //   //console.log("[awareness]",Array.from(awareness.getStates().values()), changes)
+      //   //console.log('[app users]',app.users)
+      //   this.$forceUpdate();
+      // })
+      //
+      //
+      //
+      // // Sync clients with the y-webrtc provider.
+      // let webrtcProvider = new WebrtcProvider('noosphere-demo', this.ydoc, {awareness})
+      //
+      // // Sync clients with the y-websocket provider
+      // let websocketProvider = new WebsocketProvider('wss://demos.yjs.dev', 'noosphere-demo', this.ydoc, {awareness})
+      // console.log("[providers]", webrtcProvider, websocketProvider)
+
+      // array of numbers which produce a sum
+      // this.yarray = this.ydoc.getArray('count')
+      //
+      // this.yarray.observe(event => {
+      //   console.log(event)
+      //   // print updates when the data changes
+      //   console.log(this.yarray.toJSON())
+      //   // console.log('new sum: ' + this.yarray.toArray().reduce((a,b) => a + b))
+      // })
+      //this.manageAwareness()
+
     },
-    // addToArray(){
-    //   this.yarray.push([this.newVal])
-    //   this.newVal = '1'
-    // },
-    // clear(){
-    //   this.yarray.delete(0, this.yarray.length)
-    // },
-    // addNodeToMap(){
-    //   const _mapNodes = this.ymap.get('nodes')
-    //
-    //   let node = {id: uuidv4(), name: this.newName, created: Date.now()}
-    //   _mapNodes.set(node.id, new Y.Map())
-    //   this.ymap.set(node.id, node)
-    //   this.newName = ''
-    //   this.$forceUpdate();
-    // },
-    // clearMap(){
-    //   this.ymap.clear()
-    //   this.$forceUpdate();
-    // },
-    // populateMap(){
-    //   //  this.ymap.set('map', new Y.Map())
-    //   //  this.ymap.set('editor_map', new Y.Map())
-    //   // this.ymap.set('nodes', new Y.Map())
-    //   // this.ymap.set('links', new Y.Map())
-    //   // const _map3 = this.ymap.get('map')
-    //   // _map3.set('deepmap', new Y.Map())
-    //   // this.ymap.set('stuff one', 'c2')
-    //   // _map3.set('stuff', 'c3')
-    //
-    //   // const _editorMap = this.ymap.get('editor_map')
-    //
-    //
-    //   //let data= { "time": 1661945860245, "blocks": [ { "id": "6tUGo3YdzP", "type": "paragraph", "data": { "text": "dfsg" } }, { "id": "4K-n_v3Ppg", "type": "paragraph", "data": { "text": "sdf" } } ], "version": "2.25.0" }
-    //
-    //   this.ymap.set('editor_map', this.editorData)
-    // },
-    // changeStuff(){
-    //   const _map3 = this.ymap.get('map')
-    //   _map3.set('stuff', this.newStuff)
-    //   this.newStuff= 'c4'
-    //   this.$forceUpdate();
-    // },
-    onSaveEditor(data){
-      console.log('saveEditor', data)
-      data.clientID = this.user.clientID
-      // const _editorMap = this.ymap.get('editor_map')
-      // _editorMap.set('data', data)
-      this.ymap.set('editor_map', data)
-      this.$forceUpdate()
+    mounted(){
+      //this.openRoom()
     },
-    onRoomIdChanged(roomId){
-      console.log('[roomId changed]', roomId)
-      this.user.roomId = roomId
-      this.openRoom()
-      this.$forceUpdate()
+    methods:{
+
+      randomUser(){
+        this.$randomUser()
+      },
+      onUserEvent(e){
+        console.log("userEVent", e)
+      },
+      onEditorEvent(e){
+        console.log("editorEvent",e)
+      },
+      // manageAwareness(){
+      //
+      //   // see https://stackblitz.com/edit/y-quill-awareness?file=index.ts
+      //   // this.webrtcAwareness = this.webrtcProvider.awareness
+      //   // this.websocketAwareness = this.websocketProvider.awareness
+      //   let app = this
+      //
+      //   // this.clientID = this.awareness.clientID
+      //   // console.log("CLIENTS ID", this.awareness, this.clientID)
+      //   //
+      //
+      //
+      //   // if (user != undefined){
+      //   //   this.username = user.name
+      //   //   this.usercolor = user.color
+      //   //   this.roomId = user.roomId
+      //   //   this.updateUser()
+      //   // }
+      //
+      //
+      //   // // All of our network providers implement the awareness crdt
+      //
+      //   // You can observe when a user updates their awareness information
+      //
+      // },
+      userChanged(){
+        this.$store.commit('setUser', this.user)
+        this.$userChanged()
+      },
+      generateId(){
+        this.user.roomId = uuidv4()
+        this.openRoom()
+      },
+      nowId(){
+        this.user.roomId = Date.now()
+        this.openRoom()
+      },
+
+      async openRoom(){
+        this.$openRoom()
+        //  this.editorData = null
+        // this.userChanged()
+        // this.ymap = this.ydoc.getMap(this.user.roomId)
+        //
+        // console.log("[openRoom]", this.user.roomId)
+        // //this.updateUser()
+        //
+        // let editorData = await this.ymap.get('editor_map')
+        // console.log(editorData)
+        // if (editorData != undefined){
+        //   //   console.log(editorData)
+        //   this.editorData = editorData //|| this.editorDataDefault//.toJSON()
+        //   // //  console.log(this.editorData)
+        //   // //  yService.log(this.editorData)
+        // }else{
+        //   this.ymap.set('editor_map', this.editorDataDefault)
+        //   this.editorData = Object.assign({}, this.editorDataDefault)
+        // }
+        // // observe changes of the sum
+        // // let app = this
+        //
+        // // let calls = 0
+        // this.ymap.observeDeep(events => {
+        //   events.forEach(event => {
+        //     // calls++
+        //     // console.log('calls', calls)
+        //     // @ts-ignore
+        //     // console.log(event.keysChanged.has('deepmap'))
+        //     // console.log(event.path.length === 1)
+        //     // console.log(event.path[0] === 'map')
+        //     console.log('[event]',event)
+        //     let editor_map_changed = event.keysChanged.has('editor_map')
+        //     console.log('[editor_map_changed]', editor_map_changed)
+        //     // @ts-ignore
+        //     // let dmapid = event.target.get('deepmap')._item.id
+        //     // console.log(dmapid)
+        //
+        //     // console.log("nodes",event.target.get('nodes').toJSON())
+        //     // this.nodes = event.target.get('nodes').toJSON()
+        //     // if (event.keysChanged.has('editor_map')){
+        //     // yService.log('editor_map changed')
+        //     //  let editorData = this.ymap.get('editor_map')
+        //
+        //
+        //
+        //     if (editor_map_changed == true ){
+        //       //console.log(editorData)
+        //       let editorData = this.ymap.get('editor_map')
+        //       if (editorData.clientID != this.user.clientID){
+        //         this.editorData =  editorData//.toJSON()
+        //         console.log("[update editorData]", this.editorData)
+        //       }else{
+        //         console.log("[same clientID]")
+        //       }
+        //
+        //     }
+        //     //  yService.log(this.editorData)
+        //     //}
+        //     // this.populateEditor(this.editorData)
+        //     // }
+        //   })
+        //   this.$forceUpdate();
+        //   var url = location.href;               //Save down the URL without hash.
+        //   //location.href = "#ymap_div";                 //Go to the target element.
+        //   history.replaceState(null,null,url);
+        //
+        // })
+
+        // add 1 to the sum
+        // this.yarray.push([2]) // => "new sum: 1"
+        // if(this.ymap.get('editor_map') == undefined){
+        //   this.populateMap()
+        // }
+
+      },
+      // addToArray(){
+      //   this.yarray.push([this.newVal])
+      //   this.newVal = '1'
+      // },
+      // clear(){
+      //   this.yarray.delete(0, this.yarray.length)
+      // },
+      // addNodeToMap(){
+      //   const _mapNodes = this.ymap.get('nodes')
+      //
+      //   let node = {id: uuidv4(), name: this.newName, created: Date.now()}
+      //   _mapNodes.set(node.id, new Y.Map())
+      //   this.ymap.set(node.id, node)
+      //   this.newName = ''
+      //   this.$forceUpdate();
+      // },
+      // clearMap(){
+      //   this.ymap.clear()
+      //   this.$forceUpdate();
+      // },
+      // populateMap(){
+      //   //  this.ymap.set('map', new Y.Map())
+      //   //  this.ymap.set('editor_map', new Y.Map())
+      //   // this.ymap.set('nodes', new Y.Map())
+      //   // this.ymap.set('links', new Y.Map())
+      //   // const _map3 = this.ymap.get('map')
+      //   // _map3.set('deepmap', new Y.Map())
+      //   // this.ymap.set('stuff one', 'c2')
+      //   // _map3.set('stuff', 'c3')
+      //
+      //   // const _editorMap = this.ymap.get('editor_map')
+      //
+      //
+      //   //let data= { "time": 1661945860245, "blocks": [ { "id": "6tUGo3YdzP", "type": "paragraph", "data": { "text": "dfsg" } }, { "id": "4K-n_v3Ppg", "type": "paragraph", "data": { "text": "sdf" } } ], "version": "2.25.0" }
+      //
+      //   this.ymap.set('editor_map', this.editorData)
+      // },
+      // changeStuff(){
+      //   const _map3 = this.ymap.get('map')
+      //   _map3.set('stuff', this.newStuff)
+      //   this.newStuff= 'c4'
+      //   this.$forceUpdate();
+      // },
+  
+      onRoomIdChanged(roomId){
+        console.log('[roomId changed]', roomId)
+        this.user.roomId = roomId
+        this.openRoom()
+        this.$forceUpdate()
+      }
+    },
+    // watch:{
+    //   room(){
+    //     console.log("room", this.room)
+    //     this.room.observeDeep(events => {
+    //       events.forEach(event => {
+    //         calls++
+    //         console.log('calls', calls)
+    //         // @ts-ignore
+    //         // console.log(event.keysChanged.has('deepmap'))
+    //         // console.log(event.path.length === 1)
+    //         // console.log(event.path[0] === 'map')
+    //         // @ts-ignore
+    //         // let dmapid = event.target.get('deepmap')._item.id
+    //         // console.log(dmapid)
+    //         console.log(event, event)
+    //       })
+    //       // this.$forceUpdate();
+    //     })
+    //     this.$forceUpdate();
+    //     var url = location.href;               //Save down the URL without hash.
+    //     location.href = "?room="+this.room+"#room-card";                 //Go to the target element.
+    //     history.replaceState(null,null,url);
+    //   }
+    // },
+
+    computed: {
+      user() {
+        return this.$store.state.core.user
+      },
+      // users() {
+      //   return this.$store.state.core.users
+      // },
     }
-  },
-  // watch:{
-  //   room(){
-  //     console.log("room", this.room)
-  //     this.room.observeDeep(events => {
-  //       events.forEach(event => {
-  //         calls++
-  //         console.log('calls', calls)
-  //         // @ts-ignore
-  //         // console.log(event.keysChanged.has('deepmap'))
-  //         // console.log(event.path.length === 1)
-  //         // console.log(event.path[0] === 'map')
-  //         // @ts-ignore
-  //         // let dmapid = event.target.get('deepmap')._item.id
-  //         // console.log(dmapid)
-  //         console.log(event, event)
-  //       })
-  //       // this.$forceUpdate();
-  //     })
-  //     this.$forceUpdate();
-  //     var url = location.href;               //Save down the URL without hash.
-  //     location.href = "?room="+this.room+"#room-card";                 //Go to the target element.
-  //     history.replaceState(null,null,url);
-  //   }
-  // },
 
-  computed: {
-    user() {
-      return this.$store.state.core.user
-    },
-    // users() {
-    //   return this.$store.state.core.users
-    // },
+
   }
+  </script>
 
+  <style lang="css" scoped>
+  .room-card {
 
-}
-</script>
-
-<style lang="css" scoped>
-.room-card {
-
-}
-table, th, td {
-  padding: 3px;
-  border: 1px solid black;
-  border-collapse: collapse;
-}
-</style>
+  }
+  </style>

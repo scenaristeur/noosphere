@@ -17,11 +17,13 @@ const plugin = {
       let user = JSON.parse(localStorage.getItem('noosphere-user'))
 
       let ydoc = new Y.Doc()
+      store.commit('core/setYdoc', ydoc)
       // this allows you to instantly get the (cached) documents data
       this.indexeddbProvider = new IndexeddbPersistence('noosphere-demo', ydoc)
       this.indexeddbProvider.whenSynced.then((data) => {
         console.log('[indexeddbProvider] loaded data from indexed db', data)
-        //this.openRoom()
+        Vue.prototype.$openRoom()
+        // console.log("should open room")
       })
 
 
@@ -37,7 +39,7 @@ const plugin = {
       user.roomId = this.$route.query.room || user.roomId || uuidv4()
 
       store.commit('core/setUser', user)
-
+      Vue.prototype.$userChanged()
 
       awareness.on('change', ()/*changes*/ => {
 
@@ -48,16 +50,17 @@ const plugin = {
           if (state.user) {
             //console.log('[state.user]',state.user)
             // app.users[state.user.clientID]= state.user
-
-            store.commit('core/setUserById', state.user)
+            // store.state.core.users[state.user.clientID] = state.user
+            store.commit('core/setUserById', user)
+            store.commit('core/setUsersUpdateDate', Date.now())
 
             //strings.push(`<div style="color:${state.user.color};">• ${state.user.name}</div>`)
           }
         })
-
+        store.commit('core/setUsersUpdateDate', Date.now())
         //console.log("[awareness]",Array.from(awareness.getStates().values()), changes)
         //console.log('[app users]',app.users)
-        this.$forceUpdate();
+        //  this.$forceUpdate();
       })
 
 
@@ -81,6 +84,17 @@ const plugin = {
 
       }
     }
+
+
+    Vue.prototype.$userChanged = async function(){
+      let user = store.state.core.user
+      localStorage.setItem('noosphere-user', JSON.stringify(user));
+      store.state.core.awareness.setLocalStateField('user', user)
+      console.log("[user changed]"/*, this.awareness*/, user)
+    }
+
+
+
     Vue.prototype.$randomUser = async function(/*options = {}*/){
       let user = {
         name: 'User_'+Date.now(),
@@ -90,6 +104,90 @@ const plugin = {
         rooms: []
       }
       store.commit('core/setUser', user)
+      Vue.prototype.$userChanged()
+    }
+    Vue.prototype.$openRoom = async function(){
+      Vue.prototype.$userChanged()
+      let user = store.state.core.user
+      let ymap = store.state.core.yDoc.getMap(user.roomId)
+      store.commit('core/setYmap', ymap)
+      console.log("[openRoom]", user.roomId)
+      //this.updateUser()
+
+      let editorData = await ymap.get('editor_map')
+      console.log(editorData)
+      if (editorData != undefined){
+        store.commit('core/setEditorData', editorData)
+        //   console.log(editorData)
+        //this.editorData = editorData //|| this.editorDataDefault//.toJSON()
+        // //  console.log(this.editorData)
+        // //  yService.log(this.editorData)
+      }else{
+        ymap.set('editor_map', store.state.core.editorDataDefault)
+        editorData = Object.assign({}, this.editorDataDefault)
+        store.commit('core/setEditorData', editorData)
+      }
+      // observe changes of the sum
+      // let app = this
+
+      // let calls = 0
+      ymap.observeDeep(events => {
+        events.forEach(event => {
+          // calls++
+          // console.log('calls', calls)
+          // @ts-ignore
+          // console.log(event.keysChanged.has('deepmap'))
+          // console.log(event.path.length === 1)
+          // console.log(event.path[0] === 'map')
+          console.log('[event]',event)
+          let editor_map_changed = event.keysChanged.has('editor_map')
+          console.log('[editor_map_changed]', editor_map_changed)
+          // @ts-ignore
+          // let dmapid = event.target.get('deepmap')._item.id
+          // console.log(dmapid)
+
+          // console.log("nodes",event.target.get('nodes').toJSON())
+          // this.nodes = event.target.get('nodes').toJSON()
+          // if (event.keysChanged.has('editor_map')){
+          // yService.log('editor_map changed')
+          //  let editorData = this.ymap.get('editor_map')
+
+
+
+          if (editor_map_changed == true ){
+            //console.log(editorData)
+            let editorData = ymap.get('editor_map')
+            if (editorData.clientID != user.clientID){
+              //this.editorData =  editorData//.toJSON()
+              store.commit('core/setEditorData', editorData)
+              console.log("[update editorData]", this.editorData)
+            }else{
+              console.log("[same clientID]")
+            }
+
+          }
+          //  yService.log(this.editorData)
+          //}
+          // this.populateEditor(this.editorData)
+          // }
+        })
+        //this.$forceUpdate();
+        //var url = location.href;               //Save down the URL without hash.
+        //location.href = "#ymap_div";                 //Go to the target element.
+        //history.replaceState(null,null,url);
+
+      })
+    }
+
+    Vue.prototype.$saveEditor = async function(data){
+
+      console.log('saveEditor', data)
+      data.clientID = store.state.core.user.clientID
+      // const _editorMap = this.ymap.get('editor_map')
+      // _editorMap.set('data', data)
+      store.state.core.ymap.set('editor_map', data)
+      //this.$forceUpdate()
+      //},
     }
 
   }

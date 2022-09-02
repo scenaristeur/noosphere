@@ -28,7 +28,7 @@ import yService from '@/services/y-service';
 
 export default {
   name: 'EditorView',
-  props: ['editorData'],
+  // props: ['editorData'],
   data(){
     return{
       editor: null
@@ -219,6 +219,14 @@ export default {
         // this.editor.render()
         console.log("render")
       }
+    },
+    computed: {
+      editorData: {
+          cache: false,
+          get() {
+            return this.$store.state.core.editorData;
+          },
+        },
     }
 
   }

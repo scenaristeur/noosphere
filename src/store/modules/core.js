@@ -4,10 +4,23 @@ const state = () => ({
   awareness: null,
   users: {},
   query: null,
-  rooms: []
+  rooms: [],
+  usersUpdateDate: null,
+  yDoc: null,
+  yMap: null,
+  editorData: null
 })
 
 const mutations = {
+  setYdoc(state, d){
+    state.yDoc = d
+  },
+  setYmap(state, m){
+    state.yMap = m
+  },
+  setEditorData(state, ed){
+    state.editorData = ed
+  },
   setQuery(state, q){
     state.query = q
   },
@@ -22,6 +35,10 @@ const mutations = {
   },
   setUserById(state, u){
     state.users[u.clientID] = u
+    console.log(state.users)
+  },
+  setUsersUpdateDate(state, d){
+    state.usersUpdateDate = d
   }
 
 }
