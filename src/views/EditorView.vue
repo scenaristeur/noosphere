@@ -22,6 +22,7 @@ import LinkTool from "@editorjs/link"
 import Warning from "@editorjs/warning"
 import Marker from "@editorjs/marker"
 import InlineCode from "@editorjs/inline-code"
+import MermaidTool from "editorjs-mermaid"
 
 
 import yService from '@/services/y-service';
@@ -59,6 +60,7 @@ export default {
         /**
         * Each Tool is a Plugin. Pass them via 'class' option with necessary settings {@link docs/tools.md}
         */
+         mermaid: MermaidTool,
         header: {
           class: Header,
           inlineToolbar: ['marker', 'link'],
@@ -124,6 +126,7 @@ export default {
         },
       },
       onReady: () => {
+            MermaidTool.config({ 'theme': 'neutral' })
         this.editor.notifier.show({
           message: 'Editor is ready!'
         });
