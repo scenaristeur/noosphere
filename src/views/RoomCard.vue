@@ -29,13 +29,7 @@
           <b-button  size="sm" variant="outline-info" @click="nowId">Now roomId</b-button> or
         </span>
 
-        <b-button v-else size="sm" variant="outline-info" @click="user.roomId = ''">Clear</b-button>
-
-
-
-
-
-
+        <b-button v-else size="sm" variant="outline-info" @click="user.roomId = ''">Reset roomId</b-button>
 
 
         <QrView :roomId="user.roomId" @roomIdChanged="onRoomIdChanged"/>
@@ -178,7 +172,7 @@ export default {
           {
             "type" : "paragraph",
             "data" : {
-              "text" : "Feel free to click on this text to edit, and don't forget to share this collaborative knowledge tool"
+              "text" : "Feel free to click on this text to edit, and don't forget to share this collaborative knowledge tool. You can open a new window of this app and see how rooms are realtime synced."
             }
           }
         ],
