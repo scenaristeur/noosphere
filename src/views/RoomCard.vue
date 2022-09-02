@@ -71,8 +71,8 @@
 
         <b-modal id="modal-me" title="Change your username and color" @ok="userChanged">
           <p class="my-4">
-            Choose a <b-input v-model="user.name" placeholder="username" />
-            and a color <b-input v-model="user.color" type="color" />
+            username<b-input v-model="user.name" placeholder="username" />
+            color <b-input v-model="user.color" type="color" />
             <!-- <b-button @click="userChanged" variant="info" size="sm">Update user</b-button> -->
             <b-button @click="randomUser" variant="outline-info" size="sm">Random user</b-button>
           </p>
