@@ -1,32 +1,20 @@
 <template>
   <div class="home">
+    <UsersView />
+    <RoomCard />
+    
+  </div>
+</template>
 
-    <div>
-      <!--
-      bg-variant="info"
-      text-variant="white"
-      border-variant="dark"
-      link-variant="dark"
-    -->
+<script>
 
-      </div>
+export default {
+  name: 'HomeView',
+  components: {
+    'RoomCard': ()=>import('@/views/RoomCard'),
+    'UsersView': ()=>import('@/views/UsersView'),
+    // 'StorageView': ()=>import('@/views/StorageView'),
+  },
 
-
-
-      <RoomCard />
-
-      <!-- <StorageView /> -->
-    </div>
-  </template>
-
-  <script>
-
-  export default {
-    name: 'HomeView',
-    components: {
-      'RoomCard': ()=>import('@/views/RoomCard'),
-      // 'StorageView': ()=>import('@/views/StorageView'),
-    },
-
-  }
-  </script>
+}
+</script>
