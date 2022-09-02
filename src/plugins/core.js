@@ -19,8 +19,8 @@ const plugin = {
       let ydoc = new Y.Doc()
       store.commit('core/setYdoc', ydoc)
       // this allows you to instantly get the (cached) documents data
-      this.indexeddbProvider = new IndexeddbPersistence('noosphere-demo', ydoc)
-      this.indexeddbProvider.whenSynced.then((data) => {
+      let indexeddbProvider = new IndexeddbPersistence('noosphere-demo', ydoc)
+      indexeddbProvider.whenSynced.then((data) => {
         console.log('[indexeddbProvider] loaded data from indexed db', data)
         Vue.prototype.$openRoom()
         // console.log("should open room")
@@ -72,11 +72,11 @@ const plugin = {
       let websocketProvider = new WebsocketProvider('wss://demos.yjs.dev', 'noosphere-demo', ydoc, {awareness})
       console.log("[providers]", webrtcProvider, websocketProvider)
 
-      if (this.$route.query!= undefined){
-        console.log("this.$route.query", this.$route.query)
-        store.commit('core/setQuery', this.$route.query)
-
-      }
+      // if (this.$route.query!= undefined){
+      //   console.log("this.$route.query", this.$route.query)
+      //   store.commit('core/setQuery', this.$route.query)
+      //
+      // }
     }
 
 
@@ -164,7 +164,7 @@ const plugin = {
             if (editorData.clientID != user.clientID){
               //this.editorData =  editorData//.toJSON()
               store.commit('core/setEditorData', editorData)
-              console.log("[update editorData]", this.editorData)
+              console.log("[update editorData]", editorData)
             }else{
               console.log("[same clientID]")
             }
