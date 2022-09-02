@@ -16,13 +16,13 @@
 
     <small>
       <i>
-        <p>wikipedia fr: <a href="https://fr.wikipedia.org/wiki/Noosph%C3%A8re" _target="blank">
+        <p>wikipedia fr: <a href="https://fr.wikipedia.org/wiki/Noosph%C3%A8re" target="_blank">
           La noosphère, selon la pensée de Vladimir Vernadsky1 et Pierre Teilhard de Chardin, désigne la « sphère de la pensée humaine ».
           Dans la théorie originelle de Vernadsky, la noosphère est la troisième d'une succession de phases de développement de la Terre,
           après la géosphère (matière inanimée) et la biosphère (la vie biologique).
           Tout comme l'émergence de la vie a fondamentalement transformé la géosphère, l'émergence de la cognition humaine transforme fondamentalement la biosphère.
         </a></p>
-        <p>wikipedia en: <a href="https://en.wikipedia.org/wiki/Noosphere" _target="blank">
+        <p>wikipedia en: <a href="https://en.wikipedia.org/wiki/Noosphere" target="_blank">
           The noosphere (alternate spelling noösphere) is a philosophical concept developed and popularized by the Russian-Ukrainian Soviet biogeochemist Vladimir Vernadsky,
           and the French philosopher and Jesuit priest Pierre Teilhard de Chardin.
           Vernadsky defined the noosphere as the new state of the biosphere and described as the planetary "sphere of reason".
