@@ -33,7 +33,7 @@
     ></b-progress>
   </b-alert>
 
-  <b-alert variant="success" show>Noosphere 0 - <i><small>menu</small></i></b-alert>
+
 
   <b-modal id="modal-pin" title="Pin Data on Web3.storage">
 
@@ -77,6 +77,8 @@
     </span>
 
   </b-modal>
+
+  <b-alert variant="success" show>Noosphere 0 - <i><small>mermaid</small></i></b-alert>
 
 </div>
 </template>
