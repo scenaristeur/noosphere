@@ -188,13 +188,6 @@ export default {
     //console.log('[user]',this.user)
 
     this.ydoc = new Y.Doc()
-    // this allows you to instantly get the (cached) documents data
-    this.indexeddbProvider = new IndexeddbPersistence('noosphere-demo', this.ydoc)
-    this.indexeddbProvider.whenSynced.then((data) => {
-      console.log('[indexeddbProvider] loaded data from indexed db', data)
-    })
-
-
     let awareness = this.awareness = new Awareness(this.ydoc)
 
     if (this.user == null){
@@ -208,25 +201,29 @@ export default {
 
 
 
-    awareness.on('change', ()/*changes*/ => {
+    awareness.on('change', changes => {
 
       // Whenever somebody updates their awareness information,
       // we log all awareness information from all users.
       awareness.getStates().forEach(state => {
-        //console.log(state)
+         console.log(state)
         if (state.user) {
-          //console.log('[state.user]',state.user)
+          console.log('[state.user]',state.user)
           app.users[state.user.clientID]= state.user
           //strings.push(`<div style="color:${state.user.color};">• ${state.user.name}</div>`)
         }
       })
 
-      //console.log("[awareness]",Array.from(awareness.getStates().values()), changes)
-      //console.log('[app users]',app.users)
+       console.log("[awareness]",Array.from(awareness.getStates().values()), changes)
+       console.log('[app users]',app.users)
       this.$forceUpdate();
     })
 
-
+    // this allows you to instantly get the (cached) documents data
+    this.indexeddbProvider = new IndexeddbPersistence('noosphere-demo', this.ydoc)
+    this.indexeddbProvider.whenSynced.then(() => {
+      console.log('[indexeddbProvider] loaded data from indexed db')
+    })
 
     // Sync clients with the y-webrtc provider.
     let webrtcProvider = new WebrtcProvider('noosphere-demo', this.ydoc, {awareness})
@@ -311,14 +308,14 @@ export default {
       console.log("[openRoom]", this.user.roomId)
       //this.updateUser()
 
-      let editorData = this.ymap.get('editor_map')
-      console.log(editorData)
-      if (editorData != undefined){
-        //   console.log(editorData)
-        this.editorData = editorData//.toJSON()
-        // //  console.log(this.editorData)
-        // //  yService.log(this.editorData)
-      }
+      // let editorData = this.ymap.get('editor_map')
+      // console.log(editorData)
+      // if (editorData != undefined){
+      //   console.log(editorData)
+      //   this.editorData = editorData//.toJSON()
+      // //  console.log(this.editorData)
+      // //  yService.log(this.editorData)
+      // }
       // observe changes of the sum
       // let app = this
 
@@ -331,7 +328,7 @@ export default {
           // console.log(event.keysChanged.has('deepmap'))
           // console.log(event.path.length === 1)
           // console.log(event.path[0] === 'map')
-          console.log('[event]',event)
+          //  console.log('[event]',event)
           let editor_map_changed = event.keysChanged.has('editor_map')
           console.log('[editor_map_changed]', editor_map_changed)
           // @ts-ignore
@@ -371,9 +368,9 @@ export default {
 
       // add 1 to the sum
       // this.yarray.push([2]) // => "new sum: 1"
-      // if(this.ymap.get('editor_map') == undefined){
-      //   this.populateMap()
-      // }
+      if(this.ymap.get('editor_map') == undefined){
+        this.populateMap()
+      }
 
     },
     // addToArray(){
@@ -399,8 +396,8 @@ export default {
     populateMap(){
       //  this.ymap.set('map', new Y.Map())
       //  this.ymap.set('editor_map', new Y.Map())
-      // this.ymap.set('nodes', new Y.Map())
-      // this.ymap.set('links', new Y.Map())
+      this.ymap.set('nodes', new Y.Map())
+      this.ymap.set('links', new Y.Map())
       // const _map3 = this.ymap.get('map')
       // _map3.set('deepmap', new Y.Map())
       // this.ymap.set('stuff one', 'c2')

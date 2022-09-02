@@ -127,7 +127,9 @@ export default {
         this.editor.notifier.show({
           message: 'Editor is ready!'
         });
-        this.editor.blocks.render(this.editorData)
+        if (this.editorData != null){
+          this.editor.blocks.render(this.editorData)
+        }
       },
       onChange: function(api, event) {
         //console.log('api', api.blocks.getCurrentBlockIndex())
@@ -160,7 +162,7 @@ export default {
       // }
     })
 
-    yService.log(this.editor)
+    //  yService.log(this.editor)
 
 
     // this.editor.onReady
@@ -202,7 +204,7 @@ export default {
       },
       save(){
         this.editor.save().then((outputData) => {
-          console.log('Article data: ', outputData)
+          //  console.log('Article data: ', outputData)
           this.$emit('saveEditor', outputData)
         }).catch((error) => {
           console.log('Saving failed: ', error)
@@ -211,7 +213,7 @@ export default {
     },
     watch:{
       editorData(){
-        yService.log('watch')
+        //  yService.log('watch')
         yService.log(this.editorData)
         this.editor.blocks.render(this.editorData)
         // this.editor.render()
