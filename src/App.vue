@@ -6,7 +6,7 @@
       <router-link to="/about">About</router-link>
     </nav>
     <router-view/>
-    <b-alert variant="success" show>Noosphere 0 - clean editor_map</b-alert>
+    <b-alert variant="success" show>Noosphere 0 - fix users</b-alert>
   </div>
 </template>
 

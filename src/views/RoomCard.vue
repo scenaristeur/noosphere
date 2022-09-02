@@ -155,7 +155,8 @@ export default {
 
       url: null,
       scanner: null,
-      editorData: {
+      editorData: null,
+      editorDataDefault: {
         "time" : 1550476186479,
         "blocks" : [
           {
@@ -192,20 +193,22 @@ export default {
     this.indexeddbProvider = new IndexeddbPersistence('noosphere-demo', this.ydoc)
     this.indexeddbProvider.whenSynced.then((data) => {
       console.log('[indexeddbProvider] loaded data from indexed db', data)
+      this.openRoom()
     })
 
 
     let awareness = this.awareness = new Awareness(this.ydoc)
-
+    console.log("awareness",awareness, awareness.getStates().has(this.user.clientID))
     if (this.user == null){
+
       this.randomUser()
     }else{
-      awareness.clientID = this.user.clientID
+      //awareness.clientID = this.user.clientID
     }
 
 
     this.user.roomId = this.$route.query.room || this.user.roomId || uuidv4()
-
+    // this.ymap = this.ydoc.getMap(this.user.roomId)
 
 
     awareness.on('change', ()/*changes*/ => {
@@ -213,7 +216,7 @@ export default {
       // Whenever somebody updates their awareness information,
       // we log all awareness information from all users.
       awareness.getStates().forEach(state => {
-        //console.log(state)
+        console.log(state)
         if (state.user) {
           //console.log('[state.user]',state.user)
           app.users[state.user.clientID]= state.user
@@ -248,7 +251,7 @@ export default {
 
   },
   mounted(){
-    this.openRoom()
+    //this.openRoom()
   },
   methods:{
     randomUser(){
@@ -304,20 +307,24 @@ export default {
       this.openRoom()
     },
 
-    openRoom(){
+    async openRoom(){
+      //  this.editorData = null
       this.userChanged()
       this.ymap = this.ydoc.getMap(this.user.roomId)
 
       console.log("[openRoom]", this.user.roomId)
       //this.updateUser()
 
-      let editorData = this.ymap.get('editor_map')
+      let editorData = await this.ymap.get('editor_map')
       console.log(editorData)
       if (editorData != undefined){
         //   console.log(editorData)
-        this.editorData = editorData//.toJSON()
+        this.editorData = editorData //|| this.editorDataDefault//.toJSON()
         // //  console.log(this.editorData)
         // //  yService.log(this.editorData)
+      }else{
+        this.ymap.set('editor_map', this.editorDataDefault)
+        this.editorData = Object.assign({}, this.editorDataDefault)
       }
       // observe changes of the sum
       // let app = this
