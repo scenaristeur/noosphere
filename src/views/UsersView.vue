@@ -61,8 +61,6 @@ export default {
         if(r[0]!= undefined){
           this.user.roomId = r[0].roomId
           this.$openRoom()
-          this.$router.push('/editor')
-          // console.log("should open room")
         }
       },
       userChanged(){

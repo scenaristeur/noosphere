@@ -71,12 +71,6 @@ const plugin = {
       // Sync clients with the y-websocket provider
       let websocketProvider = new WebsocketProvider('wss://demos.yjs.dev', 'noosphere-demo', ydoc, {awareness})
       console.log("[providers]", webrtcProvider, websocketProvider)
-      //
-
-
-
-
-
 
       if (this.$route.query!= undefined){
         console.log("this.$route.query", this.$route.query)
@@ -124,9 +118,18 @@ const plugin = {
         // //  console.log(this.editorData)
         // //  yService.log(this.editorData)
       }else{
-        ymap.set('editor_map', store.state.core.editorDataDefault)
-        editorData = Object.assign({}, this.editorDataDefault)
-        store.commit('core/setEditorData', editorData)
+        let defaultData = store.state.core.editorDataDefault
+        defaultData.blocks.push(
+          {
+            "type" : "paragraph",
+            "data" : {
+              "text" : "The roomId of this room is "+user.roomId
+            }
+          }
+        )
+        ymap.set('editor_map', defaultData)
+        // editorData = Object.assign({}, this.editorDataDefault)
+        store.commit('core/setEditorData', defaultData)
       }
       // observe changes of the sum
       // let app = this
@@ -178,6 +181,7 @@ const plugin = {
         //history.replaceState(null,null,url);
 
       })
+      opts.router.push('/editor')
     }
 
     Vue.prototype.$saveEditor = async function(data){

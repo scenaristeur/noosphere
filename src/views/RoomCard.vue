@@ -1,20 +1,11 @@
 <template>
-  <b-row>
-    <b-col>
-
       <div class="room-card" id="room-card">
-
-
         <b-card
         title="Open a room"
         tag="article"
         style="max-width: 20rem;"
         class="mb-2"
         >
-
-        <!-- <b-header>
-        <h2></h2>
-      </b-header> -->
       <b-card-text>
 
 
@@ -33,107 +24,24 @@
 
 
         <QrView :roomId="user.roomId" @roomIdChanged="onRoomIdChanged"/>
-        <!-- <hr>
 
-
-
-        <hr>
-        <UserView />
-        <hr> -->
-        <!-- <div id="ymap_div" v-if="ymap!=null"> -->
-
-        <!-- <input v-model="newName" placeholder="name of the new node" />
-        <button @click="addNodeToMap">Add node to map</button>
-        <button @click="clearMap">clear map</button>
-        <button @click="populateMap">populate map</button>
-        <input v-model="newStuff" placeholder="name of the stuff" />
-        <button @click="changeStuff">change stuff</button> -->
-
-        <!-- <hr> -->
-
-        <hr>
-        <!-- {{user}}
-        <b-button v-b-modal.modal-me size="sm"
-        variant="outline-primary">
-        {{user.name}}</b-button> -->
-
-
-
-
-
-        <!-- <table>
-        <thead><th>user</th><th>room</th></thead>
-        <tr v-for="u in users" :key="u.clientID" >
-        <td v-if="u.clientID == user.clientID" ><b-button v-b-modal.modal-me size="sm"
-        variant="outline-primary">
-        <div :style="'color:'+u.color"><b>{{u.name}}</b>
-      </div>
-    </b-button></td>
-    <td v-else>  <div :style="'color:'+u.color"><b>{{u.name}}</b></div> </td>
-    <td>
-    <b-button
-    size="sm"
-    variant="light"
-    @click="onRoomIdChanged(u.roomId)">{{u.roomId}}</b-button>
-  </td>
-</tr>
-</table> -->
-
-
-<hr>
-<!-- nodes : {{ymap.nodes}}
-rooms: {{JSON.stringify(rooms)}} -->
-
-<!-- ymapNodes : {{ymap.map.nodes}} -->
-<!-- <hr> -->
-<!-- </div> -->
 </b-card-text>
-<!-- <hr>
 
-<hr>
-ymap : {{ymap}}
-<hr>
-
-<hr> -->
-<!-- yarray : {{yarray}}
-<button @click="clear">clear</button>
-<hr>
-<input v-model="newVal" type="number" placeholder="number, ex: 0 or 10" />
-<button @click="addToArray">Add</button> -->
 
 </b-card>
 
 </div>
 
-</b-col>
 
-<b-col>
-  <EditorView
-  @userEvent="onUserEvent"
-  @editorEvent="onEditorEvent"
-  />
-</b-col>
-
-</b-row>
 </template>
 
 <script>
-//import yService from '@/services/y-service';
-// import * as Y from 'yjs'
-// import { WebrtcProvider } from 'y-webrtc'
-// import { WebsocketProvider } from 'y-websocket'
-// import { IndexeddbPersistence } from 'y-indexeddb'
-import { v4 as uuidv4 } from 'uuid';
-//
-// // sharing a single Awareness instance (per space) over several providers:
-//
-// import {Awareness} from 'y-protocols/awareness'
 
-// let calls = 0
+import { v4 as uuidv4 } from 'uuid';
+
 export default {
   name: 'RoomCard',
   components: {
-    'EditorView': ()=>import('@/views/EditorView'),
     'QrView': ()=>import('@/views/QrView'),
     // 'UserView': ()=>import('@/views/UserView'),
   },
@@ -163,113 +71,14 @@ export default {
 
         url: null,
         scanner: null,
-        editorData: null,
-        editorDataDefault: {
-          "time" : 1550476186479,
-          "blocks" : [
-            {
-              "type" : "paragraph",
-              "data" : {
-                "text" : "You have just opened a new room in the"
-              }
-            },
-            {
-              "type" : "header",
-              "data" : {
-                "text" : "Noosphere",
-                "level" : 2
-              }
-            },
-            {
-              "type" : "paragraph",
-              "data" : {
-                "text" : "Feel free to click on this text to edit, and don't forget to share this collaborative knowledge tool. You can open a new window of this app and see how rooms are realtime synced."
-              }
-            }
-          ],
-          "version" : "2.8.1"
-        }
+    
       }
     },
-    created(){
-      // let app = this
-      // this.user = JSON.parse(localStorage.getItem('noosphere-user'))
-      // //console.log('[user]',this.user)
-      //
-      // this.ydoc = new Y.Doc()
-      // // this allows you to instantly get the (cached) documents data
-      // this.indexeddbProvider = new IndexeddbPersistence('noosphere-demo', this.ydoc)
-      // this.indexeddbProvider.whenSynced.then((data) => {
-      //   console.log('[indexeddbProvider] loaded data from indexed db', data)
-      //   this.openRoom()
-      // })
-      //
-      //
-      // let awareness = this.awareness = new Awareness(this.ydoc)
-      // //console.log("awareness",awareness, awareness.getStates().has(this.user.clientID))
-      // if (this.user == null){
-      //   this.randomUser()
-      // }else{
-      //   //awareness.clientID = this.user.clientID
-      // }
 
-
-      //  this.user.roomId = this.$route.query.room || this.user.roomId || uuidv4()
-      // this.ymap = this.ydoc.getMap(this.user.roomId)
-
-
-      // awareness.on('change', ()/*changes*/ => {
-      //
-      //   // Whenever somebody updates their awareness information,
-      //   // we log all awareness information from all users.
-      //   awareness.getStates().forEach(state => {
-      //     console.log(state)
-      //     if (state.user) {
-      //       //console.log('[state.user]',state.user)
-      //       app.users[state.user.clientID]= state.user
-      //       //strings.push(`<div style="color:${state.user.color};">• ${state.user.name}</div>`)
-      //     }
-      //   })
-      //
-      //   //console.log("[awareness]",Array.from(awareness.getStates().values()), changes)
-      //   //console.log('[app users]',app.users)
-      //   this.$forceUpdate();
-      // })
-      //
-      //
-      //
-      // // Sync clients with the y-webrtc provider.
-      // let webrtcProvider = new WebrtcProvider('noosphere-demo', this.ydoc, {awareness})
-      //
-      // // Sync clients with the y-websocket provider
-      // let websocketProvider = new WebsocketProvider('wss://demos.yjs.dev', 'noosphere-demo', this.ydoc, {awareness})
-      // console.log("[providers]", webrtcProvider, websocketProvider)
-
-      // array of numbers which produce a sum
-      // this.yarray = this.ydoc.getArray('count')
-      //
-      // this.yarray.observe(event => {
-      //   console.log(event)
-      //   // print updates when the data changes
-      //   console.log(this.yarray.toJSON())
-      //   // console.log('new sum: ' + this.yarray.toArray().reduce((a,b) => a + b))
-      // })
-      //this.manageAwareness()
-
-    },
-    mounted(){
-      //this.openRoom()
-    },
     methods:{
 
       randomUser(){
         this.$randomUser()
-      },
-      onUserEvent(e){
-        console.log("userEVent", e)
-      },
-      onEditorEvent(e){
-        console.log("editorEvent",e)
       },
       // manageAwareness(){
       //
@@ -296,7 +105,7 @@ export default {
       //   // You can observe when a user updates their awareness information
       //
       // },
-    
+
       generateId(){
         this.user.roomId = uuidv4()
         this.openRoom()

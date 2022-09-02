@@ -8,14 +8,33 @@
       <router-link to="/room" class="m-2"><b-icon font-scale="1.5" icon="list-stars" aria-hidden="true"></b-icon></router-link>
       <router-link to="/config" class="m-2"><b-icon font-scale="1.5" icon="gear" aria-hidden="true"></b-icon></router-link>
       <router-link to="/about" class="m-2"><b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
+      <router-link to=""  class="m-2"><b-icon @click="share" font-scale="1.5" icon="share" aria-hidden="true"></b-icon></router-link>
 
     </nav>
 
     <router-view/>
-      <!-- user :{{ user }}<br>
-      users: {{ users }} -->
-    <b-alert variant="success" show>Noosphere 0 - <i><small>menu</small></i></b-alert>
-  </div>
+    <!-- user :{{ user }}<br>
+    users: {{ users }} -->
+    <b-alert
+    id="shareAlert"
+    :show="dismissCountDown"
+    dismissible
+    variant="warning"
+    @dismissed="dismissCountDown=0"
+    @dismiss-count-down="countDownChanged"
+    >
+    <p>This room's link has been copied to your clipboard, you can paste it in any other app to share it {{ dismissCountDown }} ...</p>
+    <b-progress
+    variant="warning"
+    :max="dismissSecs"
+    :value="dismissCountDown"
+    height="4px"
+    ></b-progress>
+  </b-alert>
+
+  <b-alert variant="success" show>Noosphere 0 - <i><small>menu</small></i></b-alert>
+
+</div>
 </template>
 
 
@@ -29,8 +48,36 @@ export default {
   //   // 'DataCaching': ()=>import('@/views/experiments/DataCaching'),
   //   // 'LevelgraphJsonld': ()=>import('@/views/experiments/LevelgraphJsonld'),
   // },
+  data() {
+    return {
+      dismissSecs: 10,
+      dismissCountDown: 0,
+      showDismissibleAlert: false
+    }
+  },
+
   created(){
     this.$coreInit({name: "SuperCore"})
+  },
+  methods:{
+    share(){
+      let app = this
+      console.log(this.user)
+      let text = "http://scenaristeur.github.io/noosphere?room="+this.user.roomId
+      navigator.clipboard.writeText(text).then(function() {
+        console.log('Async: Copying to clipboard was successful!');
+        app.showAlert()
+      }, function(err) {
+        console.error('Async: Could not copy text: ', err);
+      });
+
+    },
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown
+    },
+    showAlert() {
+      this.dismissCountDown = this.dismissSecs
+    }
   },
   computed: {
     user() {
@@ -64,5 +111,10 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+#shareAlert{
+  position: absolute;
+  bottom: 0px;
+  z-index:10;
 }
 </style>

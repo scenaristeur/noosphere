@@ -5,7 +5,7 @@ import router from './router'
 import store from './store'
 
 import CorePlugin from './plugins/core';
-Vue.use(CorePlugin, {store: store});
+Vue.use(CorePlugin, {store: store, router: router});
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
