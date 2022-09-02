@@ -1,6 +1,6 @@
 <template>
   <div class="user-view">
-    {{ user }}
+    <!-- {{ user }} -->
     <UsersView />
   </div>
 </template>

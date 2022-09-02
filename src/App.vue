@@ -12,8 +12,8 @@
     </nav>
 
     <router-view/>
-      user :{{ user }}<br>
-      users: {{ users }}
+      <!-- user :{{ user }}<br>
+      users: {{ users }} -->
     <b-alert variant="success" show>Noosphere 0 - <i><small>menu</small></i></b-alert>
   </div>
 </template>

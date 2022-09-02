@@ -1,8 +1,8 @@
 <template>
-  <div class="users-view">
-    Users : {{ users }}<hr>
+  <b-container fluid class="users-view">
+    <!-- Users : {{ users }}<hr>
 
-    user : {{user}}<hr>
+    user : {{user}}<hr> -->
 
     <b-table
     small
@@ -36,7 +36,7 @@
     <b-button @click="randomUser" variant="outline-info" size="sm">Random user</b-button>
   </p>
 </b-modal>
-</div>
+</b-container>
 </template>
 
 <script>
@@ -60,8 +60,9 @@ export default {
       onRowSelected(r){
         if(r[0]!= undefined){
           this.user.roomId = r[0].roomId
-          // this.openRoom()
-          console.log("should open room")
+          this.$openRoom()
+          this.$router.push('/editor')
+          // console.log("should open room")
         }
       },
       userChanged(){

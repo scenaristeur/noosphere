@@ -30,8 +30,8 @@ const plugin = {
       let awareness = new Awareness(ydoc)
       store.commit('core/setAwareness', awareness)
 
-      if (user == null){
-        user = Vue.prototype.$randomUser()
+      if (user == undefined || user == null){
+        user = await Vue.prototype.$randomUser()
       }else{
         //awareness.clientID = this.user.clientID
       }
@@ -52,7 +52,7 @@ const plugin = {
             // app.users[state.user.clientID]= state.user
             // store.state.core.users[state.user.clientID] = state.user
             store.commit('core/setUserById', state.user)
-            store.commit('core/setUsersUpdateDate', Date.now())
+            //  store.commit('core/setUsersUpdateDate', Date.now())
 
             //strings.push(`<div style="color:${state.user.color};">• ${state.user.name}</div>`)
           }
@@ -105,6 +105,7 @@ const plugin = {
       }
       store.commit('core/setUser', user)
       Vue.prototype.$userChanged()
+      return user
     }
     Vue.prototype.$openRoom = async function(){
       Vue.prototype.$userChanged()
@@ -185,7 +186,7 @@ const plugin = {
       data.clientID = store.state.core.user.clientID
       // const _editorMap = this.ymap.get('editor_map')
       // _editorMap.set('data', data)
-      store.state.core.ymap.set('editor_map', data)
+      store.state.core.yMap.set('editor_map', data)
       //this.$forceUpdate()
       //},
     }
