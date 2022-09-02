@@ -35,31 +35,46 @@
   <b-alert variant="success" show>Noosphere 0 - <i><small>menu</small></i></b-alert>
 
   <b-modal id="modal-pin" title="Pin Data on Web3.storage">
-    <p class="my-4">
-      see <a href="https://web3.storage/docs/" target="_blank"> https://web3.storage/docs/</a> (1GB free)<br>
-      <a href="https://web3.storage/tokens/" target="_blank">your web3.storage tokens</a>
-      <b-input v-model="token" placeholder="web3.storage token" />
 
-      <b-input v-model="fileName" placeholder="filename" />
+    see <a href="https://web3.storage/docs/" target="_blank"> https://web3.storage/docs/</a> (1GB free)<br>
+    <a href="https://web3.storage/tokens/" target="_blank">your web3.storage tokens</a>
+    <b-input v-model="token" @input="tokenChanged" placeholder="web3.storage token" />
+    <!-- {{uploads}} -->
+
+    <div v-if="uploads != null && uploads.length> 0">
+      Your 20 last uploads :
+
+      <ul>
+        <li v-for="u in uploads" :key="u._id">
+          <!-- <a href="">{{u.name}}</a> -->
+          <b-button class="m-0" size="sm" variant="light" @click="clickUpload(u)">{{u.name}}</b-button>
+
+        </li>
+      </ul>
 
 
-      <b-form-textarea
-      id="textarea"
-      v-model="data"
-      placeholder="Enter something..."
-      rows="3"
-      max-rows="6"
-      ></b-form-textarea>
-      <b-button @click="pin">Pin it</b-button>
-      <br>
-      {{ messages }}
-      <br>
-      <span v-if="cid != null">
+    </div>
 
-        saved on ipfs with cid
-        <a :href="'https://'+cid+'.ipfs.w3s.link/'" target="_blank">{{cid}}</a>
-      </span>
-    </p>
+    <b-input v-model="fileName" placeholder="filename" />
+
+
+    <b-form-textarea
+    id="textarea"
+    v-model="data"
+    placeholder="Enter something..."
+    rows="3"
+    max-rows="6"
+    ></b-form-textarea>
+    <b-button @click="pin">Pin it</b-button>
+    <br>
+    {{ messages }}
+    <br>
+    <span v-if="cid != null">
+
+      saved on ipfs with cid
+      <a :href="'https://'+cid+'.ipfs.w3s.link/'" target="_blank">{{cid}}</a>
+    </span>
+
   </b-modal>
 
 </div>
@@ -86,14 +101,19 @@ export default {
       fileName: "",
       token: null,
       messages: [],
-      cid: null
+      cid: null,
+      uploads: null
     }
   },
 
   created(){
     this.$coreInit({name: "SuperCore"})
+
+  },
+  mounted(){
     let web3Token = localStorage.getItem('noosphere-web3storage-token')
     this.$store.commit('core/setWeb3Token', web3Token)
+    console.log('token', web3Token)
   },
   methods:{
     share(){
@@ -112,7 +132,7 @@ export default {
       delete data.clientID
       this.data = JSON.stringify(data, null, 2)
       this.fileName = this.user.roomId
-this.cid = null
+      this.cid = null
       this.$bvModal.show("modal-pin")
     },
     async pin(){
@@ -147,6 +167,7 @@ this.cid = null
         console.log(rootCid)
         this.messages.push("[done]")
         this.cid = rootCid
+        this.list()
       }
 
 
@@ -157,11 +178,85 @@ this.cid = null
     },
     showAlert() {
       this.dismissCountDown = this.dismissSecs
+    },
+    async list(){
+
+      this.client = new Web3Storage({ token: this.token });
+      const uploads = [];
+      for await (const item of this.client.list({ maxResults: 20 })) {
+        uploads.push(item);
+      }
+      console.log(uploads)
+      console.log("list")
+      this.uploads = uploads
+    },
+    tokenChanged(){
+      localStorage.setItem('noosphere-web3storage-token', this.token);
+      this.list()
+    },
+    async clickUpload(u){
+      console.log(u)
+      this.$bvModal.hide("modal-pin")
+      let app = this
+      const res = await this.client.get(u.cid); // Web3Response
+      if(res.ok != false){
+        const files = await res.files(); // Web3File[]
+        for (const file of files) {
+          console.log(file)
+          console.log(`${file.cid} ${file.name} ${file.size}`);
+          var fileReader = new FileReader();
+          fileReader.onloadstart = function(progressEvent) {
+            //resetLog();
+            console.log("onloadstart!");
+            var msg = "File Name: " + file.name + "<br>" +
+            "File Size: " + file.size + "<br>" +
+            "File Type: " + file.type;
+
+            console.log(msg, progressEvent);
+          }
+
+          fileReader.onload = function(progressEvent) {
+            console.log("onload!");
+
+            var stringData = fileReader.result;
+            console.log(" ---------------- File Content ----------------: ");
+            console.log(stringData, progressEvent);
+            app.$loadCid({roomId: file.name.split(".json")[0], cid: file.cid, content: JSON.parse(stringData)})
+          }
+
+          fileReader.onloadend = function(progressEvent) {
+            console.log("onloadend!");
+            // FileReader.EMPTY, FileReader.LOADING, FileReader.DONE
+            console.log("readyState = " + fileReader.readyState, progressEvent);
+          }
+
+          fileReader.onerror = function(progressEvent) {
+            console.log("onerror!", progressEvent);
+            console.log("Has Error!");
+          }
+
+          // Read file asynchronously.
+          fileReader.readAsText(file, "UTF-8"); // fileReader.result -> String.
+
+
+
+        }
+        // const info = await this.client.status(this.rootCid);
+        // console.log(`${info.cid} ${info.dagSize} ${info.created}`);
+      }else{
+        console.log(res)
+      }
     }
   },
   watch:{
     web3Token(){
       this.token = this.web3Token
+
+    },
+    token(){
+      if (this.token!= null){
+        this.list()
+      }
     }
   },
   computed: {

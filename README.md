@@ -61,6 +61,7 @@ next modifs, just run ```npm run git -- "my modif"```
 # decentralized databases
 - web3.storage / filecoin https://web3.storage/docs/reference/js-client-library/
 - https://www.dolthub.com/blog/2022-05-27-decentralized-database/
+- voir filebase.com 5GB
 
 # heroku alternatives
 - https://dev.to/meshvpatel18/top-heroku-alternatives-for-free-46g1
