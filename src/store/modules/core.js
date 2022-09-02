@@ -1,7 +1,8 @@
 
 const state = () => ({
   user: null,
-  users: [],
+  awareness: null,
+  users: {},
   query: null,
   rooms: []
 })
@@ -13,8 +14,14 @@ const mutations = {
   setUser(state, u){
     state.user = u
   },
+  setAwareness(state, a){
+    state.awareness = a
+  },
   setUsers(state, u){
     state.users = u
+  },
+  setUserById(state, u){
+    state.users[u.clientID] = u
   }
 
 }

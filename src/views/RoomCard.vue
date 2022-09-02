@@ -21,7 +21,7 @@
 
         <b-input v-model="user.roomId" placeholder="roomId | random | QR"
         @keyup.enter="openRoom" />
-        <b-button v-if="this.user.roomId.length !=0" size="sm" variant="info" @click="openRoom">Go</b-button>
+        <b-button v-if="user.roomId.length !=0" size="sm" variant="info" @click="openRoom">Go</b-button>
 
 
         <span v-if="user.roomId.length ==0">
@@ -151,15 +151,15 @@ ymap : {{ymap}}
 
 <script>
 //import yService from '@/services/y-service';
-import * as Y from 'yjs'
-import { WebrtcProvider } from 'y-webrtc'
-import { WebsocketProvider } from 'y-websocket'
-import { IndexeddbPersistence } from 'y-indexeddb'
+// import * as Y from 'yjs'
+// import { WebrtcProvider } from 'y-webrtc'
+// import { WebsocketProvider } from 'y-websocket'
+// import { IndexeddbPersistence } from 'y-indexeddb'
 import { v4 as uuidv4 } from 'uuid';
-
-// sharing a single Awareness instance (per space) over several providers:
-
-import {Awareness} from 'y-protocols/awareness'
+//
+// // sharing a single Awareness instance (per space) over several providers:
+//
+// import {Awareness} from 'y-protocols/awareness'
 
 // let calls = 0
 export default {
@@ -171,7 +171,7 @@ export default {
   },
   data(){
     return{
-      user: {},
+      //user: {},
       users: {},
       fields: [       {
         key: 'name',
@@ -223,59 +223,58 @@ export default {
     }
   },
   created(){
-    let app = this
-    this.user = JSON.parse(localStorage.getItem('noosphere-user'))
-    //console.log('[user]',this.user)
+    // let app = this
+    // this.user = JSON.parse(localStorage.getItem('noosphere-user'))
+    // //console.log('[user]',this.user)
+    //
+    // this.ydoc = new Y.Doc()
+    // // this allows you to instantly get the (cached) documents data
+    // this.indexeddbProvider = new IndexeddbPersistence('noosphere-demo', this.ydoc)
+    // this.indexeddbProvider.whenSynced.then((data) => {
+    //   console.log('[indexeddbProvider] loaded data from indexed db', data)
+    //   this.openRoom()
+    // })
+    //
+    //
+    // let awareness = this.awareness = new Awareness(this.ydoc)
+    // //console.log("awareness",awareness, awareness.getStates().has(this.user.clientID))
+    // if (this.user == null){
+    //   this.randomUser()
+    // }else{
+    //   //awareness.clientID = this.user.clientID
+    // }
 
-    this.ydoc = new Y.Doc()
-    // this allows you to instantly get the (cached) documents data
-    this.indexeddbProvider = new IndexeddbPersistence('noosphere-demo', this.ydoc)
-    this.indexeddbProvider.whenSynced.then((data) => {
-      console.log('[indexeddbProvider] loaded data from indexed db', data)
-      this.openRoom()
-    })
 
-
-    let awareness = this.awareness = new Awareness(this.ydoc)
-    //console.log("awareness",awareness, awareness.getStates().has(this.user.clientID))
-    if (this.user == null){
-
-      this.randomUser()
-    }else{
-      //awareness.clientID = this.user.clientID
-    }
-
-
-    this.user.roomId = this.$route.query.room || this.user.roomId || uuidv4()
+    //  this.user.roomId = this.$route.query.room || this.user.roomId || uuidv4()
     // this.ymap = this.ydoc.getMap(this.user.roomId)
 
 
-    awareness.on('change', ()/*changes*/ => {
-
-      // Whenever somebody updates their awareness information,
-      // we log all awareness information from all users.
-      awareness.getStates().forEach(state => {
-        console.log(state)
-        if (state.user) {
-          //console.log('[state.user]',state.user)
-          app.users[state.user.clientID]= state.user
-          //strings.push(`<div style="color:${state.user.color};">• ${state.user.name}</div>`)
-        }
-      })
-
-      //console.log("[awareness]",Array.from(awareness.getStates().values()), changes)
-      //console.log('[app users]',app.users)
-      this.$forceUpdate();
-    })
-
-
-
-    // Sync clients with the y-webrtc provider.
-    let webrtcProvider = new WebrtcProvider('noosphere-demo', this.ydoc, {awareness})
-
-    // Sync clients with the y-websocket provider
-    let websocketProvider = new WebsocketProvider('wss://demos.yjs.dev', 'noosphere-demo', this.ydoc, {awareness})
-    console.log("[providers]", webrtcProvider, websocketProvider)
+    // awareness.on('change', ()/*changes*/ => {
+    //
+    //   // Whenever somebody updates their awareness information,
+    //   // we log all awareness information from all users.
+    //   awareness.getStates().forEach(state => {
+    //     console.log(state)
+    //     if (state.user) {
+    //       //console.log('[state.user]',state.user)
+    //       app.users[state.user.clientID]= state.user
+    //       //strings.push(`<div style="color:${state.user.color};">• ${state.user.name}</div>`)
+    //     }
+    //   })
+    //
+    //   //console.log("[awareness]",Array.from(awareness.getStates().values()), changes)
+    //   //console.log('[app users]',app.users)
+    //   this.$forceUpdate();
+    // })
+    //
+    //
+    //
+    // // Sync clients with the y-webrtc provider.
+    // let webrtcProvider = new WebrtcProvider('noosphere-demo', this.ydoc, {awareness})
+    //
+    // // Sync clients with the y-websocket provider
+    // let websocketProvider = new WebsocketProvider('wss://demos.yjs.dev', 'noosphere-demo', this.ydoc, {awareness})
+    // console.log("[providers]", webrtcProvider, websocketProvider)
 
     // array of numbers which produce a sum
     // this.yarray = this.ydoc.getArray('count')
@@ -297,18 +296,10 @@ export default {
       if(r[0]!= undefined){
         this.user.roomId = r[0].roomId
         this.openRoom()
-      }    
+      }
     },
     randomUser(){
-      let awareness = this.awareness
-
-      this.user = {
-        name: 'User_'+Date.now(),
-        color: '#'+Math.floor(Math.random()*16777215).toString(16),
-        clientID: awareness.clientID,
-        roomId: '',
-        rooms: []
-      }
+      this.$randomUser()
 
     },
     onUserEvent(e){
@@ -515,14 +506,14 @@ export default {
   //   }
   // },
 
-  // computed: {
-  //   room() {
-  //     return this.$store.state.core.room
-  //   },
-  //   rooms() {
-  //     return this.$store.state.core.rooms
-  //   },
-  // }
+  computed: {
+    user() {
+      return this.$store.state.core.user
+    },
+    // users() {
+    //   return this.$store.state.core.users
+    // },
+  }
 
 
 }

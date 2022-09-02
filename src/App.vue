@@ -12,7 +12,8 @@
     </nav>
 
     <router-view/>
-      {{ user }}
+      user :{{ user }}<br>
+      users: {{ users }}
     <b-alert variant="success" show>Noosphere 0 - <i><small>menu</small></i></b-alert>
   </div>
 </template>
@@ -35,8 +36,8 @@ export default {
     user() {
       return this.$store.state.core.user
     },
-    rooms() {
-      return this.$store.state.core.rooms
+    users() {
+      return this.$store.state.core.users
     },
   }
 
