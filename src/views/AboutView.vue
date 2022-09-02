@@ -33,9 +33,9 @@
         and
         <router-link to="/editor" class="m-2"><b-icon font-scale="1.5" icon="pen" aria-hidden="true"></b-icon> Start noosphering</router-link> !
 
-        <hr>
+        <!-- <hr>
         If you want to grab ideas near you and share located ones, you can activate/daesactivate your location in the
-        <router-link to="/config" class="m-2"><b-icon font-scale="1.5" icon="gear" aria-hidden="true"></b-icon> Config</router-link> menu.
+        <router-link to="/config" class="m-2"><b-icon font-scale="1.5" icon="gear" aria-hidden="true"></b-icon> Config</router-link> menu. -->
 
         <!-- <b-button variant="primary" href="/about">More Info</b-button> -->
         <b-button variant="outline-info" class="m-3" size="sm" @click="toggleJumbo">Don't show this block next time</b-button>
