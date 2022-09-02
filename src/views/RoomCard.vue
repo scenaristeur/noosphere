@@ -56,51 +56,84 @@
         <b-button v-b-modal.modal-me size="sm"
         variant="outline-primary">
         {{user.name}}</b-button> -->
-        <table>
-          <thead><th>user</th><th>room</th></thead>
-          <tr v-for="u in users" :key="u.clientID" >
-            <td v-if="u.clientID == user.clientID" ><b-button v-b-modal.modal-me size="sm"
-              variant="outline-primary">
-              <div :style="'color:'+u.color"><b>{{u.name}}</b>
-              </div>
-            </b-button></td>
-            <td v-else>  <div :style="'color:'+u.color"><b>{{u.name}}</b></div> </td>
-            <td><a :href="'?room='+u.roomId">{{u.roomId}}</a></td>
-          </tr>
-        </table>
 
-        <b-modal id="modal-me" title="Change your username and color" @ok="userChanged">
-          <p class="my-4">
-            username<b-input v-model="user.name" placeholder="username" />
-            color <b-input v-model="user.color" type="color" />
-            <!-- <b-button @click="userChanged" variant="info" size="sm">Update user</b-button> -->
-            <b-button @click="randomUser" variant="outline-info" size="sm">Random user</b-button>
-          </p>
-        </b-modal>
-        <hr>
-        <!-- nodes : {{ymap.nodes}}
-        rooms: {{JSON.stringify(rooms)}} -->
 
-        <!-- ymapNodes : {{ymap.map.nodes}} -->
-        <!-- <hr> -->
-        <!-- </div> -->
-      </b-card-text>
-      <!-- <hr>
+        <b-table
+        small
+        selectable
+        select-mode="single"
+        responsive="sm"
+        :items="Object.values(users)"
+        :fields="fields"
+        @row-selected="onRowSelected" >
+        <template #cell(name)="data">
+          <template v-if="data.item.clientID == user.clientID">
+            <b-button v-b-modal.modal-me size="sm"
+            variant="outline-primary">
+            <span :style="'color:'+data.item.color">{{data.item.name}}
+            </span>
+          </b-button>
+          <!-- <span aria-hidden="true">&check;</span> -->
+        </template>
+        <template v-else>
+          <small :style="'color:'+data.item.color"><i>{{data.item.name}}</i></small>
+        </template>
+      </template>
 
-      <hr>
-      ymap : {{ymap}}
-      <hr>
 
-      <hr> -->
-      <!-- yarray : {{yarray}}
-      <button @click="clear">clear</button>
-      <hr>
-      <input v-model="newVal" type="number" placeholder="number, ex: 0 or 10" />
-      <button @click="addToArray">Add</button> -->
+    </b-table>
 
-    </b-card>
 
+    <!-- <table>
+    <thead><th>user</th><th>room</th></thead>
+    <tr v-for="u in users" :key="u.clientID" >
+    <td v-if="u.clientID == user.clientID" ><b-button v-b-modal.modal-me size="sm"
+    variant="outline-primary">
+    <div :style="'color:'+u.color"><b>{{u.name}}</b>
   </div>
+</b-button></td>
+<td v-else>  <div :style="'color:'+u.color"><b>{{u.name}}</b></div> </td>
+<td>
+<b-button
+size="sm"
+variant="light"
+@click="onRoomIdChanged(u.roomId)">{{u.roomId}}</b-button>
+</td>
+</tr>
+</table> -->
+
+<b-modal id="modal-me" title="Change your username and color" @ok="userChanged">
+  <p class="my-4">
+    username<b-input v-model="user.name" placeholder="username" />
+    color <b-input v-model="user.color" type="color" />
+    <!-- <b-button @click="userChanged" variant="info" size="sm">Update user</b-button> -->
+    <b-button @click="randomUser" variant="outline-info" size="sm">Random user</b-button>
+  </p>
+</b-modal>
+<hr>
+<!-- nodes : {{ymap.nodes}}
+rooms: {{JSON.stringify(rooms)}} -->
+
+<!-- ymapNodes : {{ymap.map.nodes}} -->
+<!-- <hr> -->
+<!-- </div> -->
+</b-card-text>
+<!-- <hr>
+
+<hr>
+ymap : {{ymap}}
+<hr>
+
+<hr> -->
+<!-- yarray : {{yarray}}
+<button @click="clear">clear</button>
+<hr>
+<input v-model="newVal" type="number" placeholder="number, ex: 0 or 10" />
+<button @click="addToArray">Add</button> -->
+
+</b-card>
+
+</div>
 
 </b-col>
 
@@ -140,6 +173,15 @@ export default {
     return{
       user: {},
       users: {},
+      fields: [       {
+        key: 'name',
+        sortable: true
+      },
+      {
+        key: 'roomId',
+        label: 'room',
+        sortable: true
+      },],
       // username: "",
       // usercolor: null,
       // roomId: null,
@@ -251,6 +293,12 @@ export default {
     //this.openRoom()
   },
   methods:{
+    onRowSelected(r){
+      if(r[0]!= undefined){
+        this.user.roomId = r[0].roomId
+        this.openRoom()
+      }    
+    },
     randomUser(){
       let awareness = this.awareness
 
@@ -404,23 +452,23 @@ export default {
     //   this.ymap.clear()
     //   this.$forceUpdate();
     // },
-    populateMap(){
-      //  this.ymap.set('map', new Y.Map())
-      //  this.ymap.set('editor_map', new Y.Map())
-      // this.ymap.set('nodes', new Y.Map())
-      // this.ymap.set('links', new Y.Map())
-      // const _map3 = this.ymap.get('map')
-      // _map3.set('deepmap', new Y.Map())
-      // this.ymap.set('stuff one', 'c2')
-      // _map3.set('stuff', 'c3')
-
-      // const _editorMap = this.ymap.get('editor_map')
-
-
-      //let data= { "time": 1661945860245, "blocks": [ { "id": "6tUGo3YdzP", "type": "paragraph", "data": { "text": "dfsg" } }, { "id": "4K-n_v3Ppg", "type": "paragraph", "data": { "text": "sdf" } } ], "version": "2.25.0" }
-
-      this.ymap.set('editor_map', this.editorData)
-    },
+    // populateMap(){
+    //   //  this.ymap.set('map', new Y.Map())
+    //   //  this.ymap.set('editor_map', new Y.Map())
+    //   // this.ymap.set('nodes', new Y.Map())
+    //   // this.ymap.set('links', new Y.Map())
+    //   // const _map3 = this.ymap.get('map')
+    //   // _map3.set('deepmap', new Y.Map())
+    //   // this.ymap.set('stuff one', 'c2')
+    //   // _map3.set('stuff', 'c3')
+    //
+    //   // const _editorMap = this.ymap.get('editor_map')
+    //
+    //
+    //   //let data= { "time": 1661945860245, "blocks": [ { "id": "6tUGo3YdzP", "type": "paragraph", "data": { "text": "dfsg" } }, { "id": "4K-n_v3Ppg", "type": "paragraph", "data": { "text": "sdf" } } ], "version": "2.25.0" }
+    //
+    //   this.ymap.set('editor_map', this.editorData)
+    // },
     // changeStuff(){
     //   const _map3 = this.ymap.get('map')
     //   _map3.set('stuff', this.newStuff)
@@ -439,6 +487,7 @@ export default {
       console.log('[roomId changed]', roomId)
       this.user.roomId = roomId
       this.openRoom()
+      this.$forceUpdate()
     }
   },
   // watch:{

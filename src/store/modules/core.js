@@ -1,5 +1,7 @@
 
 const state = () => ({
+  user: null,
+  users: [],
   query: null,
   rooms: []
 })
@@ -8,6 +10,12 @@ const mutations = {
   setQuery(state, q){
     state.query = q
   },
+  setUser(state, u){
+    state.user = u
+  },
+  setUsers(state, u){
+    state.users = u
+  }
 
 }
 

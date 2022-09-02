@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunknoosphere"]=self["webpackChunknoosphere"]||[]).push([[445],{445:function(s,e,r){r.r(e),r.d(e,{default:function(){return a}});var t=function(){var s=this,e=s._self._c;return e("div",{staticClass:"users-view"},[s._v(" Users : "+s._s(s.users)+" ")])},u=[],n={name:"UsersView",computed:{users(){return this.$store.state.core.users}}},o=n,c=r(1001),i=(0,c.Z)(o,t,u,!1,null,"139f7b20",null),a=i.exports}}]);
+//# sourceMappingURL=445.60f4c3f3.js.map

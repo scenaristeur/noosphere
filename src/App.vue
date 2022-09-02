@@ -1,12 +1,19 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/config">Config</router-link> |
-      <router-link to="/about">About</router-link>
+
+      <router-link to="/" class="m-2"><b-icon font-scale="1.5" icon="house" aria-hidden="true"></b-icon></router-link>
+      <router-link to="/editor" class="m-2"><b-icon font-scale="1.5" icon="pen" aria-hidden="true"></b-icon></router-link>
+      <router-link to="/user" class="m-2"><b-icon font-scale="1.5" icon="person" aria-hidden="true"></b-icon></router-link>
+      <router-link to="/room" class="m-2"><b-icon font-scale="1.5" icon="list-stars" aria-hidden="true"></b-icon></router-link>
+      <router-link to="/config" class="m-2"><b-icon font-scale="1.5" icon="gear" aria-hidden="true"></b-icon></router-link>
+      <router-link to="/about" class="m-2"><b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
+
     </nav>
+
     <router-view/>
-    <b-alert variant="success" show>Noosphere 0 - <i><small>jumbo</small></i></b-alert>
+      {{ user }}
+    <b-alert variant="success" show>Noosphere 0 - <i><small>menu</small></i></b-alert>
   </div>
 </template>
 
@@ -24,6 +31,14 @@ export default {
   created(){
     this.$coreInit({name: "SuperCore"})
   },
+  computed: {
+    user() {
+      return this.$store.state.core.user
+    },
+    rooms() {
+      return this.$store.state.core.rooms
+    },
+  }
 
 }
 </script>

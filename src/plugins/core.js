@@ -4,6 +4,8 @@ const plugin = {
     let store = opts.store
 
     Vue.prototype.$coreInit = async function(/*options = {}*/){
+      let user = JSON.parse(localStorage.getItem('noosphere-user'))
+      store.commit('core/setUser', user)
 
       if (this.$route.query!= undefined){
         console.log("this.$route.query", this.$route.query)
