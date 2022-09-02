@@ -19,23 +19,24 @@
 
 
 
-        <div v-if="user.roomId.length ==0">
-          <b-button  size="sm" variant="info" @click="generateId">Randomize roomId</b-button> or
-
-        </div>
-        <div v-else>
-          <b-button size="sm" variant="outline-info" @click="user.roomId = ''">Clear</b-button>
-
-        </div>
-
-
         <b-input v-model="user.roomId" placeholder="roomId | random | QR"
-        @keyup.enter="openRoom"
-         />
+        @keyup.enter="openRoom" />
+        <b-button v-if="this.user.roomId.length !=0" size="sm" variant="info" @click="openRoom">Go</b-button>
 
-        <span v-if="this.user.roomId.length !=0">
-          <b-button size="sm" variant="info" @click="openRoom">Go</b-button> and
+
+        <span v-if="user.roomId.length ==0">
+          <b-button  size="sm" variant="outline-info" @click="generateId">Randomize roomId</b-button> or
+          <b-button  size="sm" variant="outline-info" @click="nowId">Now roomId</b-button> or
         </span>
+
+        <b-button v-else size="sm" variant="outline-info" @click="user.roomId = ''">Clear</b-button>
+
+
+
+
+
+
+
 
         <QrView :roomId="user.roomId" @roomIdChanged="onRoomIdChanged"/>
         <!-- <hr>
@@ -74,7 +75,7 @@
           </tr>
         </table>
 
-        <b-modal id="modal-me" title="Me" @ok="userChanged">
+        <b-modal id="modal-me" title="Change your username and color" @ok="userChanged">
           <p class="my-4">
             Choose a <b-input v-model="user.name" placeholder="username" />
             and a color <b-input v-model="user.color" type="color" />
@@ -164,20 +165,20 @@ export default {
           {
             "type" : "paragraph",
             "data" : {
-              "text" : "The example of text that was written in <b>one of popular</b> text editors."
+              "text" : "You have just opened a new room in the"
             }
           },
           {
             "type" : "header",
             "data" : {
-              "text" : "With the header of course",
+              "text" : "Noosphere",
               "level" : 2
             }
           },
           {
             "type" : "paragraph",
             "data" : {
-              "text" : "So what do we have?"
+              "text" : "Feel free to click on this text to edit, and don't forget to share this collaborative knowledge tool"
             }
           }
         ],
@@ -306,6 +307,10 @@ export default {
     },
     generateId(){
       this.user.roomId = uuidv4()
+      this.openRoom()
+    },
+    nowId(){
+      this.user.roomId = Date.now()
       this.openRoom()
     },
 

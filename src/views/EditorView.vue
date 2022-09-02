@@ -1,7 +1,7 @@
 <template>
   <b-container fluid class="editor-view">
-    Editor
-    <b-button @click="save">Save</b-button>
+    <!-- Editor
+    <b-button @click="save">Save</b-button> -->
     <div id="editorjs" ></div>
     <!--  {{editorData}} -->
   </b-container>
