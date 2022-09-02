@@ -34,15 +34,31 @@
 
   <b-alert variant="success" show>Noosphere 0 - <i><small>menu</small></i></b-alert>
 
-  <b-modal id="modal-pin" title="Pin Data on Web3.storage" @ok="pin">
+  <b-modal id="modal-pin" title="Pin Data on Web3.storage">
     <p class="my-4">
-      <b-input v-model="web3Token" placeholder="web3token" />
+      see <a href="https://web3.storage/docs/" target="_blank"> https://web3.storage/docs/</a> (1GB free)<br>
+      <a href="https://web3.storage/tokens/" target="_blank">your web3.storage tokens</a>
+      <b-input v-model="token" placeholder="web3.storage token" />
+
       <b-input v-model="fileName" placeholder="filename" />
 
-      {{data}}
 
+      <b-form-textarea
+      id="textarea"
+      v-model="data"
+      placeholder="Enter something..."
+      rows="3"
+      max-rows="6"
+      ></b-form-textarea>
+      <b-button @click="pin">Pin it</b-button>
+      <br>
+      {{ messages }}
+      <br>
+      <span v-if="cid != null">
 
-
+        saved on ipfs with cid
+        <a :href="'https://'+cid+'.ipfs.w3s.link/'" target="_blank">{{cid}}</a>
+      </span>
     </p>
   </b-modal>
 
@@ -51,6 +67,7 @@
 
 
 <script>
+import { Web3Storage } from 'web3.storage';
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
 export default {
@@ -66,12 +83,17 @@ export default {
       dismissCountDown: 0,
       showDismissibleAlert: false,
       data: null,
-      fileName: ""
+      fileName: "",
+      token: null,
+      messages: [],
+      cid: null
     }
   },
 
   created(){
     this.$coreInit({name: "SuperCore"})
+    let web3Token = localStorage.getItem('noosphere-web3storage-token')
+    this.$store.commit('core/setWeb3Token', web3Token)
   },
   methods:{
     share(){
@@ -88,21 +110,58 @@ export default {
     openPinModal(){
       let data = this.$store.state.core.editorData
       delete data.clientID
-      this.data = data
+      this.data = JSON.stringify(data, null, 2)
       this.fileName = this.user.roomId
-
+this.cid = null
       this.$bvModal.show("modal-pin")
     },
-    pin(){
-      console.log(this.user.roomId, this.data)
-      this.file = new File([this.data], this.user.roomId+'.json')
-      console.log(this.file)
+    async pin(){
+      if( this.token == null || this.token.length == 0){
+        alert("you need a web3.storage token, see https://web3.storage/docs/")
+        return
+      }else {
+        localStorage.setItem('noosphere-web3storage-token', this.token);
+        console.log(this.token, this.user.roomId, this.data)
+        this.file = new File([this.data], this.fileName+'.json')
+        console.log(this.file)
+        this.messages.push("[pinning]: "+this.fileName)
+
+        this.client = new Web3Storage({ token: this.token });
+
+
+        const onRootCidReady = rootCid => {
+          console.log('-- root cid:', rootCid)
+          this.messages.push("[root cid] "+rootCid)
+        }
+        const onStoredChunk = chunkSize => {
+          console.log(`stored chunk of ${chunkSize} bytes`)
+          this.messages.push("[stored chunk of] "+chunkSize+' bytes')
+        }
+
+        const rootCid = await this.client.put([this.file], {
+          name: 'noosphere_'+this.fileName,
+          maxRetries: 3,
+          onRootCidReady,
+          onStoredChunk
+        });
+        console.log(rootCid)
+        this.messages.push("[done]")
+        this.cid = rootCid
+      }
+
+
+
     },
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown
     },
     showAlert() {
       this.dismissCountDown = this.dismissSecs
+    }
+  },
+  watch:{
+    web3Token(){
+      this.token = this.web3Token
     }
   },
   computed: {
