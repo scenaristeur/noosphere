@@ -85,6 +85,7 @@ const plugin = {
       localStorage.setItem('noosphere-user', JSON.stringify(user));
       store.state.core.awareness.setLocalStateField('user', user)
       console.log("[user changed]"/*, this.awareness*/, user)
+      store.commit('core/setUserById', user)
     }
 
 

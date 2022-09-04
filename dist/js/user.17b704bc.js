@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunknoosphere"]=self["webpackChunknoosphere"]||[]).push([[378],{2181:function(e,s,r){r.r(s),r.d(s,{default:function(){return a}});var n=function(){var e=this,s=e._self._c;return s("div",{staticClass:"user-view"},[s("UsersView")],1)},t=[],u={name:"UserView",components:{UsersView:()=>r.e(896).then(r.bind(r,3896))},computed:{user(){return this.$store.state.core.user}}},c=u,i=r(1001),o=(0,i.Z)(c,n,t,!1,null,"4c37154c",null),a=o.exports}}]);
+//# sourceMappingURL=user.17b704bc.js.map

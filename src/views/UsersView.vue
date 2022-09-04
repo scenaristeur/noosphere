@@ -4,9 +4,11 @@
 
     user : {{user}}<hr> -->
 
+
     <b-table
     small
     selectable
+    sticky-header
     select-mode="single"
     responsive="sm"
     :items="Object.values(users)"
@@ -16,18 +18,20 @@
       <template v-if="data.item.clientID == user.clientID">
         <b-button v-b-modal.modal-me size="sm"
         variant="outline-primary">
-        <span :style="'color:'+data.item.color">{{data.item.name}}
+        <span :style="'color:'+data.item.color"><b>{{data.item.name}}</b>
         </span>
       </b-button>
       <!-- <span aria-hidden="true">&check;</span> -->
     </template>
     <template v-else>
-      <small :style="'color:'+data.item.color"><i>{{data.item.name}}</i></small>
+      <small :style="'color:'+data.item.color"><i><b>{{data.item.name}}</b></i></small>
     </template>
   </template>
 
 
 </b-table>
+{{ Object.values(users).length }} users
+
 <b-modal id="modal-me" title="Change your username and color" @ok="userChanged">
   <p class="my-4">
     username<b-input v-model="user.name" placeholder="username" />
