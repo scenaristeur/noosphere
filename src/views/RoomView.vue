@@ -1,13 +1,20 @@
 <template>
   <div class="room-view">
-    Room
+    <RoomCard />
+    <RoomHistory />
   </div>
 </template>
 
 <script>
 export default {
   name: 'RoomView',
-
+  components: {
+    'RoomCard': ()=>import('@/views/RoomCard'),
+    'RoomHistory': ()=>import('@/views/RoomHistory'),
+    // 'DataCaching': ()=>import('@/views/experiments/DataCaching'),
+    // 'LevelgraphJsonld': ()=>import('@/views/experiments/LevelgraphJsonld'),
+  },
+  
 
 }
 </script>

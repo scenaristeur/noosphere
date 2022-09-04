@@ -71,7 +71,7 @@ export default {
 
         url: null,
         scanner: null,
-    
+
       }
     },
 
