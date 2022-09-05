@@ -14,7 +14,8 @@
     responsive="sm"
     :items="Object.values(users)"
     :fields="fields"
-    @row-selected="onRowSelected" >
+    @row-selected="onRowSelected"
+    caption-top >
     <template #cell(name)="data">
       <template v-if="data.item.clientID == user.clientID">
         <b-button v-b-modal.modal-me size="sm"
@@ -34,9 +35,10 @@
 
   </template>
 
+  <template #table-caption>{{ Object.values(users).length }} users</template>
 
 </b-table>
-{{ Object.values(users).length }} users
+
 
 <b-modal id="modal-me" title="Change your username and color" @ok="userChanged">
   <p class="my-4">
