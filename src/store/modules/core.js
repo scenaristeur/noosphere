@@ -1,10 +1,10 @@
+import Vue from 'vue'
 
 const state = () => ({
   user: null,
   awareness: null,
   users: {},
   query: null,
-  rooms: [],
   usersUpdateDate: null,
   yDoc: null,
   yMap: null,
@@ -52,6 +52,20 @@ const mutations = {
   },
   setUser(state, u){
     state.user = u
+    this.commit('core/updateRoomHistory', u.roomId)
+  },
+  removeRoomIdFromHistory(state, roomId){
+    console.log(roomId)
+    delete state.user.rooms[roomId]
+    console.log("deleted", state.user.rooms)
+  },
+  updateRoomHistory(state,roomId){
+    if (roomId.length > 0){
+      this.commit('core/removeRoomIdFromHistory', roomId)
+      state.user.rooms[roomId] = {roomId: roomId, date: Date.now()}
+      console.log("[history]", state.user.rooms)
+      Vue.prototype.$userChanged()
+    }
   },
   setAwareness(state, a){
     state.awareness = a

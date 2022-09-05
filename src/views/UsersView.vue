@@ -7,6 +7,7 @@
 
     <b-table
     small
+    hover
     selectable
     sticky-header
     select-mode="single"
@@ -26,6 +27,11 @@
     <template v-else>
       <small :style="'color:'+data.item.color"><i><b>{{data.item.name}}</b></i></small>
     </template>
+  </template>
+  <template #cell(rooms)="data">
+    {{Object.keys(data.item.rooms)}}
+
+
   </template>
 
 
@@ -57,50 +63,56 @@ export default {
           key: 'roomId',
           label: 'room',
           sortable: true
-        },],
-      }
-    },
-    methods:{
-      onRowSelected(r){
-        if(r[0]!= undefined){
-          this.user.roomId = r[0].roomId
-          this.$openRoom()
-        }
-      },
-      userChanged(){
-        this.$store.commit('core/setUser', this.user)
-        this.$userChanged()
-      },
-      randomUser(){
-        this.$randomUser()
-      }
-    },
-    watch:{
-      usersUpdateDate(){
-        console.log(this.usersUpdateDate)
-        this.$forceUpdate()
-      }
-    },
-    computed: {
-      users: {
-        cache: false,
-        get() {
-          return this.$store.state.core.users;
         },
-      },
-      user() {
-        return this.$store.state.core.user
-      },
-      usersUpdateDate() {
-        return this.$store.state.core.usersUpdateDate
-      }
+        {
+          key: 'rooms',
+          label: 'rooms',
+          sortable: true
+        },
+      ],
     }
-
+  },
+  methods:{
+    onRowSelected(r){
+      if(r[0]!= undefined){
+        this.user.roomId = r[0].roomId
+        this.$openRoom()
+      }
+    },
+    userChanged(){
+      this.$store.commit('core/setUser', this.user)
+      this.$userChanged()
+    },
+    randomUser(){
+      this.$randomUser()
+    }
+  },
+  watch:{
+    usersUpdateDate(){
+      console.log(this.usersUpdateDate)
+      this.$forceUpdate()
+    }
+  },
+  computed: {
+    users: {
+      cache: false,
+      get() {
+        return this.$store.state.core.users;
+      },
+    },
+    user() {
+      return this.$store.state.core.user
+    },
+    usersUpdateDate() {
+      return this.$store.state.core.usersUpdateDate
+    }
   }
-  </script>
 
-  <style lang="css" scoped>
-  .users-view {
+}
+</script>
 
-  }
-  </style>
+<style lang="css" scoped>
+.users-view {
+
+}
+</style>

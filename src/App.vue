@@ -78,7 +78,7 @@
 
   </b-modal>
 
-  <b-alert variant="success" show>Noosphere 0 - <i><small>mermaid & one user fix</small></i></b-alert>
+  <b-alert variant="success" show>Noosphere 0 - <i><small>history</small></i></b-alert>
 
 </div>
 </template>

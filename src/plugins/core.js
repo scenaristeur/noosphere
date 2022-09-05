@@ -96,7 +96,7 @@ const plugin = {
         color: '#'+Math.floor(Math.random()*16777215).toString(16),
         clientID: store.state.core.awareness.clientID,
         roomId: '',
-        rooms: []
+        rooms: {}
       }
       store.commit('core/setUser', user)
       Vue.prototype.$userChanged()
@@ -107,6 +107,7 @@ const plugin = {
       let user = store.state.core.user
       let ymap = store.state.core.yDoc.getMap(user.roomId)
       store.commit('core/setYmap', ymap)
+      store.commit('core/updateRoomHistory', user.roomId)
       console.log("[openRoom]", user.roomId)
       //this.updateUser()
 
@@ -204,11 +205,7 @@ const plugin = {
       store.commit('core/setEditorData', editorData)
       store.commit('core/setUser', user)
       Vue.prototype.$openRoom()
-
-
-
     }
-
   }
 }
 

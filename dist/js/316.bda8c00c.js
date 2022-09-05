@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunknoosphere"]=self["webpackChunknoosphere"]||[]).push([[316],{8316:function(e,s,n){n.r(s),n.d(s,{default:function(){return l}});var o=function(){var e=this,s=e._self._c;return s("div",{staticClass:"room-history"},[e._v(" History ")])},r=[],t={name:"RoomHistory"},u=t,i=n(1001),a=(0,i.Z)(u,o,r,!1,null,"ab0ddd0e",null),l=a.exports}}]);
-//# sourceMappingURL=316.bda8c00c.js.map
