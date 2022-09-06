@@ -1,6 +1,7 @@
 <template>
   <div class="room-card" id="room-card">
     <b-card
+    v-if="user!= null"
     title="Open a room"
     tag="article"
     style="max-width: 20rem;"

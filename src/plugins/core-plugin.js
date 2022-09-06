@@ -14,110 +14,39 @@ const plugin = {
     let store = opts.store
 
     Vue.prototype.$coreInit = async function(options){
-      await getRouterParameters()
-      await getLocalStorageUser()
-      await createYdoc()
-      await createProviders()
-      await createAwareness()
-
-
-      let user = JSON.parse(localStorage.getItem('noosphere-user'))
       console.log('{init options}', options)
+      let ydoc = await createYdoc()
+      let awareness = await createAwareness(ydoc)
 
-      let ydoc = new Y.Doc()
-      store.commit('core/setYdoc', ydoc)
-      // this allows you to instantly get the (cached) documents data
-      let indexeddbProvider = new IndexeddbPersistence('noosphere-demo', ydoc)
-      indexeddbProvider.whenSynced.then((data) => {
-        console.log('[indexeddbProvider] loaded data from indexed db', data)
-        //  Vue.prototype.$openRoom()
-        // console.log("should open room")
-      })
-
-
-      let awareness = new Awareness(ydoc)
-      store.commit('core/setAwareness', awareness)
-
-      if (user == undefined || user == null){
-        user = await Vue.prototype.$randomUser()
-      }else{
-        //awareness.clientID = this.user.clientID
-      }
-
-
-      await opts.router.onReady(router=>{
-        console.log('[RRRRRouter]',router)
-
-        if(router != undefined && router.name == "share"){
-          console.log(router.name)
-          console.log(router.query)
-          console.log(user)
-          shareInit(user)
-        }else{
-          // if router is undefined we use route
-          console.log(options.route.query)
-          if(options.route.query.room!= undefined){
-            user.roomId = options.route.query.room
-          }
-          console.log(user)
-          // let   testok = false
-          // if(testok == true){
-          defaultInit(user)
-          // }
-
-        }
-        if(user.rommId == undefined){
-          user.rommId = uuidv4()
-        }
-
-        store.commit('core/setUser', user)
-        Vue.prototype.$userChanged()
-
-        awareness.on('change', ()/*changes*/ => {
-
-          // Whenever somebody updates their awareness information,
-          // we log all awareness information from all users.
-          awareness.getStates().forEach(state => {
-            console.log(state)
-            if (state.user) {
-              console.log('[state.user]',state.user)
-              //console.log('[state.user]',state.user)
-              // app.users[state.user.clientID]= state.user
-              // store.state.core.users[state.user.clientID] = state.user
-              store.commit('core/setUserById', state.user)
-              //  store.commit('core/setUsersUpdateDate', Date.now())
-
-              //strings.push(`<div style="color:${state.user.color};">• ${state.user.name}</div>`)
-            }
-          })
-          store.commit('core/setUsersUpdateDate', Date.now())
-          //console.log("[awareness]",Array.from(awareness.getStates().values()), changes)
-          //console.log('[app users]',app.users)
-          //  this.$forceUpdate();
-        })
-
-
-
-        // Sync clients with the y-webrtc provider.
-        let webrtcProvider = new WebrtcProvider('noosphere-demo', ydoc, {awareness})
-
-        // Sync clients with the y-websocket provider
-        let websocketProvider = new WebsocketProvider('wss://demos.yjs.dev', 'noosphere-demo', ydoc, {awareness})
-        console.log("[providers]", webrtcProvider, websocketProvider)
-
-        // if (this.$route.query!= undefined){
-        //   console.log("this.$route.query", this.$route.query)
-        //   store.commit('core/setQuery', this.$route.query)
-        //
-        // }
-        if(router.name != "share"){
-          Vue.prototype.$openRoom()
-        }
+      // let user =
+      let user = await getUser()
+      user = await getRouterParameters(user, options.route)
+      console.log(user)
+      await createProviders(ydoc, awareness, user)
 
 
 
 
-      })
+      // await opts.router.onReady(router=>{
+      //   console.log('[RRRRRouter]',router)
+      //
+      //   if(user.rommId == undefined){
+      //     user.rommId = uuidv4()
+      //   }
+      //
+      //   // if (this.$route.query!= undefined){
+      //   //   console.log("this.$route.query", this.$route.query)
+      //   //   store.commit('core/setQuery', this.$route.query)
+      //   //
+      //   // }
+      //   if(router.name != "share"){
+      //     Vue.prototype.$openRoom()
+      //   }
+      //
+      //
+      //
+      //
+      // })
 
 
 
@@ -140,11 +69,9 @@ const plugin = {
         name: 'User_'+Date.now(),
         color: '#'+Math.floor(Math.random()*16777215).toString(16),
         clientID: store.state.core.awareness.clientID,
-        roomId: '',
+        //  roomId: '',
         rooms: {}
       }
-      store.commit('core/setUser', user)
-      Vue.prototype.$userChanged()
       return user
     }
     Vue.prototype.$openRoom = async function(){
@@ -252,30 +179,100 @@ const plugin = {
       Vue.prototype.$openRoom()
     }
 
-    async function shareInit(user){
-      console.log("{share}", user)
-    }
-    async function defaultInit(user){
-      console.log("{default}", user)
-      // user.roomId = opts.router.query.room || user.roomId || uuidv4()
-
-    }
 
     ////////////////
-    async function getRouterParameters(){
-      console.log("{getRouterParameters}")
-    }
-    async function getLocalStorageUser(){
-      console.log("{getLocalStorageUser}")
-    }
+
     async function createYdoc(){
-      console.log("{createYdoc}")
+      let ydoc = new Y.Doc()
+      store.commit('core/setYdoc', ydoc)
+      console.log("{createYdoc}", ydoc)
+      return ydoc
     }
-    async function createProviders(){
-      console.log("{createProviders}")
-    }
-    async function createAwareness(){
+
+    async function createAwareness(ydoc){
+      let awareness = new Awareness(ydoc)
+      store.commit('core/setAwareness', awareness)
       console.log("{createAwareness}")
+      awareness.on('change', ()/*changes*/ => {
+        awareness.getStates().forEach(state => {
+          // console.log(state)
+          if (state.user) {
+            //  console.log('[state.user]',state.user)
+            store.commit('core/setUserById', state.user)
+          }
+        })
+        store.commit('core/setUsersUpdateDate', Date.now())
+      })
+    }
+
+    async function createProviders(ydoc, awareness, user){
+      console.log("{createProviders}")
+      // this allows you to instantly get the (cached) documents data
+
+      // Sync clients with the y-webrtc provider.
+      // let webrtcProvider =
+      new WebrtcProvider('noosphere-demo', ydoc, {awareness})
+
+      // Sync clients with the y-websocket provider
+      // let websocketProvider =
+      new WebsocketProvider('wss://demos.yjs.dev', 'noosphere-demo', ydoc, {awareness})
+      // console.log("[providers]", webrtcProvider, websocketProvider)
+      let indexeddbProvider = new IndexeddbPersistence('noosphere-demo', ydoc)
+      let syncedData = await indexeddbProvider.whenSynced
+      console.log('[indexeddbProvider] loaded data from indexed db', syncedData)
+      await end(user)
+      // .then(async function(data){
+      //   console.log('[indexeddbProvider] loaded data from indexed db', data)
+      //   //  Vue.prototype.$openRoom()
+      //   // console.log("should open room")
+      //   console.log("user",user)
+      //   await end(user)
+      // })
+    }
+
+
+    async function getRouterParameters(user, route){
+      console.log("{getRouterParameters}",opts.router, route)
+
+      await opts.router.onReady(router=>{
+        console.log('[RRRRRouter]',router)
+        if(router != undefined && router.name == "share"){
+          console.log(router.name)
+          console.log(router.query)
+          //console.log(user)
+          user.isSharing = router.query
+        }else{
+          // if router is undefined we use route
+          console.log(route.query)
+          route.query.room != undefined ? user.roomId = route.query.room : ''
+        }
+
+
+      })
+      console.log(user)
+      return user
+
+
+    }
+    async function getUser(){
+      let user = JSON.parse(localStorage.getItem('noosphere-user'))
+
+      if (user == undefined || user == null){
+        user = await Vue.prototype.$randomUser()
+      }
+      console.log("{getUser}", user)
+      return user
+    }
+
+
+    async function end(user){
+      console.log(user.isSharing)
+      if(user.isSharing == undefined && user.roomId == undefined){
+        user.roomId = uuidv4()
+      }
+      store.commit('core/setUser', user)
+      Vue.prototype.$userChanged()
+      console.log('{set local storage user, send awareness, open room}', user)
     }
 
   }

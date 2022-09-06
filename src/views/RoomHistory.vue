@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid class="room-history">
+  <b-container fluid class="room-history" v-if="user != null">
 
     <b-col lg="6" class="my-1">
       <b-form-group

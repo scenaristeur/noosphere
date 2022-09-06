@@ -83,6 +83,17 @@ B-->D;
 C-->D;
 ```
 
+
+
+# route/router test
+- http://127.0.0.1:8080/
+- room parameter http://127.0.0.1:8080/?room=4
+- share http://127.0.0.1:8080/share?title=titre&text=blopa&url=http://scenaristeur.github.io/agent
+
+# share
+- https://web.dev/web-share-target/ & https://web.dev/web-share/
+
+
 ## Project setup
 ```
 npm install

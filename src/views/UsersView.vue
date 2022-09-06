@@ -6,6 +6,7 @@
 
 
     <b-table
+    v-if="user != null"
     small
     hover
     selectable
@@ -41,7 +42,7 @@
 
 
 <b-modal id="modal-me" title="Change your username and color" @ok="userChanged">
-  <p class="my-4">
+  <p class="my-4" v-if="user!=null">
     username<b-input v-model="user.name" placeholder="username" />
     color <b-input v-model="user.color" type="color" />
     <!-- <b-button @click="userChanged" variant="info" size="sm">Update user</b-button> -->
