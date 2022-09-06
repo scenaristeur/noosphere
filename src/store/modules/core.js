@@ -74,6 +74,7 @@ const mutations = {
     state.users = u
   },
   setUserById(state, u){
+    console.log('[store setUserById]',u)
     state.users[u.clientID] = u
     console.log(state.users)
   },

@@ -13,8 +13,9 @@ const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
 
-    Vue.prototype.$coreInit = async function(/*options = {}*/){
+    Vue.prototype.$coreInit = async function(options){
       let user = JSON.parse(localStorage.getItem('noosphere-user'))
+      console.log('{init options}', options)
 
       let ydoc = new Y.Doc()
       store.commit('core/setYdoc', ydoc)
@@ -22,7 +23,7 @@ const plugin = {
       let indexeddbProvider = new IndexeddbPersistence('noosphere-demo', ydoc)
       indexeddbProvider.whenSynced.then((data) => {
         console.log('[indexeddbProvider] loaded data from indexed db', data)
-        Vue.prototype.$openRoom()
+        //  Vue.prototype.$openRoom()
         // console.log("should open room")
       })
 
@@ -36,52 +37,89 @@ const plugin = {
         //awareness.clientID = this.user.clientID
       }
 
-      user.roomId = this.$route.query.room || user.roomId || uuidv4()
 
-      store.commit('core/setUser', user)
-      Vue.prototype.$userChanged()
+      await opts.router.onReady(router=>{
+        console.log('[RRRRRouter]',router)
 
-      awareness.on('change', ()/*changes*/ => {
-
-        // Whenever somebody updates their awareness information,
-        // we log all awareness information from all users.
-        awareness.getStates().forEach(state => {
-          console.log(state)
-          if (state.user) {
-            //console.log('[state.user]',state.user)
-            // app.users[state.user.clientID]= state.user
-            // store.state.core.users[state.user.clientID] = state.user
-            store.commit('core/setUserById', state.user)
-            //  store.commit('core/setUsersUpdateDate', Date.now())
-
-            //strings.push(`<div style="color:${state.user.color};">• ${state.user.name}</div>`)
+        if(router != undefined && router.name == "share"){
+          console.log(router.name)
+          console.log(router.query)
+          console.log(user)
+          shareInit(user)
+        }else{
+          // if router is undefined we use route
+          console.log(options.route.query)
+          if(options.route.query.room!= undefined){
+            user.roomId = options.route.query.room
           }
+          console.log(user)
+          // let   testok = false
+          // if(testok == true){
+          defaultInit(user)
+          // }
+
+        }
+        if(user.rommId == undefined){
+          user.rommId = uuidv4()
+        }
+
+        store.commit('core/setUser', user)
+        Vue.prototype.$userChanged()
+
+        awareness.on('change', ()/*changes*/ => {
+
+          // Whenever somebody updates their awareness information,
+          // we log all awareness information from all users.
+          awareness.getStates().forEach(state => {
+            console.log(state)
+            if (state.user) {
+              console.log('[state.user]',state.user)
+              //console.log('[state.user]',state.user)
+              // app.users[state.user.clientID]= state.user
+              // store.state.core.users[state.user.clientID] = state.user
+              store.commit('core/setUserById', state.user)
+              //  store.commit('core/setUsersUpdateDate', Date.now())
+
+              //strings.push(`<div style="color:${state.user.color};">• ${state.user.name}</div>`)
+            }
+          })
+          store.commit('core/setUsersUpdateDate', Date.now())
+          //console.log("[awareness]",Array.from(awareness.getStates().values()), changes)
+          //console.log('[app users]',app.users)
+          //  this.$forceUpdate();
         })
-        store.commit('core/setUsersUpdateDate', Date.now())
-        //console.log("[awareness]",Array.from(awareness.getStates().values()), changes)
-        //console.log('[app users]',app.users)
-        //  this.$forceUpdate();
+
+
+
+        // Sync clients with the y-webrtc provider.
+        let webrtcProvider = new WebrtcProvider('noosphere-demo', ydoc, {awareness})
+
+        // Sync clients with the y-websocket provider
+        let websocketProvider = new WebsocketProvider('wss://demos.yjs.dev', 'noosphere-demo', ydoc, {awareness})
+        console.log("[providers]", webrtcProvider, websocketProvider)
+
+        // if (this.$route.query!= undefined){
+        //   console.log("this.$route.query", this.$route.query)
+        //   store.commit('core/setQuery', this.$route.query)
+        //
+        // }
+        if(router.name != "share"){
+          Vue.prototype.$openRoom()
+        }
+
+
+
+
       })
 
 
 
-      // Sync clients with the y-webrtc provider.
-      let webrtcProvider = new WebrtcProvider('noosphere-demo', ydoc, {awareness})
-
-      // Sync clients with the y-websocket provider
-      let websocketProvider = new WebsocketProvider('wss://demos.yjs.dev', 'noosphere-demo', ydoc, {awareness})
-      console.log("[providers]", webrtcProvider, websocketProvider)
-
-      // if (this.$route.query!= undefined){
-      //   console.log("this.$route.query", this.$route.query)
-      //   store.commit('core/setQuery', this.$route.query)
-      //
-      // }
     }
 
 
     Vue.prototype.$userChanged = async function(){
       let user = store.state.core.user
+      console.log('[user Changed]', user)
       localStorage.setItem('noosphere-user', JSON.stringify(user));
       store.state.core.awareness.setLocalStateField('user', user)
       console.log("[user changed]"/*, this.awareness*/, user)
@@ -205,6 +243,22 @@ const plugin = {
       store.commit('core/setEditorData', editorData)
       store.commit('core/setUser', user)
       Vue.prototype.$openRoom()
+    }
+
+    async function shareInit(user){
+      console.log("{share}", user)
+    }
+    async function defaultInit(user){
+      console.log("{default}", user)
+
+
+
+
+
+      // user.roomId = opts.router.query.room || user.roomId || uuidv4()
+
+
+
     }
   }
 }

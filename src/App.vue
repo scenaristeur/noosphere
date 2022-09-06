@@ -78,7 +78,7 @@
 
   </b-modal>
 
-  <b-alert variant="success" show>Noosphere 0 - <i><small>history</small></i></b-alert>
+  <b-alert variant="success" show>Noosphere 0 - <i><small>sharing</small></i></b-alert>
 
 </div>
 </template>
@@ -110,13 +110,14 @@ export default {
   },
 
   created(){
-    this.$coreInit({name: "SuperCore"})
-
+    console.log(this.$route)
+    this.$coreInit({name: "SuperCore", route: this.$route})
   },
   mounted(){
     let web3Token = localStorage.getItem('noosphere-web3storage-token')
     this.$store.commit('core/setWeb3Token', web3Token)
     console.log('token', web3Token)
+
   },
   methods:{
     share(){
