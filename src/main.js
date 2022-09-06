@@ -4,7 +4,7 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 
-import CorePlugin from './plugins/core';
+import CorePlugin from './plugins/core-plugin';
 Vue.use(CorePlugin, {store: store, router: router});
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'

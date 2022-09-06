@@ -35,7 +35,7 @@ test if room exist --> if yes show existing room
 append/add to room ? create new room ? replace ?
 <hr>
 <b-button @click="save" size="sm" variant="info">Create a new Room </b-button>
-<b-button @click="save" size="sm" variant="info">Appens to room</b-button>
+<b-button @click="save" size="sm" variant="info">Appends to room</b-button>
 </b-container>
 
 {{ query }}

@@ -14,6 +14,13 @@ const plugin = {
     let store = opts.store
 
     Vue.prototype.$coreInit = async function(options){
+      await getRouterParameters()
+      await getLocalStorageUser()
+      await createYdoc()
+      await createProviders()
+      await createAwareness()
+
+
       let user = JSON.parse(localStorage.getItem('noosphere-user'))
       console.log('{init options}', options)
 
@@ -250,16 +257,27 @@ const plugin = {
     }
     async function defaultInit(user){
       console.log("{default}", user)
-
-
-
-
-
       // user.roomId = opts.router.query.room || user.roomId || uuidv4()
 
-
-
     }
+
+    ////////////////
+    async function getRouterParameters(){
+      console.log("{getRouterParameters}")
+    }
+    async function getLocalStorageUser(){
+      console.log("{getLocalStorageUser}")
+    }
+    async function createYdoc(){
+      console.log("{createYdoc}")
+    }
+    async function createProviders(){
+      console.log("{createProviders}")
+    }
+    async function createAwareness(){
+      console.log("{createAwareness}")
+    }
+
   }
 }
 
