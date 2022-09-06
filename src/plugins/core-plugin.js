@@ -197,7 +197,7 @@ const plugin = {
         awareness.getStates().forEach(state => {
           // console.log(state)
           if (state.user) {
-            //  console.log('[state.user]',state.user)
+            console.log('[state.user]',state.user)
             store.commit('core/setUserById', state.user)
           }
         })
@@ -211,76 +211,81 @@ const plugin = {
 
       // Sync clients with the y-webrtc provider.
       // let webrtcProvider =
-      new WebrtcProvider('noosphere-demo', ydoc, {awareness})
+      new WebrtcProvider('noosphere-demo', ydoc, {awareness,
+        signaling: [
+          "wss://y-webrtc-signaling-eu.herokuapp.com",
+          "wss://y-webrtc-signaling-us.herokuapp.com",
+          "wss://signaling.yjs.dev"
+        ]})
 
-      // Sync clients with the y-websocket provider
-      // let websocketProvider =
-      new WebsocketProvider('wss://demos.yjs.dev', 'noosphere-demo', ydoc, {awareness})
-      // console.log("[providers]", webrtcProvider, websocketProvider)
-      let indexeddbProvider = new IndexeddbPersistence('noosphere-demo', ydoc)
-      let syncedData = await indexeddbProvider.whenSynced
-      console.log('[indexeddbProvider] loaded data from indexed db', syncedData)
-      await end(user)
-      // .then(async function(data){
-      //   console.log('[indexeddbProvider] loaded data from indexed db', data)
-      //   //  Vue.prototype.$openRoom()
-      //   // console.log("should open room")
-      //   console.log("user",user)
-      //   await end(user)
-      // })
-    }
+        // Sync clients with the y-websocket provider
+        // let websocketProvider =
+        new WebsocketProvider('wss://demos.yjs.dev', 'noosphere-demo', ydoc, {awareness })
+        // console.log("[providers]", webrtcProvider, websocketProvider)
+        let indexeddbProvider = new IndexeddbPersistence('noosphere-demo', ydoc)
+        let syncedData = await indexeddbProvider.whenSynced
+        console.log('[indexeddbProvider] loaded data from indexed db', syncedData)
+        await end(user)
+        // .then(async function(data){
+        //   console.log('[indexeddbProvider] loaded data from indexed db', data)
+        //   //  Vue.prototype.$openRoom()
+        //   // console.log("should open room")
+        //   console.log("user",user)
+        //   await end(user)
+        // })
+      }
 
 
-    async function getRouterParameters(user, route){
-      console.log("{getRouterParameters}",opts.router, route)
+      async function getRouterParameters(user, route){
+        console.log("{getRouterParameters}",opts.router, route)
 
-      await opts.router.onReady(router=>{
-        console.log('[RRRRRouter]',router)
-        if(router != undefined && router.name == "share"){
-          console.log(router.name)
-          console.log(router.query)
-          //console.log(user)
-          user.isSharing = router.query
-        }else{
-          // if router is undefined we use route
-          console.log(route.query)
-          route.query.room != undefined ? user.roomId = route.query.room : ''
+        await opts.router.onReady(router=>{
+          console.log('[RRRRRouter]',router)
+          if(router != undefined && router.name == "share"){
+            console.log(router.name)
+            console.log(router.query)
+            //console.log(user)
+            user.isSharing = router.query
+          }else{
+            // if router is undefined we use route
+            console.log(route.query)
+            route.query.room != undefined ? user.roomId = route.query.room : ''
+          }
+
+
+        })
+        console.log(user)
+        return user
+
+
+      }
+      async function getUser(){
+        let user = JSON.parse(localStorage.getItem('noosphere-user'))
+
+        if (user == undefined || user == null){
+          user = await Vue.prototype.$randomUser()
         }
-
-
-      })
-      console.log(user)
-      return user
-
-
-    }
-    async function getUser(){
-      let user = JSON.parse(localStorage.getItem('noosphere-user'))
-
-      if (user == undefined || user == null){
-        user = await Vue.prototype.$randomUser()
+        console.log("{getUser}", user)
+        return user
       }
-      console.log("{getUser}", user)
-      return user
-    }
 
 
-    async function end(user){
-      console.log(user.isSharing)
-      if(user.isSharing == undefined && user.roomId == undefined){
-        user.roomId = uuidv4()
+      async function end(user){
+        console.log(user.isSharing)
+        if(user.isSharing == undefined && user.roomId == undefined){
+          user.roomId = uuidv4()
+        }
+        store.commit('core/setUser', user)
+        Vue.prototype.$userChanged()
+        console.log('{set local storage user, send awareness, open room}', user)
       }
-      store.commit('core/setUser', user)
-      Vue.prototype.$userChanged()
-      console.log('{set local storage user, send awareness, open room}', user)
-    }
 
+    }
   }
-}
 
-// Auto-install
-if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(plugin)
-}
+  // Auto-install
+  if (typeof window !== 'undefined' && window.Vue) {
+    window.Vue.use(plugin)
+  }
 
-export default plugin
+  export default plugin
