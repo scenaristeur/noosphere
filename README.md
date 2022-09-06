@@ -89,6 +89,10 @@ C-->D;
 - http://127.0.0.1:8080/
 - room parameter http://127.0.0.1:8080/?room=4
 - share http://127.0.0.1:8080/share?title=titre&text=blopa&url=http://scenaristeur.github.io/agent
+- room not exist http://127.0.0.1:8080/share?title=title_not_exist&text=blopa&url=http%3A%2F%2Fscenaristeur.github.io%2Fagent
+- room exist http://127.0.0.1:8080/share?title=troom exist&text=blopa&url=http%3A%2F%2Fscenaristeur.github.io%2Fagent
+
+
 
 # share
 - https://web.dev/web-share-target/ & https://web.dev/web-share/

@@ -19,37 +19,10 @@ const plugin = {
       let awareness = await createAwareness(ydoc)
 
       // let user =
-      let user = await getUser()
+      let user = await getUser(awareness)
       user = await getRouterParameters(user, options.route)
       console.log(user)
       await createProviders(ydoc, awareness, user)
-
-
-
-
-      // await opts.router.onReady(router=>{
-      //   console.log('[RRRRRouter]',router)
-      //
-      //   if(user.rommId == undefined){
-      //     user.rommId = uuidv4()
-      //   }
-      //
-      //   // if (this.$route.query!= undefined){
-      //   //   console.log("this.$route.query", this.$route.query)
-      //   //   store.commit('core/setQuery', this.$route.query)
-      //   //
-      //   // }
-      //   if(router.name != "share"){
-      //     Vue.prototype.$openRoom()
-      //   }
-      //
-      //
-      //
-      //
-      // })
-
-
-
     }
 
 
@@ -64,11 +37,12 @@ const plugin = {
 
 
 
-    Vue.prototype.$randomUser = async function(/*options = {}*/){
+    Vue.prototype.$randomUser = async function(awareness){
+      console.log("awareness",awareness)
       let user = {
         name: 'User_'+Date.now(),
         color: '#'+Math.floor(Math.random()*16777215).toString(16),
-        clientID: store.state.core.awareness.clientID,
+        clientID: awareness.clientID,
         //  roomId: '',
         rooms: {}
       }
@@ -83,28 +57,7 @@ const plugin = {
       console.log("[openRoom]", user.roomId)
       //this.updateUser()
 
-      let editorData = await ymap.get('editor_map')
-      console.log(editorData)
-      if (editorData != undefined){
-        store.commit('core/setEditorData', editorData)
-        //   console.log(editorData)
-        //this.editorData = editorData //|| this.editorDataDefault//.toJSON()
-        // //  console.log(this.editorData)
-        // //  yService.log(this.editorData)
-      }else{
-        let defaultData = store.state.core.editorDataDefault
-        defaultData.blocks.push(
-          {
-            "type" : "paragraph",
-            "data" : {
-              "text" : "The roomId of this room is "+user.roomId
-            }
-          }
-        )
-        ymap.set('editor_map', defaultData)
-        // editorData = Object.assign({}, this.editorDataDefault)
-        store.commit('core/setEditorData', defaultData)
-      }
+
       // observe changes of the sum
       // let app = this
 
@@ -155,7 +108,42 @@ const plugin = {
         //history.replaceState(null,null,url);
 
       })
-      opts.router.push('/editor')
+
+
+
+      let editorData = await ymap.get('editor_map')
+      console.log(editorData)
+
+      // if(user.isSharing == undefined){
+
+
+
+        if (editorData != undefined){
+          store.commit('core/setEditorData', editorData)
+          //   console.log(editorData)
+          //this.editorData = editorData //|| this.editorDataDefault//.toJSON()
+          // //  console.log(this.editorData)
+          // //  yService.log(this.editorData)
+        }else{
+          let defaultData = store.state.core.editorDataDefault
+          defaultData.blocks.push(
+            {
+              "type" : "paragraph",
+              "data" : {
+                "text" : "The roomId of this room is "+user.roomId
+              }
+            }
+          )
+          ymap.set('editor_map', defaultData)
+          // editorData = Object.assign({}, this.editorDataDefault)
+          store.commit('core/setEditorData', defaultData)
+        }
+        opts.router.push('/editor')
+      // }else{
+      //   console.log("user is sharing")
+      // }
+
+
     }
 
     Vue.prototype.$saveEditor = async function(data){
@@ -185,32 +173,39 @@ const plugin = {
     async function createYdoc(){
       let ydoc = new Y.Doc()
       store.commit('core/setYdoc', ydoc)
-      console.log("{createYdoc}", ydoc)
+    //  console.log("{createYdoc}", ydoc)
       return ydoc
     }
 
     async function createAwareness(ydoc){
       let awareness = new Awareness(ydoc)
       store.commit('core/setAwareness', awareness)
-      console.log("{createAwareness}")
+    //  console.log("{createAwareness}")
       awareness.on('change', ()/*changes*/ => {
         awareness.getStates().forEach(state => {
           // console.log(state)
           if (state.user) {
-            console.log('[state.user]',state.user)
+          //  console.log('[state.user]',state.user)
             store.commit('core/setUserById', state.user)
           }
         })
         store.commit('core/setUsersUpdateDate', Date.now())
       })
+      return awareness
     }
 
     async function createProviders(ydoc, awareness, user){
-      console.log("{createProviders}")
+    //  console.log("{createProviders}")
       // this allows you to instantly get the (cached) documents data
 
       // Sync clients with the y-webrtc provider.
       // let webrtcProvider =
+
+      // console.log("[providers]", webrtcProvider, websocketProvider)
+      let indexeddbProvider = new IndexeddbPersistence('noosphere-demo', ydoc)
+      let syncedData = await indexeddbProvider.whenSynced
+     console.log('[indexeddbProvider] loaded data from indexed db', syncedData)
+
       new WebrtcProvider('noosphere-demo', ydoc, {awareness,
         signaling: [
           "wss://y-webrtc-signaling-eu.herokuapp.com",
@@ -221,10 +216,7 @@ const plugin = {
         // Sync clients with the y-websocket provider
         // let websocketProvider =
         new WebsocketProvider('wss://demos.yjs.dev', 'noosphere-demo', ydoc, {awareness })
-        // console.log("[providers]", webrtcProvider, websocketProvider)
-        let indexeddbProvider = new IndexeddbPersistence('noosphere-demo', ydoc)
-        let syncedData = await indexeddbProvider.whenSynced
-        console.log('[indexeddbProvider] loaded data from indexed db', syncedData)
+
         await end(user)
         // .then(async function(data){
         //   console.log('[indexeddbProvider] loaded data from indexed db', data)
@@ -242,42 +234,48 @@ const plugin = {
         await opts.router.onReady(router=>{
           console.log('[RRRRRouter]',router)
           if(router != undefined && router.name == "share"){
-            console.log(router.name)
-            console.log(router.query)
+            //console.log(router.name)
+            //console.log(router.query)
             //console.log(user)
             user.isSharing = router.query
           }else{
             // if router is undefined we use route
-            console.log(route.query)
+            //console.log(route.query)
             route.query.room != undefined ? user.roomId = route.query.room : ''
           }
 
 
         })
-        console.log(user)
+      //  console.log(user)
         return user
 
 
       }
-      async function getUser(){
+      async function getUser(awareness){
+      //  console.log("awareness",awareness)
         let user = JSON.parse(localStorage.getItem('noosphere-user'))
 
         if (user == undefined || user == null){
-          user = await Vue.prototype.$randomUser()
+          //console.log("awareness",awareness)
+          user = await Vue.prototype.$randomUser(awareness)
         }
-        console.log("{getUser}", user)
+      //  console.log("{getUser}", user)
         return user
       }
 
 
       async function end(user){
-        console.log(user.isSharing)
+      //  console.log(user.isSharing)
         if(user.isSharing == undefined && user.roomId == undefined){
           user.roomId = uuidv4()
         }
         store.commit('core/setUser', user)
-        Vue.prototype.$userChanged()
+        //  Vue.prototype.$userChanged()
         console.log('{set local storage user, send awareness, open room}', user)
+      //  if(user.isSharing == undefined ){
+          Vue.prototype.$openRoom()
+
+
       }
 
     }
