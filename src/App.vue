@@ -78,7 +78,7 @@
 
   </b-modal>
 
-  <b-alert variant="success" show>Noosphere 0 - <i><small>sharing</small></i></b-alert>
+  <b-alert variant="success" show>Noosphere 0 - <i><small>sharing test</small></i></b-alert>
 
 </div>
 </template>

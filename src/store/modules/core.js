@@ -57,7 +57,7 @@ const mutations = {
   removeRoomIdFromHistory(state, roomId){
     console.log(roomId)
     delete state.user.rooms[roomId]
-    console.log("deleted", state.user.rooms)
+    // console.log("deleted", state.user.rooms)
   },
   updateRoomHistory(state,roomId){
     if (roomId.length > 0){

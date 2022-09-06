@@ -48,13 +48,24 @@ const plugin = {
       }
       return user
     }
+
+    Vue.prototype.$getEditorMap = async function(roomId){
+      let ymapTemp = store.state.core.yDoc.getMap(roomId)
+      let data = await ymapTemp.get('editor_map')
+      console.log('{{editorDataTemp}}',data)
+      return data
+    }
+
     Vue.prototype.$openRoom = async function(){
-      Vue.prototype.$userChanged()
+      //  Vue.prototype.$userChanged()
       let user = store.state.core.user
+      console.log('{user]',user)
       let ymap = store.state.core.yDoc.getMap(user.roomId)
       store.commit('core/setYmap', ymap)
       store.commit('core/updateRoomHistory', user.roomId)
       console.log("[openRoom]", user.roomId)
+
+      setYMapObserver(ymap)
       //this.updateUser()
 
 
@@ -62,83 +73,38 @@ const plugin = {
       // let app = this
 
       // let calls = 0
-      ymap.observeDeep(events => {
-        events.forEach(event => {
-          // calls++
-          // console.log('calls', calls)
-          // @ts-ignore
-          // console.log(event.keysChanged.has('deepmap'))
-          // console.log(event.path.length === 1)
-          // console.log(event.path[0] === 'map')
-          console.log('[event]',event)
-          let editor_map_changed = event.keysChanged.has('editor_map')
-          console.log('[editor_map_changed]', editor_map_changed)
-          // @ts-ignore
-          // let dmapid = event.target.get('deepmap')._item.id
-          // console.log(dmapid)
 
-          // console.log("nodes",event.target.get('nodes').toJSON())
-          // this.nodes = event.target.get('nodes').toJSON()
-          // if (event.keysChanged.has('editor_map')){
-          // yService.log('editor_map changed')
-          //  let editorData = this.ymap.get('editor_map')
-
-
-
-          if (editor_map_changed == true ){
-            //console.log(editorData)
-            let editorData = ymap.get('editor_map')
-            if (editorData.clientID != user.clientID){
-              //this.editorData =  editorData//.toJSON()
-              store.commit('core/setEditorData', editorData)
-              console.log("[update editorData]", editorData)
-            }else{
-              console.log("[same clientID]")
-            }
-
-          }
-          //  yService.log(this.editorData)
-          //}
-          // this.populateEditor(this.editorData)
-          // }
-        })
-        //this.$forceUpdate();
-        //var url = location.href;               //Save down the URL without hash.
-        //location.href = "#ymap_div";                 //Go to the target element.
-        //history.replaceState(null,null,url);
-
-      })
 
 
 
       let editorData = await ymap.get('editor_map')
-      console.log(editorData)
+      console.log('{{editorData}}',editorData)
 
       // if(user.isSharing == undefined){
 
 
 
-        if (editorData != undefined){
-          store.commit('core/setEditorData', editorData)
-          //   console.log(editorData)
-          //this.editorData = editorData //|| this.editorDataDefault//.toJSON()
-          // //  console.log(this.editorData)
-          // //  yService.log(this.editorData)
-        }else{
-          let defaultData = store.state.core.editorDataDefault
-          defaultData.blocks.push(
-            {
-              "type" : "paragraph",
-              "data" : {
-                "text" : "The roomId of this room is "+user.roomId
-              }
+      if (editorData != undefined){
+        store.commit('core/setEditorData', editorData)
+        //   console.log(editorData)
+        //this.editorData = editorData //|| this.editorDataDefault//.toJSON()
+        // //  console.log(this.editorData)
+        // //  yService.log(this.editorData)
+      }else{
+        let defaultData = store.state.core.editorDataDefault
+        defaultData.blocks.push(
+          {
+            "type" : "paragraph",
+            "data" : {
+              "text" : "The roomId of this room is "+user.roomId
             }
-          )
-          ymap.set('editor_map', defaultData)
-          // editorData = Object.assign({}, this.editorDataDefault)
-          store.commit('core/setEditorData', defaultData)
-        }
-        opts.router.push('/editor')
+          }
+        )
+        ymap.set('editor_map', defaultData)
+        // editorData = Object.assign({}, this.editorDataDefault)
+        store.commit('core/setEditorData', defaultData)
+      }
+      opts.router.push('/editor')
       // }else{
       //   console.log("user is sharing")
       // }
@@ -173,19 +139,19 @@ const plugin = {
     async function createYdoc(){
       let ydoc = new Y.Doc()
       store.commit('core/setYdoc', ydoc)
-    //  console.log("{createYdoc}", ydoc)
+      //  console.log("{createYdoc}", ydoc)
       return ydoc
     }
 
     async function createAwareness(ydoc){
       let awareness = new Awareness(ydoc)
       store.commit('core/setAwareness', awareness)
-    //  console.log("{createAwareness}")
+      //  console.log("{createAwareness}")
       awareness.on('change', ()/*changes*/ => {
         awareness.getStates().forEach(state => {
           // console.log(state)
           if (state.user) {
-          //  console.log('[state.user]',state.user)
+            //  console.log('[state.user]',state.user)
             store.commit('core/setUserById', state.user)
           }
         })
@@ -195,7 +161,7 @@ const plugin = {
     }
 
     async function createProviders(ydoc, awareness, user){
-    //  console.log("{createProviders}")
+      //  console.log("{createProviders}")
       // this allows you to instantly get the (cached) documents data
 
       // Sync clients with the y-webrtc provider.
@@ -204,7 +170,7 @@ const plugin = {
       // console.log("[providers]", webrtcProvider, websocketProvider)
       let indexeddbProvider = new IndexeddbPersistence('noosphere-demo', ydoc)
       let syncedData = await indexeddbProvider.whenSynced
-     console.log('[indexeddbProvider] loaded data from indexed db', syncedData)
+      console.log('[indexeddbProvider] loaded data from indexed db', syncedData)
 
       new WebrtcProvider('noosphere-demo', ydoc, {awareness,
         signaling: [
@@ -231,12 +197,14 @@ const plugin = {
       async function getRouterParameters(user, route){
         console.log("{getRouterParameters}",opts.router, route)
 
-        await opts.router.onReady(router=>{
+        await opts.router.onReady(async (router)=>{
           console.log('[RRRRRouter]',router)
           if(router != undefined && router.name == "share"){
             //console.log(router.name)
-            //console.log(router.query)
-            //console.log(user)
+            // let dataTemp = await Vue.prototype.$getEditorMap(router.query.title)
+            // // //console.log(router.query)
+            // // //console.log(user)
+            // console.log('{dataTemp}', dataTemp)
             user.isSharing = router.query
           }else{
             // if router is undefined we use route
@@ -246,36 +214,86 @@ const plugin = {
 
 
         })
-      //  console.log(user)
+        //  console.log(user)
         return user
 
 
       }
       async function getUser(awareness){
-      //  console.log("awareness",awareness)
+        //  console.log("awareness",awareness)
         let user = JSON.parse(localStorage.getItem('noosphere-user'))
 
         if (user == undefined || user == null){
           //console.log("awareness",awareness)
           user = await Vue.prototype.$randomUser(awareness)
         }
-      //  console.log("{getUser}", user)
+        //  console.log("{getUser}", user)
         return user
       }
 
 
       async function end(user){
-      //  console.log(user.isSharing)
+        //  console.log(user.isSharing)
         if(user.isSharing == undefined && user.roomId == undefined){
           user.roomId = uuidv4()
         }
         store.commit('core/setUser', user)
         //  Vue.prototype.$userChanged()
         console.log('{set local storage user, send awareness, open room}', user)
-      //  if(user.isSharing == undefined ){
+        if(user.isSharing == undefined ){
           Vue.prototype.$openRoom()
+        }
+
+      }
+
+      async function setYMapObserver(ymap){
+        let user = store.state.core.user
+        ymap.observeDeep(events => {
+          events.forEach(event => {
+            // calls++
+            // console.log('calls', calls)
+            // @ts-ignore
+            // console.log(event.keysChanged.has('deepmap'))
+            // console.log(event.path.length === 1)
+            // console.log(event.path[0] === 'map')
+            console.log('[event]',event)
+            let editor_map_changed = event.keysChanged.has('editor_map')
+            console.log('[editor_map_changed]', editor_map_changed)
+            // @ts-ignore
+            // let dmapid = event.target.get('deepmap')._item.id
+            // console.log(dmapid)
+
+            // console.log("nodes",event.target.get('nodes').toJSON())
+            // this.nodes = event.target.get('nodes').toJSON()
+            // if (event.keysChanged.has('editor_map')){
+            // yService.log('editor_map changed')
+            //  let editorData = this.ymap.get('editor_map')
 
 
+
+            if (editor_map_changed == true ){
+              //console.log(editorData)
+              let editorData = ymap.get('editor_map')
+              if (editorData.clientID != user.clientID){
+                //this.editorData =  editorData//.toJSON()
+                store.commit('core/setEditorData', editorData)
+                console.log("[update editorData]", editorData)
+              }else{
+                console.log("[same clientID]")
+              }
+
+            }
+            //  yService.log(this.editorData)
+            //}
+            // this.populateEditor(this.editorData)
+            // }
+          })
+          //this.$forceUpdate();
+          //var url = location.href;               //Save down the URL without hash.
+          //location.href = "#ymap_div";                 //Go to the target element.
+          //history.replaceState(null,null,url);
+
+        })
       }
 
     }

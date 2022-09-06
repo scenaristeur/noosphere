@@ -4,6 +4,8 @@
 
 
     <b-container fluid>
+
+
       <b-row class="my-1" v-for="(value, field) in query" :key="field">
         <b-col sm="3">
           <label :for="`share-field-${field}`"><code>{{ field }}</code>:</label>
@@ -12,10 +14,27 @@
           <b-form-input
           :id="`share-field-${field}`"
           :placeholder="field"
-          :value="value"></b-form-input>
+          :value="value"
+          ></b-form-input>
         </b-col>
 
       </b-row>
+      <hr>
+      <b-row class="my-1">
+        <b-col sm="3">
+          <label for="roomId"><code>roomId</code>:</label>
+        </b-col>
+        <b-col sm="9">
+          <b-form-input
+          id="roomId"
+          placeHolder="roomId"
+          v-model="roomId"
+          @input="changeRoomId"
+          ></b-form-input>
+        </b-col>
+
+      </b-row>
+      <hr>
       <!-- <b-row>
       <b-col sm="3">
       <label :for="`share-field-more-comment`"><code>More comment</code>:</label>
@@ -29,20 +48,34 @@
 </b-row> -->
 <hr>
 
-user {{ user}}
-<hr>
-test if room exist --> if yes show existing room
-append/add to room ? create new room ? replace ?
-<hr>
-<b-button @click="save" size="sm" variant="info">Create a new Room </b-button>
-<b-button @click="save" size="sm" variant="info">Appends to room</b-button>
+
+
+<div v-if="dataTemp!= undefined">
+  Room with id {{roomId}} exist ->
+  <b-button  @click="append" size="sm" variant="info">Append to room</b-button> or change roomId above.
+</div>
+<div v-else>
+  Room with id {{roomId}} does not exist ->
+  <b-button @click="create" size="sm" variant="info">Create a new Room </b-button> or change roomId to append to an existing room.
+</div>
 </b-container>
 
-{{ query }}
-<hr>
+<div v-if="dataTemp != undefined">
+  <hr><hr>
+  Found in room {{roomId}} :<br>{{ dataTemp.blocks}}
+</div>
+<!-- <hr>
 title: "title",
 text: "text",
 url: "url"
+
+user {{ user}}
+<hr>
+if yes show existing room
+append/add to room ? create new room ? replace ?
+<hr>
+{{ query }}
+<hr> -->
 <!-- -{{query}}-query
 <div v-for="(value, field) in query" :key="field">
 {{field}} :
@@ -62,17 +95,39 @@ export default {
   data(){
     return{
       query: null,
-      fields: []
+      fields: [],
+      dataTemp: undefined,
+      roomId: null
     }
   },
   created(){
     console.log(this.$route.query)
     this.query = this.$route.query
     this.query["more comment"] == undefined ? this.query["more comment"] = '' : ''
+    this.roomId = this.$route.query.title
+    this.getDataTemp()
   },
+  // mounted(){
+  //   this.getDataTemp()
+  // },
   methods: {
-    save(){
-      console.log("save", this.query)
+    async getDataTemp(){
+      this.dataTemp = await this.$getEditorMap(this.roomId)
+      console.log('{dataTemp}',this.dataTemp)
+    },
+    append(){
+      console.log("append", this.query)
+    },
+    create(){
+      console.log("create", this.query)
+    },
+    changeRoomId(){
+      this.getDataTemp()
+    }
+  },
+  watch:{
+    user(){
+      this.getDataTemp()
     }
   },
   computed: {
