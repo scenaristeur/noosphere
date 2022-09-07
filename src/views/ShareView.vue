@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1>This is a share page</h1>
+    <h3>Share in the Noosphere</h3>
 
 
     <b-container fluid>

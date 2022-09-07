@@ -80,7 +80,7 @@
 
   <b-alert variant="success" show>
     <router-link to="/about" class="m-2">What is Noosphere<b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
-    <br><i><small>version: sharing 2</small></i>
+    <br><i><small>version: sharing 3</small></i>
   </b-alert>
 
 </div>
@@ -126,7 +126,7 @@ export default {
     share(){
       let url = "http://scenaristeur.github.io/noosphere?room="+this.user.roomId
       let title = 'Noosphere'
-      let text = "Check this idea I want to share in Noosphere !"
+      let text = "Check this idea I want to share in Noosphere !\n  "
 
       if (navigator && navigator.share) {
         window.navigator
