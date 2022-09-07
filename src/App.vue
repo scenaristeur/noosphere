@@ -12,7 +12,7 @@
       <router-link to="#"  class="m-2"><b-icon @click="share" font-scale="1.5" icon="share" aria-hidden="true"></b-icon></router-link>
       <router-link to="##"  class="m-2"><b-icon @click="openPinModal" font-scale="1.5" icon="pin" aria-hidden="true"></b-icon></router-link>
       <router-link to="/about" class="m-2"><b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
-      <router-link to="location" class="ml-2"><b-icon font-scale="1.5" icon="geo-alt" aria-hidden="true"></b-icon></router-link>
+      <router-link to="###" class="ml-2"><b-icon @click="getLocation" font-scale="1.5" icon="geo-alt" aria-hidden="true"></b-icon></router-link>
 
     </nav>
 
@@ -84,6 +84,7 @@
   <b-alert variant="success" show>
     <router-link to="/about" class="m-2">What is Noosphere<b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
     <br><i><small>version: sharing 3</small></i>
+    {{ location}}
   </b-alert>
 
 </div>
@@ -111,7 +112,8 @@ export default {
       token: null,
       messages: [],
       cid: null,
-      uploads: null
+      uploads: null,
+      location: null
     }
   },
 
@@ -288,6 +290,18 @@ export default {
       }else{
         console.log(res)
       }
+    },
+    getLocation(){
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(this.showPosition);
+      } else {
+        this.location = "Geolocation is not supported by this browser.";
+        console.log("location", this.location)
+      }
+    },
+    showPosition(position) {
+      this.location = "Latitude: " + position.coords.latitude +" Longitude: " + position.coords.longitude;
+      console.log("location", this.location)
     }
   },
   watch:{

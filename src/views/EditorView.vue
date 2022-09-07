@@ -24,6 +24,7 @@ import Warning from "@editorjs/warning"
 import Marker from "@editorjs/marker"
 import InlineCode from "@editorjs/inline-code"
 import MermaidTool from "editorjs-mermaid"
+// import GoogleMap from 'editorjs-googlemap'
 
 
 import yService from '@/services/y-service';
@@ -38,6 +39,8 @@ export default {
   },
   created(){
     let app = this
+    let _this = this
+    console.log(_this)
     yService.log("EditorView created")
     this.editor = new EditorJS({
       /**
@@ -62,6 +65,14 @@ export default {
         * Each Tool is a Plugin. Pass them via 'class' option with necessary settings {@link docs/tools.md}
         */
         mermaid: MermaidTool,
+        // googleMap: {
+        //   class: GoogleMap,
+        //   place: 'Bangkok thailand',
+        //   config: {
+        //     placeholder: 'Place name or lat and long eg: 15.23999,-87.393993',
+        //     searchValue: 'Search'
+        //   }
+        // },
         header: {
           class: Header,
           inlineToolbar: ['marker', 'link'],
