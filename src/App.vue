@@ -126,7 +126,7 @@ export default {
     share(){
       let url = "http://scenaristeur.github.io/noosphere?room="+this.user.roomId
       let title = 'Noosphere'
-      let text = "Check this idea I want to share in Noosphere !\n  "
+      let text = "\nCheck this idea I want to share in Noosphere !\n\n  "
 
       if (navigator && navigator.share) {
         window.navigator
