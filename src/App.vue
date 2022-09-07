@@ -78,7 +78,7 @@
 
   </b-modal>
 
-  <b-alert variant="success" show>Noosphere 0 - <i><small>sharing 1</small></i></b-alert>
+  <b-alert variant="success" show>Noosphere 0 - <i><small>sharing 2</small></i></b-alert>
 
 </div>
 </template>
@@ -121,15 +121,33 @@ export default {
   },
   methods:{
     share(){
-      let app = this
-      console.log(this.user)
-      let text = "http://scenaristeur.github.io/noosphere?room="+this.user.roomId
-      navigator.clipboard.writeText(text).then(function() {
-        console.log('Async: Copying to clipboard was successful!');
-        app.showAlert()
-      }, function(err) {
-        console.error('Async: Could not copy text: ', err);
-      });
+      let url = "http://scenaristeur.github.io/noosphere?room="+this.user.roomId
+      let title = 'Noosphere'
+      let text = "Check this idea I want to share in Noosphere !"
+
+      if (navigator && navigator.share) {
+        window.navigator
+        .share({
+          title: title,
+          text: text,
+          url: url,
+        })
+        .then(() => console.log('Successful share'))
+        .catch(error => console.log('Error sharing', error));
+      } else {
+
+        let app = this
+        console.log(this.user)
+
+        navigator.clipboard.writeText(url).then(function() {
+          console.log('Async: Copying to clipboard was successful!');
+          app.showAlert()
+        }, function(err) {
+          console.error('Async: Could not copy text: ', err);
+        });
+
+      }
+
     },
     openPinModal(){
       let data = this.$store.state.core.editorData
