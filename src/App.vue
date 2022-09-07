@@ -1,15 +1,18 @@
 <template>
   <div id="app">
-    <nav>
+    <nav class="mx-auto" >
 
-      <router-link to="/" class="m-2"><b-icon font-scale="1.5" icon="house" aria-hidden="true"></b-icon></router-link>
+      <router-link to="/" class="mr-2"><b-icon font-scale="1.5" icon="house" aria-hidden="true"></b-icon> </router-link>
       <router-link to="/editor" class="m-2"><b-icon font-scale="1.5" icon="pen" aria-hidden="true"></b-icon></router-link>
-      <router-link to="/user" class="m-2"><b-icon font-scale="1.5" icon="person" aria-hidden="true"></b-icon></router-link>
+      <router-link to="/user" class="mx-auto"><b-icon font-scale="1.5" icon="person" aria-hidden="true"></b-icon></router-link>
+
+
       <router-link to="/room" class="m-2"><b-icon font-scale="1.5" icon="list-stars" aria-hidden="true"></b-icon></router-link>
       <!-- <router-link to="/config" class="m-2"><b-icon font-scale="1.5" icon="gear" aria-hidden="true"></b-icon></router-link> -->
       <router-link to="#"  class="m-2"><b-icon @click="share" font-scale="1.5" icon="share" aria-hidden="true"></b-icon></router-link>
       <router-link to="##"  class="m-2"><b-icon @click="openPinModal" font-scale="1.5" icon="pin" aria-hidden="true"></b-icon></router-link>
       <router-link to="/about" class="m-2"><b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
+      <router-link to="location" class="ml-2"><b-icon font-scale="1.5" icon="geo-alt" aria-hidden="true"></b-icon></router-link>
 
     </nav>
 
@@ -123,18 +126,32 @@ export default {
 
   },
   methods:{
+
+    // TODO geolocation
+    // https://www.w3schools.com/html/html5_geolocation.asp
+
+
     share(){
       let url = "http://scenaristeur.github.io/noosphere?room="+this.user.roomId
       let title = 'Noosphere'
       let text = "\nCheck this idea I want to share in Noosphere !\n\n  "
 
       if (navigator && navigator.share) {
-        window.navigator
-        .share({
+        let share = {
           title: title,
           text: text,
           url: url,
-        })
+        }
+
+        // pour partager le QR code
+        let filesArray = []
+        if (navigator.canShare({ files: filesArray })){
+          share.files = filesArray
+        }
+
+
+        window.navigator
+        .share(share)
         .then(() => console.log('Successful share'))
         .catch(error => console.log('Error sharing', error));
       } else {
