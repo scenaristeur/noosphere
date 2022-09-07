@@ -78,7 +78,10 @@
 
   </b-modal>
 
-  <b-alert variant="success" show>Noosphere 0 - <i><small>sharing 2</small></i></b-alert>
+  <b-alert variant="success" show>
+    <router-link to="/about" class="m-2">What is Noosphere<b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
+    <br><i><small>version: sharing 2</small></i>
+  </b-alert>
 
 </div>
 </template>
