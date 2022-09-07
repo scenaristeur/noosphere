@@ -1,5 +1,6 @@
 <template>
   <b-container fluid class="editor-view">
+    room: <b>{{user.roomId}}</b>
     <!-- Editor
     <b-button @click="save">Save</b-button> -->
     <div id="editorjs" ></div>
@@ -60,7 +61,7 @@ export default {
         /**
         * Each Tool is a Plugin. Pass them via 'class' option with necessary settings {@link docs/tools.md}
         */
-         mermaid: MermaidTool,
+        mermaid: MermaidTool,
         header: {
           class: Header,
           inlineToolbar: ['marker', 'link'],
@@ -126,7 +127,7 @@ export default {
         },
       },
       onReady: () => {
-            MermaidTool.config({ 'theme': 'neutral' })
+        MermaidTool.config({ 'theme': 'neutral' })
         this.editor.notifier.show({
           message: 'Editor is ready!'
         });
@@ -225,11 +226,14 @@ export default {
     },
     computed: {
       editorData: {
-          cache: false,
-          get() {
-            return this.$store.state.core.editorData;
-          },
+        cache: false,
+        get() {
+          return this.$store.state.core.editorData;
         },
+      },
+      user() {
+        return this.$store.state.core.user
+      }
     }
 
   }

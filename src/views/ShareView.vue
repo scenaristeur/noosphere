@@ -62,7 +62,7 @@
 
 <div v-if="dataTemp != undefined">
   <hr><hr>
-  Found in room {{roomId}} :<br>{{ dataTemp.blocks}}
+  Found in room <b>{{roomId}}</b> :<br>{{ dataTemp.blocks}}
 </div>
 <!-- <hr>
 title: "title",
@@ -115,11 +115,95 @@ export default {
       this.dataTemp = await this.$getEditorMap(this.roomId)
       console.log('{dataTemp}',this.dataTemp)
     },
-    append(){
-      console.log("append", this.query)
+    async append(){
+
+      let newBlocks = [
+        {
+          "type" : "header",
+          "data" : {
+            "text" : this.query.title,
+            "level" : 2
+          }
+        },
+        {
+          "type" : "paragraph",
+          "data" : {
+            "text" : this.query.text
+          }
+        },
+
+        {
+          "type" : "paragraph",
+          "data" : {
+            "text" : "<a href='"+this.query.url+"'>"+this.query.url+"</a>"
+          }
+        },
+        {
+          "type" : "paragraph",
+          "data" : {
+            "text" : this.query['more_comment']
+          }
+        }
+      ]
+      let dataBlocks = this.dataTemp.blocks.concat(newBlocks);
+      this.dataTemp.blocks = dataBlocks
+      let data = this.dataTemp
+
+      console.log("append", this.query, data, this.roomId)
+      this.user.roomId = this.roomId
+      await this.$store.commit('core/setUser', this.user)
+
+      //await this.$saveMap(this.roomId,data)
+
+      await this.$openRoom()
+      this.$store.commit('core/setEditorData', data)
+
     },
-    create(){
-      console.log("create", this.query)
+    async create(){
+
+      let data = {
+        // "time" : 1550476186479,
+        "blocks" : [
+          {
+            "type" : "header",
+            "data" : {
+              "text" : this.query.title,
+              "level" : 2
+            }
+          },
+          {
+            "type" : "paragraph",
+            "data" : {
+              "text" : this.query.text
+            }
+          },
+
+          {
+            "type" : "paragraph",
+            "data" : {
+              "text" : "<a href='"+this.query.url+"'>"+this.query.url+"</a>"
+            }
+          },
+          {
+            "type" : "paragraph",
+            "data" : {
+              "text" : this.query['more_comment']
+            }
+          }
+        ],
+        // "version" : "2.8.1"
+      }
+
+      console.log("create", this.query, data, this.roomId)
+      this.user.roomId = this.roomId
+      await this.$store.commit('core/setUser', this.user)
+
+      //await this.$saveMap(this.rotitle_not_existomId,data)
+
+      await this.$openRoom()
+      this.$store.commit('core/setEditorData', data)
+
+
     },
     changeRoomId(){
       this.getDataTemp()
