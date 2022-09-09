@@ -13,6 +13,7 @@
     sticky-header
     select-mode="single"
     responsive="sm"
+    table-variant="info"
     :items="Object.values(users)"
     :fields="fields"
     @row-selected="onRowSelected"
@@ -31,7 +32,8 @@
     </template>
   </template>
   <template #cell(rooms)="data">
-    {{Object.keys(data.item.rooms)}}
+    <!-- {{Object.keys(data.item.rooms)}} -->
+    <b-button size="sm" @click="openUserModal(data.item)">{{Object.keys(data.item.rooms).length}}</b-button>
 
 
   </template>
@@ -46,9 +48,24 @@
     username<b-input v-model="user.name" placeholder="username" />
     color <b-input v-model="user.color" type="color" />
     <!-- <b-button @click="userChanged" variant="info" size="sm">Update user</b-button> -->
-    <b-button @click="randomUser" variant="outline-info" size="sm">Random user</b-button>
+    <b-button @click="randomUser" variant="outline-info" disabled size="sm">Random user</b-button>
   </p>
 </b-modal>
+
+
+
+<b-modal id="modal-currentUser" title="User">
+  <b>{{currentUser.name}}</b>
+  <ul v-if="currentUser.rooms != undefined">
+    <li v-for="room in Object.values(currentUser.rooms)" :key="room.roomId">
+      <b-button @click="changeRoom(room.roomId)" size="sm">{{room.roomId}}</b-button>
+    </li>
+  </ul>
+
+
+  <!-- <p class="my-4">  {{currentUser}}</p> -->
+</b-modal>
+
 </b-container>
 </template>
 
@@ -73,6 +90,7 @@ export default {
           sortable: true
         },
       ],
+      currentUser: {}
     }
   },
   methods:{
@@ -88,6 +106,16 @@ export default {
     },
     randomUser(){
       this.$randomUser()
+    },
+    openUserModal(user){
+      console.log(user)
+      this.currentUser = user
+      this.$bvModal.show("modal-currentUser")
+    },
+    changeRoom(roomId){
+      console.log(roomId)
+      this.user.roomId = roomId
+      this.$openRoom()
     }
   },
   watch:{

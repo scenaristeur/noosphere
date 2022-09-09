@@ -1,9 +1,9 @@
 <template>
-  <b-container fluid class="editor-view">
+  <b-container fluid class="editor-view lead">
     room: <b>{{user.roomId}}</b>
     <!-- Editor
     <b-button @click="save">Save</b-button> -->
-    <div id="editorjs" ></div>
+    <div id="editorjs" class="text-info" ></div>
     <!--  {{editorData}} -->
   </b-container>
 </template>
@@ -139,9 +139,9 @@ export default {
       },
       onReady: () => {
         MermaidTool.config({ 'theme': 'neutral' })
-        this.editor.notifier.show({
-          message: 'Editor is ready!'
-        });
+        // this.editor.notifier.show({
+        //   message: 'Editor is ready!'
+        // });
         if (this.editorData != null){
           this.editor.blocks.render(this.editorData)
         }
@@ -252,6 +252,6 @@ export default {
 
   <style lang="css" scoped>
   .editor-view {
-
+    /* background-color: white; */
   }
   </style>

@@ -39,13 +39,17 @@ const plugin = {
 
     Vue.prototype.$randomUser = async function(awareness){
       console.log("awareness",awareness)
+      if (awareness == undefined){
+        awareness = store.state.core.awareness
+      }
       let user = {
         name: 'User_'+Date.now(),
         color: '#'+Math.floor(Math.random()*16777215).toString(16),
         clientID: awareness.clientID,
-        //  roomId: '',
+        //roomId: uuidv4(),
         rooms: {}
       }
+    //  store.commit('core/setUser', user)
       return user
     }
 

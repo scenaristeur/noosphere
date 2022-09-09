@@ -37,7 +37,7 @@ Dropdown
 </nav> -->
 
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <!-- <a class="navbar-brand" href="#">Navbar</a> -->
   <router-link to="/" class="nav-item mx-2"><b-icon font-scale="1.5" icon="house" aria-hidden="true"></b-icon> </router-link>
 
@@ -138,7 +138,7 @@ height="4px"
 
 <b-alert variant="info" show>
   <router-link to="/about" class="m-2">What is Noosphere<b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
-  <br><i><small>version: sharing 3</small></i>
+  <br><i><small>version: users rooms dialog</small></i>
   {{ location}}
 </b-alert>
 
