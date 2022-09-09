@@ -165,8 +165,12 @@ height="4px"
 </b-modal>
 
 <b-alert variant="info" show>
-  <router-link to="/about" class="m-2">What is Noosphere<b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
-  <br><i><small>version: link auto complete</small></i>
+  <router-link to="/about" class="m-2">What is Noosphere <b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
+  <b-link href="https://matrix.to/#/#noosphere:matrix.org" class="m-2">
+    Chat about Noosphere
+    <b-icon font-scale="1.5" icon="chat" aria-hidden="true"></b-icon>
+  </b-link>
+  <br><i><small>version: link auto complete chat</small></i>
   {{ location}}
 </b-alert>
 

@@ -16,7 +16,7 @@
         <b-input v-model="user.roomId" placeholder="roomId | random | QR"
         @keyup.enter="openRoom" />
         <b-input-group-append>
-          <b-button class="text-warning" variant="outline-danger" @click="user.roomId = ''" size="sm">X</b-button>
+          <b-button class="text-warning" variant="outline-warning" @click="user.roomId = ''" size="sm">X</b-button>
 
         </b-input-group-append>
       </b-input-group>
