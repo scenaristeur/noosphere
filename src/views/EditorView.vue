@@ -1,9 +1,9 @@
 <template>
-  <b-container fluid class="editor-view lead">
+  <b-container fluid class="editor-view text-primary">
     room: <b>{{user.roomId}}</b>
     <!-- Editor
     <b-button @click="save">Save</b-button> -->
-    <div id="editorjs" class="text-info" ></div>
+    <div id="editorjs" class="text-light" ></div>
     <!--  {{editorData}} -->
   </b-container>
 </template>

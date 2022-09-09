@@ -39,12 +39,11 @@ Dropdown
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <!-- <a class="navbar-brand" href="#">Navbar</a> -->
-  <router-link to="/" class="nav-item mx-2"><b-icon font-scale="1.5" icon="house" aria-hidden="true"></b-icon> </router-link>
+  <router-link to="/" class="nav-item mx-2"><b-icon font-scale="1.5" icon="house-fill" aria-hidden="true"></b-icon> </router-link>
 
-
-  <router-link to="/user" class="nav-item mx-2"><b-icon font-scale="1.5" icon="person" aria-hidden="true"></b-icon></router-link>
   <router-link to="/editor" class="nav-item mx-2"><b-icon font-scale="1.5" icon="pen" aria-hidden="true"></b-icon></router-link>
   <router-link to="/room" class="nav-item mx-2"><b-icon font-scale="1.5" icon="list-stars" aria-hidden="true"></b-icon></router-link>
+  <router-link to="/user" class="nav-item mx-2"><b-icon font-scale="1.5" icon="people-fill" aria-hidden="true"></b-icon></router-link>
   <router-link to="##"  class="nav-item mx-2"><b-icon @click="openPinModal" font-scale="1.5" icon="pin" aria-hidden="true"></b-icon></router-link>
   <router-link to="/about" class="nav-item mx-2"><b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
   <router-link to="###" class="nav-item mx-2"><b-icon @click="getLocation" font-scale="1.5" icon="geo-alt" aria-hidden="true"></b-icon></router-link>
@@ -93,30 +92,34 @@ height="4px"
 
 
 
-<b-modal id="modal-pin" title="Pin Data on Web3.storage">
+<b-modal id="modal-pin" title="Pin Data on Web3.storage" size="lg">
 
   see <a href="https://web3.storage/docs/" target="_blank"> https://web3.storage/docs/</a> (1GB free)<br>
   <a href="https://web3.storage/tokens/" target="_blank">your web3.storage tokens</a>
-  <b-input v-model="token" @input="tokenChanged" placeholder="web3.storage token" />
-  <!-- {{uploads}} -->
-
-  <div v-if="uploads != null && uploads.length> 0">
-    Your 20 last uploads :
-
-    <ul>
-      <li v-for="u in uploads" :key="u._id">
-        <!-- <a href="">{{u.name}}</a> -->
-        <b-button class="m-0" size="sm" variant="light" @click="clickUpload(u)">{{u.name}}</b-button>
-
-      </li>
-    </ul>
 
 
-  </div>
+  <b-row class="my-1">
+    <b-col sm="2">
+      <label for="input-small">Token:</label>
+    </b-col>
+    <b-col sm="10">
+      <b-input v-model="token" @input="tokenChanged" size="sm" placeholder="web3.storage token" />
+      <!-- <b-form-input id="input-small" size="sm" placeholder="Enter your name"></b-form-input> -->
+    </b-col>
+  </b-row>
 
-  <b-input v-model="fileName" placeholder="filename" />
 
+  <b-row class="my-1">
+    <b-col sm="2">
+      <label for="input-small">Filename:</label>
+    </b-col>
+    <b-col sm="10">
+      <b-input v-model="fileName" size="sm" placeholder="filename" />
+      <!-- <b-form-input id="input-small" size="sm" placeholder="Enter your name"></b-form-input> -->
+    </b-col>
+  </b-row>
 
+  Content:
   <b-form-textarea
   id="textarea"
   v-model="data"
@@ -134,11 +137,35 @@ height="4px"
     <a :href="'https://'+cid+'.ipfs.w3s.link/'" target="_blank">{{cid}}</a>
   </span>
 
+
+
+
+  <!-- {{uploads}} -->
+
+  <div v-if="uploads != null && uploads.length> 0">
+    Your 20 last uploads :
+
+    <ul>
+      <li v-for="u in uploads" :key="u._id">
+        <!-- <a href="">{{u.name}}</a> -->
+        <b-button class="m-0" size="sm" @click="clickUpload(u)">{{u.name}}</b-button>
+
+      </li>
+    </ul>
+
+
+  </div>
+
+
+
+
+
+
 </b-modal>
 
 <b-alert variant="info" show>
   <router-link to="/about" class="m-2">What is Noosphere<b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
-  <br><i><small>version: users rooms dialog</small></i>
+  <br><i><small>version: pin web3.storage</small></i>
   {{ location}}
 </b-alert>
 
