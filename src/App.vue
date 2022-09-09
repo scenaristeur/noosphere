@@ -1,91 +1,138 @@
 <template>
   <div id="app">
-    <nav class="mx-auto" >
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+      <router-link to="/" class="navbar-brand"><b-icon font-scale="1.5" icon="house" aria-hidden="true"></b-icon> </router-link>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-      <router-link to="/" class="mr-2"><b-icon font-scale="1.5" icon="house" aria-hidden="true"></b-icon> </router-link>
-      <router-link to="/editor" class="m-2"><b-icon font-scale="1.5" icon="pen" aria-hidden="true"></b-icon></router-link>
-      <router-link to="/user" class="mx-auto"><b-icon font-scale="1.5" icon="person" aria-hidden="true"></b-icon></router-link>
+            <router-link to="/user" class="nav-item nav-link"><b-icon font-scale="1.5" icon="person" aria-hidden="true"></b-icon></router-link>
+            <router-link to="/editor" class="nav-item nav-link"><b-icon font-scale="1.5" icon="pen" aria-hidden="true"></b-icon></router-link>
+            <router-link to="/room" class="nav-item nav-link"><b-icon font-scale="1.5" icon="list-stars" aria-hidden="true"></b-icon></router-link>
+            <router-link to="##"  class="nav-item nav-link"><b-icon @click="openPinModal" font-scale="1.5" icon="pin" aria-hidden="true"></b-icon></router-link>
+            <!-- <router-link to="/about" class="nav-item nav-link"><b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link> -->
 
 
-      <router-link to="/room" class="m-2"><b-icon font-scale="1.5" icon="list-stars" aria-hidden="true"></b-icon></router-link>
-      <!-- <router-link to="/config" class="m-2"><b-icon font-scale="1.5" icon="gear" aria-hidden="true"></b-icon></router-link> -->
-      <router-link to="#"  class="m-2"><b-icon @click="share" font-scale="1.5" icon="share" aria-hidden="true"></b-icon></router-link>
-      <router-link to="##"  class="m-2"><b-icon @click="openPinModal" font-scale="1.5" icon="pin" aria-hidden="true"></b-icon></router-link>
-      <router-link to="/about" class="m-2"><b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
-      <router-link to="###" class="ml-2"><b-icon @click="getLocation" font-scale="1.5" icon="geo-alt" aria-hidden="true"></b-icon></router-link>
 
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <!-- <li class="nav-item">
+            <router-link to="/user" class="nav-link"><b-icon font-scale="1.5" icon="person" aria-hidden="true"></b-icon></router-link>
+          </li> -->
+          <!-- <li class="nav-item">
+            <router-link to="/editor" class="nav-link"><b-icon font-scale="1.5" icon="pen" aria-hidden="true"></b-icon></router-link>
+          </li> -->
+          <!-- <li class="nav-item">
+            <router-link to="/room" class="nav-link"><b-icon font-scale="1.5" icon="list-stars" aria-hidden="true"></b-icon></router-link>
+          </li> -->
+          <!-- <li class="nav-item">
+            <router-link to="##"  class="nav-link"><b-icon @click="openPinModal" font-scale="1.5" icon="pin" aria-hidden="true"></b-icon></router-link>
+          </li> -->
+          <li class="nav-item">
+            <router-link to="/about" class="nav-link"><b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="###" class="nav-link"><b-icon @click="getLocation" font-scale="1.5" icon="geo-alt" aria-hidden="true"></b-icon></router-link>
+          </li>
+
+          <li class="nav-item">
+            <router-link to="/config" class="nav-link"><b-icon font-scale="1.5" icon="gear" aria-hidden="true"></b-icon></router-link>
+          </li>
+
+        </ul>
+      </div>
     </nav>
 
-    <router-view/>
-    <!-- user :{{ user }}<br>
-    users: {{ users }} -->
-    <b-alert
-    id="shareAlert"
-    :show="dismissCountDown"
-    dismissible
-    variant="warning"
-    @dismissed="dismissCountDown=0"
-    @dismiss-count-down="countDownChanged"
-    >
-    <p>This room's link has been copied to your clipboard, you can paste it in any other app to share it {{ dismissCountDown }} ...</p>
-    <b-progress
-    variant="warning"
-    :max="dismissSecs"
-    :value="dismissCountDown"
-    height="4px"
-    ></b-progress>
-  </b-alert>
+    <!--
+
+    <nav class="navbar navbar-dark bg-dark" style="background-color: #e3f2fd;">
+
+    <ul class="navbar-nav mr-auto">
+    <router-link to="/" class="nav-item"><b-icon font-scale="1.5" icon="house" aria-hidden="true"></b-icon> </router-link>
+    <router-link to="/editor" class="m-2"><b-icon font-scale="1.5" icon="pen" aria-hidden="true"></b-icon></router-link>
+    <router-link to="/user" class="mx-auto"><b-icon font-scale="1.5" icon="person" aria-hidden="true"></b-icon></router-link>
+
+
+    <router-link to="/room" class="m-2"><b-icon font-scale="1.5" icon="list-stars" aria-hidden="true"></b-icon></router-link>
+    <router-link to="/config" class="m-2"><b-icon font-scale="1.5" icon="gear" aria-hidden="true"></b-icon></router-link>
+    <router-link to="#"  class="m-2"><b-icon @click="share" font-scale="1.5" icon="share" aria-hidden="true"></b-icon></router-link>
+    <router-link to="##"  class="m-2"><b-icon @click="openPinModal" font-scale="1.5" icon="pin" aria-hidden="true"></b-icon></router-link>
+    <router-link to="/about" class="m-2"><b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
+    <router-link to="###" class="ml-2"><b-icon @click="getLocation" font-scale="1.5" icon="geo-alt" aria-hidden="true"></b-icon></router-link>
+  </ul>
+</nav> -->
+
+<router-view/>
+<!-- user :{{ user }}<br>
+users: {{ users }} -->
+<b-alert
+id="shareAlert"
+:show="dismissCountDown"
+dismissible
+variant="warning"
+@dismissed="dismissCountDown=0"
+@dismiss-count-down="countDownChanged"
+>
+<p>This room's link has been copied to your clipboard, you can paste it in any other app to share it {{ dismissCountDown }} ...</p>
+<b-progress
+variant="warning"
+:max="dismissSecs"
+:value="dismissCountDown"
+height="4px"
+></b-progress>
+</b-alert>
 
 
 
-  <b-modal id="modal-pin" title="Pin Data on Web3.storage">
+<b-modal id="modal-pin" title="Pin Data on Web3.storage">
 
-    see <a href="https://web3.storage/docs/" target="_blank"> https://web3.storage/docs/</a> (1GB free)<br>
-    <a href="https://web3.storage/tokens/" target="_blank">your web3.storage tokens</a>
-    <b-input v-model="token" @input="tokenChanged" placeholder="web3.storage token" />
-    <!-- {{uploads}} -->
+  see <a href="https://web3.storage/docs/" target="_blank"> https://web3.storage/docs/</a> (1GB free)<br>
+  <a href="https://web3.storage/tokens/" target="_blank">your web3.storage tokens</a>
+  <b-input v-model="token" @input="tokenChanged" placeholder="web3.storage token" />
+  <!-- {{uploads}} -->
 
-    <div v-if="uploads != null && uploads.length> 0">
-      Your 20 last uploads :
+  <div v-if="uploads != null && uploads.length> 0">
+    Your 20 last uploads :
 
-      <ul>
-        <li v-for="u in uploads" :key="u._id">
-          <!-- <a href="">{{u.name}}</a> -->
-          <b-button class="m-0" size="sm" variant="light" @click="clickUpload(u)">{{u.name}}</b-button>
+    <ul>
+      <li v-for="u in uploads" :key="u._id">
+        <!-- <a href="">{{u.name}}</a> -->
+        <b-button class="m-0" size="sm" variant="light" @click="clickUpload(u)">{{u.name}}</b-button>
 
-        </li>
-      </ul>
-
-
-    </div>
-
-    <b-input v-model="fileName" placeholder="filename" />
+      </li>
+    </ul>
 
 
-    <b-form-textarea
-    id="textarea"
-    v-model="data"
-    placeholder="Enter something..."
-    rows="3"
-    max-rows="6"
-    ></b-form-textarea>
-    <b-button @click="pin">Pin it</b-button>
-    <br>
-    {{ messages }}
-    <br>
-    <span v-if="cid != null">
+  </div>
 
-      saved on ipfs with cid
-      <a :href="'https://'+cid+'.ipfs.w3s.link/'" target="_blank">{{cid}}</a>
-    </span>
+  <b-input v-model="fileName" placeholder="filename" />
 
-  </b-modal>
 
-  <b-alert variant="success" show>
-    <router-link to="/about" class="m-2">What is Noosphere<b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
-    <br><i><small>version: sharing 3</small></i>
-    {{ location}}
-  </b-alert>
+  <b-form-textarea
+  id="textarea"
+  v-model="data"
+  placeholder="Enter something..."
+  rows="3"
+  max-rows="6"
+  ></b-form-textarea>
+  <b-button @click="pin">Pin it</b-button>
+  <br>
+  {{ messages }}
+  <br>
+  <span v-if="cid != null">
+
+    saved on ipfs with cid
+    <a :href="'https://'+cid+'.ipfs.w3s.link/'" target="_blank">{{cid}}</a>
+  </span>
+
+</b-modal>
+
+<b-alert variant="success" show>
+  <router-link to="/about" class="m-2">What is Noosphere<b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
+  <br><i><small>version: sharing 3</small></i>
+  {{ location}}
+</b-alert>
 
 </div>
 </template>
