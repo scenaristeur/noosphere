@@ -51,6 +51,9 @@
   </b-jumbotron>
   <hr>
 
+  <router-link to="/config" class="nav-item mx-2"><b-icon font-scale="1.5" icon="gear" aria-hidden="true"></b-icon> Config to get more config options</router-link>
+
+  <hr>
 
   <a href="https://github.com/scenaristeur/noosphere" target="_blank">Noosphere Source Code</a>
   <hr>

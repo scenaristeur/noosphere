@@ -12,10 +12,16 @@
 
     <b-card-text>
 
+      <b-input-group class="mt-3">
+        <b-input v-model="user.roomId" placeholder="roomId | random | QR"
+        @keyup.enter="openRoom" />
+        <b-input-group-append>
+          <b-button class="text-warning" variant="outline-danger" @click="user.roomId = ''" size="sm">X</b-button>
+
+        </b-input-group-append>
+      </b-input-group>
 
 
-      <b-input v-model="user.roomId" placeholder="roomId | random | QR"
-      @keyup.enter="openRoom" />
       <b-form-checkbox
       disabled
       id="checkbox-isPublic"
@@ -32,7 +38,7 @@
       <b-button  size="sm" variant="outline-info" @click="nowId">Now roomId</b-button> or
     </span>
 
-    <b-button v-else size="sm" variant="outline-info" @click="user.roomId = ''">Reset roomId</b-button>
+    <!-- <b-button v-else size="sm" variant="outline-info" @click="user.roomId = ''">Reset roomId</b-button> -->
 
 
     <QrView :roomId="user.roomId" @roomIdChanged="onRoomIdChanged"/>
