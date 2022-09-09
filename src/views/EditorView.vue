@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid class="editor-view text-primary">
+  <b-container fluid class="editor-view text-primary ">
     room: <b>{{user.roomId}}</b>
     <!-- Editor
     <b-button @click="save">Save</b-button> -->
@@ -24,6 +24,7 @@ import Warning from "@editorjs/warning"
 import Marker from "@editorjs/marker"
 import InlineCode from "@editorjs/inline-code"
 import MermaidTool from "editorjs-mermaid"
+import LinkAutocomplete from "@editorjs/link-autocomplete"
 // import GoogleMap from 'editorjs-googlemap'
 
 
@@ -77,7 +78,8 @@ export default {
           class: Header,
           inlineToolbar: ['marker', 'link'],
           config: {
-            placeholder: 'Header'
+            placeholder: 'Enter a header',
+            defaultlevel: 3
           },
           shortcut: 'CMD+SHIFT+H'
         },
@@ -128,6 +130,13 @@ export default {
         },
 
         linkTool: LinkTool,
+        link: {
+          class: LinkAutocomplete,
+          config: {
+            endpoint: 'http://localhost:3000/',
+            queryParam: 'search'
+          }
+        },
 
         embed: Embed,
 
@@ -138,7 +147,7 @@ export default {
         },
       },
       onReady: () => {
-        MermaidTool.config({ 'theme': 'neutral' })
+        // MermaidTool.config({ 'theme': 'neutral' })
         // this.editor.notifier.show({
         //   message: 'Editor is ready!'
         // });

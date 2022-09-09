@@ -165,7 +165,7 @@ height="4px"
 
 <b-alert variant="info" show>
   <router-link to="/about" class="m-2">What is Noosphere<b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
-  <br><i><small>version: pin web3.storage</small></i>
+  <br><i><small>version: link auto complete</small></i>
   {{ location}}
 </b-alert>
 

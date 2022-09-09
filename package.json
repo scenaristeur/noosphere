@@ -44,6 +44,7 @@
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
     "@editorjs/delimiter": "^1.2.0",
+    "@editorjs/link-autocomplete": "^0.0.0",
     "@editorjs/quote": "^2.4.0",
     "@editorjs/warning": "^1.2.0",
     "@vue/cli-plugin-babel": "~5.0.0",

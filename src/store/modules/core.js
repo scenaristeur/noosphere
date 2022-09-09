@@ -11,29 +11,29 @@ const state = () => ({
   web3Token: null,
   editorData: null,
   editorDataDefault: {
-    "time" : 1550476186479,
+    // "time" : 1550476186479,
     "blocks" : [
-      {
-        "type" : "paragraph",
-        "data" : {
-          "text" : "You have just opened a new room in the"
-        }
-      },
+      // {
+      //   "type" : "paragraph",
+      //   "data" : {
+      //     "text" : "You have just opened a new room in the"
+      //   }
+      // },
       {
         "type" : "header",
         "data" : {
-          "text" : "Noosphere",
+          "text" : "Title",
           "level" : 2
         }
       },
       {
         "type" : "paragraph",
         "data" : {
-          "text" : "Feel free to click on this text to edit, and don't forget to share this collaborative knowledge tool. You can open a new window of this app and see how rooms are realtime synced."
+          "text" : "Click to edit."
         }
       }
     ],
-    "version" : "2.8.1"
+    // "version" : "2.8.1"
   }
 })
 
