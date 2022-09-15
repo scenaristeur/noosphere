@@ -10,6 +10,9 @@ Vue.use(CorePlugin, {store: store, router: router});
 import Web3Plugin from './plugins/web3-plugin';
 Vue.use(Web3Plugin, {store: store, router: router});
 
+import GraphPlugin from './plugins/graph-plugin';
+Vue.use(GraphPlugin, {store: store, router: router});
+
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
 // Import Bootstrap and BootstrapVue CSS files (order is important)

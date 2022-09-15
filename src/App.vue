@@ -46,9 +46,11 @@ Dropdown
   <router-link to="/user" class="nav-item mx-2"><b-icon font-scale="1.5" icon="people-fill" aria-hidden="true"></b-icon></router-link>
   <!-- <router-link to="#"  class="nav-item mx-2"><b-icon @click="share" font-scale="1.5" icon="share" aria-hidden="true"></b-icon></router-link> -->
   <!-- <router-link to="##"  class="nav-item mx-2"><b-icon @click="openPinModal" font-scale="1.5" icon="pin" aria-hidden="true"></b-icon></router-link> -->
-  <router-link to="###" class="nav-item mx-2"><b-icon @click="getLocation" font-scale="1.5" icon="geo-alt" aria-hidden="true"></b-icon></router-link>
-  <router-link to="/about" class="nav-item mx-2"><b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
+  <!-- <router-link to="###" class="nav-item mx-2"><b-icon @click="getLocation" font-scale="1.5" icon="geo-alt" aria-hidden="true"></b-icon></router-link> -->
+
   <router-link to="/config" class="nav-item mx-2"><b-icon font-scale="1.5" icon="gear" aria-hidden="true"></b-icon></router-link>
+  <router-link to="/graph" class="nav-item mx-2">graph</router-link>
+  <router-link to="/about" class="nav-item mx-2"><b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
 
 </nav>
 
@@ -85,7 +87,7 @@ users: {{ users }} -->
     Chat about Noosphere
     <b-icon font-scale="1.5" icon="chat" aria-hidden="true"></b-icon>
   </b-link>
-  <br><i><small>version: pinning</small></i>
+  <br><i><small>version: network</small></i>
   {{ location}}
 </b-alert>
 
