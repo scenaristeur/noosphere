@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunknoosphere"]=self["webpackChunknoosphere"]||[]).push([[894],{7210:function(e,o,n){n.r(o),n.d(o,{default:function(){return l}});var s=function(){var e=this,o=e._self._c;return o("div",{staticClass:"room-view"},[o("RoomCard"),o("RoomHistory"),o("Web3Uploads")],1)},t=[],r={name:"RoomView",components:{RoomCard:()=>n.e(377).then(n.bind(n,4377)),RoomHistory:()=>n.e(41).then(n.bind(n,41)),Web3Uploads:()=>n.e(81).then(n.bind(n,5081))}},a=r,i=n(1001),u=(0,i.Z)(a,s,t,!1,null,"90f3fa0a",null),l=u.exports}}]);
+//# sourceMappingURL=roomView.b93d2cc4.js.map
