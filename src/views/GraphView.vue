@@ -27,7 +27,7 @@ export default {
       }
     },
     updateUsers(){
-      // this.links = []
+    //  this.links = []
       for (const [clientID, user] of Object.entries(this.users)) {
         console.log('[user]',clientID,user);
         // user
@@ -52,7 +52,7 @@ export default {
           }else{
             link.label = "room"
           }
-          //  this.links.push(link)
+        //  this.links.push(link)
         }
 
 
