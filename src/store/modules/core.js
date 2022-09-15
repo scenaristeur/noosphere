@@ -55,7 +55,7 @@ const mutations = {
     this.commit('core/updateRoomHistory', u.roomId)
   },
   removeRoomIdFromHistory(state, roomId){
-    console.log(roomId)
+  //  console.log(roomId)
     delete state.user.rooms[roomId]
     // console.log("deleted", state.user.rooms)
   },
@@ -63,7 +63,7 @@ const mutations = {
     if (roomId.length > 0){
       this.commit('core/removeRoomIdFromHistory', roomId)
       state.user.rooms[roomId] = {roomId: roomId, date: Date.now()}
-      console.log("[history]", state.user.rooms)
+    //  console.log("[history]", state.user.rooms)
       Vue.prototype.$userChanged()
     }
   },
@@ -74,9 +74,9 @@ const mutations = {
     state.users = u
   },
   setUserById(state, u){
-    console.log('[store setUserById]',u)
+  //  console.log('[store setUserById]',u)
     state.users[u.clientID] = u
-    console.log(state.users)
+  //  console.log(state.users)
   },
   setUsersUpdateDate(state, d){
     state.usersUpdateDate = d

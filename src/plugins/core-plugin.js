@@ -14,24 +14,24 @@ const plugin = {
     let store = opts.store
 
     Vue.prototype.$coreInit = async function(options){
-      console.log('{init options}', options)
+      //    console.log('{init options}', options)
       let ydoc = await createYdoc()
       let awareness = await createAwareness(ydoc)
 
       // let user =
       let user = await getUser(awareness)
       user = await getRouterParameters(user, options.route)
-      console.log(user)
+      //  console.log(user)
       await createProviders(ydoc, awareness, user)
     }
 
 
     Vue.prototype.$userChanged = async function(){
       let user = store.state.core.user
-      console.log('[user Changed]', user)
+      //  console.log('[user Changed]', user)
       localStorage.setItem('noosphere-user', JSON.stringify(user));
       store.state.core.awareness.setLocalStateField('user', user)
-      console.log("[user changed]"/*, this.awareness*/, user)
+      //  console.log("[user changed]"/*, this.awareness*/, user)
       store.commit('core/setUserById', user)
     }
 
@@ -49,7 +49,7 @@ const plugin = {
         //roomId: uuidv4(),
         rooms: {}
       }
-    //  store.commit('core/setUser', user)
+      //  store.commit('core/setUser', user)
       return user
     }
 
@@ -63,7 +63,7 @@ const plugin = {
     Vue.prototype.$openRoom = async function(){
       //  Vue.prototype.$userChanged()
       let user = store.state.core.user
-      console.log('{user]',user)
+      // console.log('[user openroom]',user)
       let ymap = store.state.core.yDoc.getMap(user.roomId)
       store.commit('core/setYmap', ymap)
       store.commit('core/updateRoomHistory', user.roomId)
@@ -173,21 +173,27 @@ const plugin = {
 
       // console.log("[providers]", webrtcProvider, websocketProvider)
       let indexeddbProvider = new IndexeddbPersistence('noosphere-demo', ydoc)
-      let syncedData = await indexeddbProvider.whenSynced
-      console.log('[indexeddbProvider] loaded data from indexed db', syncedData)
 
-      new WebrtcProvider('noosphere-demo', ydoc, {awareness,
-        signaling: [
-          "wss://y-webrtc-signaling-eu.herokuapp.com",
-          "wss://y-webrtc-signaling-us.herokuapp.com",
-          "wss://signaling.yjs.dev"
-        ]})
+      indexeddbProvider.on('synced', async () => {
+        //  let syncedData = await indexeddbProvider.whenSynced
+        //  console.log('[indexeddbProvider] loaded data from indexed db', syncedData)
 
-        // Sync clients with the y-websocket provider
-        // let websocketProvider =
-        new WebsocketProvider('wss://demos.yjs.dev', 'noosphere-demo', ydoc, {awareness })
+        new WebrtcProvider('noosphere-demo', ydoc, {awareness,
+          signaling: [
+            "wss://y-webrtc-signaling-eu.herokuapp.com",
+            "wss://y-webrtc-signaling-us.herokuapp.com",
+            "wss://signaling.yjs.dev"
+          ]})
 
-        await end(user)
+          // Sync clients with the y-websocket provider
+          // let websocketProvider =
+          new WebsocketProvider('wss://demos.yjs.dev', 'noosphere-demo', ydoc, {awareness })
+
+          await end(user)
+        })
+
+
+
         // .then(async function(data){
         //   console.log('[indexeddbProvider] loaded data from indexed db', data)
         //   //  Vue.prototype.$openRoom()
@@ -199,10 +205,10 @@ const plugin = {
 
 
       async function getRouterParameters(user, route){
-        console.log("{getRouterParameters}",opts.router, route)
+        //  console.log("{getRouterParameters}",opts.router, route)
 
         await opts.router.onReady(async (router)=>{
-          console.log('[RRRRRouter]',router)
+          //  console.log('[RRRRRouter]',router)
           if(router != undefined && router.name == "share"){
             //console.log(router.name)
             // let dataTemp = await Vue.prototype.$getEditorMap(router.query.title)
@@ -243,7 +249,7 @@ const plugin = {
         }
         store.commit('core/setUser', user)
         //  Vue.prototype.$userChanged()
-        console.log('{set local storage user, send awareness, open room}', user)
+        //  console.log('{set local storage user, send awareness, open room}', user)
         if(user.isSharing == undefined ){
           Vue.prototype.$openRoom()
         }

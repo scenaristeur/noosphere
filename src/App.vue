@@ -167,10 +167,10 @@ height="4px"
 <b-alert variant="info" show>
   <router-link to="/about" class="m-2">What is Noosphere <b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
   <b-link href="https://matrix.to/#/#noosphere:matrix.org" class="m-2">
-    Chat about Noosphere
+    Chat about Noosphere 
     <b-icon font-scale="1.5" icon="chat" aria-hidden="true"></b-icon>
   </b-link>
-  <br><i><small>version: link auto complete chat</small></i>
+  <br><i><small>version: prov</small></i>
   {{ location}}
 </b-alert>
 
@@ -205,13 +205,13 @@ export default {
   },
 
   created(){
-    console.log(this.$route)
+  //  console.log(this.$route)
     this.$coreInit({name: "SuperCore", route: this.$route})
   },
   mounted(){
     let web3Token = localStorage.getItem('noosphere-web3storage-token')
     this.$store.commit('core/setWeb3Token', web3Token)
-    console.log('token', web3Token)
+  //  console.log('token', web3Token)
 
   },
   methods:{

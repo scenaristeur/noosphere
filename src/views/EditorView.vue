@@ -28,7 +28,7 @@ import LinkAutocomplete from "@editorjs/link-autocomplete"
 // import GoogleMap from 'editorjs-googlemap'
 
 
-import yService from '@/services/y-service';
+//import yService from '@/services/y-service';
 
 export default {
   name: 'EditorView',
@@ -42,7 +42,7 @@ export default {
     let app = this
     let _this = this
     console.log(_this)
-    yService.log("EditorView created")
+    //  yService.log("EditorView created")
     this.editor = new EditorJS({
       /**
       * Id of Element that should contain the Editor
@@ -238,7 +238,10 @@ export default {
     watch:{
       editorData(){
         //  yService.log('watch')
-        yService.log(this.editorData)
+        //  yService.log(this.editorData)
+        if (this.editor.blocks == undefined){
+          this.editor.blocks = []
+        }
         this.editor.blocks.render(this.editorData)
         // this.editor.render()
         console.log("render")
