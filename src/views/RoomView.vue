@@ -2,6 +2,7 @@
   <div class="room-view">
     <RoomCard />
     <RoomHistory />
+    <Web3Uploads />
   </div>
 </template>
 
@@ -11,10 +12,11 @@ export default {
   components: {
     'RoomCard': ()=>import('@/views/RoomCard'),
     'RoomHistory': ()=>import('@/views/RoomHistory'),
+    'Web3Uploads': ()=>import('@/views/Web3Uploads'),
     // 'DataCaching': ()=>import('@/views/experiments/DataCaching'),
     // 'LevelgraphJsonld': ()=>import('@/views/experiments/LevelgraphJsonld'),
   },
-  
+
 
 }
 </script>

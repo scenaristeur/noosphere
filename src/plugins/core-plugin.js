@@ -96,14 +96,21 @@ const plugin = {
         // //  yService.log(this.editorData)
       }else{
         let defaultData = store.state.core.editorDataDefault
-        defaultData.blocks.push(
-          {
-            "type" : "paragraph",
-            "data" : {
-              "text" : "The roomId of this room is "+user.roomId
-            }
+        // defaultData.blocks.push(
+        //   {
+        //     "type" : "paragraph",
+        //     "data" : {
+        //       "text" : "The roomId of this room is "+user.roomId
+        //     }
+        //   }
+        // )
+        defaultData.blocks[0] =       {
+          "type" : "header",
+          "data" : {
+            "text" : user.roomId,
+            "level" : 3
           }
-        )
+        },
         ymap.set('editor_map', defaultData)
         // editorData = Object.assign({}, this.editorDataDefault)
         store.commit('core/setEditorData', defaultData)
@@ -144,6 +151,18 @@ const plugin = {
       let ydoc = new Y.Doc()
       store.commit('core/setYdoc', ydoc)
       //  console.log("{createYdoc}", ydoc)
+      // ydoc.on('beforeTransaction', tr => {
+      //   console.log('beforeTransaction',tr, tr.origin)
+      // })
+      // ydoc.on('beforeObserverCalls', tr => {
+      //   console.log('beforeObserverCalls',tr, tr.origin)
+      // })
+      // ydoc.on('afterTransaction', tr => {
+      //   console.log('afterTransaction',tr, tr.origin)
+      // })
+      // ydoc.on('update', (update, origin, tr) => {
+      //   console.log('update',tr, tr.origin)
+      // })
       return ydoc
     }
 
@@ -258,7 +277,18 @@ const plugin = {
 
       async function setYMapObserver(ymap){
         let user = store.state.core.user
-        ymap.observeDeep(events => {
+
+
+        ymap.observe((event, tr) => {
+          console.log(tr, tr.origin)
+        })
+        // ymap.observeDeep((events, tr) => {
+        //   tr.origin
+        // })
+
+
+        ymap.observeDeep((events,tr) => {
+          console.log(tr, tr.origin)
           events.forEach(event => {
             // calls++
             // console.log('calls', calls)
@@ -268,7 +298,7 @@ const plugin = {
             // console.log(event.path[0] === 'map')
             console.log('[event]',event)
             let editor_map_changed = event.keysChanged.has('editor_map')
-            console.log('[editor_map_changed]', editor_map_changed)
+            //console.log('[editor_map_changed]', editor_map_changed)
             // @ts-ignore
             // let dmapid = event.target.get('deepmap')._item.id
             // console.log(dmapid)
@@ -288,9 +318,10 @@ const plugin = {
                 //this.editorData =  editorData//.toJSON()
                 store.commit('core/setEditorData', editorData)
                 console.log("[update editorData]", editorData)
-              }else{
-                console.log("[same clientID]")
               }
+              // else{
+              //   console.log("[same clientID]")
+              // }
 
             }
             //  yService.log(this.editorData)

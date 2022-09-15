@@ -41,7 +41,7 @@
     <!-- <b-button v-else size="sm" variant="outline-info" @click="user.roomId = ''">Reset roomId</b-button> -->
 
 
-    <QrView :roomId="user.roomId" @roomIdChanged="onRoomIdChanged"/>
+    <QrView @roomIdChanged="onRoomIdChanged"/>
 
   </b-card-text>
 

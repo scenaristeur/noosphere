@@ -1,44 +1,29 @@
 <template>
   <div class="qr-view">
-    <span v-if="roomId.length !=0">
+    <!-- <span v-if="roomId.length !=0">
       <b-button size="sm" variant="outline-info" @click="generateQR">Qr Share</b-button> or
-    </span>
+    </span> -->
     <b-button size="sm" variant="outline-info" @click="toggle_qr_scanner">Qr scan</b-button>
 
-    <div  v-if="QRsrc">
-      <small>{{ this.url}}</small><br>
-      <b-button @click="saveQR" disabled size="sm" variant="info">save QR</b-button>
 
-      <b-button @click="saveQR" disabled size="sm" variant="info">copy url</b-button>
-      <!-- <b-button @click="QRsrc=null" size="sm" variant="info">hide</b-button> -->
-      <img :src="QRsrc" width="280px" /><br>
-    </div>
     <div id="reader" ref="reader" width="600px"></div>
   </div>
 </template>
 
 <script>
-import QRCode from 'qrcode'
+
 import {Html5QrcodeScanner} from "html5-qrcode"
 
 export default {
   name: 'QrView',
-  props:['roomId'],
+  // props:['roomId'],
   data(){
     return{
-      QRsrc: null,
+
     }
   },
   methods:{
-    async generateQR(){
-      if (this.QRsrc == null){
-        this.url = 'https://scenaristeur.github.io/noosphere/?room='+this.roomId
-        this.QRsrc = await QRCode.toDataURL(this.url, {color: {light: '#98faf5'}})
-      }else{
-        this.QRsrc = null
-      }
 
-    },
     toggle_qr_scanner(){
       if(this.$refs.reader.innerHTML == ""){
         this.scanner = new Html5QrcodeScanner(

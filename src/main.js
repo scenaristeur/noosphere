@@ -7,6 +7,9 @@ import store from './store'
 import CorePlugin from './plugins/core-plugin';
 Vue.use(CorePlugin, {store: store, router: router});
 
+import Web3Plugin from './plugins/web3-plugin';
+Vue.use(Web3Plugin, {store: store, router: router});
+
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
 // Import Bootstrap and BootstrapVue CSS files (order is important)

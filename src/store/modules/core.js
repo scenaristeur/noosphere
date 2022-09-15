@@ -10,6 +10,9 @@ const state = () => ({
   yMap: null,
   web3Token: null,
   editorData: null,
+  services: [],
+  uploads: [],
+  pinMessages: [],
   editorDataDefault: {
     // "time" : 1550476186479,
     "blocks" : [
@@ -55,7 +58,7 @@ const mutations = {
     this.commit('core/updateRoomHistory', u.roomId)
   },
   removeRoomIdFromHistory(state, roomId){
-  //  console.log(roomId)
+    //  console.log(roomId)
     delete state.user.rooms[roomId]
     // console.log("deleted", state.user.rooms)
   },
@@ -63,7 +66,7 @@ const mutations = {
     if (roomId.length > 0){
       this.commit('core/removeRoomIdFromHistory', roomId)
       state.user.rooms[roomId] = {roomId: roomId, date: Date.now()}
-    //  console.log("[history]", state.user.rooms)
+      //  console.log("[history]", state.user.rooms)
       Vue.prototype.$userChanged()
     }
   },
@@ -74,9 +77,9 @@ const mutations = {
     state.users = u
   },
   setUserById(state, u){
-  //  console.log('[store setUserById]',u)
+    //  console.log('[store setUserById]',u)
     state.users[u.clientID] = u
-  //  console.log(state.users)
+    //  console.log(state.users)
   },
   setUsersUpdateDate(state, d){
     state.usersUpdateDate = d
@@ -84,6 +87,18 @@ const mutations = {
   setWeb3Token(state, t){
     state.web3Token = t
   },
+  updateServices(state, s){
+    state.services = s
+  },
+  setUploads(state,u){
+    state.uploads = u
+  },
+  resetPinMessages(state){
+    state.pinMessages = []
+  },
+  addPinMessage(state, m){
+    state.pinMessages.push(m)
+  }
 
 }
 

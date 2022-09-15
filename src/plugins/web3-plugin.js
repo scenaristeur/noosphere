@@ -1,0 +1,130 @@
+import { Web3Storage } from 'web3.storage';
+let client = null
+
+const plugin = {
+  install(Vue, opts = {}) {
+    let store = opts.store
+
+    Vue.prototype.$web3list = async function(token){
+      client = new Web3Storage({ token: token });
+      const uploads = [];
+      for await (const item of client.list({ maxResults: 20 })) {
+        uploads.push(item);
+      }
+      // console.log(uploads)
+      // console.log("list")
+      // this.uploads = uploads
+      store.commit('core/setUploads', uploads)
+      return uploads
+    }
+
+    Vue.prototype.$web3Pin = async function(options){
+      store.commit('core/resetPinMessages')
+      let token = store.state.core.web3Token
+      if( token == null || token.length == 0){
+        alert("you need a web3.storage token, see https://web3.storage/docs/")
+        opts.router.push('/config')
+        return
+      }else {
+        localStorage.setItem('noosphere-web3storage-token', token);
+        //  console.log(token, this.user.roomId, options.data)
+        let file = new File([options.data], options.fileName+'.json')
+        console.log(file)
+        store.commit('core/addPinMessage', "[pinning]: "+options.fileName)
+
+        client = new Web3Storage({ token: token });
+
+
+        const onRootCidReady = rootCid => {
+          console.log('-- root cid:', rootCid)
+          store.commit('core/addPinMessage', "[root cid] "+rootCid)
+        }
+        const onStoredChunk = chunkSize => {
+          console.log(`stored chunk of ${chunkSize} bytes`)
+          store.commit('core/addPinMessage', "[stored chunk of] "+chunkSize+' bytes')
+        }
+
+        const rootCid = await client.put([file], {
+          name: 'noosphere_'+options.fileName,
+          maxRetries: 3,
+          onRootCidReady,
+          onStoredChunk
+        });
+        console.log(rootCid)
+        store.commit('core/addPinMessage', "[done]")
+
+        Vue.prototype.$web3list(token)
+        return rootCid
+      }
+
+
+
+    }
+
+    Vue.prototype.$web3Load = async function(cid){
+
+      console.log(cid)
+      // this.$bvModal.hide("modal-pin")
+      let app = this
+      const res = await client.get(cid); // Web3Response
+      if(res.ok != false){
+        const files = await res.files(); // Web3File[]
+        for (const file of files) {
+          console.log(file)
+          console.log(`${file.cid} ${file.name} ${file.size}`);
+          var fileReader = new FileReader();
+          fileReader.onloadstart = function(progressEvent) {
+            //resetLog();
+            console.log("onloadstart!");
+            var msg = "File Name: " + file.name + "<br>" +
+            "File Size: " + file.size + "<br>" +
+            "File Type: " + file.type;
+
+            console.log(msg, progressEvent);
+          }
+
+          fileReader.onload = function(progressEvent) {
+            console.log("onload!");
+
+            var stringData = fileReader.result;
+            console.log(" ---------------- File Content ----------------: ");
+            console.log(stringData, progressEvent);
+            app.$loadCid({roomId: file.name.split(".json")[0], cid: file.cid, content: JSON.parse(stringData)})
+          }
+
+          fileReader.onloadend = function(progressEvent) {
+            console.log("onloadend!");
+            // FileReader.EMPTY, FileReader.LOADING, FileReader.DONE
+            console.log("readyState = " + fileReader.readyState, progressEvent);
+          }
+
+          fileReader.onerror = function(progressEvent) {
+            console.log("onerror!", progressEvent);
+            console.log("Has Error!");
+          }
+
+          // Read file asynchronously.
+          fileReader.readAsText(file, "UTF-8"); // fileReader.result -> String.
+
+
+
+        }
+        // const info = await this.client.status(this.rootCid);
+        // console.log(`${info.cid} ${info.dagSize} ${info.created}`);
+      }else{
+        console.log(res)
+      }
+    }
+
+
+
+
+  }
+}
+
+// Auto-install
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use(plugin)
+}
+
+export default plugin
