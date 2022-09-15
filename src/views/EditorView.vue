@@ -239,9 +239,9 @@ export default {
       editorData(){
         //  yService.log('watch')
         //  yService.log(this.editorData)
-        if (this.editor.blocks == undefined){
-          this.editor.blocks = []
-        }
+        // if (this.editor.blocks == undefined){
+        //   this.editor.blocks = []
+        // }
         this.editor.blocks.render(this.editorData)
         // this.editor.render()
         console.log("render")
