@@ -28,17 +28,17 @@ const plugin = {
         }
       } );
 
-Vue.prototype.$zoomToFit = function(/*params*/){
-  // console.log(params.text)
+      Vue.prototype.$zoomToFit = function(/*params*/){
+        // console.log(params.text)
 
-store.state.network.graph.zoomToFit(10,10, node =>{
+        store.state.network.graph.zoomToFit(10,10, node =>{
 
-   store.state.network.search == null || store.state.network.search.text.length > 0 && node.name.includes(store.state.network.search.text)
-// let show = node.name.includes(store.state.network.search.text)
-// console.log(node.name, show)
-//    return show
-})
-}
+          store.state.network.search == null || store.state.network.search.text.length > 0 && node.name.includes(store.state.network.search.text)
+          // let show = node.name.includes(store.state.network.search.text)
+          // console.log(node.name, show)
+          //    return show
+        })
+      }
 
 
       Vue.prototype.$graphInit = async function(options){
@@ -92,6 +92,10 @@ store.state.network.graph.zoomToFit(10,10, node =>{
         .linkWidth(link => highlightLinks.has(link) ? 4 : 1)
         .linkDirectionalParticles(link => highlightLinks.has(link) ? 4 : 0)
         .linkDirectionalParticleWidth(4)
+        .nodeAutoColorBy('group')
+        .linkAutoColorBy('group')
+        //.linkAutoColorBy(d => store.state.network.nodes[d.source].group)
+        .linkOpacity(0.5)
         .onNodeHover(node => {
           // no state change
           if ((!node && !highlightNodes.size) || (node && hoverNode === node)) return;
@@ -142,7 +146,7 @@ store.state.network.graph.zoomToFit(10,10, node =>{
       //   }
 
       Vue.prototype.$nodeFocus = function(node) {
-      //  console.log("node",node)
+        //  console.log("node",node)
 
         const distance = 50;
         let pos = {x: distance, y: distance, z: distance}
@@ -163,7 +167,7 @@ store.state.network.graph.zoomToFit(10,10, node =>{
 
       Vue.prototype.$updateHighlight = function() {
         // trigger update of highlighted objects in scene
-      //  console.log(store.state.network.highlightNodes)
+        //  console.log(store.state.network.highlightNodes)
         let graph = store.state.network.graph
         graph
         .nodeColor(graph.nodeColor())
@@ -338,7 +342,7 @@ store.state.network.graph.zoomToFit(10,10, node =>{
         // if(node.url != undefined && node.url.startsWith('http')){
         //   app.$store.commit ('app/mustExplore', node.url)
         // }
-  Vue.prototype.$nodeFocus(node)
+        Vue.prototype.$nodeFocus(node)
 
       }
 
