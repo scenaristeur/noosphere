@@ -46,21 +46,23 @@ export default {
         user.id = user.clientID
         user.group = "user"
         var indexU = this.nodes.findIndex(x => x.id==user.id);
-        indexU === -1 ? this.nodes.push(user) : "" //Object.assign(this.nodes[indexU], user)
+        indexU === -1 ? this.nodes.push(user) : Object.assign(this.nodes[indexU], user)
         //  console.log(this.nodes)
         // rooms
+        console.log(user.rooms)
         for (const [id, room] of Object.entries(user.rooms)) {
           room.id = id
           room.name = id
           room.group = "room"
           var indexR = this.nodes.findIndex(x => x.id==room.id);
-          indexR === -1 ? this.nodes.push(room) : "" //Object.assign(this.nodes[indexR], room)
+          indexR === -1 ? this.nodes.push(room) : Object.assign(this.nodes[indexR], room)
           // console.log(this.nodes)
           let link = {source: user.id, target: room.id, group: "visited", label: "visited", color: 'blue'}
           if (room.id == user.roomId){
             link.group = "current"
             link.label = "current"
             link.color = "red"
+            console.log('#link',link)
             //  Object.assign(this.nodes[user.roomId], {color: 'red', group: 'occuped'})
           }
           // else{

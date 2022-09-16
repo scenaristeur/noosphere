@@ -55,7 +55,10 @@ const mutations = {
   },
   setUser(state, u){
     state.user = u
-    this.commit('core/updateRoomHistory', u.roomId)
+    if (u.roomId != null){
+      this.commit('core/updateRoomHistory', u.roomId)
+    }
+
   },
   removeRoomIdFromHistory(state, roomId){
     //  console.log(roomId)

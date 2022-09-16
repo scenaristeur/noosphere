@@ -48,7 +48,7 @@
     username<b-input v-model="user.name" placeholder="username" />
     color <b-input v-model="user.color" type="color" />
     <!-- <b-button @click="userChanged" variant="info" size="sm">Update user</b-button> -->
-    <b-button @click="randomUser" variant="outline-info" disabled size="sm">Random user</b-button>
+    <b-button @click="randomUser" variant="outline-info" size="sm">Random user</b-button>
   </p>
 </b-modal>
 
@@ -104,8 +104,12 @@ export default {
       this.$store.commit('core/setUser', this.user)
       this.$userChanged()
     },
-    randomUser(){
-      this.$randomUser()
+    async randomUser(){
+      this.currentUser = await this.$randomUser()
+      console.log(this.currentUser)
+      this.$store.commit('core/setUser', this.currentUser)
+      // this.$userChanged()
+      // this.userChanged()
     },
     openUserModal(user){
       console.log(user)
