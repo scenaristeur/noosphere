@@ -54,12 +54,12 @@
         </b-col>
         <b-col sm="10">
           <b-input
+          id="input-small"
           v-model="token"
           @input="tokenChanged"
           size="sm"
           placeholder="web3.storage token"
           type="password" />
-          <!-- <b-form-input id="input-small" size="sm" placeholder="Enter your name"></b-form-input> -->
         </b-col>
       </b-row>
 
@@ -86,11 +86,49 @@
       </b-form-checkbox>
     </b-button>
   </b-card-header>
+
   <b-collapse id="accordion-solid" accordion="my-accordion" role="tabpanel">
     <b-card-body>
-      <b-card-text>{{ text }}</b-card-text>
-    </b-card-body>
-  </b-collapse>
+      <b-card-text>
+        Where are is the persistannt list of all rooms
+        <b-row class="my-1">
+          <b-col sm="2">
+            <label for="input-pod">Pod url:</label>
+          </b-col>
+          <b-col sm="10">
+            <b-input
+            id="input-pod"
+            v-model="pod_url"
+            @input="pod_urlChanged"
+            size="sm"
+            placeholder="pod url"
+            />
+          </b-col>
+        </b-row>
+        <!--
+
+        <b-row class="my-1">
+        <b-col sm="2">
+        <label for="input-small">Token:</label>
+      </b-col>
+      <b-col sm="10">
+      <b-input
+      v-model="token"
+      @input="tokenChanged"
+      size="sm"
+      placeholder="web3.storage token"
+      type="password" />
+    </b-col>
+  </b-row> -->
+
+
+
+
+
+
+</b-card-text>
+</b-card-body>
+</b-collapse>
 </b-card>
 
 <!-- <b-card no-body class="mb-1">
@@ -126,7 +164,7 @@ other
 export default {
   name: 'ConfigView',
   // components: {
-  //   'QrView': ()=>import('@/views/QrView'),
+  //   'QrView': ()=>import('@/vie'User_'+Date.now()ws/QrView'),
   //   // 'UserView': ()=>import('@/views/UserView'),
   // },
   data(){
@@ -137,8 +175,10 @@ export default {
 
     }
   },
-  created(){
+  async created(){
     this.token = this.$store.state.core.web3Token
+    this.$solidRoomList()
+    this.$solidCreateRoom('Room_'+Date.now())
   },
   methods:{
     async tokenChanged(){
@@ -146,6 +186,10 @@ export default {
       await this.$web3list(this.token)
       //console.log("Web3 uploads",uploads)
     },
+    async pod_urlChanged(){
+      console.log('pod_urlChanged', this.pod_url)
+      this.$solidRoomList()
+    }
   },
   watch:{
     web3Token(){
@@ -169,6 +213,15 @@ export default {
       },
       set(services) {
         this.$store.commit('core/updateServices', services)
+      },
+
+    },
+    pod_url: {
+      get() {
+        return this.$store.state.core.pod_url;
+      },
+      set(pod_url) {
+        this.$store.commit('core/setPodUrl', pod_url)
       },
 
     },

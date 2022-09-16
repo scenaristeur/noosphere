@@ -28,7 +28,7 @@ const plugin = {
 
     Vue.prototype.$userChanged = async function(){
       let user = store.state.core.user
-       console.log('[user Changed]', user)
+      console.log('[user Changed]', user)
       localStorage.setItem('noosphere-user', JSON.stringify(user));
       store.state.core.awareness.setLocalStateField('user', user)
       //  console.log("[user changed]"/*, this.awareness*/, user)
@@ -142,6 +142,13 @@ const plugin = {
       store.commit('core/setEditorData', editorData)
       store.commit('core/setUser', user)
       Vue.prototype.$openRoom()
+    }
+
+    Vue.prototype.$solidRoomList = async function(){
+      const roomList = await (
+        await fetch(this.pod_url)
+      ).text();
+      console.log('{roomList',roomList)
     }
 
 

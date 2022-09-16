@@ -13,6 +13,9 @@ Vue.use(Web3Plugin, {store: store, router: router});
 import GraphPlugin from './plugins/graph-plugin';
 Vue.use(GraphPlugin, {store: store, router: router});
 
+import SolidPlugin from './plugins/solid-plugin';
+Vue.use(SolidPlugin, {store: store, router: router});
+
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
 // Import Bootstrap and BootstrapVue CSS files (order is important)

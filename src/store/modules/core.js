@@ -13,6 +13,7 @@ const state = () => ({
   services: [],
   uploads: [],
   pinMessages: [],
+  pod_url: 'https://noosphere.solidcommunity.net/public/testrooms/',
   editorDataDefault: {
     // "time" : 1550476186479,
     "blocks" : [
@@ -101,7 +102,10 @@ const mutations = {
   },
   addPinMessage(state, m){
     state.pinMessages.push(m)
-  }
+  },
+  setPodUrl(state, u){
+    state.pod_url = u
+  },
 
 }
 

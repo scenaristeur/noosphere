@@ -1,0 +1,67 @@
+import { LinkedDataObject } from "ldo";
+import { NoosphereRoomFactory } from "@/ldo/noosphereRoom.ldoFactory.ts";
+import { NoosphereRoom } from "@/ldo/noosphereRoom.typings.ts";
+import { Dataset } from "@rdfjs/types";
+
+const plugin = {
+  install(Vue, opts = {}) {
+    let store = opts.store
+
+    // Vue.prototype.$solidRoomList = async function(){
+    //   let pod_url = store.state.core.pod_url
+    //   const roomList = await (
+    //     await fetch(pod_url)
+    //   ).text();
+    //   console.log('{roomList',roomList)
+    // }
+    //
+    // Vue.prototype.$solidSetRoom = async function(){
+    //   // const emptyProfile: LinkedDataObject<NoosphereRoom>  =
+    //   // NoosphereRoomFactory.new("https://example.com/room1");
+    //
+    //   let pod_url = store.state.core.pod_url
+    //
+    //
+    //   const roomJson = {
+    //     "@id": pod_url+"/aangProfile",
+    //     idRoom: "hello",
+    //     creator: "folks"
+    //     // type: "Person",
+    //     // name: "Aang",
+    //     // knows: [
+    //     //   {
+    //     //     "@id": "https://example.com/kataraProfile",
+    //     //     type: "Person",
+    //     //     name: "Katara",
+    //     //   }
+    //     // ]
+    //   }
+    //   const room: LinkedDataObject<NoosphereRoom> =
+    //   NoosphereRoomFactory.fromJson(roomJson);
+    //
+    //
+    // }
+    //
+    //
+    // Vue.prototype.$getRooms = async function(){
+    //
+    //   let pod_url = store.state.core.pod_url
+    //   const dataset: Dataset = // initialize dataset
+    //   const profile: LinkedDataObject<NoosphereRoom> = await NoosphereRoomFactory.parse(
+    //     pod_url,
+    //     dataset
+    //   );
+    //
+    //
+    //
+    // }
+
+  }
+}
+
+// Auto-install
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use(plugin)
+}
+
+export default plugin
