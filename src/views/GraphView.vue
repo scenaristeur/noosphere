@@ -1,20 +1,32 @@
 <template>
-  <div>
-    <div id="graph" width="100px" ref="graph">Loading graph...</div>
-    <div>
-      {{users}}
-      <hr>
-      {{uploads}}
-      <hr>
-    </div>
-  </div>
+  <b-row>
+    <b-col>
+      <div id="graph" width="100px" ref="graph">Loading graph...</div>
+    </b-col>
+    <b-col>
+      <div>
+        {{ currentNode }}
+        <!-- {{users}} -->
+        <hr>
+        {{uploads}}
+        <hr>
+      </div>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
 export default {
   name: 'GraphView',
+  data(){
+    return{
+      nodes: [],
+      links: []
+    }
+  },
   mounted(){
     this.$graphInit({domElement: this.$refs.graph})
+    this.updateUsers()
     // this.users = this.$store.state.core.users
   },
   methods:{
@@ -27,38 +39,44 @@ export default {
       }
     },
     updateUsers(){
-    //  this.links = []
+      //  this.links = []
       for (const [clientID, user] of Object.entries(this.users)) {
         console.log('[user]',clientID,user);
         // user
         user.id = user.clientID
         user.group = "user"
         var indexU = this.nodes.findIndex(x => x.id==user.id);
-        indexU === -1 ? this.nodes.push(user) : Object.assign(this.nodes[indexU], user)
-        console.log(this.nodes)
+        indexU === -1 ? this.nodes.push(user) : "" //Object.assign(this.nodes[indexU], user)
+        //  console.log(this.nodes)
         // rooms
         for (const [id, room] of Object.entries(user.rooms)) {
           room.id = id
           room.name = id
+          room.group = "room"
           var indexR = this.nodes.findIndex(x => x.id==room.id);
-          indexR === -1 ? this.nodes.push(room) : Object.assign(this.nodes[indexR], room)
-          console.log(this.nodes)
-          let link = {source: user.id, target: room.id}
+          indexR === -1 ? this.nodes.push(room) : "" //Object.assign(this.nodes[indexR], room)
+          // console.log(this.nodes)
+          let link = {source: user.id, target: room.id, group: "visited", label: "visited", color: 'blue'}
           if (room.id == user.roomId){
             link.group = "current"
             link.label = "current"
             link.color = "red"
             //  Object.assign(this.nodes[user.roomId], {color: 'red', group: 'occuped'})
-          }else{
-            link.label = "room"
           }
-        //  this.links.push(link)
+          // else{
+          //   link.label = "room"
+          // }
+          //  console.log(link)
+          //  console.log('links before', this.links)
+          // this.links = this.links.filter(l => {return l.source == link.source && l.target == link.target})
+          var indexL = this.links.findIndex(l => l.source == link.source && l.target == link.target);
+          indexL === -1 ? this.links.push(link) : Object.assign(this.links[indexL], link)
+          // console.log('links after', this.links)
+          // this.links.push(link)
         }
 
-
-
-
       }
+      this.update()
     }
   },
   watch:{
@@ -79,15 +97,33 @@ export default {
       console.log(this.usersUpdateDate)
       this.updateUsers()
       this.$forceUpdate()
+    },
+    currentNode(){
+      console.log(this.currentNode)
+      let user = this.$store.state.core.user
+      switch (this.currentNode.group) {
+        case "room":
+
+        user.roomId = this.currentNode.id
+        this.$store.commit('core/setUser', user)
+        this.$openRoom()
+        break;
+        case "user":
+
+        break;
+        default:
+        console.log("i don't know what to do")
+
+      }
     }
   },
   computed: {
-    nodes() {
-      return this.$store.state.network.nodes
-    },
-    links() {
-      return this.$store.state.network.links
-    },
+    // nodes() {
+    //   return this.$store.state.network.nodes
+    // },
+    // links() {
+    //   return this.$store.state.network.links
+    // },
     graph() {
       return this.$store.state.network.graph
     },
@@ -102,6 +138,9 @@ export default {
     },
     uploads() {
       return this.$store.state.core.uploads
+    },
+    currentNode(){
+      return this.$store.state.network.currentNode
     }
   },
 

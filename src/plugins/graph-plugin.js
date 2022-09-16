@@ -160,7 +160,7 @@ const plugin = {
           3000  // ms transition duration
         );
         // console.log(store.state.network.graph)
-        let n = store.state.network.nodes.find(n => n.id == node.id)
+        let n = {id: node.id, group: node.group}
         store.commit ('network/setCurrentNode', n)
 
       }
