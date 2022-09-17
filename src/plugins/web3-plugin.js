@@ -45,7 +45,7 @@ const plugin = {
         }
 
         const rootCid = await client.put([file], {
-          name: 'noosphere_'+options.fileName,
+          name: 'noos_'+options.fileName+'_'+Date.now(),
           maxRetries: 3,
           onRootCidReady,
           onStoredChunk

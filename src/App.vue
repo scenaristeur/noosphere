@@ -10,7 +10,7 @@
       <router-link to="/user" class="nav-item mx-2"><b-icon font-scale="1.5" icon="people-fill" aria-hidden="true"></b-icon></router-link>
       <!-- <router-link to="###" class="nav-item mx-2"><b-icon @click="getLocation" font-scale="1.5" icon="geo-alt" aria-hidden="true"></b-icon></router-link> -->
       <router-link to="/config" class="nav-item mx-2"><b-icon font-scale="1.5" icon="gear" aria-hidden="true"></b-icon></router-link>
-      <router-link to="/graph" class="nav-item mx-2">graph</router-link>
+      <router-link to="/graph" class="nav-item mx-2">net</router-link>
       <router-link to="/about" class="nav-item mx-2"><b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
 
     </nav>

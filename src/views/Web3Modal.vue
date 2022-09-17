@@ -1,6 +1,6 @@
 <template>
   <div class="web3-modal">
-    web3modal
+    <!-- web3modal -->
     <b-modal id="modal-pin" title="Pin Data on Web3.storage" size="lg" @shown="populate">
 
 
@@ -82,8 +82,13 @@ export default {
       this.$store.commit('core/resetPinMessages')
       let data = this.$store.state.core.editorData
       delete data.clientID
+      data.roomId = this.user.roomId
+      let prefix = 'noos'
+      let separator = '_'
+      this.fileName = prefix+separator+this.user.roomId+separator+Date.now()
       this.data = JSON.stringify(data, null, 2)
-      this.fileName = this.user.roomId
+
+      // this.fileName = this.user.roomId
       this.cid = null
     },
     async pin(){
