@@ -23,7 +23,7 @@
         Chat about Noosphere
         <b-icon font-scale="1.5" icon="chat" aria-hidden="true"></b-icon>
       </b-link>
-      <br><i><small>version: network links navbar</small></i>
+      <br><i><small>version: qrcode & test sidebar</small></i>
       {{ location}}
     </b-alert>
 

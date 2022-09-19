@@ -151,7 +151,7 @@ export default {
 
 <style lang="css" scoped>
 .graph-view {
-
+ z-index: 100;
 }
 .node-label {
   font-size: 12px;

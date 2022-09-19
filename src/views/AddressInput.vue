@@ -6,7 +6,7 @@
 
 
 
-    <b-input  placeholder="room adress" v-model="ra" size="sm" @keyup.enter="openRoom"/>
+    <b-input  placeholder="room address" v-model="ra" size="sm" @keyup.enter="openRoom"/>
     <b-input-group-append>
       <b-button @click="ra = ''" size="sm">X</b-button>
 
@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: 'AdressInput',
+  name: 'AddressInput',
   data(){
     return{
     ra: '',
@@ -41,13 +41,13 @@ export default {
     }
   },
   watch:{
-    roomAdress(){
-      this.ra = this.roomAdress
+    roomAddress(){
+      this.ra = this.roomAddress
     }
   },
   computed:{
     roomAdress(){
-        return this.$store.state.core.roomAdress
+        return this.$store.state.core.roomAddress
     },
     user(){
       return this.$store.state.core.user
@@ -59,7 +59,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.adress-input {
+.address-input {
 
 }
 </style>
