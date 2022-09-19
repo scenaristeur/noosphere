@@ -7,27 +7,23 @@
       <router-link to="/" class="nav-item mx-2"><b-icon font-scale="1.5" icon="house-fill" aria-hidden="true"></b-icon> </router-link>
 
       <router-link to="/editor" class="nav-item mx-2"><b-icon font-scale="1.5" icon="pen" aria-hidden="true"></b-icon></router-link>
-      <router-link to="/room" class="nav-item mx-2"><b-icon font-scale="1.5" icon="list-stars" aria-hidden="true"></b-icon></router-link>
-      <router-link to="/user" class="nav-item mx-2"><b-icon font-scale="1.5" icon="people-fill" aria-hidden="true"></b-icon></router-link>
+      <!-- <router-link to="/room" class="nav-item mx-2"><b-icon font-scale="1.5" icon="list-stars" aria-hidden="true"></b-icon></router-link> -->
+      <!-- <router-link to="/user" class="nav-item mx-2"><b-icon font-scale="1.5" icon="people-fill" aria-hidden="true"></b-icon></router-link> -->
       <!-- <router-link to="###" class="nav-item mx-2"><b-icon @click="getLocation" font-scale="1.5" icon="geo-alt" aria-hidden="true"></b-icon></router-link> -->
-      <router-link to="/config" class="nav-item mx-2"><b-icon font-scale="1.5" icon="gear" aria-hidden="true"></b-icon></router-link>
+      <!-- <router-link to="/config" class="nav-item mx-2"><b-icon font-scale="1.5" icon="gear" aria-hidden="true"></b-icon></router-link> -->
       <router-link to="/graph" class="nav-item mx-2">net</router-link>
-      <router-link to="/about" class="nav-item mx-2"><b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
+
 
     </nav>
 
     <router-view/>
   </div>
 
-    <b-alert variant="info" show>
-      <router-link to="/about" class="m-2">What is Noosphere <b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
-      <b-link href="https://matrix.to/#/#noosphere:matrix.org" class="m-2">
-        Chat about Noosphere
-        <b-icon font-scale="1.5" icon="chat" aria-hidden="true"></b-icon>
-      </b-link>
-      <br><i><small>version: navbar</small></i>
+    <!-- <b-alert variant="info" show>
+
+      <i><small>version: navbar</small></i>
       {{ location}}
-    </b-alert>
+    </b-alert> -->
 
   </div>
 </template>
@@ -42,7 +38,7 @@ export default {
   },
   data() {
     return {
-      location: null
+      // location: null
     }
   },
   created(){
@@ -60,18 +56,18 @@ export default {
     // TODO geolocation
     // https://www.w3schools.com/html/html5_geolocation.asp
 
-    getLocation(){
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(this.showPosition);
-      } else {
-        this.location = "Geolocation is not supported by this browser.";
-        console.log("location", this.location)
-      }
-    },
-    showPosition(position) {
-      this.location = "Latitude: " + position.coords.latitude +" Longitude: " + position.coords.longitude;
-      console.log("location", this.location)
-    }
+    // getLocation(){
+    //   if (navigator.geolocation) {
+    //     navigator.geolocation.getCurrentPosition(this.showPosition);
+    //   } else {
+    //     this.location = "Geolocation is not supported by this browser.";
+    //     console.log("location", this.location)
+    //   }
+    // },
+    // showPosition(position) {
+    //   this.location = "Latitude: " + position.coords.latitude +" Longitude: " + position.coords.longitude;
+    //   console.log("location", this.location)
+    // }
   },
   watch:{
 

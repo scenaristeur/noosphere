@@ -7,10 +7,10 @@
 
 
     <b-input  placeholder="room address" v-model="ra" size="sm" @keyup.enter="openRoom" type="search"/>
-    <b-input-group-append>
+    <!-- <b-input-group-append>
       <b-button v-if="ra.length > 0" @click="ra = ''" size="sm">X</b-button>
 
-    </b-input-group-append>
+    </b-input-group-append> -->
     <b-input-group-append class="mt-1 ml-1" v-if="showFav">
       <b-icon v-if="isFavorite == true" icon="star-fill" variant="warning" @click="toogleFav"></b-icon>
       <b-icon v-else icon="star" variant="warning" @click="toogleFav"></b-icon>
@@ -42,11 +42,12 @@ export default {
   },
   watch:{
     roomAddress(){
+      console.log(this.roomAddress)
       this.ra = this.roomAddress
     }
   },
   computed:{
-    roomAdress(){
+    roomAddress(){
         return this.$store.state.core.roomAddress
     },
     user(){

@@ -109,6 +109,7 @@ const mutations = {
     state.pod_url = u
   },
   setRoomAddress(state, r){
+    console.log('roomAddress', r)
     state.roomAddress = r
   },
 

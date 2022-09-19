@@ -42,22 +42,22 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "editor" */ '../views/EditorView.vue')
   },
-  {
-    path: '/user',
-    name: 'user',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "user" */ '../views/UserView.vue')
-  },
-  {
-    path: '/room',
-    name: 'room',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "roomView" */ '../views/RoomView.vue')
-  },
+  // {
+  //   path: '/user',
+  //   name: 'user',
+  //   // route level code-splitting
+  //   // this generates a separate chunk (about.[hash].js) for this route
+  //   // which is lazy-loaded when the route is visited.
+  //   component: () => import(/* webpackChunkName: "user" */ '../views/UserView.vue')
+  // },
+  // {
+  //   path: '/room',
+  //   name: 'room',
+  //   // route level code-splitting
+  //   // this generates a separate chunk (about.[hash].js) for this route
+  //   // which is lazy-loaded when the route is visited.
+  //   component: () => import(/* webpackChunkName: "roomView" */ '../views/RoomView.vue')
+  // },
   {
     path: '/graph',
     name: 'graph',

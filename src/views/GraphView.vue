@@ -1,18 +1,7 @@
 <template>
-  <b-row>
-    <b-col>
-      <div id="graph"  ref="graph">Loading graph...</div>
-    </b-col>
-    <b-col>
-      <div>
-        {{ currentNode }}
-        <!-- {{users}} -->
-        <hr>
-        {{uploads}}
-        <hr>
-      </div>
-    </b-col>
-  </b-row>
+  
+  <div id="graph"  ref="graph">Loading graph...</div>
+
 </template>
 
 <script>

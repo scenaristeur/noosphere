@@ -15,7 +15,7 @@
         id="filter-input"
         v-model="filter"
         type="search"
-        placeholder="Find in Room History"
+        placeholder="Find in uploads"
         ></b-form-input>
 
         <b-input-group-append>

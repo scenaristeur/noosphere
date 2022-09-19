@@ -58,7 +58,7 @@
 </template> -->
 <!--    @filtered="onFiltered"
 filter-included-fields="['roomId']"-->
-<template #table-caption>My Room History</template>
+<!-- <template #table-caption>My Room History</template> -->
 </b-table>
 </b-container>
 </template>
