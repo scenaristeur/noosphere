@@ -109,7 +109,7 @@
 </b-navbar>
 <QrModal />
 
-<b-sidebar id="sidebar-right" title="Sidebar" right shadow>
+<b-sidebar id="sidebar-right" title="Sidebar" right shadow width="100%">
   <div class="px-3 py-2">
     <p>
       Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
