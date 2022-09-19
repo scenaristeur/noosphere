@@ -1,7 +1,6 @@
 <template>
   <div class="nav-bar">
-    <div>
-      <b-navbar toggleable="lg" type="dark" variant="info">
+      <b-navbar toggleable="lg" type="dark" variant="info" fixed="top">
         <b-navbar-brand >
 
           <!-- <b-col cols="auto" > -->
@@ -15,7 +14,7 @@
 
         </b-navbar-brand>
 
-
+        <b-button v-b-toggle.sidebar-right size="sm">></b-button>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -24,7 +23,7 @@
 
 
 
-              <b-button v-b-toggle.sidebar-right size="sm">noosphere</b-button>
+
 
 
 
@@ -110,19 +109,15 @@
 <QrModal />
 
 <b-sidebar id="sidebar-right" title="Sidebar" right shadow width="100%">
-  <!-- <div class="px-3 py-2"> -->
-    <!-- <p>
+  <div class="px-3 py-2">  <p>
       Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
       in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-    </p> -->
+    </p>
 
-    <GraphView style="inherit"/>
 
-    <!-- <b-img src="https://picsum.photos/500/500/?image=54" fluid thumbnail></b-img> -->
-  <!-- </div> -->
+    <b-img src="https://picsum.photos/500/500/?image=54" fluid thumbnail></b-img>  </div>
 </b-sidebar>
 
-</div>
 </div>
 </template>
 
@@ -133,7 +128,7 @@ export default {
     'AddressInput': ()=>import('@/views/AddressInput'),
     'MenuNew': ()=>import('@/views/MenuNew'),
     'QrModal': ()=>import('@/views/QrModal'),
-    'GraphView': ()=>import('@/views/GraphView'),
+    // 'GraphView': ()=>import('@/views/GraphView'),
     // 'UserView': ()=>import('@/views/UserView'),
   },
   data(){

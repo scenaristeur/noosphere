@@ -1,6 +1,7 @@
 <template>
   <div id="app">
 <NavBar />
+ <div style="margin-top: 60px;">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <!-- <a class="navbar-brand" href="#">Navbar</a> -->
       <router-link to="/" class="nav-item mx-2"><b-icon font-scale="1.5" icon="house-fill" aria-hidden="true"></b-icon> </router-link>
@@ -16,6 +17,7 @@
     </nav>
 
     <router-view/>
+  </div>
 
     <b-alert variant="info" show>
       <router-link to="/about" class="m-2">What is Noosphere <b-icon font-scale="1.5" icon="question" aria-hidden="true"></b-icon></router-link>
@@ -23,7 +25,7 @@
         Chat about Noosphere
         <b-icon font-scale="1.5" icon="chat" aria-hidden="true"></b-icon>
       </b-link>
-      <br><i><small>version: search</small></i>
+      <br><i><small>version: navbar</small></i>
       {{ location}}
     </b-alert>
 
