@@ -15,43 +15,44 @@
         <b-button>Edit</b-button>
         <b-button>Undo</b-button> -->
 
-        <b-button><b-icon @click="share" font-scale="1.5" icon="share" aria-hidden="true"></b-icon></b-button>
-        <b-button><b-icon @click="openPinModal" font-scale="1.5" icon="pin" aria-hidden="true"></b-icon></b-button>
+        <b-button size="sm"><b-icon @click="share" font-scale="1.5" icon="share" aria-hidden="true"></b-icon></b-button>
+        <b-button size="sm"><b-icon @click="openPinModal" font-scale="1.5" icon="pin" aria-hidden="true"></b-icon></b-button>
+        <b-button size="sm" @click="fork">fork</b-button>
 
       </b-button-group>
       <!-- <b-dropdown class="mx-1" right text="Addons">
-        <b-dropdown-item @click="getLocation">
-          <b-button class="nav-item mx-2" >
-            <b-icon font-scale="1.5" icon="geo-alt" aria-hidden="true"></b-icon> add location
-          </b-button>
-        </b-dropdown-item>
-        <b-dropdown-item>Wikidata Tags</b-dropdown-item>
-        <b-dropdown-item>Item 3</b-dropdown-item>
-      </b-dropdown>
-      <b-button-group class="mx-1">
-        <b-button>Save</b-button>
-        <b-button>Cancel</b-button>
-      </b-button-group> -->
-    </b-button-toolbar>
+      <b-dropdown-item @click="getLocation">
+      <b-button class="nav-item mx-2" >
+      <b-icon font-scale="1.5" icon="geo-alt" aria-hidden="true"></b-icon> add location
+    </b-button>
+  </b-dropdown-item>
+  <b-dropdown-item>Wikidata Tags</b-dropdown-item>
+  <b-dropdown-item>Item 3</b-dropdown-item>
+</b-dropdown>
+<b-button-group class="mx-1">
+<b-button>Save</b-button>
+<b-button>Cancel</b-button>
+</b-button-group> -->
+</b-button-toolbar>
 
-    {{ location}}
-    <b-alert
-    id="shareAlert"
-    :show="dismissCountDown"
-    dismissible
-    variant="info"
-    @dismissed="dismissCountDown=0"
-    @dismiss-count-down="countDownChanged"
-    >
-    <p><b>{{url}}</b> has been copied to your clipboard, you can paste it in any other app to share it {{ dismissCountDown }} ...</p>
-    <b-progress
-    variant="warning"
-    :max="dismissSecs"
-    :value="dismissCountDown"
-    height="4px"
-    ></b-progress>
-  </b-alert>
-  <Web3Modal />
+{{ location}}
+<b-alert
+id="shareAlert"
+:show="dismissCountDown"
+dismissible
+variant="info"
+@dismissed="dismissCountDown=0"
+@dismiss-count-down="countDownChanged"
+>
+<p><b>{{url}}</b> has been copied to your clipboard, you can paste it in any other app to share it {{ dismissCountDown }} ...</p>
+<b-progress
+variant="warning"
+:max="dismissSecs"
+:value="dismissCountDown"
+height="4px"
+></b-progress>
+</b-alert>
+<Web3Modal />
 
 </div>
 </template>
@@ -145,6 +146,9 @@ export default {
       }
 
     },
+    fork(){
+      alert('not implemented yet, see More menu to help !')
+    }
   },
   computed: {
     user() {

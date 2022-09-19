@@ -26,7 +26,7 @@ export default {
     return{
     ra: '',
       isFavorite: false,
-      showFav: true
+      showFav: false
     }
   },
   methods:{
@@ -35,7 +35,7 @@ export default {
     },
     openRoom(){
       let user = this.user
-      user.roomId = this.ra
+      user.roomId = this.ra.trim()
       this.$store.commit('core/setUser', user)
       this.$openRoom()
     }

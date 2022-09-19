@@ -28,15 +28,16 @@
   <b-card no-body class="mb-1">
     <b-card-header header-tag="header" class="p-1" role="tab">
       <b-button block v-b-toggle.accordion-web3 variant="info">
-        <b-form-checkbox
+        <!-- <b-form-checkbox
         id="checkbox-1"
         v-model="services"
         name="checkbox-1"
         value="web3storage"
         size="lg"
         @click.stop
-        > Web3Storage
-      </b-form-checkbox>
+        > -->
+         Web3Storage
+      <!-- </b-form-checkbox> -->
     </b-button>
 
   </b-card-header>
@@ -45,7 +46,7 @@
 
 
       see <a href="https://web3.storage/docs/" target="_blank"> https://web3.storage/docs/</a> (1GB free)<br>
-      <a href="https://web3.storage/tokens/" target="_blank">your web3.storage tokens</a>
+      <a href="https://web3.storage/tokens/" target="_blank">my web3.storage tokens</a>
 
 
       <b-row class="my-1">
@@ -63,8 +64,9 @@
         </b-col>
       </b-row>
 
-      <div v-if="uploads != undefined && uploads.length>0">
-        <router-link to="/room" class="nav-item mx-2"><b-icon font-scale="1.5" icon="people-fill" aria-hidden="true"></b-icon> my 20 last uploads</router-link></div>
+      <!-- <div v-if="uploads != undefined && uploads.length>0">
+        <router-link to="/room" class="nav-item mx-2"><b-icon font-scale="1.5" icon="people-fill" aria-hidden="true"></b-icon> my 20 last uploads</router-link>
+      </div> -->
 
         <!-- <b-card-text>I start opened because <code>visible</code> is <code>true</code></b-card-text>
         <b-card-text>{{ text }}</b-card-text> -->
@@ -75,15 +77,16 @@
   <b-card no-body class="mb-1">
     <b-card-header header-tag="header" class="p-1" role="tab">
       <b-button block v-b-toggle.accordion-solid variant="info">
-        <b-form-checkbox
+        <!-- <b-form-checkbox
         id="checkbox-2"
         v-model="services"
         name="checkbox-2"
         value="solid"
         size="lg"
         @click.stop
-        > Solid
-      </b-form-checkbox>
+        >  -->
+        Solid
+      <!-- </b-form-checkbox> -->
     </b-button>
   </b-card-header>
 
@@ -104,6 +107,7 @@
             placeholder="pod url"
             />
           </b-col>
+          <a :href="pod_url" target="_blank">open</a>
         </b-row>
         <!--
 

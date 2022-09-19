@@ -1,7 +1,7 @@
 <template>
   <b-container fluid class="editor-view text-primary ">
     <div v-if="user!= null" >room: <b>{{user.roomId}}</b></div>
-    <ToolBar />
+
     <!-- Editor
     <b-button @click="save">Save</b-button> -->
     <div id="editorjs"  class="text-light"></div>
@@ -34,7 +34,7 @@ import LinkAutocomplete from "@editorjs/link-autocomplete"
 export default {
   name: 'EditorView',
   components: {
-    'ToolBar': ()=>import('@/views/ToolBar'),
+  
     // 'DataCaching': ()=>import('@/views/experiments/DataCaching'),
     // 'LevelgraphJsonld': ()=>import('@/views/experiments/LevelgraphJsonld'),
   },

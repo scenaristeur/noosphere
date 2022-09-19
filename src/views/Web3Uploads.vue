@@ -91,11 +91,11 @@ export default {
           label: 'date',
           sortable: true
         },
-        {key: 'delete',
-        label:'delete',
-        headerAbbr: 'delete',
-        headerTitle: 'delete from history'
-      }
+      //   {key: 'delete',
+      //   label:'delete',
+      //   headerAbbr: 'delete',
+      //   headerTitle: 'delete from history'
+      // }
     ],
     cidToOpen: null
   }
