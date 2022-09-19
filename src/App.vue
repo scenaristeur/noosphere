@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-
+<NavBar />
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <!-- <a class="navbar-brand" href="#">Navbar</a> -->
       <router-link to="/" class="nav-item mx-2"><b-icon font-scale="1.5" icon="house-fill" aria-hidden="true"></b-icon> </router-link>
@@ -23,7 +23,7 @@
         Chat about Noosphere
         <b-icon font-scale="1.5" icon="chat" aria-hidden="true"></b-icon>
       </b-link>
-      <br><i><small>version: network links</small></i>
+      <br><i><small>version: network links navbar</small></i>
       {{ location}}
     </b-alert>
 
@@ -34,6 +34,10 @@
 
 export default {
   name: 'App',
+  components: {
+    'NavBar': ()=>import('@/views/NavBar'),
+    // 'UserView': ()=>import('@/views/UserView'),
+  },
   data() {
     return {
       location: null

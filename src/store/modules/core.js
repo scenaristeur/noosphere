@@ -13,6 +13,7 @@ const state = () => ({
   services: [],
   uploads: [],
   pinMessages: [],
+  roomAdress: '',
   pod_url: 'https://noosphere.solidcommunity.net/public/testrooms/',
   editorDataDefault: {
     // "time" : 1550476186479,
@@ -69,6 +70,7 @@ const mutations = {
   updateRoomHistory(state,roomId){
     if (roomId.length > 0){
       this.commit('core/removeRoomIdFromHistory', roomId)
+      this.commit('core/setRoomAdress', roomId)
       state.user.rooms[roomId] = {roomId: roomId, date: Date.now()}
       //  console.log("[history]", state.user.rooms)
       Vue.prototype.$userChanged()
@@ -105,6 +107,9 @@ const mutations = {
   },
   setPodUrl(state, u){
     state.pod_url = u
+  },
+  setRoomAdress(state, r){
+    state.roomAdress = r
   },
 
 }

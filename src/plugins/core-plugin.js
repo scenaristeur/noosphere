@@ -115,7 +115,12 @@ const plugin = {
         // editorData = Object.assign({}, this.editorDataDefault)
         store.commit('core/setEditorData', defaultData)
       }
-      opts.router.push('/editor')
+
+      // console.log(opts.router, Vue.$route)
+      if(opts.router.history.current.name != 'editor'){
+        opts.router.push('/editor')
+      }
+
       // }else{
       //   console.log("user is sharing")
       // }
