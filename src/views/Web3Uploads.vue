@@ -38,6 +38,7 @@
   sort-by.sync="date"
   :fields="fields"
   @row-selected="onRowSelected"
+  class="table"
   :items="Object.values(uploads)">
 
 
@@ -103,6 +104,7 @@ export default {
 methods: {
   onRowSelected(r){
     this.$web3Load(r[0].cid)
+        this.$emit('hide')
     // if(r[0]!= undefined){
     //   this.user.roomId = r[0].roomId
     //   this.$openRoom()
@@ -111,12 +113,12 @@ methods: {
   openCid(){
     this.$web3Load(this.cidToOpen)
   },
-  trash(roomId){
-    console.log(roomId)
-    this.$store.commit('core/removeRoomIdFromHistory', roomId)
-    this.$forceUpdate()
-    this.$userChanged()
-  }
+  // trash(roomId){
+  //   console.log(roomId)
+  //   this.$store.commit('core/removeRoomIdFromHistory', roomId)
+  //   this.$forceUpdate()
+  //   this.$userChanged()
+  // }
 },
 computed: {
   user() {
@@ -136,5 +138,8 @@ computed: {
 <style lang="css" scoped>
 .room-history {
 
+}
+.table{
+      max-height:"800px"
 }
 </style>

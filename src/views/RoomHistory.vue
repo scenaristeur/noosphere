@@ -28,7 +28,8 @@
   <b-table
   small
   selectable
-  sticky-header
+  class="table"
+  max-height="400px"
   select-mode="single"
   responsive="sm"
   hover
@@ -36,6 +37,7 @@
   table-variant="info"
   :filter="filter"
   sort-by.sync="date"
+  sort-direction="desc"
   :fields="fields"
   @row-selected="onRowSelected"
   :items="Object.values(user.rooms)">
@@ -93,6 +95,9 @@ methods: {
     if(r[0]!= undefined){
       this.user.roomId = r[0].roomId
       this.$openRoom()
+      this.$emit('hide')
+      // v-b-toggle.sidebar-right
+      // this.$bvSideBar.hide('sidebar-right')
     }
   },
   trash(roomId){
@@ -114,5 +119,8 @@ computed: {
 <style lang="css" scoped>
 .room-history {
 
+}
+.table{
+  max-height:"400px"
 }
 </style>

@@ -118,7 +118,7 @@ Config Web3 Storage
     Chat about Noosphere         <b-icon icon="chat" aria-hidden="true"></b-icon>
     <!-- </b-link> -->
   </b-dropdown-item>
-  <b-dropdown-item href="#"><i><small>version: navbar</small></i></b-dropdown-item>
+  <b-dropdown-item href="#"><i><small>version: navbar table</small></i></b-dropdown-item>
   <!--  <b-dropdown-item href="#">FA</b-dropdown-item> -->
 </b-nav-item-dropdown>
 
@@ -137,18 +137,18 @@ Config Web3 Storage
 </b-navbar>
 <QrModal />
 
-<b-sidebar id="sidebar-right" title="Sidebar" right shadow width="100%">
 
-  <TabsView />
 
-  <!-- <div class="px-3 py-2">  <p>
-  Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
-  in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+<SideBar />
+
+<!-- <div class="px-3 py-2">  <p>
+Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
+in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
 </p>
 
 
 <b-img src="https://picsum.photos/500/500/?image=54" fluid thumbnail></b-img>  </div> -->
-</b-sidebar>
+
 
 </div>
 </template>
@@ -160,8 +160,8 @@ export default {
     'AddressInput': ()=>import('@/views/AddressInput'),
     'MenuNew': ()=>import('@/views/MenuNew'),
     'QrModal': ()=>import('@/views/QrModal'),
-    'TabsView': ()=>import('@/views/TabsView'),
-      'ToolBar': ()=>import('@/views/ToolBar'),
+    'SideBar': ()=>import('@/views/SideBar'),
+    'ToolBar': ()=>import('@/views/ToolBar'),
     // 'GraphView': ()=>import('@/views/GraphView'),
     // 'UserView': ()=>import('@/views/UserView'),
   },

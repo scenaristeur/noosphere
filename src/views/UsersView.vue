@@ -11,12 +11,14 @@
     hover
     selectable
     sticky-header
+    max-height="800px"
     select-mode="single"
     responsive="sm"
     table-variant="info"
     :items="Object.values(users)"
     :fields="fields"
     @row-selected="onRowSelected"
+    class="table"
     caption-top >
     <template #cell(name)="data">
       <template v-if="data.item.clientID == user.clientID">
@@ -54,8 +56,10 @@
 
 
 
-<b-modal id="modal-currentUser" title="User">
-  <b>{{currentUser.name}}</b>
+<b-modal id="modal-currentUser" ok-only size="lg">
+  <template #modal-title>
+    User <b>{{currentUser.name}}</b>
+  </template>
   <ul v-if="currentUser.rooms != undefined">
     <li v-for="room in Object.values(currentUser.rooms)" :key="room.roomId">
       <b-button @click="changeRoom(room.roomId)" size="sm">{{room.roomId}}</b-button>
@@ -98,6 +102,7 @@ export default {
       if(r[0]!= undefined){
         this.user.roomId = r[0].roomId
         this.$openRoom()
+        this.$emit('hide')
       }
     },
     userChanged(){
@@ -120,6 +125,8 @@ export default {
       console.log(roomId)
       this.user.roomId = roomId
       this.$openRoom()
+      this.$emit('hide')
+      this.$bvModal.hide('modal-currentUser')
     }
   },
   watch:{
@@ -149,5 +156,8 @@ export default {
 <style lang="css" scoped>
 .users-view {
 
+}
+.table{
+        max-height:"800px"
 }
 </style>
