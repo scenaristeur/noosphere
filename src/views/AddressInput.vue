@@ -6,9 +6,9 @@
 
 
 
-    <b-input  placeholder="room address" v-model="ra" size="sm" @keyup.enter="openRoom"/>
+    <b-input  placeholder="room address" v-model="ra" size="sm" @keyup.enter="openRoom" type="search"/>
     <b-input-group-append>
-      <b-button @click="ra = ''" size="sm">X</b-button>
+      <b-button v-if="ra.length > 0" @click="ra = ''" size="sm">X</b-button>
 
     </b-input-group-append>
     <b-input-group-append class="mt-1 ml-1" v-if="showFav">

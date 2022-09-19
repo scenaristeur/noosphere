@@ -4,7 +4,7 @@
     <ToolBar />
     <!-- Editor
     <b-button @click="save">Save</b-button> -->
-    <div id="editorjs" class="text-light" ></div>
+    <div id="editorjs"  class="text-light"></div>
     <!--  {{editorData}} -->
   </b-container>
 </template>
@@ -272,8 +272,24 @@ export default {
   }
   </script>
 
-  <style lang="css" scoped>
+  <style lang="css">
   .editor-view {
     /* background-color: white; */
   }
+  .ce-toolbar__actions {
+    background-color: gray;
+      }
+      .ce-popover__items{
+        background-color: #6f42c1;
+      }
+      /* .ce-popover__item hover{
+      color: #e83e8c;
+      } */
+
+/* .text-green {
+  color: #3cf281
+} */
+  /* .ce-inline-toolbar__buttons{
+    background-color: red;
+  } */
   </style>

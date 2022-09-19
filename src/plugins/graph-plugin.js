@@ -17,7 +17,8 @@ const plugin = {
 
     function getSize(){
       //768 = medium bootstrap
-      return {w: window.innerWidth > 768 ? window.innerWidth/2 : window.innerWidth,
+      return {
+        w: window.innerWidth, //window.innerWidth > 768 ? window.innerWidth/2 : window.innerWidth,
         h: window.innerWidth > 768 ? window.innerHeight*.9 : window.innerHeight*.8}
       }
       window.addEventListener('resize', function(){

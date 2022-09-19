@@ -1,7 +1,7 @@
 <template>
   <b-row>
     <b-col>
-      <div id="graph" width="100px" ref="graph">Loading graph...</div>
+      <div id="graph"  ref="graph">Loading graph...</div>
     </b-col>
     <b-col>
       <div>
@@ -151,7 +151,7 @@ export default {
 
 <style lang="css" scoped>
 .graph-view {
- z-index: 100;
+
 }
 .node-label {
   font-size: 12px;
