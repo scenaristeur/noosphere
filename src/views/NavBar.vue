@@ -118,7 +118,13 @@ Config Web3 Storage
     Chat about Noosphere         <b-icon icon="chat" aria-hidden="true"></b-icon>
     <!-- </b-link> -->
   </b-dropdown-item>
-  <b-dropdown-item href="#"><i><small>version: navbar table</small></i></b-dropdown-item>
+  <b-dropdown-item href="#">
+    <i><small>
+
+      version: import export
+      
+    </small></i>
+  </b-dropdown-item>
   <!--  <b-dropdown-item href="#">FA</b-dropdown-item> -->
 </b-nav-item-dropdown>
 

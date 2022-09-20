@@ -72,7 +72,7 @@ export default {
     },
     removeUser(){
       this.$removeUser()
-      this.randomUser()
+      //this.randomUser()
     },
     async upload (file, cb){
       const fileReader = new FileReader()
