@@ -7,6 +7,7 @@ const state = () => ({
   query: null,
   usersUpdateDate: null,
   historyUpdated: null,
+  // editorUpdated: null,
   yDoc: null,
   yMap: null,
   web3Token: null,
@@ -51,7 +52,9 @@ const mutations = {
     state.yMap = m
   },
   setEditorData(state, ed){
+    console.log('{setEditorData}', ed)
     state.editorData = ed
+    // state.editorUpdated = Date.now()
   },
   setQuery(state, q){
     state.query = q

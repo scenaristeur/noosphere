@@ -65,72 +65,43 @@ const plugin = {
       return data
     }
 
-    Vue.prototype.$openRoom = async function(){
-      //  Vue.prototype.$userChanged()
+    Vue.prototype.$openRoom = async function(options){
+      console.log('###{openRoom options}',options)
       let user = store.state.core.user
-      // console.log('[user openroom]',user)
       let ymap = store.state.core.yDoc.getMap(user.roomId)
       store.commit('core/setYmap', ymap)
       store.commit('core/updateRoomHistory', user.roomId)
       console.log("[openRoom]", user.roomId)
 
       setYMapObserver(ymap)
-      //this.updateUser()
-
-
-      // observe changes of the sum
-      // let app = this
-
-      // let calls = 0
-
-
-
 
       let editorData = await ymap.get('editor_map')
       console.log('{{editorData}}',editorData)
 
-      // if(user.isSharing == undefined){
-
-
-
-      if (editorData != undefined){
-        store.commit('core/setEditorData', editorData)
-        //   console.log(editorData)
-        //this.editorData = editorData //|| this.editorDataDefault//.toJSON()
-        // //  console.log(this.editorData)
-        // //  yService.log(this.editorData)
-      }else{
-        let defaultData = store.state.core.editorDataDefault
-        // defaultData.blocks.push(
-        //   {
-        //     "type" : "paragraph",
-        //     "data" : {
-        //       "text" : "The roomId of this room is "+user.roomId
-        //     }
-        //   }
-        // )
-        defaultData.blocks[0] =       {
+      if (editorData == undefined){
+        console.log('default', store.state.core.editorDataDefault)
+        let tempData = Object.assign({}, store.state.core.editorDataDefault)
+        console.log('ed', tempData)
+        tempData.blocks[0] =       {
           "type" : "header",
           "data" : {
             "text" : user.roomId,
             "level" : 3
           }
         },
-        ymap.set('editor_map', defaultData)
+        ymap.set('editor_map', tempData)
+        editorData = Object.assign({}, tempData)
         // editorData = Object.assign({}, this.editorDataDefault)
-        store.commit('core/setEditorData', defaultData)
-      }
 
+      }
+      else{
+        store.commit('core/setEditorData', editorData)
+      }
+      // store.commit('core/setEditorData', editorData)
       // console.log(opts.router, Vue.$route)
       if(opts.router.history.current.name != 'editor'){
         opts.router.push('/editor')
       }
-
-      // }else{
-      //   console.log("user is sharing")
-      // }
-
-
     }
 
     Vue.prototype.$saveEditor = async function(data){
@@ -339,6 +310,7 @@ const plugin = {
                 //this.editorData =  editorData//.toJSON()
                 store.commit('core/setEditorData', editorData)
                 console.log("[update editorData]", editorData)
+
               }
               // else{
               //   console.log("[same clientID]")

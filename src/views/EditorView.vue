@@ -223,6 +223,14 @@ export default {
 
   },
   methods:{
+    render(){
+      console.log('render', this.editorData)
+      if (this.editor.blocks != undefined){
+        this.editor.blocks.render(this.editorData)
+        // this.editor.render()
+        console.log("render")
+      }
+    },
     userEvent(e){
       console.log(e)
       let selection = document.getSelection()
@@ -242,17 +250,18 @@ export default {
       }
     },
     watch:{
+      // editorUpdated(){
+      //   console.log('w ed up', this.editorData)
+      //   this.render()
+      //   this.$forceUpdate()
+      // },
       editorData(){
         //  yService.log('watch')
         //  yService.log(this.editorData)
         // if (this.editor.blocks == undefined){
         //   this.editor.blocks = []
         // }
-        if (this.editor.blocks != undefined){
-          this.editor.blocks.render(this.editorData)
-          // this.editor.render()
-          console.log("render")
-        }
+        this.render()
 
       }
     },
@@ -265,7 +274,10 @@ export default {
       },
       user() {
         return this.$store.state.core.user
-      }
+      },
+      // editorUpdated(){
+      //   return this.$store.state.core.editorUpdated
+      // }
     }
 
   }
@@ -277,18 +289,18 @@ export default {
   }
   .ce-toolbar__actions {
     background-color: gray;
-      }
-      .ce-popover__items{
-        background-color: #6f42c1;
-      }
-      /* .ce-popover__item hover{
-      color: #e83e8c;
-      } */
+  }
+  .ce-popover__items{
+    background-color: #6f42c1;
+  }
+  /* .ce-popover__item hover{
+  color: #e83e8c;
+  } */
 
-/* .text-green {
+  /* .text-green {
   color: #3cf281
-} */
+  } */
   /* .ce-inline-toolbar__buttons{
-    background-color: red;
+  background-color: red;
   } */
   </style>

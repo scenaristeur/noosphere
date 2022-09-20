@@ -121,7 +121,7 @@ Config Web3 Storage
   <b-dropdown-item href="#">
     <i><small>
 
-      version: modal share
+      version: new menu
 
     </small></i>
   </b-dropdown-item>
