@@ -121,7 +121,7 @@ Config Web3 Storage
   <b-dropdown-item href="#">
     <i><small>
 
-      version: import export
+      version: modal share
 
     </small></i>
   </b-dropdown-item>

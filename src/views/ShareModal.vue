@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-modal id="modal-share" title="Share" @shown="share" ok-only>
+    <b-modal id="modal-share" title="Share" @show="share" ok-only>
       <div  v-if="QRsrc">
         {{ this.url}}<br>
         <!-- <b-button @click="saveQR" disabled size="sm" variant="info">save QR</b-button>
