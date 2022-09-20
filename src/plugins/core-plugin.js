@@ -42,16 +42,20 @@ const plugin = {
       if (awareness == undefined){
         awareness = store.state.core.awareness
       }
-      let ran = Math.floor(Math.random()*16777215).toString(16)
       let user = {
-        name: 'User_'+ran,
-        color: '#'+ran,
+        name: 'User_'+Date.now(),
+        color: '#'+Math.floor(Math.random()*16777215).toString(16),
         clientID: awareness.clientID,
         //roomId: uuidv4(),
         rooms: {}
       }
       //  store.commit('core/setUser', user)
       return user
+    }
+
+    Vue.prototype.$removeUser = async function(){
+      localStorage.removeItem('noosphere-user');
+      store.commit('core/setUser', null)
     }
 
     Vue.prototype.$getEditorMap = async function(roomId){
