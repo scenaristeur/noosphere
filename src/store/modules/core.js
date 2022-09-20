@@ -18,21 +18,7 @@ const state = () => ({
   roomAddress: '',
   pod_url: 'https://noosphere.solidcommunity.net/public/testrooms/',
   editorDataDefault: {
-    // "time" : 1550476186479,
     "blocks" : [
-      // {
-      //   "type" : "paragraph",
-      //   "data" : {
-      //     "text" : "You have just opened a new room in the"
-      //   }
-      // },
-      {
-        "type" : "header",
-        "data" : {
-          "text" : "Title",
-          "level" : 2
-        }
-      },
       {
         "type" : "paragraph",
         "data" : {
@@ -40,7 +26,6 @@ const state = () => ({
         }
       }
     ],
-    // "version" : "2.8.1"
   }
 })
 

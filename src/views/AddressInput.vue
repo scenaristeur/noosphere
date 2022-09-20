@@ -29,9 +29,14 @@ export default {
     },
     openRoom(){
       let user = this.user
+      let options = this.options
+      if (this.options!= undefined && this.options.mode == 'fork'){
+        options.parent = this.user.roomId
+        options.user = user.name
+      }
       user.roomId = this.ra.trim()
       this.$store.commit('core/setUser', user)
-      this.$openRoom(this.options)
+      this.$openRoom(options)
     }
   },
   watch:{

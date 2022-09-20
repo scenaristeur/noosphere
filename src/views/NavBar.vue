@@ -121,7 +121,7 @@ Config Web3 Storage
   <b-dropdown-item href="#">
     <i><small>
 
-      version: new menu
+      version: fork
 
     </small></i>
   </b-dropdown-item>

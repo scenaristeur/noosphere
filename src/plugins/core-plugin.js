@@ -67,6 +67,7 @@ const plugin = {
 
     Vue.prototype.$openRoom = async function(options){
       console.log('###{openRoom options}',options)
+
       let user = store.state.core.user
       let ymap = store.state.core.yDoc.getMap(user.roomId)
       store.commit('core/setYmap', ymap)
@@ -79,16 +80,36 @@ const plugin = {
       console.log('{{editorData}}',editorData)
 
       if (editorData == undefined){
-        console.log('default', store.state.core.editorDataDefault)
-        let tempData = Object.assign({}, store.state.core.editorDataDefault)
-        console.log('ed', tempData)
-        tempData.blocks[0] =       {
+        let tempData = null
+        if (options != undefined && options.mode ==  'fork'){
+          tempData = Object.assign({}, store.state.core.editorData)
+          console.log("##### data to fork", options )
+          tempData.blocks.unshift({
+            "type" : "paragraph",
+            "data" : {
+              "text" : '<small><i>forked from <a href="https://scenaristeur.github.io/noosphere?room='+options.parent+'" >"'+options.parent+'"</a></i></small>'
+            }
+          })
+          tempData.parent = options.parent
+          console.log('todo link parent to fork')
+        }else{
+          console.log('default', store.state.core.editorDataDefault)
+          tempData = Object.assign({}, store.state.core.editorDataDefault)
+        }
+
+
+
+        tempData.blocks.unshift({
           "type" : "header",
           "data" : {
             "text" : user.roomId,
-            "level" : 3
+            "level" : 2
           }
-        },
+        })
+
+
+        console.log('ed', tempData)
+
         ymap.set('editor_map', tempData)
         editorData = Object.assign({}, tempData)
         // editorData = Object.assign({}, this.editorDataDefault)
@@ -107,7 +128,7 @@ const plugin = {
     Vue.prototype.$saveEditor = async function(data){
 
       console.log('saveEditor', data)
-      data.clientID = store.state.core.user.clientID
+        data.clientID = store.state.core.user.clientID
       // const _editorMap = this.ymap.get('editor_map')
       // _editorMap.set('data', data)
       store.state.core.yMap.set('editor_map', data)
