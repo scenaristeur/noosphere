@@ -5,6 +5,16 @@ const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
 
+    Vue.prototype.$web3Init = async function(){
+      let web3Token = localStorage.getItem('noosphere-web3storage-token')
+      if (web3Token != null){
+        await store.commit('core/setWeb3Token', web3Token)
+        let uploads = await Vue.prototype.$web3list(web3Token)
+        console.log("Web3 uploads",uploads)
+      }
+    }
+
+
     Vue.prototype.$web3list = async function(token){
       client = new Web3Storage({ token: token });
       const uploads = [];

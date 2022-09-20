@@ -1,19 +1,19 @@
 <template>
   <div id="app">
-<NavBar />
- <div style="margin-top: 60px;">
-  
+    <NavBar />
+    <div style="margin-top: 60px;">
 
-    <router-view/>
-  </div>
+
+      <router-view/>
+    </div>
 
     <!-- <b-alert variant="info" show>
 
-      <i><small>version: navbar</small></i>
-      {{ location}}
-    </b-alert> -->
+    <i><small>version: navbar</small></i>
+    {{ location}}
+  </b-alert> -->
 
-  </div>
+</div>
 </template>
 
 <script>
@@ -33,10 +33,7 @@ export default {
     this.$coreInit({name: "SuperCore", route: this.$route})
   },
   async mounted(){
-    let web3Token = localStorage.getItem('noosphere-web3storage-token')
-    await this.$store.commit('core/setWeb3Token', web3Token)
-    let uploads = await this.$web3list(web3Token)
-    console.log("Web3 uploads",uploads)
+    this.$web3Init()
     //  console.log('token', web3Token)
   },
   methods:{

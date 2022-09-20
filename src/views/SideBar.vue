@@ -1,5 +1,5 @@
 <template>
-  <b-sidebar id="sidebar-right" ref="sidebar" title="Sidebar" right shadow width="100%">
+  <b-sidebar id="sidebar-right" ref="sidebar" title="Noosphere" right shadow width="100%">
     <b-tabs card content-class="mt-3">
 
       <b-tab active no-body >

@@ -101,6 +101,9 @@ C-->D;
 - ldo LinkedDataObject https://www.npmjs.com/package/ldo https://www.youtube.com/watch?v=AO-XAmVwphc https://shaperepo.com/ https://medium.com/@JacksonMorgan/building-solid-apps-with-ldo-6127a5a1979c https://github.com/o-development/ldo#readme
 
 
+# user gun SEA gun-avatar
+- https://gun-avatar.js.org/ used by https://github.com/DeFUCC/gun-vue
+
 
 ## Project setup
 ```

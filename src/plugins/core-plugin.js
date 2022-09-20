@@ -42,9 +42,10 @@ const plugin = {
       if (awareness == undefined){
         awareness = store.state.core.awareness
       }
+      let ran = Math.floor(Math.random()*16777215).toString(16)
       let user = {
-        name: 'User_'+Date.now(),
-        color: '#'+Math.floor(Math.random()*16777215).toString(16),
+        name: 'User_'+ran,
+        color: '#'+ran,
         clientID: awareness.clientID,
         //roomId: uuidv4(),
         rooms: {}
@@ -266,9 +267,13 @@ const plugin = {
 
         if (user == undefined || user == null){
           //console.log("awareness",awareness)
+
           user = await Vue.prototype.$randomUser(awareness)
+
+          opts.router.push('/profile')
         }
-        //  console.log("{getUser}", user)
+        console.log("{getUser}", user)
+        store.commit('core/setUser', user)
         return user
       }
 

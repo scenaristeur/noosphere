@@ -89,7 +89,7 @@ Config Web3 Storage
 </b-dropdown-item>
 </div>
 </b-nav-item-dropdown> -->
-
+<b-nav-item to="/profile">profile <b-icon icon="person" aria-hidden="true"></b-icon></b-nav-item>
 <b-nav-item to="/config">config <b-icon icon="gear" aria-hidden="true"></b-icon></b-nav-item>
 
 <!-- <b-nav-item-dropdown text="Lang" right>
