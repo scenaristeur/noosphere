@@ -1,9 +1,5 @@
 <template>
-  <div class="web3-modal">
-    <!-- web3modal -->
     <b-modal id="modal-pin" title="Pin Data on Web3.storage" size="lg" @shown="populate">
-
-
 
       <b-row class="my-1">
         <b-col sm="2">
@@ -36,9 +32,6 @@
         <a :href="'https://'+cid+'.ipfs.w3s.link/'" target="_blank">{{cid}}</a>
       </span>
 
-
-
-
       <!-- {{uploads}} -->
 
       <!-- <div v-if="uploads != null && uploads.length> 0">
@@ -52,16 +45,9 @@
     </li>
   </ul>
 
-
 </div> -->
 
-
-
-
-
-
 </b-modal>
-</div>
 </template>
 
 <script>
@@ -107,9 +93,3 @@ export default {
 
 }
 </script>
-
-<style lang="css" scoped>
-.web3-modal {
-
-}
-</style>

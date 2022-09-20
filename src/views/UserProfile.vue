@@ -41,11 +41,11 @@
   placeholder="Choose a identity file or drop it here..."
   drop-placeholder="Drop identity file here..."
   ></b-form-file>
-  <!-- <div class="mt-3">Selected file: {{ identityFile ? identityFile.name : '' }}</div> -->
+  <div class="mt-3">Selected file: {{ identityFile ? identityFile.name : '' }}</div>
   <!-- <b-button variant="outline-primary" size="sm" @click="import">import identity</b-button> -->
   <b-button variant="outline-primary" @click="removeUser" size="sm">remove from this device</b-button>
   <br>
-  <!-- {{ user }} -->
+  {{ user }}
 </b-container>
 </template>
 
@@ -72,7 +72,7 @@ export default {
     },
     removeUser(){
       this.$removeUser()
-      //this.randomUser()
+      this.randomUser()
     },
     async upload (file, cb){
       const fileReader = new FileReader()

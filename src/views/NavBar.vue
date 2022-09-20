@@ -36,7 +36,7 @@
 
 
 
-          <ToolBar />
+          <!-- <ToolBar /> -->
 
           <MenuNew />
 
@@ -122,7 +122,7 @@ Config Web3 Storage
     <i><small>
 
       version: import export
-      
+
     </small></i>
   </b-dropdown-item>
   <!--  <b-dropdown-item href="#">FA</b-dropdown-item> -->
@@ -167,7 +167,7 @@ export default {
     'MenuNew': ()=>import('@/views/MenuNew'),
     'QrModal': ()=>import('@/views/QrModal'),
     'SideBar': ()=>import('@/views/SideBar'),
-    'ToolBar': ()=>import('@/views/ToolBar'),
+    // 'ToolBar': ()=>import('@/views/ToolBar'),
     // 'GraphView': ()=>import('@/views/GraphView'),
     // 'UserView': ()=>import('@/views/UserView'),
   },

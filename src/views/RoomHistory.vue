@@ -24,7 +24,7 @@
       </b-input-group>
     </b-form-group>
   </b-col>
-
+{{Object.values(user.rooms).length}}
   <b-table
   small
   selectable
@@ -40,7 +40,7 @@
   sort-direction="desc"
   :fields="fields"
   @row-selected="onRowSelected"
-  :items="Object.values(user.rooms)">
+  :items="Object.values(user.rooms).reverse()">
 
   <template #cell(date)="data">
     {{new Date(data.item.date).toLocaleString()}}
@@ -107,10 +107,21 @@ methods: {
     this.$userChanged()
   }
 },
+watch:{
+  historyUpdated(){
+    this.$forceUpdate()
+  }
+},
 computed: {
-  user() {
-    return this.$store.state.core.user
+  user: {
+    cache: false,
+    get() {
+      return this.$store.state.core.user;
+    },
   },
+  historyUpdated() {
+    return this.$store.state.core.historyUpdated
+  }
 }
 
 }

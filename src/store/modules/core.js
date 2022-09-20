@@ -6,6 +6,7 @@ const state = () => ({
   users: {},
   query: null,
   usersUpdateDate: null,
+  historyUpdated: null,
   yDoc: null,
   yMap: null,
   web3Token: null,
@@ -57,14 +58,14 @@ const mutations = {
   },
   setUser(state, u){
     state.user = u
-    if (u.roomId != null){
+    if (u != null && u.roomId != null){
       this.commit('core/updateRoomHistory', u.roomId)
     }
-
   },
   removeRoomIdFromHistory(state, roomId){
     //  console.log(roomId)
     delete state.user.rooms[roomId]
+    state.historyUpdated = Date.now()
     // console.log("deleted", state.user.rooms)
   },
   updateRoomHistory(state,roomId){
@@ -74,6 +75,7 @@ const mutations = {
       state.user.rooms[roomId] = {roomId: roomId, date: Date.now()}
       //  console.log("[history]", state.user.rooms)
       Vue.prototype.$userChanged()
+      state.historyUpdated = Date.now()
     }
   },
   setAwareness(state, a){
