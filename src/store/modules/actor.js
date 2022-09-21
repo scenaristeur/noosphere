@@ -1,6 +1,10 @@
-// import Vue from 'vue'
+import Vue from 'vue'
 
 const state = () => ({
+  user: null,
+  users: {},
+  usersUpdated: null,
+  roomAddress: '',
   // graph: null,
   // nodes: [],
   // links: [],
@@ -10,6 +14,44 @@ const state = () => ({
 })
 
 const mutations = {
+  setUser(state, u){
+    state.user = u
+    if (u != null && u.roomId != null){
+      this.commit('actor/updateRoomHistory', u.roomId)
+    }
+  },
+  removeRoomIdFromHistory(state, roomId){
+    //  console.log(roomId)
+    delete state.user.rooms[roomId]
+    state.historyUpdated = Date.now()
+    // console.log("deleted", state.user.rooms)
+  },
+  updateRoomHistory(state,roomId){
+    if (roomId.length > 0){
+      this.commit('actor/removeRoomIdFromHistory', roomId)
+      this.commit('actor/setRoomAddress', roomId)
+      state.user.rooms[roomId] = {roomId: roomId, date: Date.now()}
+      //  console.log("[history]", state.user.rooms)
+      Vue.prototype.$userChanged()
+      state.historyUpdated = Date.now()
+    }
+  },
+  setRoomAddress(state, r){
+    console.log('roomAddress', r)
+    state.roomAddress = r
+  },
+
+  setUsers(state, u){
+    state.users = u
+  },
+  setUserById(state, u){
+    //  console.log('[store setUserById]',u)
+    state.users[u.clientID] = u
+    //  console.log(state.users)
+  },
+  setUsersUpdateDate(state, d){
+    state.usersUpdated = d
+  },
   // setGraph(state, g){
   //   state.graph = g
   // },

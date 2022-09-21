@@ -1,7 +1,8 @@
 // import Vue from 'vue'
 
 const state = () => ({
-  pendingTasks: []
+  pendingTasks: [],
+  // services: [],
   // graph: null,
   // nodes: [],
   // links: [],
@@ -12,11 +13,14 @@ const state = () => ({
 
 const mutations = {
   spinnerAdd(state,t){
-   state.pendingTasks.push(t)
- },
- spinnerRemove(state, t){
-   state.pendingTasks = state.pendingTasks.filter(x => x.id!=t.id )
- }
+    state.pendingTasks.push(t)
+  },
+  spinnerRemove(state, t){
+    state.pendingTasks = state.pendingTasks.filter(x => x.id!=t.id )
+  },
+  // updateServices(state, s){
+  //   state.services = s
+  // },
   // setGraph(state, g){
   //   state.graph = g
   // },

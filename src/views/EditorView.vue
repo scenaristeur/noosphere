@@ -269,11 +269,11 @@ export default {
       editorData: {
         cache: false,
         get() {
-          return this.$store.state.core.editorData;
+          return this.$store.state.editor.editorData;
         },
       },
       user() {
-        return this.$store.state.core.user
+        return this.$store.state.actor.user
       },
       // editorUpdated(){
       //   return this.$store.state.core.editorUpdated

@@ -7,7 +7,9 @@ const plugin = {
     // }
     Vue.prototype.$getUser = function(){
       //  console.log("awareness",awareness)
-      let user = JSON.parse(localStorage.getItem('noosphere-user'))
+      let localuser = localStorage.getItem('noosphere-user')
+      console.log('{localuser}',localuser)
+      let user = JSON.parse(localuser)
 
       if (user == undefined || user == null){
         //console.log("awareness",awareness)
@@ -26,7 +28,7 @@ const plugin = {
       // if (awareness == undefined){
       //   awareness = store.state.core.awareness
       // }
-      let awareness = store.state.core.awareness
+      let awareness = store.state.y.awareness
       let user = {
         name: 'User_'+Date.now(),
         color: '#'+Math.floor(Math.random()*16777215).toString(16),
@@ -36,6 +38,15 @@ const plugin = {
       }
       //  store.commit('core/setUser', user)
       return user
+    }
+
+    Vue.prototype.$userChanged = async function(){
+      let user = store.state.actor.user
+      console.log('[user Changed]', user)
+      localStorage.setItem('noosphere-user', JSON.stringify(user));
+      store.state.core.awareness.setLocalStateField('user', user)
+      //  console.log("[user changed]"/*, this.awareness*/, user)
+      store.commit('actor/setUserById', user)
     }
 
   }

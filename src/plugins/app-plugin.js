@@ -26,14 +26,7 @@ const plugin = {
     }
 
 
-    Vue.prototype.$userChanged = async function(){
-      let user = store.state.core.user
-      console.log('[user Changed]', user)
-      localStorage.setItem('noosphere-user', JSON.stringify(user));
-      store.state.core.awareness.setLocalStateField('user', user)
-      //  console.log("[user changed]"/*, this.awareness*/, user)
-      store.commit('core/setUserById', user)
-    }
+  
 
 
 
@@ -213,46 +206,8 @@ const plugin = {
       }
 
 
-      async function getRouterParameters(user, route){
-        //  console.log("{getRouterParameters}",opts.router, route)
-
-        await opts.router.onReady(async (router)=>{
-          //  console.log('[RRRRRouter]',router)
-          if(router != undefined && router.name == "share"){
-            //console.log(router.name)
-            // let dataTemp = await Vue.prototype.$getEditorMap(router.query.title)
-            // // //console.log(router.query)
-            // // //console.log(user)
-            // console.log('{dataTemp}', dataTemp)
-            user.isSharing = router.query
-          }else{
-            // if router is undefined we use route
-            //console.log(route.query)
-            route.query.room != undefined ? user.roomId = route.query.room : ''
-          }
 
 
-        })
-        //  console.log(user)
-        return user
-
-
-      }
-      async function getUser(awareness){
-        //  console.log("awareness",awareness)
-        let user = JSON.parse(localStorage.getItem('noosphere-user'))
-
-        if (user == undefined || user == null){
-          //console.log("awareness",awareness)
-
-          user = await Vue.prototype.$randomUser(awareness)
-
-          opts.router.push('/profile')
-        }
-        console.log("{getUser}", user)
-        store.commit('core/setUser', user)
-        return user
-      }
 
 
       async function end(user){

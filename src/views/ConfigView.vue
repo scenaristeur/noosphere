@@ -180,7 +180,7 @@ export default {
     }
   },
   async created(){
-    this.token = this.$store.state.core.web3Token
+    this.token = this.$store.state.web3.token
     this.$solidRoomList()
     this.$solidCreateRoom('Room_'+Date.now())
   },
@@ -206,34 +206,31 @@ export default {
     //     // console.log("Web3 uploads",uploads)
     //   }
     // }
-    // services(){
-    //   this.$store.commit('core/updateServices', this.services)
-    // }
-  },
-  computed: {
-    services: {
-      get() {
-        return this.$store.state.core.services;
-      },
-      set(services) {
-        this.$store.commit('core/updateServices', services)
-      },
-
     },
+  computed: {
+    // services: {
+    //   get() {
+    //     return this.$store.state.util.services;
+    //   },
+    //   set(services) {
+    //     this.$store.commit('util/updateServices', services)
+    //   },
+    //
+    // },
     pod_url: {
       get() {
-        return this.$store.state.core.pod_url;
+        return this.$store.state.util.pod_url;
       },
       set(pod_url) {
-        this.$store.commit('core/setPodUrl', pod_url)
+        this.$store.commit('util/setPodUrl', pod_url)
       },
 
     },
     web3Token(){
-      return this.$store.state.core.web3Token
+      return this.$store.state.web3.token
     },
     uploads(){
-      return this.$store.state.core.uploads
+      return this.$store.state.web3.uploads
     }
   }
 }

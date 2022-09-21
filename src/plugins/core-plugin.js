@@ -12,7 +12,7 @@ const plugin = {
       // console.log('{core ydoc}', yDoc)
       // let user = await getUser(awareness)
       Vue.prototype.$getUser()
-      Vue.prototype.getRouterParameters(options.route)
+      Vue.prototype.$getRouterParameters(options.route)
       // user = await getRouterParameters(user, options.route)
       //  console.log(user)
       //await createProviders(ydoc, awareness, user)

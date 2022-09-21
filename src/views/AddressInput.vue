@@ -35,7 +35,7 @@ export default {
         options.user = user.name
       }
       user.roomId = this.ra.trim()
-      this.$store.commit('core/setUser', user)
+      this.$store.commit('actor/setUser', user)
       this.$openRoom(options)
     }
   },
@@ -47,10 +47,10 @@ export default {
   },
   computed:{
     roomAddress(){
-      return this.$store.state.core.roomAddress
+      return this.$store.state.actor.roomAddress
     },
     user(){
-      return this.$store.state.core.user
+      return this.$store.state.actor.user
     }
   }
 

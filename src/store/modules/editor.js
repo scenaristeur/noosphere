@@ -1,6 +1,7 @@
 // import Vue from 'vue'
 
 const state = () => ({
+    editorData: null,
   // graph: null,
   // nodes: [],
   // links: [],
@@ -10,6 +11,11 @@ const state = () => ({
 })
 
 const mutations = {
+  setEditorData(state, ed){
+    console.log('{setEditorData}', ed)
+    state.editorData = ed
+    // state.editorUpdated = Date.now()
+  },
   // setGraph(state, g){
   //   state.graph = g
   // },
