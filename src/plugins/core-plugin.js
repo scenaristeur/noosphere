@@ -67,7 +67,7 @@ const plugin = {
 
     Vue.prototype.$openRoom = async function(options){
       console.log('###{openRoom options}',options)
-
+      console.log('default', store.state.core.editorDataDefault)
       let user = store.state.core.user
       let ymap = store.state.core.yDoc.getMap(user.roomId)
       store.commit('core/setYmap', ymap)
@@ -94,7 +94,12 @@ const plugin = {
           console.log('todo link parent to fork')
         }else{
           console.log('default', store.state.core.editorDataDefault)
-          tempData = Object.assign({}, store.state.core.editorDataDefault)
+          let temporaryData = Object.assign({}, store.state.core.editorDataDefault)
+          let fakeData = store.state.core.editorDataDefault
+          tempData = {}
+          tempData.blocks = []
+          tempData.blocks.push(store.state.core.editorDataDefault)
+          console.log(temporaryData, fakeData, tempData)
         }
 
 
@@ -116,7 +121,12 @@ const plugin = {
 
       }
       else{
-        store.commit('core/setEditorData', editorData)
+        if (options != undefined && options.mode ==  'fork'){
+          alert ("room already exist : cancel / merge / append / use another name ?")
+        }else{
+          store.commit('core/setEditorData', editorData)
+        }
+
       }
       // store.commit('core/setEditorData', editorData)
       // console.log(opts.router, Vue.$route)
@@ -128,7 +138,7 @@ const plugin = {
     Vue.prototype.$saveEditor = async function(data){
 
       console.log('saveEditor', data)
-        data.clientID = store.state.core.user.clientID
+      data.clientID = store.state.core.user.clientID
       // const _editorMap = this.ymap.get('editor_map')
       // _editorMap.set('data', data)
       store.state.core.yMap.set('editor_map', data)

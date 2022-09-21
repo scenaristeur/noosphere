@@ -1,11 +1,12 @@
 <template>
   <b-container fluid class="editor-view text-primary ">
     <ToolBar />
-    <div v-if="user!= null" >room: <b>{{user.roomId}}</b></div>
+
 
     <!-- Editor
     <b-button @click="save">Save</b-button> -->
     <div id="editorjs"  class="text-light"></div>
+      <div v-if="user!= null" >room: <b>{{user.roomId}}</b></div>
     <!--  {{editorData}} -->
   </b-container>
 </template>

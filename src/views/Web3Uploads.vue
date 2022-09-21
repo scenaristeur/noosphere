@@ -28,7 +28,6 @@
   <b-table
   small
   selectable
-  sticky-header
   select-mode="single"
   responsive="sm"
   hover
@@ -43,9 +42,9 @@
 
 
 
-  <template #cell(date)="data">
+  <!-- <template #cell(date)="data">
     {{new Date(data.item.date).toLocaleString()}}
-  </template>
+  </template> -->
   <template #cell(delete)="data">
     <!-- {{data}} -->
     <div style="float:right">
@@ -90,47 +89,50 @@ export default {
         {
           key: 'updated',
           label: 'date',
+          formatter: value => {
+             return this.$secondsToHms((new Date()-new Date(value))/1000) //value.charAt(0).toUpperCase()
+           },
           sortable: true
         },
-      //   {key: 'delete',
-      //   label:'delete',
-      //   headerAbbr: 'delete',
-      //   headerTitle: 'delete from history'
+        //   {key: 'delete',
+        //   label:'delete',
+        //   headerAbbr: 'delete',
+        //   headerTitle: 'delete from history'
+        // }
+      ],
+      cidToOpen: null
+    }
+  },
+  methods: {
+    onRowSelected(r){
+      this.$web3Load(r[0].cid)
+      this.$emit('hide')
+      // if(r[0]!= undefined){
+      //   this.user.roomId = r[0].roomId
+      //   this.$openRoom()
       // }
-    ],
-    cidToOpen: null
-  }
-},
-methods: {
-  onRowSelected(r){
-    this.$web3Load(r[0].cid)
-        this.$emit('hide')
-    // if(r[0]!= undefined){
-    //   this.user.roomId = r[0].roomId
-    //   this.$openRoom()
+    },
+    openCid(){
+      this.$web3Load(this.cidToOpen)
+    },
+    // trash(roomId){
+    //   console.log(roomId)
+    //   this.$store.commit('core/removeRoomIdFromHistory', roomId)
+    //   this.$forceUpdate()
+    //   this.$userChanged()
     // }
   },
-  openCid(){
-    this.$web3Load(this.cidToOpen)
-  },
-  // trash(roomId){
-  //   console.log(roomId)
-  //   this.$store.commit('core/removeRoomIdFromHistory', roomId)
-  //   this.$forceUpdate()
-  //   this.$userChanged()
-  // }
-},
-computed: {
-  user() {
-    return this.$store.state.core.user
-  },
-  uploads() {
-    return this.$store.state.core.uploads
-  },
-  web3Token(){
-    return this.$store.state.core.web3Token
+  computed: {
+    user() {
+      return this.$store.state.core.user
+    },
+    uploads() {
+      return this.$store.state.core.uploads
+    },
+    web3Token(){
+      return this.$store.state.core.web3Token
+    }
   }
-}
 
 }
 </script>
@@ -140,6 +142,6 @@ computed: {
 
 }
 .table{
-      max-height:"800px"
+  max-height:"200px"
 }
 </style>

@@ -9,7 +9,7 @@
 
         <b-button size="sm"><b-icon v-b-modal.modal-share font-scale="1.5" icon="share" aria-hidden="true"></b-icon></b-button>
         <b-button size="sm"><b-icon v-b-modal.modal-pin font-scale="1.5" icon="pin" aria-hidden="true"></b-icon></b-button>
-        <b-button size="sm" @click="fork" disabled>fork</b-button>
+        <b-button size="sm" to="/fork" disabled>fork</b-button>
         <b-button size="sm" @click="getLocation" disabled><b-icon icon="geo-alt" aria-hidden="true"></b-icon></b-button>
 
       </b-button-group>

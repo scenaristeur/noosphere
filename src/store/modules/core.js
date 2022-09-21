@@ -18,15 +18,11 @@ const state = () => ({
   roomAddress: '',
   pod_url: 'https://noosphere.solidcommunity.net/public/testrooms/',
   editorDataDefault: {
-    "blocks" : [
-      {
         "type" : "paragraph",
         "data" : {
           "text" : "Click to edit."
         }
       }
-    ],
-  }
 })
 
 const mutations = {

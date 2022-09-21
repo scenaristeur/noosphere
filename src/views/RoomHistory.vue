@@ -24,7 +24,7 @@
       </b-input-group>
     </b-form-group>
   </b-col>
-{{Object.values(user.rooms).length}}
+  {{Object.values(user.rooms).length}}
   <b-table
   small
   selectable
@@ -42,21 +42,21 @@
   @row-selected="onRowSelected"
   :items="Object.values(user.rooms).reverse()">
 
-  <template #cell(date)="data">
-    {{new Date(data.item.date).toLocaleString()}}
-  </template>
-  <template #cell(delete)="data">
-    <!-- {{data}} -->
-    <div style="float:right">
-      <b-button size="sm" @click="trash(data.item.roomId)" variant="outline-info">
-        <b-icon icon="trash" variant="danger" aria-hidden="true"></b-icon>
-      </b-button>
-    </div>
-  </template>
+  <!-- <template #cell(date)="data">
+  {{new Date(data.item.date).toLocaleString()}}
+</template> -->
+<template #cell(delete)="data">
+  <!-- {{data}} -->
+  <div style="float:right">
+    <b-button size="sm" @click="trash(data.item.roomId)" variant="outline-info">
+      <b-icon icon="trash" variant="danger" aria-hidden="true"></b-icon>
+    </b-button>
+  </div>
+</template>
 
-  <!-- <template #cell(roomId)="data">
-  # TODO
-  _rowVariant when = user.roomId
+<!-- <template #cell(roomId)="data">
+# TODO
+_rowVariant when = user.roomId
 </template> -->
 <!--    @filtered="onFiltered"
 filter-included-fields="['roomId']"-->
@@ -80,6 +80,10 @@ export default {
         {
           key: 'date',
           label: 'date',
+          // formatter: this.formatter,
+          formatter: value => {
+             return this.$secondsToHms((new Date()-value)/1000) //value.charAt(0).toUpperCase()
+           },
           sortable: true
         },
         {key: 'delete',
@@ -91,6 +95,9 @@ export default {
   }
 },
 methods: {
+  // formatter(value){
+  //   return this.$secondsToHms((new Date()-value)/1000)
+  // },
   onRowSelected(r){
     if(r[0]!= undefined){
       this.user.roomId = r[0].roomId

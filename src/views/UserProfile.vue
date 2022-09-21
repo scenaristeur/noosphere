@@ -1,51 +1,81 @@
 <template>
   <b-container class="user-profile text-light">
-    <!-- Profile -->
 
+    <b-card-group columns>
+      <b-card
+      bg-variant="info" text-variant="white" header="Profile"
+      class="text-center mb-2"
+      tag="article"
+      style="max-width: 20rem;"
+      >
+      <b-card-title>
+        username<b-input v-model="user.name" placeholder="username" />
+      </b-card-title>
+      <b-card-text>
+        prefered color
+        <b-input v-model="user.color" type="color" />
+        <!-- Some quick example text to build on the card title and make up the bulk of the card's content. -->
+      </b-card-text>
 
-
-    <!-- <b-button @click="userChanged" variant="info" size="sm">Update user</b-button> -->
-
-
-    <!-- title="Card Title"
-    img-src="https://picsum.photos/600/300/?image=25"
-    img-alt="Image"
-    img-top -->
-
+      <b-button @click="save" variant="primary">Save</b-button>
+    </b-card>
 
     <b-card
-    bg-variant="info" text-variant="white" header="Profile"
+    bg-variant="info" text-variant="white" header="Identity Manager"
     class="text-center mb-2"
     tag="article"
     style="max-width: 20rem;"
     >
-    <b-card-title>
-      username<b-input v-model="user.name" placeholder="username" />
-    </b-card-title>
-    <b-card-text>
-      prefered color
-      <b-input v-model="user.color" type="color" />
-      <!-- Some quick example text to build on the card title and make up the bulk of the card's content. -->
-    </b-card-text>
+    <!-- <b-card-title>
+    username<b-input v-model="user.name" placeholder="username" />
+  </b-card-title> -->
+  <b-card-text>
 
-    <b-button @click="save" variant="primary">Save</b-button>
-  </b-card>
+    <!-- <div class="mt-3">Selected file: {{ identityFile ? identityFile.name : '' }}</div> -->
+    <!-- <b-button variant="outline-primary" size="sm" @click="import">import identity</b-button> -->
+    <b-button variant="success text-dark" @click="download"><b-icon v-b-modal.modal-share font-scale="1.5" icon="download" aria-hidden="true"></b-icon>download this identity</b-button>
+
+    <!-- prefered color
+    <b-input v-model="user.color" type="color" /> -->
+    <!-- Some quick example text to build on the card title and make up the bulk of the card's content. -->
+  </b-card-text>
+
+  <template #footer>
 
 
-  <br>
-  <b-button @click="randomUser" variant="outline-info" size="sm">random user</b-button>
-  <b-button variant="outline-primary" size="sm" @click="download">download this identity</b-button>
-  <b-form-file
-  v-model="identityFile"
-  :state="Boolean(identityFile)"
-  placeholder="Choose a identity file or drop it here..."
-  drop-placeholder="Drop identity file here..."
-  ></b-form-file>
-  <div class="mt-3">Selected file: {{ identityFile ? identityFile.name : '' }}</div>
-  <!-- <b-button variant="outline-primary" size="sm" @click="import">import identity</b-button> -->
-  <b-button variant="outline-primary" @click="removeUser" size="sm">remove from this device</b-button>
-  <br>
-  {{ user }}
+
+
+    <b-alert show variant="warning">
+      <h4 class="alert-heading">CAN NOT BE UNDONE !</h4>
+      <p>
+        You will loose your history !
+      </p>
+      <hr>
+      <p class="mb-0">
+        Be sur to download the actual identity before !
+      </p>
+    </b-alert>
+    <!-- <b-alert class="text-danger" show>CAN NOT BE UNDONE ! <br>Be sur to downlaod the actual identity before !</b-alert> -->
+    <b-form-file
+    v-model="identityFile"
+    :state="Boolean(identityFile)"
+    placeholder="Choose a identity file or drop it here..."
+    drop-placeholder="Drop identity file here..."
+    ></b-form-file>
+    <b-button size="sm" @click="randomUser" variant="outline-warning text-dark"><b-icon v-b-modal.modal-share font-scale="1.5" icon="dice3" aria-hidden="true"></b-icon>random user</b-button>
+    <b-button variant="danger text-dark" @click="removeUser" size="sm"><b-icon v-b-modal.modal-share font-scale="1.5" icon="trash" aria-hidden="true"></b-icon>remove from this device</b-button>
+  </template>
+
+  <!-- <b-button @click="save" variant="primary">Save</b-button> -->
+</b-card>
+
+</b-card-group>
+
+<br>
+<!-- <b-button @click="randomUser" variant="outline-info" size="sm">random user</b-button> -->
+
+<br>
+{{ user }}
 </b-container>
 </template>
 

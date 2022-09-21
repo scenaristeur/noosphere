@@ -66,6 +66,14 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "graph" */ '../views/GraphView.vue')
   },
+  {
+    path: '/fork',
+    name: 'fork',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "fork" */ '../views/ForkView.vue')
+  },
 ]
 
 const router = new VueRouter({
