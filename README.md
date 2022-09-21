@@ -83,6 +83,8 @@ B-->D;
 C-->D;
 ```
 
+# https://github.com/kommitters/editorjs-toggle-block
+- does not seem to work with noosphere
 
 
 # route/router test

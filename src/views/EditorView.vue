@@ -27,7 +27,8 @@ import Warning from "@editorjs/warning"
 import Marker from "@editorjs/marker"
 import InlineCode from "@editorjs/inline-code"
 import MermaidTool from "editorjs-mermaid"
-import LinkAutocomplete from "@editorjs/link-autocomplete"
+// import ToggleBlock from 'editorjs-toggle-block';
+// import LinkAutocomplete from "@editorjs/link-autocomplete"
 // import GoogleMap from 'editorjs-googlemap'
 
 
@@ -61,18 +62,14 @@ export default {
       * Pass Tool's class or Settings object for each Tool you want to use
       */
       tools: {
-        // header: {
-        //   class: Header,
-        //   inlineToolbar: ['link']
-        // },
-        // list: {
-        //   class: List,
-        //   inlineToolbar: true
-        // },
-        /**
+          /**
         * Each Tool is a Plugin. Pass them via 'class' option with necessary settings {@link docs/tools.md}
         */
-        mermaid: MermaidTool,
+  //       toggle: {
+  //   class: ToggleBlock,
+  //   inlineToolbar: true,
+  // },
+
         // googleMap: {
         //   class: GoogleMap,
         //   place: 'Bangkok thailand',
@@ -90,11 +87,12 @@ export default {
           },
           shortcut: 'CMD+SHIFT+H'
         },
+        table: {
+          class: Table,
+          inlineToolbar: true,
+          shortcut: 'CMD+ALT+T'
+        },
 
-        /**
-        * Or pass class directly without any configuration
-        */
-        image: SimpleImage,
 
         list: {
           class: List,
@@ -107,6 +105,26 @@ export default {
           inlineToolbar: true,
         },
 
+
+
+        warning: Warning,
+
+        marker: {
+          class:  Marker,
+          shortcut: 'CMD+SHIFT+M'
+        },
+
+
+
+        delimiter: Delimiter,
+        code: {
+          class:  CodeTool,
+          shortcut: 'CMD+SHIFT+C'
+        },
+        inlineCode: {
+          class: InlineCode,
+          shortcut: 'CMD+SHIFT+C'
+        },
         quote: {
           class: Quote,
           inlineToolbar: true,
@@ -117,41 +135,22 @@ export default {
           shortcut: 'CMD+SHIFT+O'
         },
 
-        warning: Warning,
-
-        marker: {
-          class:  Marker,
-          shortcut: 'CMD+SHIFT+M'
-        },
-
-        code: {
-          class:  CodeTool,
-          shortcut: 'CMD+SHIFT+C'
-        },
-
-        delimiter: Delimiter,
-
-        inlineCode: {
-          class: InlineCode,
-          shortcut: 'CMD+SHIFT+C'
-        },
-
         linkTool: LinkTool,
-        link: {
-          class: LinkAutocomplete,
-          config: {
-            endpoint: 'http://localhost:3000/',
-            queryParam: 'search'
-          }
-        },
+        // link: {
+        //   class: LinkAutocomplete,
+        //   config: {
+        //     endpoint: 'http://localhost:3000/',
+        //     queryParam: 'search'
+        //   }
+        // },
 
         embed: Embed,
 
-        table: {
-          class: Table,
-          inlineToolbar: true,
-          shortcut: 'CMD+ALT+T'
-        },
+        /**
+        * Or pass class directly without any configuration
+        */
+        image: SimpleImage,
+                mermaid: MermaidTool,
       },
       onReady: () => {
         // MermaidTool.config({ 'theme': 'neutral' })
