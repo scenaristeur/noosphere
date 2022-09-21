@@ -42,9 +42,9 @@ const plugin = {
       })
       return awareness
     }
-    // Vue.prototype.$spinnerRemove = function(task){
-    //   store.commit('core/spinnerRemove', task)
-    // }
+    Vue.prototype.$createProvider = function(){
+      console.log("should create providers")
+    }
 
 
   }
