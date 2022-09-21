@@ -1,6 +1,9 @@
 // import Vue from 'vue'
 
 const state = () => ({
+  token: null,
+  uploads: [],
+    pinMessages: [],
   // graph: null,
   // nodes: [],
   // links: [],
@@ -10,6 +13,18 @@ const state = () => ({
 })
 
 const mutations = {
+  setToken(state, t){
+    state.token = t
+  },
+  setUploads(state,u){
+    state.uploads = u
+  },
+  resetPinMessages(state){
+    state.pinMessages = []
+  },
+  addPinMessage(state, m){
+    state.pinMessages.push(m)
+  },
   // setGraph(state, g){
   //   state.graph = g
   // },

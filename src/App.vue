@@ -6,7 +6,7 @@
 
       <router-view/>
     </div>
-
+    <SpinnerComp />
     <!-- <b-alert variant="info" show>
 
     <i><small>version: navbar</small></i>
@@ -22,6 +22,7 @@ export default {
   name: 'App',
   components: {
     'NavBar': ()=>import('@/views/NavBar'),
+    'SpinnerComp': ()=>import('@/components/SpinnerComp'),
     // 'UserView': ()=>import('@/views/UserView'),
   },
   data() {

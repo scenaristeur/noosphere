@@ -28,8 +28,8 @@ Vue.use(GraphPlugin, {store: store, router: router});
 import SolidPlugin from './plugins/solid-plugin';
 Vue.use(SolidPlugin, {store: store, router: router});
 
-import UtilsPlugin from './plugins/utils-plugin';
-Vue.use(UtilsPlugin, {store: store, router: router});
+import UtilPlugin from './plugins/util-plugin';
+Vue.use(UtilPlugin, {store: store, router: router});
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 

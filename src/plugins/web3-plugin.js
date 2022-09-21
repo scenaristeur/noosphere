@@ -8,9 +8,11 @@ const plugin = {
     Vue.prototype.$web3Init = async function(){
       let web3Token = localStorage.getItem('noosphere-web3storage-token')
       if (web3Token != null){
-        await store.commit('core/setWeb3Token', web3Token)
+        await store.commit('web3/setToken', web3Token)
+        store.commit('util/spinnerAdd', 'web3list')
         let uploads = await Vue.prototype.$web3list(web3Token)
         console.log("Web3 uploads",uploads)
+        store.commit('util/spinnerRemove', 'web3list')
       }
     }
 
@@ -24,13 +26,13 @@ const plugin = {
       // console.log(uploads)
       // console.log("list")
       // this.uploads = uploads
-      store.commit('core/setUploads', uploads)
+      store.commit('web3/setUploads', uploads)
       return uploads
     }
 
     Vue.prototype.$web3Pin = async function(options){
-      store.commit('core/resetPinMessages')
-      let token = store.state.core.web3Token
+      store.commit('web3/resetPinMessages')
+      let token = store.state.web3.token
       if( token == null || token.length == 0){
         alert("you need a web3.storage token, see https://web3.storage/docs/")
         opts.router.push('/config')
@@ -40,18 +42,18 @@ const plugin = {
         //  console.log(token, this.user.roomId, options.data)
         let file = new File([options.data], options.fileName+'.json')
         console.log(file)
-        store.commit('core/addPinMessage', "[pinning]: "+options.fileName)
+        store.commit('web3/addPinMessage', "[pinning]: "+options.fileName)
 
         client = new Web3Storage({ token: token });
 
 
         const onRootCidReady = rootCid => {
           console.log('-- root cid:', rootCid)
-          store.commit('core/addPinMessage', "[root cid] "+rootCid)
+          store.commit('web3/addPinMessage', "[root cid] "+rootCid)
         }
         const onStoredChunk = chunkSize => {
           console.log(`stored chunk of ${chunkSize} bytes`)
-          store.commit('core/addPinMessage', "[stored chunk of] "+chunkSize+' bytes')
+          store.commit('web3/addPinMessage', "[stored chunk of] "+chunkSize+' bytes')
         }
 
         const rootCid = await client.put([file], {
@@ -61,7 +63,7 @@ const plugin = {
           onStoredChunk
         });
         console.log(rootCid)
-        store.commit('core/addPinMessage', "[done]")
+        store.commit('web3/addPinMessage', "[done]")
 
         Vue.prototype.$web3list(token)
         return rootCid

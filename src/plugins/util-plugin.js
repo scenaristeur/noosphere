@@ -2,10 +2,10 @@ const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
     Vue.prototype.$spinnerAdd = function(task){
-      store.commit('core/spinnerAdd', task)
+      store.commit('util/spinnerAdd', task)
     }
     Vue.prototype.$spinnerRemove = function(task){
-      store.commit('core/spinnerRemove', task)
+      store.commit('util/spinnerRemove', task)
     }
 
     Vue.prototype.$secondsToHms = function (d) {

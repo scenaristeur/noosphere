@@ -1,26 +1,18 @@
 // import Vue from 'vue'
 
 const state = () => ({
-  // graph: null,
-  // nodes: [],
-  // links: [],
-  // highlightNodes: new Set(),
-  // highlightLinks: new Set(),
-  // currentNode: null
+  yDoc: null,
+  awareness: null,
+
 })
 
 const mutations = {
-  // setGraph(state, g){
-  //   state.graph = g
-  // },
-  // setCurrentNode(state, n){
-  //   console.log(n)
-  //   state.currentNode = n
-  // }
-  // setLinks(state, g){
-  //   state.graph = g
-  // },
-
+  setYdoc(state, d){
+    state.yDoc = d
+  },
+  setAwareness(state, a){
+    state.awareness = a
+  },
 
 }
 
