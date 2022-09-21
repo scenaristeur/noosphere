@@ -72,7 +72,7 @@ next modifs, just run ```npm run git -- "my modif"```
 
 
 # mermaid test
-
+- bug with mermaid and image-simple https://github.com/codex-team/editor.js/issues/2139
 - https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams
 
 ```mermaid
@@ -83,8 +83,10 @@ B-->D;
 C-->D;
 ```
 
-# https://github.com/kommitters/editorjs-toggle-block
-- does not seem to work with noosphere
+# a voir
+- https://strapi.io/ Headless CMS
+- editorjs color plugin https://www.npmjs.com/package/editorjs-text-color-plugin
+- toggle does not seem to work with noosphere https://github.com/kommitters/editorjs-toggle-block
 
 
 # route/router test
