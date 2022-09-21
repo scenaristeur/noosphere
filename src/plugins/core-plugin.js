@@ -67,9 +67,12 @@ const plugin = {
 
     Vue.prototype.$openRoom = async function(options){
       console.log('###{openRoom options}',options)
-      console.log('default', store.state.core.editorDataDefault)
+      console.log('Store editorData', store.state.core.editorData)
+
       let user = store.state.core.user
       let ymap = store.state.core.yDoc.getMap(user.roomId)
+
+      console.log('ymap', ymap)
       store.commit('core/setYmap', ymap)
       store.commit('core/updateRoomHistory', user.roomId)
       console.log("[openRoom]", user.roomId)
@@ -77,7 +80,7 @@ const plugin = {
       setYMapObserver(ymap)
 
       let editorData = await ymap.get('editor_map')
-      console.log('{{editorData}}',editorData)
+      console.log('{{ymap editorData}}',editorData)
 
       if (editorData == undefined){
         let tempData = null
@@ -299,6 +302,7 @@ const plugin = {
       }
 
       async function setYMapObserver(ymap){
+        // see https://github.com/hughfenghen/y-editorjs/blob/8a24139170033ee8bec17e9cdf543661a385e7aa/src/y-editor.ts
         let user = store.state.core.user
 
 
@@ -335,6 +339,7 @@ const plugin = {
 
 
             if (editor_map_changed == true ){
+            console.log('{ymap}',ymap)
               //console.log(editorData)
               let editorData = ymap.get('editor_map')
               if (editorData.clientID != user.clientID){
