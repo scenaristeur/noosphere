@@ -17,7 +17,7 @@ const plugin = {
       //  console.log(user)
       //await createProviders(ydoc, awareness, user)
       Vue.prototype.$createProvider()
-
+      Vue.prototype.$ready()
 
     }
 
@@ -44,6 +44,22 @@ const plugin = {
       //  console.log(user)
       return user
 
+
+    }
+
+
+    Vue.prototype.$ready = function(){
+      let user = store.state.actor.user
+      //  console.log(user.isSharing)
+      if(user.isSharing == undefined && user.roomId == undefined){
+        user.roomId = Vue.prototype.$random()
+      }
+      store.commit('actor/setUser', user)
+      //  Vue.prototype.$userChanged()
+      //  console.log('{set local storage user, send awareness, open room}', user)
+      if(user.isSharing == undefined ){
+        Vue.prototype.$openRoom()
+      }
 
     }
 

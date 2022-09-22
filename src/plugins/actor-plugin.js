@@ -47,6 +47,11 @@ const plugin = {
       store.commit('actor/setUserById', user)
     }
 
+    Vue.prototype.$removeUser = async function(){
+      localStorage.removeItem('noosphere-user');
+      store.commit('core/setUser', null)
+    }
+
   }
 }
 

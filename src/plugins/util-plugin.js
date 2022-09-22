@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
@@ -6,6 +8,10 @@ const plugin = {
     }
     Vue.prototype.$spinnerRemove = function(task){
       store.commit('util/spinnerRemove', task)
+    }
+
+    Vue.prototype.$random = function(){
+      return uuidv4()
     }
 
     Vue.prototype.$secondsToHms = function (d) {

@@ -2,6 +2,12 @@
 
 const state = () => ({
     editorData: null,
+    editorDataDefault: {
+      "type" : "paragraph",
+      "data" : {
+        "text" : "Click to edit."
+      }
+    }
   // graph: null,
   // nodes: [],
   // links: [],

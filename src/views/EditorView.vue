@@ -6,7 +6,7 @@
     <!-- Editor
     <b-button @click="save">Save</b-button> -->
     <div id="editorjs"  class="text-light"></div>
-      <div v-if="user!= null" >room: <b>{{user.roomId}}</b></div>
+    <div v-if="user!= null" >room: <b>{{user.roomId}}</b></div>
     <!--  {{editorData}} -->
   </b-container>
 </template>
@@ -62,13 +62,13 @@ export default {
       * Pass Tool's class or Settings object for each Tool you want to use
       */
       tools: {
-          /**
+        /**
         * Each Tool is a Plugin. Pass them via 'class' option with necessary settings {@link docs/tools.md}
         */
-  //       toggle: {
-  //   class: ToggleBlock,
-  //   inlineToolbar: true,
-  // },
+        //       toggle: {
+        //   class: ToggleBlock,
+        //   inlineToolbar: true,
+        // },
 
         // googleMap: {
         //   class: GoogleMap,
@@ -150,7 +150,7 @@ export default {
         * Or pass class directly without any configuration
         */
         image: SimpleImage,
-                mermaid: MermaidTool,
+        mermaid: MermaidTool,
       },
       onReady: () => {
         // MermaidTool.config({ 'theme': 'neutral' })
@@ -162,14 +162,16 @@ export default {
         }
       },
       onChange: function(api, event) {
-        //console.log('api', api.blocks.getCurrentBlockIndex())
-        // currentBlockIndexRef.current= api.blocks.getCurrentBlockIndex() // update ref with the current index
-        // let editorEvent = {
-        //   block :  api.blocks.getCurrentBlockIndex(),
-        //   event: event
-        // }
+        // blocks api https://editorjs.io/blocks
+        console.log('api', api.blocks.getCurrentBlockIndex())
+        let currentBlockIndexRef = {} //https://stackoverflow.com/questions/64236633/retrieve-block-and-cursor-position-on-editor-js-after-lose-focus
+        currentBlockIndexRef.current= api.blocks.getCurrentBlockIndex() // update ref with the current index
+        let editorEvent = {
+          block :  api.blocks.getCurrentBlockIndex(),
+          event: event
+        }
         console.log(api, event)
-        // app.$emit('editorEvent', editorEvent)
+        console.log('editorEvent', editorEvent, currentBlockIndexRef)
         app.save()
         // app.userEvent(event)
         // this.save()
@@ -237,67 +239,74 @@ export default {
       let userEvent = {
         selection : selection,
         cursorPosition: selection.anchorOffset,
-        blockindex: this.editor.blocks.getCurrentBlockIndex()}
-        this.$emit('userEvent', userEvent)
-      },
-      save(){
+        blockindex: this.editor.blocks.getCurrentBlockIndex()
+      }
+      console.log('userEvent', userEvent)
+    },
+    save(){
         this.editor.save().then((outputData) => {
-          //  console.log('Article data: ', outputData)
-          this.$saveEditor(outputData)
-        }).catch((error) => {
-          console.log('Saving failed: ', error)
-        });
-      }
-    },
-    watch:{
-      // editorUpdated(){
-      //   console.log('w ed up', this.editorData)
-      //   this.render()
-      //   this.$forceUpdate()
-      // },
-      editorData(){
-        //  yService.log('watch')
-        //  yService.log(this.editorData)
-        // if (this.editor.blocks == undefined){
-        //   this.editor.blocks = []
-        // }
-        this.render()
+        //  console.log('Article data: ', outputData)
 
-      }
-    },
-    computed: {
-      editorData: {
-        cache: false,
-        get() {
-          return this.$store.state.editor.editorData;
-        },
-      },
-      user() {
-        return this.$store.state.actor.user
-      },
+        this.$saveEditor(outputData)
+        return outputData
+      }).catch((error) => {
+        console.log('Saving failed: ', error)
+      })
+      // .then((data)=>{
+      //   console.log('the data', data)
+      //     this.$store.commit('editor/setEditorData', data)
+      // })
     }
+  },
+  watch:{
+    // editorUpdated(){
+    //   console.log('w ed up', this.editorData)
+    //   this.render()
+    //   this.$forceUpdate()
+    // },
+    editorData(){
+      //  yService.log('watch')
+      //  yService.log(this.editorData)
+      // if (this.editor.blocks == undefined){
+      //   this.editor.blocks = []
+      // }
+      this.render()
 
+    }
+  },
+  computed: {
+    editorData: {
+      cache: false,
+      get() {
+        return this.$store.state.editor.editorData;
+      },
+    },
+    user() {
+      return this.$store.state.actor.user
+    },
   }
-  </script>
 
-  <style lang="css">
-  .editor-view {
-    /* background-color: white; */
-  }
-  .ce-toolbar__actions {
-    background-color: gray;
-  }
-  .ce-popover__items{
-    background-color: #6f42c1;
-  }
-  /* .ce-popover__item hover{
-  color: #e83e8c;
-  } */
+}
+</script>
 
-  /* .text-green {
-  color: #3cf281
-  } */
-  /* .ce-inline-toolbar__buttons{
-  background-color: red;
-  } */
-  </style>
+<style lang="css">
+.editor-view {
+  /* background-color: white; */
+}
+.ce-toolbar__actions {
+  background-color: gray;
+}
+.ce-popover__items{
+  background-color: #6f42c1;
+}
+/* .ce-popover__item hover{
+color: #e83e8c;
+} */
+
+/* .text-green {
+color: #3cf281
+} */
+/* .ce-inline-toolbar__buttons{
+background-color: red;
+} */
+</style>

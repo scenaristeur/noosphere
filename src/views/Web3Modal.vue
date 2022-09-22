@@ -83,7 +83,7 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.state.editor.user
+      return this.$store.state.actor.user
     },
     messages(){
       return this.$store.state.web3.pinMessages

@@ -1,7 +1,10 @@
 // import Vue from 'vue'
 
+
 const state = () => ({
   pendingTasks: [],
+  // query: null,
+  pod_url: 'https://noosphere.solidcommunity.net/public/testrooms/',
   // services: [],
   // graph: null,
   // nodes: [],
@@ -17,6 +20,12 @@ const mutations = {
   },
   spinnerRemove(state, t){
     state.pendingTasks = state.pendingTasks.filter(x => x.id!=t.id )
+  },
+  // setQuery(state, q){
+  //   state.query = q
+  // },
+  setPodUrl(state, u){
+    state.pod_url = u
   },
   // updateServices(state, s){
   //   state.services = s

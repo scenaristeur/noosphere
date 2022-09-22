@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { v4 as uuidv4 } from 'uuid';
+
 
 export default {
   name: 'MenuNew',
@@ -54,7 +54,7 @@ export default {
   },
   data(){
     return{
-      roomId: uuidv4(),
+      roomId: this.$random(),
       mode: 'empty'
     }
   },
@@ -64,7 +64,7 @@ export default {
     },
     randomRoom(){
       console.log('random')
-      this.user.roomId = uuidv4()
+      this.user.roomId = this.$random()
       this.$store.commit('actor/setUser', this.user)
       this.$openRoom()
     },

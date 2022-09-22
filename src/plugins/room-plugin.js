@@ -2,12 +2,81 @@ const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
         console.log("store",store)
-    // Vue.prototype.$spinnerAdd = function(task){
-    //   store.commit('core/spinnerAdd', task)
-    // }
-    // Vue.prototype.$spinnerRemove = function(task){
-    //   store.commit('core/spinnerRemove', task)
-    // }
+
+    Vue.prototype.$openRoom = async function(options){
+      console.log('###{openRoom options}',options)
+      console.log('Store editorData', store.state.editor.editorData)
+
+      let user = store.state.actor.user
+      let ymap = store.state.y.yDoc.getMap(user.roomId)
+
+      console.log('ymap', ymap)
+      store.commit('y/setYmap', ymap)
+      store.commit('actor/updateRoomHistory', user.roomId)
+      console.log("[openRoom]", user.roomId)
+
+      Vue.prototype.$setYMapObserver()
+
+      let editorData = await ymap.get('editor_map')
+      console.log('{{ymap editorData}}',editorData)
+
+      if (editorData == undefined){
+        let tempData = null
+        if (options != undefined && options.mode ==  'fork'){
+          tempData = Object.assign({}, store.state.editor.editorData)
+          console.log("##### data to fork", options )
+          tempData.blocks.unshift({
+            "type" : "paragraph",
+            "data" : {
+              "text" : '<small><i>forked from <a href="https://scenaristeur.github.io/noosphere?room='+options.parent+'" >"'+options.parent+'"</a></i></small>'
+            }
+          })
+          tempData.parent = options.parent
+          console.log('todo link parent to fork')
+        }else{
+          console.log('default', store.state.editor.editorDataDefault)
+          // let temporaryData = Object.assign({}, store.state.editoe.editorDataDefault)
+          // let fakeData = store.state.editor.editorDataDefault
+          tempData = {}
+          tempData.blocks = []
+          tempData.blocks.push(store.state.editor.editorDataDefault)
+          console.log( tempData)
+        }
+
+
+
+        tempData.blocks.unshift({
+          "type" : "header",
+          "data" : {
+            "text" : user.roomId,
+            "level" : 2
+          }
+        })
+
+
+        console.log('ed', tempData)
+
+        ymap.set('editor_map', tempData)
+        editorData = Object.assign({}, tempData)
+        // editorData = Object.assign({}, this.editorDataDefault)
+
+      }
+      else{
+        if (options != undefined && options.mode ==  'fork'){
+          alert ("room already exist : cancel / merge / append / use another name ?")
+        }else{
+          store.commit('editor/setEditorData', editorData)
+        }
+
+      }
+      // store.commit('editor/setEditorData', editorData)
+      // console.log(opts.router, Vue.$route)
+      if(opts.router.history.current.name != 'editor'){
+        opts.router.push('/editor')
+      }
+    }
+
+
 
 
   }
