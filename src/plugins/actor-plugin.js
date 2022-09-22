@@ -14,7 +14,7 @@ const plugin = {
         // let awareness = store.state.y.awareness
         user = Vue.prototype.$randomUser()
 
-        opts.router.push('/profile')
+        //opts.router.push('/profile')
       }
     //  console.log("{getUser}", user)
       store.commit('actor/setUser', user)

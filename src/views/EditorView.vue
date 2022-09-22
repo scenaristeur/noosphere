@@ -46,7 +46,7 @@ export default {
     }
   },
   created(){
-     let app = this
+    let app = this
     // let _this = this
     // console.log(_this)
     //  yService.log("EditorView created")
@@ -152,25 +152,29 @@ export default {
         image: SimpleImage,
         mermaid: MermaidTool,
       },
-      onReady: () => {
+      onReady: async () => {
         // MermaidTool.config({ 'theme': 'neutral' })
         // this.editor.notifier.show({
         //   message: 'Editor is ready!'
         // });
+        let app = this
         if (this.editorData != null){
-          this.editor.blocks.render(this.editorData)
+          await this.editor.blocks.render(this.editorData)
+          let blocks = app.editorBlocks()
+          console.log('[blocks] ready',blocks)
         }
       },
 
 
       onChange: function(api, event) {
         let blockIndex = api.blocks.getCurrentBlockIndex()
-      //  console.log( blockIndex,event, event.type)
+        //  console.log( blockIndex,event, event.type)
         let block = api.blocks.getBlockByIndex(blockIndex);
-      //  console.log(block.id, block.name, block)
+        //  console.log(block.id, block.name, block)
         let e ={
           block: block,
-          event: event
+          event: event,
+          roomId: app.user.roomId
         }
         app.$propagateEvent(e)
       }
@@ -249,12 +253,16 @@ export default {
 
   },
   methods:{
-    render(){
-      console.log('render', this.editorData)
+    async render(){
+    //  console.log('render', this.editorData)
       if (this.editor.blocks != undefined){
-        this.editor.blocks.render(this.editorData)
+        // this.editor.blocks.clear()
+         await this.editor.blocks.render(this.editorData)
         // this.editor.render()
-        console.log("render")
+        // console.log("render")
+        let blocks = this.editorBlocks()
+        console.log('[blocks] render',blocks)
+        //
       }
     },
     userEvent(e){
@@ -281,6 +289,16 @@ export default {
       //   console.log('the data', data)
       //     this.$store.commit('editor/setEditorData', data)
       // })
+    },
+    editorBlocks() {
+
+      const blockCount = this.editor.blocks.getBlocksCount()
+            console.log('editorBlocks', blockCount)
+      const blocks = []
+      for (let i = 0; i < blockCount; i += 1) {
+        blocks.push(this.editor.blocks.getBlockByIndex(i))
+      }
+      return blocks
     }
   },
   watch:{
@@ -290,6 +308,7 @@ export default {
     //   this.$forceUpdate()
     // },
     editorData(){
+console.log('[TOEDITOR]',this.editorData)
       //  yService.log('watch')
       //  yService.log(this.editorData)
       // if (this.editor.blocks == undefined){

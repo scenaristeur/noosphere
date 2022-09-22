@@ -5,6 +5,8 @@ import { WebrtcProvider } from 'y-webrtc'
 import { WebsocketProvider } from 'y-websocket'
 import { IndexeddbPersistence } from 'y-indexeddb'
 
+let channel = 'noosphere-demo1'
+
 const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
@@ -12,17 +14,25 @@ const plugin = {
 
     Vue.prototype.$propagateEvent = function (e){
       console.log(e)
-      console.log(e.type, e.detail)
+      console.log(e.event.type, e.event.detail, e.event.detail.target.id)
+      let ymap = store.state.y.yMap
+      let ymapData = ymap.get('editor_map')
+      console.log('{ymap before}',ymapData)
+      console.log('{blockid}', e.block.id)
 
-      switch (e.type) {
+      switch (e.event.type) {
         case 'block-added':
         console.log('add')
+        //ymapData.set('editor_map', ymapData)
         break;
-        case 'block-deleted':
-        console.log('deleted')
+        case 'block-removed':
+        console.log('removed')
         break;
         case 'block-changed':
         console.log('changed')
+        break;
+        case 'block-moved':
+        console.log('moved')
         break;
         default:
         console.log("unknown",e.type)
@@ -43,9 +53,9 @@ const plugin = {
       // ydoc.on('afterTransaction', tr => {
       //   console.log('afterTransaction',tr, tr.origin)
       // })
-      ydoc.on('update', (update, origin, tr) => {
-        console.log('ydoc update',update, origin, tr)
-      })
+      // ydoc.on('update', (update, origin, tr) => {
+      //   console.log('ydoc update',update, origin, tr)
+      // })
       return ydoc
 
     }
@@ -55,9 +65,9 @@ const plugin = {
       store.commit('y/setAwareness', awareness)
       awareness.on('change', ()/*changes*/ => {
         awareness.getStates().forEach(state => {
-        //  console.log(state)
+          //  console.log(state)
           if (state.user) {
-          //  console.log('[state.user]',state.user)
+            //  console.log('[state.user]',state.user)
             store.commit('actor/setUserById', state.user)
           }
         })
@@ -67,7 +77,7 @@ const plugin = {
     }
 
     Vue.prototype.$createProvider = function(){
-    //  console.log("create providers")
+      //  console.log("create providers")
       // }
       let ydoc = store.state.y.yDoc
       let awareness = store.state.y.awareness
@@ -80,13 +90,13 @@ const plugin = {
       // let webrtcProvider =
 
       // console.log("[providers]", webrtcProvider, websocketProvider)
-      let indexeddbProvider = new IndexeddbPersistence('noosphere-demo', ydoc)
+      let indexeddbProvider = new IndexeddbPersistence(channel, ydoc)
 
       indexeddbProvider.on('synced', async () => {
         //  let syncedData = await indexeddbProvider.whenSynced
         //  console.log('[indexeddbProvider] loaded data from indexed db', syncedData)
 
-        new WebrtcProvider('noosphere-demo', ydoc, {awareness,
+        new WebrtcProvider(channel, ydoc, {awareness,
           signaling: [
             "wss://y-webrtc-signaling-eu.herokuapp.com",
             "wss://y-webrtc-signaling-us.herokuapp.com",
@@ -95,7 +105,7 @@ const plugin = {
 
           // Sync clients with the y-websocket provider
           // let websocketProvider =
-          new WebsocketProvider('wss://demos.yjs.dev', 'noosphere-demo', ydoc, {awareness })
+          new WebsocketProvider('wss://demos.yjs.dev', channel, ydoc, {awareness })
 
           //  await end(user)
         })
@@ -115,7 +125,7 @@ const plugin = {
         // see https://github.com/hughfenghen/y-editorjs/blob/8a24139170033ee8bec17e9cdf543661a385e7aa/src/y-editor.ts
         let user = store.state.actor.user
         let ymap = store.state.y.yMap
-      //  console.log('user', user)
+        //  console.log('user', user)
 
         // ymap.observe((event, tr) => {
         //   console.log(tr, tr.origin)
@@ -126,7 +136,7 @@ const plugin = {
 
 
         ymap.observeDeep((events/*,tr*/) => {
-        //  console.log(tr, tr.origin)
+          //  console.log(tr, tr.origin)
           events.forEach(event => {
             // calls++
             // console.log('calls', calls)
@@ -150,15 +160,18 @@ const plugin = {
 
 
             if (editor_map_changed == true ){
-            //  console.log('{ymap}',ymap)
+              //  console.log('{ymap}',ymap)
               //console.log(editorData)
-              let editorData = ymap.get('editor_map')
-              if (editorData.clientID != user.clientID){
-                //this.editorData =  editorData//.toJSON()
-                store.commit('editor/setEditorData', editorData)
+              let ymapData = ymap.get('editor_map')
+              console.log(ymapData.clientID != user.clientID)
+              //  if (editorData.clientID != user.clientID){
+              //this.editorData =  editorData//.toJSON()
+              ymapData.source = 'ymapEvent'
+              console.log(ymapData)
+              store.commit('editor/setEditorData', ymapData)
               //  console.log("[update editorData]", editorData)
 
-              }
+              //  }
               // else{
               //   console.log("[same clientID]")
               // }

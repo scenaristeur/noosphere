@@ -12,8 +12,35 @@ const plugin = {
 
       store.commit('y/setYmap', ymap)
 
-        Vue.prototype.$setYMapObserver()
 
+
+      if( ymapData == undefined){
+        ymapData = {}
+        ymapData.blocks = []
+        ymapData.blocks.push(store.state.editor.editorDataDefault)
+        ymapData.blocks.unshift({
+          "type" : "header",
+          "data" : {
+            "text" : user.roomId,
+            "level" : 2
+          }
+        })
+        ymapData.creator = user.clientID
+        ymapData.action = "create"
+        ymapData.roomId = user.roomId
+      //  ymap.set('editor_map', ymapData)
+        ymapData.source = 'creation'
+      }else{
+        console.log('not undefined')
+        ymapData.source = 'exist'
+        ymapData.roomId == undefined ? ymapData.roomId = user.roomId : ""
+      }
+      console.log('ymapReady', ymapData)
+      store.commit('editor/setEditorData', ymapData)
+      if(opts.router.history.current.name != 'editor'){
+        opts.router.push('/editor')
+      }
+      Vue.prototype.$setYMapObserver()
     }
 
 
