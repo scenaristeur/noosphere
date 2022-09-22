@@ -111,18 +111,18 @@ export default {
     },
     async randomUser(){
       this.currentUser = await this.$randomUser()
-      console.log(this.currentUser)
+    //  console.log(this.currentUser)
       this.$store.commit('actor/setUser', this.currentUser)
       // this.$userChanged()
       // this.userChanged()
     },
     openUserModal(user){
-      console.log(user)
+    //  console.log(user)
       this.currentUser = user
       this.$bvModal.show("modal-currentUser")
     },
     changeRoom(roomId){
-      console.log(roomId)
+    //  console.log(roomId)
       this.user.roomId = roomId
       this.$openRoom()
       this.$emit('hide')
@@ -130,8 +130,8 @@ export default {
     }
   },
   watch:{
-    usersUpdateDate(){
-      console.log(this.usersUpdateDate)
+    usersUpdated(){
+    //  console.log(this.usersUpdated)
       this.$forceUpdate()
     }
   },
@@ -145,7 +145,7 @@ export default {
     user() {
       return this.$store.state.actor.user
     },
-    usersUpdateDate() {
+    usersUpdated() {
       return this.$store.state.actor.usersUpdated
     }
   }

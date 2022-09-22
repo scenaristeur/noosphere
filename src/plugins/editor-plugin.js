@@ -1,7 +1,7 @@
 const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
-    console.log("store",store)
+    // console.log("store",store)
     // Vue.prototype.$spinnerAdd = function(task){
     //   store.commit('core/spinnerAdd', task)
     // }

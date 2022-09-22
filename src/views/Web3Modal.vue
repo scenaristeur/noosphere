@@ -69,9 +69,11 @@ export default {
       let data = this.$store.state.editor.editorData
       delete data.clientID
       data.roomId = this.user.roomId
-      let prefix = 'noos'
-      let separator = '_'
-      this.fileName = prefix+separator+this.user.roomId+separator+Date.now()
+      //let prefix = 'noos'
+     let separator = '_'
+      // this.fileName = prefix+separator+this.user.roomId+separator+Date.now()
+      this.fileName = this.user.roomId+separator+Date.now()
+
       this.data = JSON.stringify(data, null, 2)
 
       // this.fileName = this.user.roomId

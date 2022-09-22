@@ -1,12 +1,12 @@
 const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
-    console.log("store",store)
+    // console.log("store",store)
 
     Vue.prototype.$getUser = function(){
       //  console.log("awareness",awareness)
       let localuser = localStorage.getItem('noosphere-user')
-      console.log('{localuser}',localuser)
+    //  console.log('{localuser}',localuser)
       let user = JSON.parse(localuser)
 
       if (user == undefined || user == null){
@@ -16,7 +16,7 @@ const plugin = {
 
         opts.router.push('/profile')
       }
-      console.log("{getUser}", user)
+    //  console.log("{getUser}", user)
       store.commit('actor/setUser', user)
       return user
     }
@@ -40,7 +40,7 @@ const plugin = {
 
     Vue.prototype.$userChanged = async function(){
       let user = store.state.actor.user
-      console.log('[user Changed]', user)
+    //  console.log('[user Changed]', user)
       localStorage.setItem('noosphere-user', JSON.stringify(user));
       store.state.y.awareness.setLocalStateField('user', user)
       //  console.log("[user changed]"/*, this.awareness*/, user)

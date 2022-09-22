@@ -3,9 +3,9 @@
 const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
-    console.log("store",store)
+    // console.log("store",store)
     Vue.prototype.$coreInit = async function(options){
-      console.log('{core options}', options)
+    //  console.log('{core options}', options)
       Vue.prototype.$createYDoc()
       //let yDoc = store.state.y.yDoc
       // let awareness = store.state.y.awareness

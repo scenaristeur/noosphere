@@ -38,7 +38,7 @@ const mutations = {
     }
   },
   setRoomAddress(state, r){
-    console.log('roomAddress', r)
+  //  console.log('roomAddress', r)
     state.roomAddress = r
   },
 

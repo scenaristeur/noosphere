@@ -1,30 +1,44 @@
 const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
-        console.log("store",store)
+    // console.log("store",store)
 
     Vue.prototype.$openRoom = async function(options){
-      console.log('###{openRoom options}',options)
-      console.log('Store editorData', store.state.editor.editorData)
+      let user = store.state.actor.user
+      let ymap = store.state.y.yDoc.getMap(user.roomId)
+      let ymapData = await ymap.get('editor_map')
+      console.log('openRoom', options, user, ymap, ymapData)
+      console.log('ymapData', ymapData)
+
+      store.commit('y/setYmap', ymap)
+
+        Vue.prototype.$setYMapObserver()
+
+    }
+
+
+    Vue.prototype.$openRoom1 = async function(options){
+      //  console.log('###{openRoom options}',options)
+      //  console.log('Store editorData', store.state.editor.editorData)
 
       let user = store.state.actor.user
       let ymap = store.state.y.yDoc.getMap(user.roomId)
 
-      console.log('ymap', ymap)
+      //  console.log('ymap', ymap)
       store.commit('y/setYmap', ymap)
       store.commit('actor/updateRoomHistory', user.roomId)
-      console.log("[openRoom]", user.roomId)
+      //  console.log("[openRoom]", user.roomId)
 
       Vue.prototype.$setYMapObserver()
 
       let editorData = await ymap.get('editor_map')
-      console.log('{{ymap editorData}}',editorData)
+      //  console.log('{{ymap editorData}}',editorData)
 
       if (editorData == undefined){
         let tempData = null
         if (options != undefined && options.mode ==  'fork'){
           tempData = Object.assign({}, store.state.editor.editorData)
-          console.log("##### data to fork", options )
+          //    console.log("##### data to fork", options )
           tempData.blocks.unshift({
             "type" : "paragraph",
             "data" : {
@@ -32,15 +46,15 @@ const plugin = {
             }
           })
           tempData.parent = options.parent
-          console.log('todo link parent to fork')
+          //  console.log('todo link parent to fork')
         }else{
-          console.log('default', store.state.editor.editorDataDefault)
+          //  console.log('default', store.state.editor.editorDataDefault)
           // let temporaryData = Object.assign({}, store.state.editoe.editorDataDefault)
           // let fakeData = store.state.editor.editorDataDefault
           tempData = {}
           tempData.blocks = []
           tempData.blocks.push(store.state.editor.editorDataDefault)
-          console.log( tempData)
+          //  console.log( tempData)
         }
 
 
@@ -54,7 +68,7 @@ const plugin = {
         })
 
 
-        console.log('ed', tempData)
+        //  console.log('ed', tempData)
 
         ymap.set('editor_map', tempData)
         editorData = Object.assign({}, tempData)

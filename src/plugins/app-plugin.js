@@ -53,15 +53,7 @@ const plugin = {
       return data
     }
 
-    Vue.prototype.$loadCid = async function(data){
-      console.log(data)
-      let user = store.state.core.user
-      user.roomId = data.roomId
-      let editorData = data.content
-      store.commit('core/setEditorData', editorData)
-      store.commit('core/setUser', user)
-      Vue.prototype.$openRoom()
-    }
+
 
     Vue.prototype.$solidRoomList = async function(){
       const roomList = await (

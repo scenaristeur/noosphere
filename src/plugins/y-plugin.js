@@ -9,6 +9,26 @@ const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
     //  console.log("store",store)
+
+    Vue.prototype.$propagateEvent = function (e){
+      console.log(e)
+      console.log(e.type, e.detail)
+
+      switch (e.type) {
+        case 'block-added':
+        console.log('add')
+        break;
+        case 'block-deleted':
+        console.log('deleted')
+        break;
+        case 'block-changed':
+        console.log('changed')
+        break;
+        default:
+        console.log("unknown",e.type)
+      }
+    }
+
     Vue.prototype.$createYDoc = function(){
       let ydoc = new Y.Doc()
       store.commit('y/setYdoc', ydoc)
@@ -23,9 +43,9 @@ const plugin = {
       // ydoc.on('afterTransaction', tr => {
       //   console.log('afterTransaction',tr, tr.origin)
       // })
-      // ydoc.on('update', (update, origin, tr) => {
-      //   console.log('update',tr, tr.origin)
-      // })
+      ydoc.on('update', (update, origin, tr) => {
+        console.log('ydoc update',update, origin, tr)
+      })
       return ydoc
 
     }
@@ -35,9 +55,9 @@ const plugin = {
       store.commit('y/setAwareness', awareness)
       awareness.on('change', ()/*changes*/ => {
         awareness.getStates().forEach(state => {
-          console.log(state)
+        //  console.log(state)
           if (state.user) {
-            console.log('[state.user]',state.user)
+          //  console.log('[state.user]',state.user)
             store.commit('actor/setUserById', state.user)
           }
         })
@@ -47,7 +67,7 @@ const plugin = {
     }
 
     Vue.prototype.$createProvider = function(){
-      console.log("create providers")
+    //  console.log("create providers")
       // }
       let ydoc = store.state.y.yDoc
       let awareness = store.state.y.awareness
@@ -95,18 +115,18 @@ const plugin = {
         // see https://github.com/hughfenghen/y-editorjs/blob/8a24139170033ee8bec17e9cdf543661a385e7aa/src/y-editor.ts
         let user = store.state.actor.user
         let ymap = store.state.y.yMap
-        console.log('user', user)
+      //  console.log('user', user)
 
-        ymap.observe((event, tr) => {
-          console.log(tr, tr.origin)
-        })
+        // ymap.observe((event, tr) => {
+        //   console.log(tr, tr.origin)
+        // })
         // ymap.observeDeep((events, tr) => {
         //   tr.origin
         // })
 
 
-        ymap.observeDeep((events,tr) => {
-          console.log(tr, tr.origin)
+        ymap.observeDeep((events/*,tr*/) => {
+        //  console.log(tr, tr.origin)
           events.forEach(event => {
             // calls++
             // console.log('calls', calls)
@@ -114,7 +134,7 @@ const plugin = {
             // console.log(event.keysChanged.has('deepmap'))
             // console.log(event.path.length === 1)
             // console.log(event.path[0] === 'map')
-            console.log('[event]',event)
+            console.log('[YMAP event]',event)
             let editor_map_changed = event.keysChanged.has('editor_map')
             //console.log('[editor_map_changed]', editor_map_changed)
             // @ts-ignore
@@ -130,13 +150,13 @@ const plugin = {
 
 
             if (editor_map_changed == true ){
-              console.log('{ymap}',ymap)
+            //  console.log('{ymap}',ymap)
               //console.log(editorData)
               let editorData = ymap.get('editor_map')
               if (editorData.clientID != user.clientID){
                 //this.editorData =  editorData//.toJSON()
                 store.commit('editor/setEditorData', editorData)
-                console.log("[update editorData]", editorData)
+              //  console.log("[update editorData]", editorData)
 
               }
               // else{

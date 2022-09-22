@@ -46,9 +46,9 @@ export default {
     }
   },
   created(){
-    let app = this
-    let _this = this
-    console.log(_this)
+     let app = this
+    // let _this = this
+    // console.log(_this)
     //  yService.log("EditorView created")
     this.editor = new EditorJS({
       /**
@@ -161,26 +161,40 @@ export default {
           this.editor.blocks.render(this.editorData)
         }
       },
+
+
       onChange: function(api, event) {
-        // blocks api https://editorjs.io/blocks
-        console.log('api', api.blocks.getCurrentBlockIndex())
-        let currentBlockIndexRef = {} //https://stackoverflow.com/questions/64236633/retrieve-block-and-cursor-position-on-editor-js-after-lose-focus
-        currentBlockIndexRef.current= api.blocks.getCurrentBlockIndex() // update ref with the current index
-        let editorEvent = {
-          block :  api.blocks.getCurrentBlockIndex(),
+        let blockIndex = api.blocks.getCurrentBlockIndex()
+      //  console.log( blockIndex,event, event.type)
+        let block = api.blocks.getBlockByIndex(blockIndex);
+      //  console.log(block.id, block.name, block)
+        let e ={
+          block: block,
           event: event
         }
-        console.log(api, event)
-        console.log('editorEvent', editorEvent, currentBlockIndexRef)
-        app.save()
-        // app.userEvent(event)
-        // this.save()
-        // editor.save().then((data) => {
-        //
-        //  setEditorData({ ...editorData,data,});
-        // })
+        app.$propagateEvent(e)
+      }
 
-      },
+      // onChange1: function(api, event) {
+      //   // blocks api https://editorjs.io/blocks
+      //   console.log('api', api.blocks.getCurrentBlockIndex())
+      //   let currentBlockIndexRef = {} //https://stackoverflow.com/questions/64236633/retrieve-block-and-cursor-position-on-editor-js-after-lose-focus
+      //   currentBlockIndexRef.current= api.blocks.getCurrentBlockIndex() // update ref with the current index
+      //   let editorEvent = {
+      //     block :  api.blocks.getCurrentBlockIndex(),
+      //     event: event
+      //   }
+      //   console.log(api, event)
+      //   console.log('editorEvent', editorEvent, currentBlockIndexRef)
+      //   app.save()
+      //   // app.userEvent(event)
+      //   // this.save()
+      //   // editor.save().then((data) => {
+      //   //
+      //   //  setEditorData({ ...editorData,data,});
+      //   // })
+      //
+      // },
       // onChange: (api) => {
       //   // this.editor.notifier.show({
       //   //   message: 'Editor has changed!'
@@ -201,10 +215,18 @@ export default {
 
   },
   mounted(){
+
+    // let app = this
+    // const editorElement = document.getElementById('editorjs') // your "holder" ID
+    // editorElement.addEventListener('click', (e) => {
+    //   // your logic
+    //   //console.log("click",e)
+    //   app.userEvent(e)
+    // })
+
     // if (this.editorData != null){
     //   this.editor.blocks.render(this.editorData)
     // }
-    const editorElement = document.getElementById('editorjs') // your "holder" ID
     //
     // editorElement.addEventListener('focusin', (e) => {
     //   // your logic
@@ -216,12 +238,14 @@ export default {
     //   //  this.save()
     // })
     //
-    let app = this
-    editorElement.addEventListener('click', (e) => {
-      // your logic
-      //console.log("click",e)
-      app.userEvent(e)
-    })
+
+    // editorElement.addEventListener("keydown", (e) => {
+    //     app.userEvent(e)
+    // })
+    // editorElement.addEventListener("keypress", (e) => {
+    //     app.userEvent(e)
+    // })
+
 
   },
   methods:{
@@ -236,6 +260,7 @@ export default {
     userEvent(e){
       console.log(e)
       let selection = document.getSelection()
+      console.log(e.code, e.charCode, String.fromCharCode(e.charCode))
       let userEvent = {
         selection : selection,
         cursorPosition: selection.anchorOffset,
@@ -244,7 +269,7 @@ export default {
       console.log('userEvent', userEvent)
     },
     save(){
-        this.editor.save().then((outputData) => {
+      this.editor.save().then((outputData) => {
         //  console.log('Article data: ', outputData)
 
         this.$saveEditor(outputData)

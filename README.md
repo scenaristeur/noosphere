@@ -96,6 +96,10 @@ C-->D;
 - room not exist http://127.0.0.1:8080/share?title=title_not_exist&text=blopa&url=http%3A%2F%2Fscenaristeur.github.io%2Fagent
 - room exist http://127.0.0.1:8080/share?title=52&text=blopa&url=http%3A%2F%2Fscenaristeur.github.io%2Fagent
 
+# key press
+- https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent
+- https://stackoverflow.com/questions/1772179/get-character-value-from-keycode-in-javascript-then-trim
+- https://github.com/fresheneesz/keysight
 
 
 # share

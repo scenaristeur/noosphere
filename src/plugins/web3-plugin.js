@@ -10,8 +10,9 @@ const plugin = {
       if (web3Token != null){
         await store.commit('web3/setToken', web3Token)
         store.commit('util/spinnerAdd', 'web3list')
-        let uploads = await Vue.prototype.$web3list(web3Token)
-        console.log("Web3 uploads",uploads)
+      //  let uploads = 
+        await Vue.prototype.$web3list(web3Token)
+      //  console.log("Web3 uploads",uploads)
         store.commit('util/spinnerRemove', 'web3list')
       }
     }
@@ -57,7 +58,7 @@ const plugin = {
         }
 
         const rootCid = await client.put([file], {
-          name: 'noos_'+options.fileName+'_'+Date.now(),
+          name: options.fileName+'_'+Date.now(),
           maxRetries: 3,
           onRootCidReady,
           onStoredChunk
@@ -74,7 +75,7 @@ const plugin = {
     }
 
     Vue.prototype.$web3Load = async function(cid){
-
+      Vue.prototype.$spinnerAdd('web3 load')
       console.log(cid)
       // this.$bvModal.hide("modal-pin")
       let app = this
@@ -126,6 +127,18 @@ const plugin = {
       }else{
         console.log(res)
       }
+    }
+
+    Vue.prototype.$loadCid = async function(data){
+      console.log(data)
+      let user = store.state.actor.user
+      user.roomId = data.roomId
+      let editorData = data.content
+      store.commit('editor/setEditorData', editorData)
+      store.commit('actor/setUser', user)
+
+      Vue.prototype.$openRoom()
+      Vue.prototype.$spinnerRemove('web3 load')
     }
 
 
