@@ -65,8 +65,8 @@ export default {
   methods:{
     populate(){
       console.log('populate')
-      this.$store.commit('core/resetPinMessages')
-      let data = this.$store.state.core.editorData
+      this.$store.commit('web3/resetPinMessages')
+      let data = this.$store.state.editor.editorData
       delete data.clientID
       data.roomId = this.user.roomId
       let prefix = 'noos'
@@ -83,10 +83,10 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.state.core.user
+      return this.$store.state.editor.user
     },
     messages(){
-      return this.$store.state.core.pinMessages
+      return this.$store.state.web3.pinMessages
     }
   }
 

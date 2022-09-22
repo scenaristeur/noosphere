@@ -53,7 +53,7 @@ const plugin = {
     let store = opts.store
 
     Vue.prototype.$solidCreateRoom = async function(roomId){
-      let pod_url = store.state.core.pod_url
+      let pod_url = store.state.util.pod_url
       console.log(roomId)
 
       let room = {
@@ -63,7 +63,7 @@ const plugin = {
         },
         '@id': roomId,
         created: Date.now(),
-        creator: store.state.core.user.name
+        creator: store.state.actor.user.name
       }
 
       // let room = {

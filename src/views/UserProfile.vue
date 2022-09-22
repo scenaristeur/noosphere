@@ -91,12 +91,12 @@ export default {
     async randomUser(){
       let user = await this.$randomUser()
       console.log(user)
-      this.$store.commit('core/setUser', user)
+      this.$store.commit('actor/setUser', user)
       // this.$userChanged()
       // this.userChanged()
     },
     save(){
-      this.$store.commit('core/setUser', this.user)
+      this.$store.commit('actor/setUser', this.user)
       this.$userChanged()
       this.$router.push('/')
     },
@@ -117,7 +117,7 @@ export default {
     populateIdentity(data){
       console.log('populate', data)
       let user = JSON.parse(data)
-      this.$store.commit('core/setUser', user)
+      this.$store.commit('actor/setUser', user)
       this.$userChanged()
     },
     download(){
@@ -168,11 +168,8 @@ export default {
   },
   computed:{
     user(){
-      return this.$store.state.core.user
+      return this.$store.state.actor.user
     },
-    // uploads(){
-    //   return this.$store.state.core.uploads
-    // }
   }
 
 

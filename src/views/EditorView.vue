@@ -275,9 +275,6 @@ export default {
       user() {
         return this.$store.state.actor.user
       },
-      // editorUpdated(){
-      //   return this.$store.state.core.editorUpdated
-      // }
     }
 
   }

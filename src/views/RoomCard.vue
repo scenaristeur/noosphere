@@ -124,29 +124,28 @@ export default {
       //   // You can observe when a user updates their awareness information
       //
       // },
-
+open(){
+  this.$store.commit('actor/setUser', this.user)
+  this.openRoom()
+},
       generateId(){
         this.user.roomId = uuidv4()
-        this.$store.commit('core/setUser', this.user)
-        this.openRoom()
+this.open()
       },
       nowId(){
         this.user.roomId = Date.now()
-        this.$store.commit('core/setUser', this.user)
-        this.openRoom()
+        this.open()
       },
 
       async openRoom(){
-        this.$store.commit('core/setUser', this.user)
-        this.$openRoom()
+this.open()
 
       },
 
       onRoomIdChanged(roomId){
         console.log('[roomId changed]', roomId)
         this.user.roomId = roomId
-        this.$store.commit('core/setUser', this.user)
-        this.openRoom()
+      this.open()
         this.$forceUpdate()
       }
     },
@@ -177,11 +176,9 @@ export default {
 
     computed: {
       user() {
-        return this.$store.state.core.user
+        return this.$store.state.actor.user
       },
-      // users() {
-      //   return this.$store.state.core.users
-      // },
+
     }
 
 

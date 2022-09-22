@@ -534,10 +534,10 @@ export default {
 
     computed: {
       room() {
-        return this.$store.state.core.room
+        return this.$store.state.room.room
       },
       rooms() {
-        return this.$store.state.core.rooms
+        return this.$store.state.room.rooms
       },
     }
 

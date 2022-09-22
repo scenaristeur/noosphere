@@ -106,13 +106,13 @@ export default {
       }
     },
     userChanged(){
-      this.$store.commit('core/setUser', this.user)
+      this.$store.commit('actor/setUser', this.user)
       this.$userChanged()
     },
     async randomUser(){
       this.currentUser = await this.$randomUser()
       console.log(this.currentUser)
-      this.$store.commit('core/setUser', this.currentUser)
+      this.$store.commit('actor/setUser', this.currentUser)
       // this.$userChanged()
       // this.userChanged()
     },
@@ -139,14 +139,14 @@ export default {
     users: {
       cache: false,
       get() {
-        return this.$store.state.core.users;
+        return this.$store.state.actor.users;
       },
     },
     user() {
-      return this.$store.state.core.user
+      return this.$store.state.actor.user
     },
     usersUpdateDate() {
-      return this.$store.state.core.usersUpdateDate
+      return this.$store.state.actor.usersUpdated
     }
   }
 

@@ -65,13 +65,13 @@ export default {
     randomRoom(){
       console.log('random')
       this.user.roomId = uuidv4()
-      this.$store.commit('core/setUser', this.user)
+      this.$store.commit('actor/setUser', this.user)
       this.$openRoom()
     },
     nowRoom(){
       console.log('now')
       this.user.roomId = Date.now()
-      this.$store.commit('core/setUser', this.user)
+      this.$store.commit('actor/setUser', this.user)
       this.$openRoom()
     }
   },
@@ -82,10 +82,10 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.state.core.user
+      return this.$store.state.actor.user
     },
     roomAddress() {
-      return this.$store.state.core.roomAddress
+      return this.$store.state.actor.roomAddress
     },
   }
 }

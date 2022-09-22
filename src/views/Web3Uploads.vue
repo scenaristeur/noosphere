@@ -117,20 +117,20 @@ export default {
     },
     // trash(roomId){
     //   console.log(roomId)
-    //   this.$store.commit('core/removeRoomIdFromHistory', roomId)
+    //   this.$store.commit('actor/removeRoomIdFromHistory', roomId)
     //   this.$forceUpdate()
     //   this.$userChanged()
     // }
   },
   computed: {
     user() {
-      return this.$store.state.core.user
+      return this.$store.state.actor.user
     },
     uploads() {
-      return this.$store.state.core.uploads
+      return this.$store.state.web3.uploads
     },
     web3Token(){
-      return this.$store.state.core.web3Token
+      return this.$store.state.web3.token
     }
   }
 

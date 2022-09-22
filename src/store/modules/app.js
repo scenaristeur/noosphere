@@ -4,7 +4,7 @@ const state = () => ({
 
   query: null,
 
-  historyUpdated: null,
+
   // editorUpdated: null,
 
   yMap: null,

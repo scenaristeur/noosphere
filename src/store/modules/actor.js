@@ -5,6 +5,7 @@ const state = () => ({
   users: {},
   usersUpdated: null,
   roomAddress: '',
+  historyUpdated: null,
   // graph: null,
   // nodes: [],
   // links: [],
@@ -49,7 +50,7 @@ const mutations = {
     state.users[u.clientID] = u
     //  console.log(state.users)
   },
-  setUsersUpdateDate(state, d){
+  setUsersUpdated(state, d){
     state.usersUpdated = d
   },
   // setGraph(state, g){

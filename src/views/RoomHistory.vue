@@ -109,7 +109,7 @@ methods: {
   },
   trash(roomId){
     console.log(roomId)
-    this.$store.commit('core/removeRoomIdFromHistory', roomId)
+    this.$store.commit('actor/removeRoomIdFromHistory', roomId)
     this.$forceUpdate()
     this.$userChanged()
   }
@@ -123,11 +123,11 @@ computed: {
   user: {
     cache: false,
     get() {
-      return this.$store.state.core.user;
+      return this.$store.state.actor.user;
     },
   },
   historyUpdated() {
-    return this.$store.state.core.historyUpdated
+    return this.$store.state.actor.historyUpdated
   }
 }
 

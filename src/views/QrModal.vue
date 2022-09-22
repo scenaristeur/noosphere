@@ -48,7 +48,7 @@ export default {
         console.log(roomId, this.scanner)
               let user = this.user
         user.roomId = roomId
-        this.$store.commit('core/setUser', user)
+        this.$store.commit('actor/setUser', user)
 
         this.$nextTick(() => {
           this.$bvModal.hide('modal-qrscan')
@@ -69,7 +69,7 @@ export default {
     },
     computed:{
       user(){
-        return this.$store.state.core.user
+        return this.$store.state.actor.user
       },
     }
 

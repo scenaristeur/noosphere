@@ -1,5 +1,5 @@
 <template>
-  
+
   <div id="graph"  ref="graph">Loading graph...</div>
 
 </template>
@@ -16,7 +16,7 @@ export default {
   mounted(){
     this.$graphInit({domElement: this.$refs.graph})
     this.updateUsers()
-    // this.users = this.$store.state.core.users
+    // this.users = this.$store.state.actor.users
   },
   methods:{
     update(){
@@ -91,12 +91,12 @@ export default {
     },
     currentNode(){
       console.log(this.currentNode)
-      let user = this.$store.state.core.user
+      let user = this.$store.state.actor.user
       switch (this.currentNode.group) {
         case "room":
 
         user.roomId = this.currentNode.id
-        this.$store.commit('core/setUser', user)
+        this.$store.commit('actor/setUser', user)
         this.$openRoom()
         break;
         case "user":
@@ -121,14 +121,14 @@ export default {
     users: {
       cache: false,
       get() {
-        return this.$store.state.core.users;
+        return this.$store.state.actor.users;
       },
     },
     usersUpdateDate() {
-      return this.$store.state.core.usersUpdateDate
+      return this.$store.state.actor.usersUpdated
     },
     uploads() {
-      return this.$store.state.core.uploads
+      return this.$store.state.web3.uploads
     },
     currentNode(){
       return this.$store.state.network.currentNode

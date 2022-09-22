@@ -151,12 +151,12 @@ export default {
 
       console.log("append", this.query, data, this.roomId)
       this.user.roomId = this.roomId
-      await this.$store.commit('core/setUser', this.user)
+      await this.$store.commit('actor/setUser', this.user)
 
       //await this.$saveMap(this.roomId,data)
 
       await this.$openRoom()
-      this.$store.commit('core/setEditorData', data)
+      this.$store.commit('editor/setEditorData', data)
 
     },
     async create(){
@@ -196,12 +196,12 @@ export default {
 
       console.log("create", this.query, data, this.roomId)
       this.user.roomId = this.roomId
-      await this.$store.commit('core/setUser', this.user)
+      await this.$store.commit('actor/setUser', this.user)
 
       //await this.$saveMap(this.rotitle_not_existomId,data)
 
       await this.$openRoom()
-      this.$store.commit('core/setEditorData', data)
+      this.$store.commit('editor/setEditorData', data)
 
 
     },
@@ -216,7 +216,7 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.state.core.user
+      return this.$store.state.actor.user
     }
   }
 }

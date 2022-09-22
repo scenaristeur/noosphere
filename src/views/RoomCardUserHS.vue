@@ -455,14 +455,7 @@ export default {
   //   }
   // },
 
-  // computed: {
-  //   room() {
-  //     return this.$store.state.core.room
-  //   },
-  //   rooms() {
-  //     return this.$store.state.core.rooms
-  //   },
-  // }
+
 
 
 }

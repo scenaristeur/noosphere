@@ -53,7 +53,7 @@
     <div v-if="this.url != null">
 
     </div>
-  
+
     <div id="ymap_div" v-if="ymap!=null">
 
       <input v-model="newName" placeholder="name of the new node" />
@@ -299,10 +299,10 @@ export default {
 
     computed: {
       room() {
-        return this.$store.state.core.room
+        return this.$store.state.room.room
       },
       rooms() {
-        return this.$store.state.core.rooms
+        return this.$store.state.room.rooms
       },
     }
 
