@@ -3,6 +3,11 @@
 vue create noosphere
 cd noosphere
 
+# voir milkdown
+- https://stackblitz.com/edit/milkdown-collab-4htabc
+- https://milkdown.dev/collaborative-editing
+- https://milkdown.dev/online-demo
+- https://milkdown.dev/vue2
 
 dependencies
 "@editorjs/editorjs": "^2.25.0",

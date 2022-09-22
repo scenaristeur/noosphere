@@ -25,6 +25,11 @@
     "@editorjs/table": "^2.0.4",
     "@inrupt/solid-client": "^1.23.3",
     "@inrupt/solid-client-authn-browser": "^1.12.2",
+    "@milkdown/core": "^6.4.1",
+    "@milkdown/plugin-collaborative": "^6.4.1",
+    "@milkdown/preset-commonmark": "^6.4.2",
+    "@milkdown/prose": "^6.4.1",
+    "@milkdown/theme-nord": "^6.4.1",
     "3d-force-graph": "^1.70.13",
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.22.0",
@@ -44,7 +49,7 @@
     "web3.storage": "^4.4.0",
     "y-indexeddb": "^9.0.9",
     "y-webrtc": "^10.2.3",
-    "y-websocket": "^1.4.4",
+    "y-websocket": "^1.4.5",
     "yjs": "^13.5.41"
   },
   "devDependencies": {
