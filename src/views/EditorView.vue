@@ -157,26 +157,31 @@ export default {
         // this.editor.notifier.show({
         //   message: 'Editor is ready!'
         // });
-        let app = this
+      //  let app = this
         if (this.editorData != null){
           await this.editor.blocks.render(this.editorData)
-          let blocks = app.editorBlocks()
-          console.log('[blocks] ready',blocks)
+          // let blocks = app.editorBlocks()
+          // console.log('[blocks] ready',blocks)
+          // this.$editorToYMapBlocks(blocks)
         }
       },
 
 
       onChange: function(api, event) {
         let blockIndex = api.blocks.getCurrentBlockIndex()
-        //  console.log( blockIndex,event, event.type)
-        let block = api.blocks.getBlockByIndex(blockIndex);
-        //  console.log(block.id, block.name, block)
-        let e ={
-          block: block,
-          event: event,
-          roomId: app.user.roomId
-        }
-        app.$propagateEvent(e)
+         console.log( blockIndex,event, event.type)
+        // let block = api.blocks.getBlockByIndex(blockIndex);
+        // //  console.log(block.id, block.name, block)
+        // let e ={
+        //   block: block,
+        //   event: event,
+        //   roomId: app.user.roomId
+        // }
+        // app.$propagateEvent(e)
+
+        // temporary save
+      //  let app = this
+         app.save()
       }
 
       // onChange1: function(api, event) {
@@ -190,7 +195,7 @@ export default {
       //   }
       //   console.log(api, event)
       //   console.log('editorEvent', editorEvent, currentBlockIndexRef)
-      //   app.save()
+       // app.save()
       //   // app.userEvent(event)
       //   // this.save()
       //   // editor.save().then((data) => {
@@ -254,14 +259,15 @@ export default {
   },
   methods:{
     async render(){
-    //  console.log('render', this.editorData)
+      //  console.log('render', this.editorData)
       if (this.editor.blocks != undefined){
         // this.editor.blocks.clear()
-         await this.editor.blocks.render(this.editorData)
+        await this.editor.blocks.render(this.editorData)
         // this.editor.render()
         // console.log("render")
-        let blocks = this.editorBlocks()
-        console.log('[blocks] render',blocks)
+        // let blocks = this.editorBlocks()
+        // console.log('[blocks] render',blocks)
+      //  this.$editorToYMapBlocks(blocks)
         //
       }
     },
@@ -293,10 +299,12 @@ export default {
     editorBlocks() {
 
       const blockCount = this.editor.blocks.getBlocksCount()
-            console.log('editorBlocks', blockCount)
+      console.log('editorBlocks', blockCount)
       const blocks = []
       for (let i = 0; i < blockCount; i += 1) {
-        blocks.push(this.editor.blocks.getBlockByIndex(i))
+        let block = this.editor.blocks.getBlockByIndex(i)
+        console.log(block)
+        blocks.push(block)
       }
       return blocks
     }
@@ -307,8 +315,16 @@ export default {
     //   this.render()
     //   this.$forceUpdate()
     // },
+    updates(){
+
+      let blocks = this.editorBlocks()
+      console.log('updates',this.updates, blocks)
+
+
+    },
+
     editorData(){
-console.log('[TOEDITOR]',this.editorData)
+      console.log('[TOEDITOR]',this.editorData)
       //  yService.log('watch')
       //  yService.log(this.editorData)
       // if (this.editor.blocks == undefined){
@@ -328,6 +344,9 @@ console.log('[TOEDITOR]',this.editorData)
     user() {
       return this.$store.state.actor.user
     },
+    updates(){
+      return this.$store.state.editor.updates
+    }
   }
 
 }

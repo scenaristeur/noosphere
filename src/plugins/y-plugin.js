@@ -5,39 +5,68 @@ import { WebrtcProvider } from 'y-webrtc'
 import { WebsocketProvider } from 'y-websocket'
 import { IndexeddbPersistence } from 'y-indexeddb'
 
-let channel = 'noosphere-demo1'
+let channel = 'noosphere-demo'
 
 const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
     //  console.log("store",store)
 
-    Vue.prototype.$propagateEvent = function (e){
-      console.log(e)
-      console.log(e.event.type, e.event.detail, e.event.detail.target.id)
-      let ymap = store.state.y.yMap
-      let ymapData = ymap.get('editor_map')
-      console.log('{ymap before}',ymapData)
-      console.log('{blockid}', e.block.id)
+//     Vue.prototype.$editorToYMapBlocks = function (blocks){
+//       let ymap = store.state.y.yMap
+//       console.log('{blocks}',blocks)
+//       // let user = store.state.actor.user
+//       let ymapData = ymap.get('editor_map')
+//       console.log(ymapData)
+// let temp = {}
+//       blocks.forEach((b) => {
+//         console.log(b.id, b)
+//         temp[b.id] = b
+//       });
+//
+//       if(ymapData == undefined){
+//         console.log(temp)
+//         ymap.set('editor_map',temp)
+//         console.log('{ymap populated}',ymap)
+//       }else{
+//         console.log('ymapdata is', ymapData)
+//       }
+//       // blocks.forEach((b) => {
+//       //   console.log(b)
+//       //   ymapData.set(b.id, b)
+//       // });
+//
+//
+//
+//     }
 
-      switch (e.event.type) {
-        case 'block-added':
-        console.log('add')
-        //ymapData.set('editor_map', ymapData)
-        break;
-        case 'block-removed':
-        console.log('removed')
-        break;
-        case 'block-changed':
-        console.log('changed')
-        break;
-        case 'block-moved':
-        console.log('moved')
-        break;
-        default:
-        console.log("unknown",e.type)
-      }
-    }
+
+    // Vue.prototype.$propagateEvent = function (e){
+    //   console.log(e)
+    //   console.log(e.event.type, e.event.detail)
+    //   let ymap = store.state.y.yMap
+    //   let ymapData = ymap.get('editor_map')
+    //   console.log('{ymap before}',ymapData)
+    //   console.log('{blockid}', e.block.id, '{targetid}', e.event.detail.target.id)
+    //
+    //   switch (e.event.type) {
+    //     case 'block-added':
+    //     console.log('add')
+    //     //ymapData.set('editor_map', ymapData)
+    //     break;
+    //     case 'block-removed':
+    //     console.log('removed')
+    //     break;
+    //     case 'block-changed':
+    //     console.log('changed')
+    //     break;
+    //     case 'block-moved':
+    //     console.log('moved')
+    //     break;
+    //     default:
+    //     console.log("unknown",e.type)
+    //   }
+    // }
 
     Vue.prototype.$createYDoc = function(){
       let ydoc = new Y.Doc()
@@ -166,9 +195,12 @@ const plugin = {
               console.log(ymapData.clientID != user.clientID)
               //  if (editorData.clientID != user.clientID){
               //this.editorData =  editorData//.toJSON()
-              ymapData.source = 'ymapEvent'
-              console.log(ymapData)
-              store.commit('editor/setEditorData', ymapData)
+              if (ymapData.clientID != user.clientID){
+              //  ymapData.source = 'ymapEvent'
+                console.log('{ymap event}',ymapData)
+                store.commit('editor/setEditorData', ymapData)
+              }
+
               //  console.log("[update editorData]", editorData)
 
               //  }

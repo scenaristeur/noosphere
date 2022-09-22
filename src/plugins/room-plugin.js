@@ -3,48 +3,48 @@ const plugin = {
     let store = opts.store
     // console.log("store",store)
 
+    // Vue.prototype.$openRoom2 = async function(options){
+    //   let user = store.state.actor.user
+    //   let ymap = store.state.y.yDoc.getMap(user.roomId)
+    //   let ymapData = await ymap.get('editor_map')
+    //   console.log('openRoom', options, user, ymap, ymapData)
+    //   console.log('ymapData', ymapData)
+    //
+    //   store.commit('y/setYmap', ymap)
+    //
+    //
+    //
+    //   if( ymapData == undefined){
+    //     ymapData = {}
+    //     ymapData.blocks = []
+    //     ymapData.blocks.push(store.state.editor.editorDataDefault)
+    //     ymapData.blocks.unshift({
+    //       "type" : "header",
+    //       "data" : {
+    //         "text" : user.roomId,
+    //         "level" : 2
+    //       }
+    //     })
+    //     ymapData.creator = user.clientID
+    //     ymapData.action = "create"
+    //     ymapData.roomId = user.roomId
+    //   //  ymap.set('editor_map', ymapData)
+    //     ymapData.source = 'creation'
+    //   }else{
+    //     console.log('not undefined')
+    //     ymapData.source = 'exist'
+    //     ymapData.roomId == undefined ? ymapData.roomId = user.roomId : ""
+    //   }
+    //   console.log('ymapReady', ymapData)
+    //   store.commit('editor/setEditorData', ymapData)
+    //   if(opts.router.history.current.name != 'editor'){
+    //     opts.router.push('/editor')
+    //   }
+    //   Vue.prototype.$setYMapObserver()
+    // }
+
+
     Vue.prototype.$openRoom = async function(options){
-      let user = store.state.actor.user
-      let ymap = store.state.y.yDoc.getMap(user.roomId)
-      let ymapData = await ymap.get('editor_map')
-      console.log('openRoom', options, user, ymap, ymapData)
-      console.log('ymapData', ymapData)
-
-      store.commit('y/setYmap', ymap)
-
-
-
-      if( ymapData == undefined){
-        ymapData = {}
-        ymapData.blocks = []
-        ymapData.blocks.push(store.state.editor.editorDataDefault)
-        ymapData.blocks.unshift({
-          "type" : "header",
-          "data" : {
-            "text" : user.roomId,
-            "level" : 2
-          }
-        })
-        ymapData.creator = user.clientID
-        ymapData.action = "create"
-        ymapData.roomId = user.roomId
-      //  ymap.set('editor_map', ymapData)
-        ymapData.source = 'creation'
-      }else{
-        console.log('not undefined')
-        ymapData.source = 'exist'
-        ymapData.roomId == undefined ? ymapData.roomId = user.roomId : ""
-      }
-      console.log('ymapReady', ymapData)
-      store.commit('editor/setEditorData', ymapData)
-      if(opts.router.history.current.name != 'editor'){
-        opts.router.push('/editor')
-      }
-      Vue.prototype.$setYMapObserver()
-    }
-
-
-    Vue.prototype.$openRoom1 = async function(options){
       //  console.log('###{openRoom options}',options)
       //  console.log('Store editorData', store.state.editor.editorData)
 

@@ -7,7 +7,8 @@ const state = () => ({
       "data" : {
         "text" : "Click to edit."
       }
-    }
+    },
+    updates: null
   // graph: null,
   // nodes: [],
   // links: [],
@@ -22,6 +23,10 @@ const mutations = {
     state.editorData = ed
     // state.editorUpdated = Date.now()
   },
+
+  setUpdates(state, data){
+    state.updates = data
+  }
   // setGraph(state, g){
   //   state.graph = g
   // },
