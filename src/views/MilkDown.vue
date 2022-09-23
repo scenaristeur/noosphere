@@ -127,8 +127,14 @@ export default {
 
 </script>
 
-<style lang="css" scoped>
-. {
+<style lang="css">
+.milkdown-menu {
+  position:fixed;
+  /* top:60px; */
+  right:0;
+  left:0;
+  bottom: 0px;
+  z-index:1040
 
 }
 </style>
