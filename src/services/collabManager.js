@@ -74,7 +74,8 @@ indexeddbProvider.on('synced', async () => {
     // new WebsocketProvider('wss://demos.yjs.dev', channel, this.doc, {awareness })
     // ["ws://localhost:1234",'wss://demos.yjs.dev']
     this.wsProvider = new WebsocketProvider(
-      "ws://localhost:1234",
+      // "ws://localhost:1234",
+      "wss://flame-long-base.glitch.me/",
       // "wss://yjs-websocket--1234.local-corp.webcontainer.io",
       // 'wss://demos.yjs.dev',
       this.room, this.doc, { connect: autoConnect });

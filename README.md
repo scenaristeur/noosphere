@@ -56,6 +56,9 @@ then open your website  https://scenaristeur.github.io/noosphere
 
 next modifs, just run ```npm run git -- "my modif"```
 
+# y-websocket server
+- https://flame-long-base.glitch.me/me
+- https://www.youtube.com/watch?v=eLPhUFHKm0M
 
 # Tools
 - pwa share api https://web.dev/web-share-target/
