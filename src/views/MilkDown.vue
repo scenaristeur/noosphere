@@ -2,6 +2,7 @@
   <div>
     <b-button @click="connect">Connect</b-button>
     <b-button @click="disconnect">Disonnect</b-button>
+    <b-button @click="toggle">Toggle</b-button>
     <b-input v-model="room" placeholder="room" />
     <b-button @click="open">Open</b-button>
     status: {{collabManager != null && collabManager.status}}
@@ -24,13 +25,7 @@ import { gfm } from '@milkdown/preset-gfm';
 // import { WebsocketProvider } from 'y-websocket';
 // import { Doc } from 'yjs';
 import { CollabManager } from '@/services/collabManager';
-const markdown = `
-# Milkdown Collaborative Example
 
----
-
-Now you can play!
-`;
 
 export default {
   name: 'MilkDown',
@@ -45,7 +40,7 @@ export default {
     }
   },
   async mounted() {
-    // let app = this
+    let app = this
     const editor = await Editor.make()
     .config((ctx) => {
       ctx.set(rootCtx, this.$refs.editor);
@@ -65,8 +60,8 @@ export default {
 
     editor.action((ctx) => {
       const collabService = ctx.get(collabServiceCtx);
-      this.collabManager = new CollabManager(collabService);
-      this.collabManager.flush(markdown);
+      app.collabManager = new CollabManager(collabService);
+      app.collabManager.flush();
 
       // if (connect$) {
       //     connect$.onclick = () => {
@@ -116,6 +111,9 @@ export default {
     },
     disconnect(){
       this.collabManager.disconnect();
+    },
+    toggle(){
+      this.collabManager.toggleRoom();
     },
     open(){
       this.room = this.room.trim()
