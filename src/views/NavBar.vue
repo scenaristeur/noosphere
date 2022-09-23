@@ -6,6 +6,7 @@
       </b-navbar-brand>
 
       <b-button v-b-toggle.sidebar-right size="sm">+</b-button>
+       <b-button v-b-toggle.sidebar-manager size="sm">Manager</b-button>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 

@@ -134,7 +134,7 @@ const plugin = {
 
           // Sync clients with the y-websocket provider
           // let websocketProvider =
-          new WebsocketProvider('wss://demos.yjs.dev', channel, ydoc, {awareness })
+          new WebsocketProvider(["ws://localhost:1234",'wss://demos.yjs.dev'], channel, ydoc, {awareness })
 
           //  await end(user)
         })
