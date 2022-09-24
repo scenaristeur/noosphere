@@ -8,16 +8,16 @@
     <div ref="editor"></div>
     <b-button @click="connect">Connect</b-button>
     <b-button @click="disconnect">Disonnect</b-button>
-    status: {{collabManager != null && collabManager.status}}
+    status: {{collabManager != null && collabManager.status}} {{ roomAddress }}
   </b-container>
 </template>
 
 <script>
 import { defaultValueCtx, Editor, rootCtx } from '@milkdown/core';
-import { nord } from '@milkdown/theme-nord';
-// import { tokyo } from '@milkdown/theme-tokyo';
-import { gfm } from '@milkdown/preset-gfm';
-// import { commonmark } from '@milkdown/preset-commonmark';
+// import { nord } from '@milkdown/theme-nord';
+import { tokyo } from '@milkdown/theme-tokyo';
+// import { gfm } from '@milkdown/preset-gfm';
+import { commonmark } from '@milkdown/preset-commonmark';
 import { collaborative, collabServiceCtx } from '@milkdown/plugin-collaborative';
 import { menu } from '@milkdown/plugin-menu';
 import { slash } from '@milkdown/plugin-slash';
@@ -51,15 +51,16 @@ export default {
       ctx.set(rootCtx, this.$refs.editor);
       ctx.set(defaultValueCtx, this.default);
     })
-    .use(nord)
-    // .use(tokyo)
-    // .use(commonmark)
+    // .use(nord)
+    .use(tokyo)
+        // .use(gfm)
+    .use(commonmark)
     .use(menu)
     .use(slash)
     .use(tooltip)
     .use(cursor)
     .use(clipboard)
-    .use(gfm)
+
     .use(history)
     .use(collaborative)
     .create();
@@ -114,11 +115,23 @@ export default {
 <style lang="css">
 .milkdown-menu {
   position:fixed;
+  background-color: rgba(0, 0, 64, .1);
   top:60px;
   right:0;
   left:0;
   /* bottom: 0px; */
   z-index:1
-
 }
+/* .milkdown .editor {
+
+  background-color: rgb(100, 100, 130,.9);
+   background-position-x: 0%;
+  background-position-y: 0%;
+  background-repeat: repeat;
+  background-attachment: scroll;
+  background-image: none;
+  background-size: auto;
+  background-origin: padding-box;
+  background-clip: border-box;
+} */
 </style>
