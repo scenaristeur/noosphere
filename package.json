@@ -14,6 +14,7 @@
     "@milkdown/plugin-clipboard": "^6.4.1",
     "@milkdown/plugin-collaborative": "^6.4.1",
     "@milkdown/plugin-cursor": "^6.4.1",
+    "@milkdown/plugin-history": "^6.4.1",
     "@milkdown/plugin-menu": "^6.4.1",
     "@milkdown/plugin-slash": "^6.4.3",
     "@milkdown/plugin-tooltip": "^6.4.1",

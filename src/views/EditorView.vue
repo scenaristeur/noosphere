@@ -83,6 +83,23 @@ export default {
       }
 
     }
+  },
+  watch:{
+    roomAddress(){
+      console.log(this.roomAddress)
+      this.collabManager.openRoom(this.roomAddress);
+    }
+  },
+  computed: {
+    // nodes() {
+    //   return this.$store.state.network.nodes
+    // },
+    // links() {
+    //   return this.$store.state.network.links
+    // },
+    roomAddress() {
+      return this.$store.state.actor.roomAddress
+    },
   }
 };
 

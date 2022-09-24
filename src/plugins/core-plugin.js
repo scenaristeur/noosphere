@@ -5,8 +5,8 @@ const plugin = {
     let store = opts.store
     // console.log("store",store)
     Vue.prototype.$coreInit = async function(options){
-    //  console.log('{core options}', options)
-    //  Vue.prototype.$createYDoc()
+      //  console.log('{core options}', options)
+      //  Vue.prototype.$createYDoc()
       //let yDoc = store.state.y.yDoc
       // let awareness = store.state.y.awareness
       // console.log('{core ydoc}', yDoc)
@@ -16,7 +16,7 @@ const plugin = {
       // user = await getRouterParameters(user, options.route)
       //  console.log(user)
       //await createProviders(ydoc, awareness, user)
-    //  Vue.prototype.$createProvider()
+      //  Vue.prototype.$createProvider()
       Vue.prototype.$ready()
 
     }
@@ -62,6 +62,11 @@ const plugin = {
         console.log('openRoom', user)
       }
 
+    }
+
+    Vue.prototype.$openRoom = function(){
+      let user = store.state.actor.user
+      store.commit('actor/updateRoomHistory', user.roomId)
     }
 
     // Vue.prototype.$spinnerAdd = function(task){
