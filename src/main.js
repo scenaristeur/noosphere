@@ -16,6 +16,17 @@ Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 
+
+import CorePlugin from './plugins/core-plugin';
+Vue.use(CorePlugin, {store: store, router: router});
+
+import ActorPlugin from './plugins/actor-plugin';
+Vue.use(ActorPlugin, {store: store, router: router});
+
+import UtilPlugin from './plugins/util-plugin';
+Vue.use(UtilPlugin, {store: store, router: router});
+
+
 Vue.config.productionTip = false
 
 new Vue({

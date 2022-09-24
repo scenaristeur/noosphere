@@ -1,4 +1,4 @@
-// import {Awareness} from 'y-protocols/awareness'
+import {Awareness} from 'y-protocols/awareness'
 // import { WebrtcProvider } from 'y-webrtc'
 import { WebsocketProvider } from 'y-websocket'
 import { IndexeddbPersistence } from 'y-indexeddb'
@@ -25,8 +25,11 @@ export { CollabManager }
 
 class CollabManager {
 
-  constructor(collabService) {
-    this.collabService = collabService
+  constructor(options) {
+
+    console.log(options)
+    this.collabService = options.collabService
+    this.store = options.store
     this.room = 'milkdown';
     this.doc = null
     this.wsProvider = null
@@ -34,6 +37,7 @@ class CollabManager {
     // this.webrtcProvider = null
     // this.awareness = null
     this.status = null
+console.log("store", this.store)
     // if (room) {
     //   room.textContent = this.room;
     // }
@@ -60,10 +64,23 @@ class CollabManager {
     //   // store.commit('actor/setUsersUpdated', Date.now())
     // })
 
-  //  console.log(this.room)
+    //  console.log(this.room)
 
 
     this.indexeddbProvider = new IndexeddbPersistence(this.room, this.doc)
+
+    let awareness = new Awareness(this.doc)
+    this.store.commit('y/setAwareness', awareness)
+    awareness.on('change', ()/*changes*/ => {
+      awareness.getStates().forEach(state => {
+        //  console.log(state)
+        if (state.user) {
+          console.log('[state.user]',state.user)
+          // store.commit('actor/setUserById', state.user)
+        }
+      })
+      // store.commit('actor/setUsersUpdated', Date.now())
+    })
 
     //  let syncedData = await indexeddbProvider.whenSynced
     //  console.log('[indexeddbProvider] loaded data from indexed db', syncedData)
@@ -84,7 +101,7 @@ class CollabManager {
       "wss://flame-long-base.glitch.me/",
       // "wss://yjs-websocket--1234.local-corp.webcontainer.io",
       // 'wss://demos.yjs.dev',
-      this.room, this.doc, { connect: autoConnect });
+      this.room, this.doc, { connect: autoConnect },{awareness });
 
 
       this.wsProvider.awareness.setLocalStateField('user', options[rndInt]);
@@ -98,7 +115,7 @@ class CollabManager {
 
       this.indexeddbProvider.once('synced', async (synced) => {
         console.log('indexeddb synced', synced, template)
-      //  this.collabService.applyTemplate(template).connect();
+        //  this.collabService.applyTemplate(template).connect();
       })
 
       this.wsProvider.once('synced', async (isSynced) => {
