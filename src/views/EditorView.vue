@@ -13,6 +13,7 @@
 <script>
 import { defaultValueCtx, Editor, rootCtx } from '@milkdown/core';
 import { nord } from '@milkdown/theme-nord';
+import { gfm } from '@milkdown/preset-gfm';
 // import { commonmark } from '@milkdown/preset-commonmark';
 import { collaborative, collabServiceCtx } from '@milkdown/plugin-collaborative';
 import { menu } from '@milkdown/plugin-menu';
@@ -20,7 +21,7 @@ import { slash } from '@milkdown/plugin-slash';
 import { tooltip } from '@milkdown/plugin-tooltip';
 import { clipboard } from '@milkdown/plugin-clipboard';
 import { cursor } from '@milkdown/plugin-cursor';
-import { gfm } from '@milkdown/preset-gfm';
+
 
 // import { WebsocketProvider } from 'y-websocket';
 // import { Doc } from 'yjs';
@@ -62,47 +63,7 @@ export default {
       const collabService = ctx.get(collabServiceCtx);
       app.collabManager = new CollabManager(collabService);
       app.collabManager.flush();
-
-      // if (connect$) {
-      //     connect$.onclick = () => {
-      //         collabManager.connect();
-      //     };
-      // }
-      //
-      // if (disconnect$) {
-      //     disconnect$.onclick = () => {
-      //         collabManager.disconnect();
-      //     };
-      // }
-      //
-      // if (apply$ && template$) {
-      //     apply$.onclick = () => {
-      //         if (template$ instanceof HTMLTextAreaElement) {
-      //             collabManager.applyTemplate(template$.value);
-      //         }
-      //     };
-      // }
-      //
-      // if (toggle$) {
-      //     toggle$.onclick = () => {
-      //         collabManager.toggleRoom();
-      //     };
-      // }
     });
-
-    console.log(this.collabManager)
-    // const doc = new Doc();
-    // const wsProvider = new WebsocketProvider('ws://localhost:1234', 'milkdown', doc);
-
-    // editor.action((ctx) => {
-    //   const collabService = ctx.get(collabServiceCtx);
-    //   collabService
-    //   // bind doc and awareness
-    //   .bindDoc(doc)
-    //   .setAwareness(wsProvider.awareness)
-    //   // connect yjs with milkdown
-    //   .connect();
-    // });
 
   },
   methods:{
@@ -118,7 +79,7 @@ export default {
     open(){
       this.room = this.room.trim()
       if(this.room.length >0){
-          this.collabManager.openRoom(this.room);
+        this.collabManager.openRoom(this.room);
       }
 
     }

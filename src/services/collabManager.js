@@ -60,7 +60,7 @@ class CollabManager {
     //   // store.commit('actor/setUsersUpdated', Date.now())
     // })
 
-    console.log(this.room)
+  //  console.log(this.room)
 
 
     this.indexeddbProvider = new IndexeddbPersistence(this.room, this.doc)
@@ -97,20 +97,18 @@ class CollabManager {
       this.collabService.bindDoc(this.doc).setAwareness(this.wsProvider.awareness);
 
       this.indexeddbProvider.once('synced', async (synced) => {
-        console.log('indexeddb synced', synced)
-        this.collabService.applyTemplate(template).connect();
+        console.log('indexeddb synced', synced, template)
+      //  this.collabService.applyTemplate(template).connect();
       })
 
       this.wsProvider.once('synced', async (isSynced) => {
         if (isSynced) {
-          console.log('ws synced', template)
-          this.collabService.applyTemplate(template).connect();
+          console.log('ws synced', isSynced,template)
+          // this.collabService.applyTemplate(template).connect();
+          this.collabService.connect();
         }
       });
       //  await end(user)
-
-
-
 
     }
 
