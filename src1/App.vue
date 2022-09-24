@@ -6,13 +6,13 @@
 
       <router-view/>
     </div>
-    <!-- <SpinnerComp /> -->
+    <SpinnerComp />
     <!-- <b-alert variant="info" show>
 
     <i><small>version: navbar</small></i>
     {{ location}}
   </b-alert> -->
-  <!-- <RoomManager /> -->
+  <RoomManager />
 
 </div>
 </template>
@@ -23,8 +23,8 @@ export default {
   name: 'App',
   components: {
     'NavBar': ()=>import('@/views/NavBar'),
-    // 'SpinnerComp': ()=>import('@/components/SpinnerComp'),
-    // 'RoomManager': ()=>import('@/views/RoomManager'),
+    'SpinnerComp': ()=>import('@/components/SpinnerComp'),
+    'RoomManager': ()=>import('@/views/RoomManager'),
     // 'UserView': ()=>import('@/views/UserView'),
   },
   data() {
@@ -32,13 +32,13 @@ export default {
       // location: null
     }
   },
-  // created(){
-  //   this.$coreInit({name: "SuperCore", route: this.$route})
-  // },
-  // async mounted(){
-  //   this.$web3Init()
-  //   //  console.log('token', web3Token)
-  // },
+  created(){
+    this.$coreInit({name: "SuperCore", route: this.$route})
+  },
+  async mounted(){
+    this.$web3Init()
+    //  console.log('token', web3Token)
+  },
   methods:{
 
     // TODO geolocation
@@ -60,14 +60,14 @@ export default {
   watch:{
 
   },
-  // computed: {
-  //   user() {
-  //     return this.$store.state.actor.user
-  //   },
-  //   users() {
-  //     return this.$store.state.actor.users
-  //   },
-  // }
+  computed: {
+    user() {
+      return this.$store.state.actor.user
+    },
+    users() {
+      return this.$store.state.actor.users
+    },
+  }
 }
 </script>
 

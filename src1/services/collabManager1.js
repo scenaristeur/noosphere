@@ -1,5 +1,5 @@
-// import {Awareness} from 'y-protocols/awareness'
-// import { WebrtcProvider } from 'y-webrtc'
+import {Awareness} from 'y-protocols/awareness'
+import { WebrtcProvider } from 'y-webrtc'
 import { WebsocketProvider } from 'y-websocket'
 import { IndexeddbPersistence } from 'y-indexeddb'
 import { Doc } from 'yjs';
@@ -30,9 +30,6 @@ class CollabManager {
     this.room = 'milkdown';
     this.doc = null
     this.wsProvider = null
-    this.indexeddbProvider = null
-    // this.webrtcProvider = null
-    // this.awareness = null
     this.status = null
     // if (room) {
     //   room.textContent = this.room;
@@ -43,37 +40,34 @@ class CollabManager {
 
     this.doc ? this.doc.destroy(): ""
     this.wsProvider ? this.wsProvider.destroy(): ""
-    // this.indexeddbProvider ? this.indexeddbProvider.destroy(): ""
-    // this.webrtcProvider ? this.webrtcProvider.destroy(): ""
-    // this.awareness ? this.awareness.destroy() : ""
 
     this.doc = new Doc();
-    // let awareness = this.awareness = new Awareness(this.doc)
-    // this.awareness.on('change', ()/*changes*/ => {
-    //   this.awareness.getStates().forEach(state => {
-    //     //  console.log(state)
-    //     if (state.user) {
-    //       console.log('[state.user]',state.user)
-    //       // store.commit('actor/setUserById', state.user)
-    //     }
-    //   })
-    //   // store.commit('actor/setUsersUpdated', Date.now())
-    // })
+    let awareness = this.awareness = new Awareness(this.doc)
+    this.awareness.on('change', ()/*changes*/ => {
+      this.awareness.getStates().forEach(state => {
+        //  console.log(state)
+        if (state.user) {
+          console.log('[state.user]',state.user)
+          // store.commit('actor/setUserById', state.user)
+        }
+      })
+      // store.commit('actor/setUsersUpdated', Date.now())
+    })
 
     console.log(this.room)
 
 
-    this.indexeddbProvider = new IndexeddbPersistence(this.room, this.doc)
+let indexeddbProvider = new IndexeddbPersistence(this.room, this.doc)
+indexeddbProvider.on('synced', async () => {
+  //  let syncedData = await indexeddbProvider.whenSynced
+  //  console.log('[indexeddbProvider] loaded data from indexed db', syncedData)
 
-    //  let syncedData = await indexeddbProvider.whenSynced
-    //  console.log('[indexeddbProvider] loaded data from indexed db', syncedData)
-
-    // this.webrtcProvider = new WebrtcProvider(this.room, this.doc, {awareness,
-    //   signaling: [
-    //     "wss://y-webrtc-signaling-eu.herokuapp.com",
-    //     "wss://y-webrtc-signaling-us.herokuapp.com",
-    //     "wss://signaling.yjs.dev"
-    //   ]})
+  new WebrtcProvider(this.room, this.doc, {awareness,
+    signaling: [
+      "wss://y-webrtc-signaling-eu.herokuapp.com",
+      "wss://y-webrtc-signaling-us.herokuapp.com",
+      "wss://signaling.yjs.dev"
+    ]})
 
     // Sync clients with the y-websocket provider
     // let websocketProvider =
@@ -85,8 +79,6 @@ class CollabManager {
       // "wss://yjs-websocket--1234.local-corp.webcontainer.io",
       // 'wss://demos.yjs.dev',
       this.room, this.doc, { connect: autoConnect });
-
-
       this.wsProvider.awareness.setLocalStateField('user', options[rndInt]);
       this.wsProvider.on('status', (payload) => {
         if (payload.status) {
@@ -95,35 +87,24 @@ class CollabManager {
       });
 
       this.collabService.bindDoc(this.doc).setAwareness(this.wsProvider.awareness);
-
-      this.indexeddbProvider.once('synced', async (synced) => {
-        console.log('indexeddb synced', synced)
-        this.collabService.applyTemplate(template).connect();
-      })
-
       this.wsProvider.once('synced', async (isSynced) => {
         if (isSynced) {
-          console.log('ws synced', template)
           this.collabService.applyTemplate(template).connect();
         }
       });
-      //  await end(user)
-
+    //  await end(user)
+  })
 
 
 
     }
 
     connect() {
-      this.indexeddbProvider.connect();
-      // this.webrtcProvider.connect();
       this.wsProvider.connect();
       this.collabService.connect();
     }
 
     disconnect() {
-      //  this.indexeddbProvider.disconnect();
-      // this.webrtcProvider.disconnect();
       this.collabService.disconnect();
       this.wsProvider.disconnect();
     }
@@ -134,26 +115,25 @@ class CollabManager {
       .applyTemplate(template, () => true)
       .connect();
     }
-    // toggleRoom() {
-    //   this.room = this.room === 'milkdown' ? 'sandbox' : 'milkdown';
-    //   // if (room$) {
-    //   //     room$.textContent = this.room;
-    //   // }
-    //
-    //   const template = this.room === 'milkdown' ? markdown : '# Sandbox Room';
-    //   this.disconnect();
-    //   this.flush(template);
-    // }
-
-    openRoom(roomId) {
-      this.room = roomId
-      console.log(this.room)
+    toggleRoom() {
+      this.room = this.room === 'milkdown' ? 'sandbox' : 'milkdown';
       // if (room$) {
-      //   room$.textContent = this.room;
+      //     room$.textContent = this.room;
       // }
 
-      // const template = this.room === 'milkdown' ? markdown : '# Sandbox Room';
-      const template = '# '+this.room+  " Room -- click"
+      const template = this.room === 'milkdown' ? markdown : '# Sandbox Room';
+      this.disconnect();
+      this.flush(template);
+    }
+
+    openRoom(roomId) {
+      console.log(roomId)
+      this.room = roomId //this.room === 'milkdown' ? 'sandbox' : 'milkdown';
+      // if (room$) {
+      //     room$.textContent = this.room;
+      // }
+      //const template = this.room === 'milkdown' ? markdown : '# Sandbox Room';
+      const template = markdown+'#'+this.room
       this.disconnect();
       this.flush(template);
     }

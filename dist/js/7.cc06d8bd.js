@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunknoosphere"]=self["webpackChunknoosphere"]||[]).push([[7],{2007:function(e,a,r){r.r(a),r.d(a,{default:function(){return h}});var n=function(){var e=this,a=e._self._c;return a("div",{staticClass:"room-manager"},[a("b-sidebar",{ref:"manager",attrs:{id:"sidebar-manager",title:"Noosphere Manager",right:"",shadow:"",width:"100%"}},[e._v(" Room ")])],1)},s=[],t={name:"RoomManager"},o=t,i=r(1001),u=(0,i.Z)(o,n,s,!1,null,"7e6a0140",null),h=u.exports}}]);
-//# sourceMappingURL=7.cc06d8bd.js.map
