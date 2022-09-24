@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunknoosphere"]=self["webpackChunknoosphere"]||[]).push([[177],{8944:function(e,t,n){n.r(t),n.d(t,{default:function(){return l}});var o=function(){var e=this,t=e._self._c;return t("div",{staticClass:"home-view"},[e._v(" home "),t("b-button",{attrs:{to:"/editor"}},[e._v("Editor")])],1)},r=[],s={name:"HomeView"},u=s,i=n(1001),a=(0,i.Z)(u,o,r,!1,null,"72679af6",null),l=a.exports}}]);
+//# sourceMappingURL=home.ce4901c8.js.map
