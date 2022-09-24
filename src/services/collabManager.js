@@ -13,13 +13,13 @@ const markdown = `
 Now you can play!
 `;
 
-const options = [
-  { color: '#5e81AC', name: 'milkdown user 1' },
-  { color: '#8FBCBB', name: 'milkdown user 2' },
-  { color: '#dbfdbf', name: 'milkdown user 3' },
-  { color: '#D08770', name: 'milkdown user 4' },
-];
-const rndInt = Math.floor(Math.random() * 4);
+// const options = [
+//   { color: '#5e81AC', name: 'milkdown user 1' },
+//   { color: '#8FBCBB', name: 'milkdown user 2' },
+//   { color: '#dbfdbf', name: 'milkdown user 3' },
+//   { color: '#D08770', name: 'milkdown user 4' },
+// ];
+// const rndInt = Math.floor(Math.random() * 4);
 
 export { CollabManager }
 
@@ -37,7 +37,7 @@ class CollabManager {
     // this.webrtcProvider = null
     // this.awareness = null
     this.status = null
-console.log("store", this.store)
+    console.log("store", this.store)
     // if (room) {
     //   room.textContent = this.room;
     // }
@@ -103,8 +103,9 @@ console.log("store", this.store)
       // 'wss://demos.yjs.dev',
       this.room, this.doc, { connect: autoConnect },{awareness });
 
+      let user = this.store.state.actor.user
 
-      this.wsProvider.awareness.setLocalStateField('user', options[rndInt]);
+      this.wsProvider.awareness.setLocalStateField('user', user/*options[rndInt]*/);
       this.wsProvider.on('status', (payload) => {
         if (payload.status) {
           this.status = payload.status;
@@ -112,6 +113,7 @@ console.log("store", this.store)
       });
 
       this.collabService.bindDoc(this.doc).setAwareness(this.wsProvider.awareness);
+      this.store.state.y.awareness.setLocalStateField('user', user)
 
       this.indexeddbProvider.once('synced', async (synced) => {
         console.log('indexeddb synced', synced, template)

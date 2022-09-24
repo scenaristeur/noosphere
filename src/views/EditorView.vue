@@ -1,18 +1,21 @@
 <template>
-  <div>
+  <b-container fluid>
+
+    <!-- <b-button @click="toggle">Toggle</b-button> -->
+    <!-- <b-input v-model="room" placeholder="room" />
+    <b-button @click="open">Open</b-button> -->
+
+    <div ref="editor"></div>
     <b-button @click="connect">Connect</b-button>
     <b-button @click="disconnect">Disonnect</b-button>
-    <!-- <b-button @click="toggle">Toggle</b-button> -->
-    <b-input v-model="room" placeholder="room" />
-    <b-button @click="open">Open</b-button>
     status: {{collabManager != null && collabManager.status}}
-    <div ref="editor"></div>
-  </div>
+  </b-container>
 </template>
 
 <script>
 import { defaultValueCtx, Editor, rootCtx } from '@milkdown/core';
 import { nord } from '@milkdown/theme-nord';
+// import { tokyo } from '@milkdown/theme-tokyo';
 import { gfm } from '@milkdown/preset-gfm';
 // import { commonmark } from '@milkdown/preset-commonmark';
 import { collaborative, collabServiceCtx } from '@milkdown/plugin-collaborative';
@@ -21,6 +24,7 @@ import { slash } from '@milkdown/plugin-slash';
 import { tooltip } from '@milkdown/plugin-tooltip';
 import { clipboard } from '@milkdown/plugin-clipboard';
 import { cursor } from '@milkdown/plugin-cursor';
+import { history } from '@milkdown/plugin-history';
 
 
 // import { WebsocketProvider } from 'y-websocket';
@@ -48,6 +52,7 @@ export default {
       ctx.set(defaultValueCtx, this.default);
     })
     .use(nord)
+    // .use(tokyo)
     // .use(commonmark)
     .use(menu)
     .use(slash)
@@ -55,6 +60,7 @@ export default {
     .use(cursor)
     .use(clipboard)
     .use(gfm)
+    .use(history)
     .use(collaborative)
     .create();
 
@@ -108,11 +114,11 @@ export default {
 <style lang="css">
 .milkdown-menu {
   position:fixed;
-  /* top:60px; */
+  top:60px;
   right:0;
   left:0;
-  bottom: 0px;
-  z-index:1040
+  /* bottom: 0px; */
+  z-index:1
 
 }
 </style>

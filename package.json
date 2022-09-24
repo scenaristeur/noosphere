@@ -22,6 +22,7 @@
     "@milkdown/preset-gfm": "^6.4.1",
     "@milkdown/prose": "^6.4.1",
     "@milkdown/theme-nord": "^6.4.1",
+    "@milkdown/theme-tokyo": "^6.4.1",
     "3d-force-graph": "^1.70.13",
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.22.0",
