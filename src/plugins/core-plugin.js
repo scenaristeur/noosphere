@@ -225,7 +225,10 @@ const plugin = {
 
           // Sync clients with the y-websocket provider
           // let websocketProvider =
-          new WebsocketProvider('wss://demos.yjs.dev', 'noosphere-demo', ydoc, {awareness })
+          new WebsocketProvider(
+            "wss://flame-long-base.glitch.me/",
+            // 'wss://demos.yjs.dev',
+             'noosphere-demo', ydoc, {awareness })
 
           await end(user)
         })
