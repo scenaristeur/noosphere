@@ -69,7 +69,7 @@ export default {
     editor.action((ctx) => {
       const collabService = ctx.get(collabServiceCtx);
       app.collabManager = new CollabManager({collabService: collabService, store: app.$store});
-      app.collabManager.flush();
+      //app.collabManager.flush();
     });
 
   },
