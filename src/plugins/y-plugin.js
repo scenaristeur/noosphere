@@ -134,7 +134,10 @@ const plugin = {
 
           // Sync clients with the y-websocket provider
           // let websocketProvider =
-          new WebsocketProvider('wss://demos.yjs.dev', channel, ydoc, {awareness })
+          new WebsocketProvider(
+            "wss://flame-long-base.glitch.me/",
+            // 'wss://demos.yjs.dev',
+             channel, ydoc, {awareness })
 
           //  await end(user)
         })
