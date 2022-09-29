@@ -117,7 +117,7 @@ export default {
     download(){
       console.log('todo')
     },
-    print() {
+    print1() {
       let divName = 'printable'
       var printContents = document.getElementById(divName).innerHTML;
       var originalContents = document.body.innerHTML;
@@ -128,7 +128,7 @@ export default {
 
       document.body.innerHTML = originalContents;
     },
-    print1()
+    print()
     {
       let divName = 'printable'
       var mywindow = window.open('', 'PRINT', 'height=400,width=600');
