@@ -16,7 +16,7 @@ const plugin = {
       // user = await getRouterParameters(user, options.route)
       //  console.log(user)
       //await createProviders(ydoc, awareness, user)
-      Vue.prototype.$createProvider()
+    //  Vue.prototype.$createProvider()
       Vue.prototype.$ready()
 
     }

@@ -12,6 +12,8 @@
     <i><small>version: navbar</small></i>
     {{ location}}
   </b-alert> -->
+  <!-- <RoomManager /> -->
+  <SideBar />
 
 </div>
 </template>
@@ -23,6 +25,8 @@ export default {
   components: {
     'NavBar': ()=>import('@/views/NavBar'),
     'SpinnerComp': ()=>import('@/components/SpinnerComp'),
+    // 'RoomManager': ()=>import('@/views/RoomManager'),
+    'SideBar': ()=>import('@/views/SideBar'),
     // 'UserView': ()=>import('@/views/UserView'),
   },
   data() {

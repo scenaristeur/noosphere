@@ -5,16 +5,22 @@
       <b-button v-if="ra.length > 0" @click="ra = ''" size="sm">X</b-button>
 
     </b-input-group-append> -->
-    <b-input-group-append class="mt-1 ml-1" v-if="showFav">
-      <b-icon v-if="isFavorite == true" icon="star-fill" variant="warning" @click="toogleFav"></b-icon>
-      <b-icon v-else icon="star" variant="warning" @click="toogleFav"></b-icon>
+    <b-input-group-append>
+      <!-- <b-icon v-if="isFavorite == true" icon="star-fill" variant="warning" @click="toogleFav"></b-icon> -->
+      <!-- <b-icon v-else icon="star" variant="warning" @click="toogleFav"></b-icon> -->
+              <ToolBar />
     </b-input-group-append>
+
   </b-input-group>
 </template>
 
 <script>
 export default {
   name: 'AddressInput',
+  components: {
+    'ToolBar': ()=>import('@/views/ToolBar'),
+
+  },
   props: ['options'],
   data(){
     return{

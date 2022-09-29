@@ -3,6 +3,11 @@
 vue create noosphere
 cd noosphere
 
+# voir milkdown
+- https://stackblitz.com/edit/milkdown-collab-4htabc
+- https://milkdown.dev/collaborative-editing
+- https://milkdown.dev/online-demo
+- https://milkdown.dev/vue2
 
 dependencies
 "@editorjs/editorjs": "^2.25.0",
@@ -51,6 +56,9 @@ then open your website  https://scenaristeur.github.io/noosphere
 
 next modifs, just run ```npm run git -- "my modif"```
 
+# y-websocket server
+- https://flame-long-base.glitch.me/me
+- https://www.youtube.com/watch?v=eLPhUFHKm0M
 
 # Tools
 - pwa share api https://web.dev/web-share-target/
