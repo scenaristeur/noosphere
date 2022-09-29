@@ -70,6 +70,7 @@ const plugin = {
 
     Vue.prototype.$createYDoc = function(){
       let ydoc = new Y.Doc()
+      console.log("REVOIRLA CREATION DU YDOC !!! en double avec l'editeur")
       store.commit('y/setYdoc', ydoc)
       Vue.prototype.$createAwareness(ydoc)
       //  console.log("{createYdoc}", ydoc)

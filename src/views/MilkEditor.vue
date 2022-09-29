@@ -127,6 +127,11 @@ export default {
     //   rooms: {}
     // }
     this.$store.commit('y/setAwareness', awareness)
+    console.log('this.roomId', this.user)
+    if (this.user.roomId != undefined){
+      this.roomId = this.user.roomId
+      this.connect()
+    }
 
 
   },

@@ -14,6 +14,8 @@
   </b-alert> -->
   <!-- <RoomManager /> -->
   <SideBar />
+  <Web3Modal />
+  <ShareModal />
 
 </div>
 </template>
@@ -27,6 +29,8 @@ export default {
     'SpinnerComp': ()=>import('@/components/SpinnerComp'),
     // 'RoomManager': ()=>import('@/views/RoomManager'),
     'SideBar': ()=>import('@/views/SideBar'),
+    'Web3Modal': ()=>import('@/views/Web3Modal'),
+    'ShareModal': ()=>import('@/views/ShareModal'),
     // 'UserView': ()=>import('@/views/UserView'),
   },
   data() {

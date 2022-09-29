@@ -1,20 +1,33 @@
 <template>
   <div>
-    <b-modal id="modal-share" title="Share" @show="share" ok-only>
-      <div  v-if="QRsrc">
-        {{ this.url}}<br>
-        <!-- <b-button @click="saveQR" disabled size="sm" variant="info">save QR</b-button>
+    <b-modal id="modal-share" title="Share" @shown="share" ok-only>
+      <!-- <div  v-if="QRsrc"> -->
+      <!-- {{ this.url}}<br> -->
+      <!-- <b-button @click="saveQR" disabled size="sm" variant="info">save QR</b-button>
 
-        <b-button @click="saveQR" disabled size="sm" variant="info">copy url</b-button> -->
-
+      <b-button @click="saveQR" disabled size="sm" variant="info">copy url</b-button> -->
+      <div id="printable">
+        Let's talk about <b><u>{{user.roomId}}</u></b> at : <br>
+        Discutons de <b><u>{{user.roomId}}</u></b> à l'adresse :
+        <hr>
+        {{this.url}}
+        <hr>
         <img :src="QRsrc" width="280px" />
-        <br>
-        <b-button @click="download" disabled size="sm" variant="info">download QR</b-button>
-        <b-button @click="print" disabled size="sm" variant="info">print QR</b-button>
+
       </div>
 
+      <p>
+        the url has been copied to your clipboard, you can paste it with Ctrl+v in any other app to share it</p>
 
-      <b-alert
+        <br>
+        <b-button @click="download" disabled size="sm" variant="info">download QR</b-button>
+        <b-button @click="print" size="sm" variant="info">print QR</b-button>
+        <!-- </div> -->
+
+
+
+      </b-modal>
+      <!-- <b-alert
       id="shareAlert"
       :show="dismissCountDown"
       dismissible
@@ -29,9 +42,8 @@
       :value="dismissCountDown"
       height="4px"
       ></b-progress>
-    </b-alert>
-  </b-modal>
-</div>
+    </b-alert> -->
+  </div>
 </template>
 
 <script>
@@ -49,7 +61,7 @@ export default {
     }
   },
   methods:{
-    share(){
+    async share(){
       this.url = "http://scenaristeur.github.io/noosphere?room="+this.user.roomId
       let title = 'Noosphere'
       let text = "\nCheck this idea I want to share in Noosphere !\n\n  "
@@ -85,15 +97,15 @@ export default {
         });
 
       }
-      this.generateQR()
+      await this.generateQR()
     },
     async generateQR(){
-      if (this.QRsrc == null){
-        this.url = 'https://scenaristeur.github.io/noosphere/?room='+this.user.roomId
-        this.QRsrc = await QRCode.toDataURL(this.url, {color: {light: '#98faf5'}})
-      }else{
-        this.QRsrc = null
-      }
+      // if (this.QRsrc == null){
+      this.url = 'https://scenaristeur.github.io/noosphere/?room='+this.user.roomId
+      this.QRsrc = await QRCode.toDataURL(this.url, {color: {light: '#98faf5'}})
+      // }else{
+      //   this.QRsrc = null
+      // }
 
     },
     countDownChanged(dismissCountDown) {
@@ -105,8 +117,35 @@ export default {
     download(){
       console.log('todo')
     },
-    print(){
-      console.log('todo')
+    print1() {
+      let divName = 'printable'
+      var printContents = document.getElementById(divName).innerHTML;
+      var originalContents = document.body.innerHTML;
+
+      document.body.innerHTML = printContents;
+
+      window.print();
+
+      document.body.innerHTML = originalContents;
+    },
+    print()
+    {
+      let divName = 'printable'
+      var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+      mywindow.document.write('<html><head><title>' + document.title  + '</title>');
+      mywindow.document.write('</head><body >');
+      mywindow.document.write('<h1>' + document.title  + '</h1>');
+      mywindow.document.write(document.getElementById(divName).innerHTML);
+      mywindow.document.write('</body></html>');
+
+      mywindow.document.close(); // necessary for IE >= 10
+      mywindow.focus(); // necessary for IE >= 10*/
+
+      mywindow.print();
+      mywindow.close();
+
+      return true;
     }
   },
   computed: {
@@ -119,7 +158,8 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.share-modal {
-
+#shareAlert {
+  position: fixed;
+  bottom: 0px;
 }
 </style>

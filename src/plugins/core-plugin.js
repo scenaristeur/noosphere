@@ -5,7 +5,7 @@ const plugin = {
     let store = opts.store
     // console.log("store",store)
     Vue.prototype.$coreInit = async function(options){
-    //  console.log('{core options}', options)
+     console.log('{core options}', options)
       Vue.prototype.$createYDoc()
       //let yDoc = store.state.y.yDoc
       // let awareness = store.state.y.awareness
@@ -22,10 +22,10 @@ const plugin = {
     }
 
     Vue.prototype.$getRouterParameters= async function( route){
-      //  console.log("{getRouterParameters}",opts.router, route)
+       console.log("{getRouterParameters}",opts.router, route)
       let user = store.state.actor.user
       await opts.router.onReady(async (router)=>{
-        //  console.log('[RRRRRouter]',router)
+         console.log('[RRRRRouter]',router)
         if(router != undefined && router.name == "share"){
           //console.log(router.name)
           // let dataTemp = await Vue.prototype.$getEditorMap(router.query.title)
@@ -41,7 +41,7 @@ const plugin = {
 
 
       })
-      //  console.log(user)
+       console.log(user)
       return user
 
 
