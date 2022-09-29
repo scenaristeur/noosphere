@@ -1,6 +1,11 @@
 <template>
   <div>
-    <b-modal id="modal-share" title="Share" @shown="share" ok-only>
+    <b-modal id="modal-share" @shown="share" ok-only>
+      <template #modal-title>
+        <h2>Share</h2>
+        <b-button @click="print" size="sm" variant="info">print QR</b-button>
+        <b-button @click="download" disabled size="sm" variant="info">download QR</b-button>
+      </template>
       <!-- <div  v-if="QRsrc"> -->
       <!-- {{ this.url}}<br> -->
       <!-- <b-button @click="saveQR" disabled size="sm" variant="info">save QR</b-button>
@@ -20,8 +25,8 @@
         the url has been copied to your clipboard, you can paste it with Ctrl+v in any other app to share it</p>
 
         <br>
-        <b-button @click="download" disabled size="sm" variant="info">download QR</b-button>
-        <b-button @click="print" size="sm" variant="info">print QR</b-button>
+
+
         <!-- </div> -->
 
 
@@ -133,19 +138,19 @@ export default {
       let divName = 'printable'
       var mywindow = window.open('', 'PRINT', 'height=400,width=600');
 
-      mywindow.document.write('<html><head><title>' + document.title  + '</title>');
+      mywindow.document.write('<html><head><title>' + this.user.roomId + '</title>');
       mywindow.document.write('</head><body >');
-      mywindow.document.write('<h1>' + document.title  + '</h1>');
+      mywindow.document.write("<h2>Let's talk about" + this.user.roomId  + "</h1>");
       mywindow.document.write(document.getElementById(divName).innerHTML);
       mywindow.document.write('</body></html>');
 
-      mywindow.document.close(); // necessary for IE >= 10
+      //  mywindow.document.close(); // necessary for IE >= 10
       mywindow.focus(); // necessary for IE >= 10*/
 
       mywindow.print();
-      mywindow.close();
+      //mywindow.close();
 
-      return true;
+      //return true;
     }
   },
   computed: {
