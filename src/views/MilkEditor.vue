@@ -37,7 +37,7 @@ export default {
       roomId: null,
       default: "### Welcome to the Noosphere \n1. Choose a room\n 2. click to edit",
       rootDoc: null,
-      user: null
+      // user: null
       // ready: false
     }
   },
@@ -104,28 +104,29 @@ export default {
     // console.log(this.ready)
 
 
-
     let awareness = this.awareness =  new Awareness(this.rootDoc)
     // store.commit('y/setAwareness', awareness)
-    awareness.on('change', ()/*changes*/ => {
-      awareness.getStates().forEach(async state => {
+    awareness.on('change', changes => {
+      console.log("changes", changes)
+      awareness.getStates().forEach(state => {
         //  console.log(state)
         if (state.user) {
-          console.log('[state.user]',await state.user)
-          // store.commit('actor/setUserById', state.user)
+          console.log('[state.user]',state.user)
+          this.$store.commit('actor/setUserById', state.user)
         }
       })
-      // store.commit('actor/setUsersUpdated', Date.now())
+      this.$store.commit('actor/setUsersUpdated', Date.now())
     })
 
 
-    this.user = {
-      name: 'User_RAND_'+Date.now(),
-      color: '#'+Math.floor(Math.random()*16777215).toString(16),
-      clientID: awareness.clientID,
-      //roomId: uuidv4(),
-      rooms: {}
-    }
+    // this.user = {
+    //   name: 'User_RAND_'+Date.now(),
+    //   color: '#'+Math.floor(Math.random()*16777215).toString(16),
+    //   clientID: awareness.clientID,
+    //   //roomId: uuidv4(),
+    //   rooms: {}
+    // }
+    this.$store.commit('y/setAwareness', awareness)
 
 
   },
@@ -208,6 +209,9 @@ export default {
     roomAddress() {
       return this.$store.state.actor.roomAddress
     },
+    user() {
+      return this.$store.state.actor.user
+    },
 
   }
 
@@ -226,13 +230,13 @@ export default {
 }
 
 /* .milkdown-wsc9t6 .menu-selector-list {
-  width: 184px;
-  position: absolute;
-  background: rgba(255, 255, 255, 1);
-  border: 1px solid rgba(216, 222, 233, 1);
-  box-shadow: 0 1px 1px rgba(59, 66, 82, 0.14),0 2px 1px rgba(59, 66, 82, 0.12),0 1px 3px rgba(59, 66, 82, 0.2);
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-  z-index: 2;
+width: 184px;
+position: absolute;
+background: rgba(255, 255, 255, 1);
+border: 1px solid rgba(216, 222, 233, 1);
+box-shadow: 0 1px 1px rgba(59, 66, 82, 0.14),0 2px 1px rgba(59, 66, 82, 0.12),0 1px 3px rgba(59, 66, 82, 0.2);
+border-bottom-left-radius: 4px;
+border-bottom-right-radius: 4px;
+z-index: 2;
 } */
 </style>
