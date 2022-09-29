@@ -3,7 +3,8 @@
     <b-modal id="modal-share" @shown="share" ok-only>
       <template #modal-title>
         <h2>Share</h2>
-        <b-button @click="print" size="sm" variant="info">print QR</b-button>
+        <b-button @click="print('fr')" size="sm" variant="info">print french QR</b-button>
+        <b-button @click="print('en')" size="sm" variant="info">print eng QR</b-button>
         <b-button @click="download" disabled size="sm" variant="info">download QR</b-button>
       </template>
       <!-- <div  v-if="QRsrc"> -->
@@ -12,11 +13,12 @@
 
       <b-button @click="saveQR" disabled size="sm" variant="info">copy url</b-button> -->
       <div id="printable">
-        Let's talk about <b><u>{{user.roomId}}</u></b> at : <br>
+        <!-- Let's talk about <b><u>{{user.roomId}}</u></b> at : <br>
         Discutons de <b><u>{{user.roomId}}</u></b> à l'adresse :
-        <hr>
+        <hr> -->
         {{this.url}}
-        <hr>
+        <br>
+        <!-- <hr> -->
         <img :src="QRsrc" width="280px" />
 
       </div>
@@ -133,14 +135,17 @@ export default {
 
       document.body.innerHTML = originalContents;
     },
-    print()
+    print(lang)
     {
+let annonce = {fr: "Parlons de", en: "Let's talk about"}
+
+
       let divName = 'printable'
       var mywindow = window.open('', 'PRINT', 'height=400,width=600');
 
       mywindow.document.write('<html><head><title>' + this.user.roomId + '</title>');
       mywindow.document.write('</head><body >');
-      mywindow.document.write("<h2>Let's talk about" + this.user.roomId  + "</h1>");
+      mywindow.document.write("<h2>"+annonce[lang]+" " + this.user.roomId  + "</h1>");
       mywindow.document.write(document.getElementById(divName).innerHTML);
       mywindow.document.write('</body></html>');
 
