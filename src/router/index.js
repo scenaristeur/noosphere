@@ -41,7 +41,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     // component: () => import(/* webpackChunkName: "editor" */ '../views/EditorView.vue')
-    component: () => import(/* webpackChunkName: "editor" */ '../views/MilkDown.vue')
+    component: () => import(/* webpackChunkName: "editor" */ '../views/MilkEditor.vue')
   },
   {
     path: '/profile',

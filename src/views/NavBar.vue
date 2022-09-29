@@ -3,18 +3,20 @@
     <b-navbar toggleable="lg" type="dark" variant="info" fixed="top">
       <b-navbar-brand >
         <AddressInput />
+
       </b-navbar-brand>
 
-      <b-button v-b-toggle.sidebar-right size="sm">+</b-button>
-       <b-button v-b-toggle.sidebar-manager size="sm">Manager</b-button>
 
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+      <!-- <b-button v-b-toggle.sidebar-manager size="sm">Manager</b-button> -->
+
+
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
-            <b-nav-item to="/"><b-icon icon="house-fill" aria-hidden="true"></b-icon></b-nav-item>
+          <b-nav-item to="/"><b-icon icon="house-fill" aria-hidden="true"></b-icon></b-nav-item>
           <MenuNew />
           <b-nav-item to="/profile">profile <b-icon icon="person" aria-hidden="true"></b-icon></b-nav-item>
           <b-nav-item to="/config">config <b-icon icon="gear" aria-hidden="true"></b-icon></b-nav-item>
@@ -35,7 +37,7 @@
     </b-navbar>
     <QrModal />
 
-    <SideBar />
+
   </div>
 </template>
 
@@ -46,7 +48,8 @@ export default {
     'AddressInput': ()=>import('@/views/AddressInput'),
     'MenuNew': ()=>import('@/views/MenuNew'),
     'QrModal': ()=>import('@/views/QrModal'),
-    'SideBar': ()=>import('@/views/SideBar'),
+    // 'ToolBar': ()=>import('@/views/ToolBar'),
+
   },
   computed:{
     user(){
