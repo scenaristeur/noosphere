@@ -156,21 +156,21 @@ const plugin = {
 
 
       // console.log (editor)
-if(editor != null){
-      editor.action((ctx) => {
-        const collabService = ctx.get(collabServiceCtx);
+      if(editor != null){
+        editor.action((ctx) => {
+          const collabService = ctx.get(collabServiceCtx);
 
-        collabService
-        .disconnect()
-        // bind doc and awareness
-        .bindDoc(roomDoc)
-        .setAwareness(awareness)
-        // connect yjs with milkdown
-        .connect();
-      });
-    }else{
-      console.log('{editor is null now}')
-    }
+          collabService
+          .disconnect()
+          // bind doc and awareness
+          .bindDoc(roomDoc)
+          .setAwareness(awareness)
+          // connect yjs with milkdown
+          .connect();
+        });
+      }else{
+        console.log('{editor is null now}')
+      }
 
       // user.roomId = roomId
       user.rooms[roomId] = {date: Date.now()}
