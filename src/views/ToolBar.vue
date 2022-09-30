@@ -1,8 +1,8 @@
 <template>
-  <div class="tool-bar">
+
 
     <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
-      <b-button-group class="mx-1">
+      <b-button-group >
         <!-- <b-button>New</b-button>
         <b-button>Edit</b-button>
         <b-button>Undo</b-button> -->
@@ -31,7 +31,7 @@
 
 
 
-</div>
+
 </template>
 
 <script>

@@ -24,7 +24,7 @@
         <b-form-radio :value="{ fourth: 4 }">This is the 4th radio</b-form-radio> -->
       </b-form-radio-group>
 
-      <AddressInput :options="{mode: mode}" class="m-3"/>
+      <AddressInput :options="{mode: mode, toolbar: false}" class="m-3" />
     </div>
     <!-- </b-form-group> -->
     <!-- </b-dropdown-form> -->

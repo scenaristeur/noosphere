@@ -1,11 +1,11 @@
 <template>
   <div class="nav-bar">
     <b-navbar toggleable="lg" type="dark" variant="info" fixed="top">
-      <b-navbar-brand >
+      <b-navbar-brand class="mr-1">
         <AddressInput />
 
       </b-navbar-brand>
-
+      <ToolBar />
 
 
       <!-- <b-button v-b-toggle.sidebar-manager size="sm">Manager</b-button> -->
@@ -48,7 +48,7 @@ export default {
     'AddressInput': ()=>import('@/views/AddressInput'),
     'MenuNew': ()=>import('@/views/MenuNew'),
     'QrModal': ()=>import('@/views/QrModal'),
-    // 'ToolBar': ()=>import('@/views/ToolBar'),
+    'ToolBar': ()=>import('@/views/ToolBar'),
 
   },
   computed:{
