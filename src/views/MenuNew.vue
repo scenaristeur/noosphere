@@ -19,7 +19,7 @@
         class="m-3 p-3"
         >
         <b-form-radio value="empty">empty room</b-form-radio>
-        <b-form-radio value="fork">fork current room</b-form-radio>
+        <b-form-radio value="fork" disabled>fork current room</b-form-radio>
         <!-- <b-form-radio value="third" disabled>This one is Disabled</b-form-radio>
         <b-form-radio :value="{ fourth: 4 }">This is the 4th radio</b-form-radio> -->
       </b-form-radio-group>
