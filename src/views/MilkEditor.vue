@@ -11,7 +11,7 @@
 import { defaultValueCtx, Editor, rootCtx } from '@milkdown/core';
 import { nord } from '@milkdown/theme-nord';
 import { commonmark } from '@milkdown/preset-commonmark';
-import { collaborative, collabServiceCtx } from '@milkdown/plugin-collaborative';
+import { collaborative/*, collabServiceCtx*/ } from '@milkdown/plugin-collaborative';
 import { menu } from '@milkdown/plugin-menu';
 import { slash } from '@milkdown/plugin-slash';
 import { tooltip } from '@milkdown/plugin-tooltip';
@@ -21,11 +21,11 @@ import { history } from '@milkdown/plugin-history';
 import { emoji } from '@milkdown/plugin-emoji';
 import { diagram } from '@milkdown/plugin-diagram';
 // import { gfm } from '@milkdown/preset-gfm';
-import { listener, listenerCtx } from '@milkdown/plugin-listener';
-import { Doc } from 'yjs';
-import {Awareness} from 'y-protocols/awareness'
+// import { listener, listenerCtx } from '@milkdown/plugin-listener';
+
+// import {Awareness} from 'y-protocols/awareness'
 // import { WebrtcProvider } from 'y-webrtc'
-import { WebsocketProvider } from 'y-websocket'
+
 // import { IndexeddbPersistence } from 'y-indexeddb'
 
 // import { CollabManager } from '@/services/collabManager';
@@ -36,46 +36,46 @@ export default {
     return{
       roomId: null,
       default: "### Welcome to the Noosphere \n1. Choose a room\n 2. click to edit",
-      rootDoc: null,
+      // rootDoc: null,
       // user: null
       // ready: false
     }
   },
   async mounted() {
-    this.editor = await Editor.make()
+    let editor = await Editor.make()
     .config((ctx) => {
       ctx.set(rootCtx, this.$refs.editor);
       ctx.set(defaultValueCtx, this.default);
-      ctx.get(listenerCtx)
-      // .beforeMount((ctx) => {
-      //   // before the editor mounts
-      //   console.log('beforeMount', ctx)
-      // })
-      // .mounted((ctx) => {
-      //   // after the editor mounts
-      //   console.log('mounted', ctx)
-      // })
-      .updated((ctx, /*doc, prevDoc*/) => {
-        console.log('updated', ctx)
-        //  console.log('updated', ctx, doc, prevDoc)
-        // when editor state updates
-      })
-      // .markdownUpdated((ctx, markdown, prevMarkdown) => {
-      //   // when markdown updates
-      //   console.log('markdown updated', ctx,markdown, prevMarkdown)
-      // })
-      // .blur((ctx) => {
-      //   // when editor loses focus
-      //   console.log('blur', ctx)
-      // })
-      // .focus((ctx) => {
-      //   // when focus editor
-      //   console.log('focus', ctx)
-      // })
-      .destroy((ctx) => {
-        // when editor is being destroyed
-        console.log('destroy', ctx)
-      });
+      //   ctx.get(listenerCtx)
+      //   .beforeMount((ctx) => {
+      //     // before the editor mounts
+      //     console.log('beforeMount', ctx)
+      //   })
+      //   .mounted((ctx) => {
+      //     // after the editor mounts
+      //     console.log('mounted', ctx)
+      //   })
+      //   .updated((ctx, /*doc, prevDoc*/) => {
+      //     console.log('updated', ctx)
+      //     //  console.log('updated', ctx, doc, prevDoc)
+      //     // when editor state updates
+      //   })
+      //   .markdownUpdated((ctx, markdown, prevMarkdown) => {
+      //     // when markdown updates
+      //     console.log('markdown updated', ctx,markdown, prevMarkdown)
+      //   })
+      //   .blur((ctx) => {
+      //     // when editor loses focus
+      //     console.log('blur', ctx)
+      //   })
+      //   .focus((ctx) => {
+      //     // when focus editor
+      //     console.log('focus', ctx)
+      //   })
+      //   .destroy((ctx) => {
+      //     // when editor is being destroyed
+      //     console.log('destroy', ctx)
+      //   });
     })
     .use(nord)
     .use(commonmark)
@@ -89,10 +89,12 @@ export default {
     .use(history)
     .use(emoji)
     .use(diagram)
-    .use(listener)
+    // .use(listener)
     .create();
 
-    this.rootDoc = new Doc();
+
+    this.$store.commit('editor/setEditor', editor)
+    // this.rootDoc = new Doc();
 
     // let indexeddbProvider = new IndexeddbPersistence('noosphere-demo3', this.rootDoc)
     // //
@@ -104,19 +106,19 @@ export default {
     // console.log(this.ready)
 
 
-    let awareness = this.awareness =  new Awareness(this.rootDoc)
+    // let awareness = this.awareness //=  new Awareness(this.rootDoc)
     // store.commit('y/setAwareness', awareness)
-    awareness.on('change', changes => {
-      console.log("changes", changes)
-      awareness.getStates().forEach(state => {
-        //  console.log(state)
-        if (state.user) {
-          console.log('[state.user]',state.user)
-          this.$store.commit('actor/setUserById', state.user)
-        }
-      })
-      this.$store.commit('actor/setUsersUpdated', Date.now())
-    })
+    // awareness.on('change', changes => {
+    //   console.log("changes", changes)
+    //   awareness.getStates().forEach(state => {
+    //     //  console.log(state)
+    //     if (state.user) {
+    //       console.log('[state.user]',state.user)
+    //       this.$store.commit('actor/setUserById', state.user)
+    //     }
+    //   })
+    //   this.$store.commit('actor/setUsersUpdated', Date.now())
+    // })
 
 
     // this.user = {
@@ -126,76 +128,17 @@ export default {
     //   //roomId: uuidv4(),
     //   rooms: {}
     // }
-    this.$store.commit('y/setAwareness', awareness)
+    // this.$store.commit('y/setAwareness', awareness)
     console.log('this.roomId', this.user)
-    if (this.user.roomId != undefined){
-      this.roomId = this.user.roomId
-      this.connect()
-    }
+    // if (this.user.roomId != undefined){
+    //   this.roomId = this.user.roomId
+    this.$connect()
+    // }
 
 
   },
   methods:{
-    connect(){
-      let awareness = this.awareness
-      console.log('awareness clientID', awareness.clientID)
-      this.ymap = this.rootDoc.getMap()
-      console.log('ymap', this.ymap)
-      this.roomDoc = this.ymap.get(this.roomId)
-      console.log (this.roomDoc)
-      if (this.roomDoc == undefined){
-        // Client One
 
-
-
-        this.roomDoc = new Doc()
-        //subDoc.getText().insert(0, 'some initial content')
-        this.ymap.set(this.roomId, this.roomDoc)
-      }
-      // else{
-      //
-      // }
-
-
-
-      // const wsProvider =
-      new WebsocketProvider(
-        // "ws://localhost:1234",
-        //  "wss://noosphere.glitch.me/",       // basic y-websocket
-        "wss://yjs-leveldb.glitch.me/", // with leveldb
-        // "wss://yjs-websocket--1234.local-corp.webcontainer.io",
-        // 'wss://demos.yjs.dev',
-        this.roomId, //'milkdown', // roomId
-        this.roomDoc, // Doc
-        {awareness}
-      );
-
-
-      console.log(this.rootDoc, this.roomDoc)
-
-
-
-
-
-      // console.log (editor)
-
-      this.editor.action((ctx) => {
-        const collabService = ctx.get(collabServiceCtx);
-
-        collabService
-        .disconnect()
-        // bind doc and awareness
-        .bindDoc(this.roomDoc)
-        .setAwareness(this.awareness)
-        // connect yjs with milkdown
-        .connect();
-      });
-
-      this.user.roomId = this.roomId
-      this.user.rooms[this.roomId] = {}
-      this.awareness.setLocalStateField('user', this.user)
-
-    }
   },
 
 
@@ -204,9 +147,7 @@ export default {
     roomAddress(){
       this.roomId = this.roomAddress
       console.log(this.roomId)
-      this.connect()
-
-
+      this.$connect()
     }
   },
 
@@ -216,6 +157,15 @@ export default {
     },
     user() {
       return this.$store.state.actor.user
+    },
+    rootDoc() {
+      return this.$store.state.y.yDoc
+    },
+    awareness() {
+      return this.$store.state.y.awareness
+    },
+    editor() {
+      return this.$store.state.editor.editor
     },
 
   }

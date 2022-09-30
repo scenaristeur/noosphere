@@ -1,14 +1,15 @@
 // import Vue from 'vue'
 
 const state = () => ({
-    editorData: null,
-    editorDataDefault: {
-      "type" : "paragraph",
-      "data" : {
-        "text" : "Click to edit."
-      }
-    },
-    updates: null
+  editor: null
+    // editorData: null,
+    // editorDataDefault: {
+    //   "type" : "paragraph",
+    //   "data" : {
+    //     "text" : "Click to edit."
+    //   }
+    // },
+    // updates: null
   // graph: null,
   // nodes: [],
   // links: [],
@@ -18,15 +19,18 @@ const state = () => ({
 })
 
 const mutations = {
-  setEditorData(state, ed){
-    console.log('{setEditorData}', ed)
-    state.editorData = ed
-    // state.editorUpdated = Date.now()
-  },
-
-  setUpdates(state, data){
-    state.updates = data
+  setEditor(state, e){
+    state.editor = e
   }
+  // setEditorData(state, ed){
+  //   console.log('{setEditorData}', ed)
+  //   state.editorData = ed
+  //   // state.editorUpdated = Date.now()
+  // },
+  //
+  // setUpdates(state, data){
+  //   state.updates = data
+  // }
   // setGraph(state, g){
   //   state.graph = g
   // },

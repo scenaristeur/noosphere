@@ -5,7 +5,7 @@ const plugin = {
     let store = opts.store
     // console.log("store",store)
     Vue.prototype.$coreInit = async function(options){
-     console.log('{core options}', options)
+      console.log('{core options}', options)
       Vue.prototype.$createYDoc()
       //let yDoc = store.state.y.yDoc
       // let awareness = store.state.y.awareness
@@ -16,16 +16,18 @@ const plugin = {
       // user = await getRouterParameters(user, options.route)
       //  console.log(user)
       //await createProviders(ydoc, awareness, user)
-    //  Vue.prototype.$createProvider()
+      //  Vue.prototype.$createProvider()
+      Vue.prototype.$connect()
+
       Vue.prototype.$ready()
 
     }
 
     Vue.prototype.$getRouterParameters= async function( route){
-       console.log("{getRouterParameters}",opts.router, route)
+      console.log("{getRouterParameters}",opts.router, route)
       let user = store.state.actor.user
       await opts.router.onReady(async (router)=>{
-         console.log('[RRRRRouter]',router)
+        console.log('[RRRRRouter]',router)
         if(router != undefined && router.name == "share"){
           //console.log(router.name)
           // let dataTemp = await Vue.prototype.$getEditorMap(router.query.title)
@@ -41,7 +43,7 @@ const plugin = {
 
 
       })
-       console.log(user)
+      console.log(user)
       return user
 
 
@@ -56,10 +58,10 @@ const plugin = {
       }
       store.commit('actor/setUser', user)
       //  Vue.prototype.$userChanged()
-      //  console.log('{set local storage user, send awareness, open room}', user)
-      if(user.isSharing == undefined ){
-        Vue.prototype.$openRoom()
-      }
+       console.log('{set local storage user, send awareness, open room}', user)
+      // if(user.isSharing == undefined ){
+      //   Vue.prototype.$connect()
+      // }
 
     }
 

@@ -155,7 +155,7 @@ export default {
 
       //await this.$saveMap(this.roomId,data)
 
-      await this.$openRoom()
+      await this.$connect()
       this.$store.commit('editor/setEditorData', data)
 
     },
@@ -200,7 +200,7 @@ export default {
 
       //await this.$saveMap(this.rotitle_not_existomId,data)
 
-      await this.$openRoom()
+      await this.$connect()
       this.$store.commit('editor/setEditorData', data)
 
 

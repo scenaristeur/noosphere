@@ -66,13 +66,13 @@ export default {
       console.log('random')
       this.user.roomId = this.$random()
       this.$store.commit('actor/setUser', this.user)
-      this.$openRoom()
+      this.$connect()
     },
     nowRoom(){
       console.log('now')
       this.user.roomId = Date.now()
       this.$store.commit('actor/setUser', this.user)
-      this.$openRoom()
+      this.$connect()
     }
   },
   watch:{

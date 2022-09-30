@@ -44,7 +44,7 @@ const plugin = {
     // }
 
 
-    Vue.prototype.$openRoom = async function(options){
+    Vue.prototype.$openRoomOLD = async function(options){
       //  console.log('###{openRoom options}',options)
       //  console.log('Store editorData', store.state.editor.editorData)
 
