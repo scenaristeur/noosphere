@@ -137,7 +137,7 @@ const plugin = {
       store.commit('editor/setEditorData', editorData)
       store.commit('actor/setUser', user)
 
-      Vue.prototype.$connect()
+      Vue.prototype.$connect('web3')
       Vue.prototype.$spinnerRemove('web3 load')
     }
 

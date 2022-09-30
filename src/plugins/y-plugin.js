@@ -95,11 +95,21 @@ const plugin = {
       let awareness = new Awareness(ydoc)
       store.commit('y/setAwareness', awareness)
       awareness.on('change', ()/*changes*/ => {
+        let users = store.state.actor.users
+        console.log("users",users)
         awareness.getStates().forEach(state => {
-          //  console.log(state)
-          if (state.user) {
+          console.log(state)
+          if (state.user ) {
             console.log('[state.user]',state.user)
-            store.commit('actor/setUserById', state.user)
+            // console.log('mustupdate')
+            let user = users[state.user.id]
+            // console.log(state.user,user)
+
+            if (user == undefined || Object.entries(state.user).toString() === Object.entries(user).toString() == false){
+              store.commit('actor/setUserById', state.user)
+            }
+
+
           }
         })
         store.commit('actor/setUsersUpdated', Date.now())
@@ -107,15 +117,23 @@ const plugin = {
       return awareness
     }
 
-    Vue.prototype.$connect = async function(){
-      if(opts.router.history.current.name != 'editor'){
-        opts.router.push('/editor')
-      }
+    Vue.prototype.$connect = async function(source){
+      console.log('connect from ',source)
       let rootDoc = store.state.y.yDoc
-      let awareness = store.state.y.awareness
+      let awareness = Vue.prototype.$createAwareness(rootDoc)
       let user = store.state.actor.user
       let editor = store.state.editor.editor
       let roomId = user.roomId
+      Vue.prototype.$spinnerAdd(roomId)
+
+      if(opts.router.history.current.name != 'editor'){
+        opts.router.push('/editor')
+      }
+
+      //  let uploads =
+
+      //  console.log("Web3 uploads",uploads)
+
       console.log('awareness clientID', awareness.clientID)
       let ymap = rootDoc.getMap()
       console.log('ymap', ymap)
@@ -137,7 +155,7 @@ const plugin = {
 
 
       // const wsProvider =
-      new WebsocketProvider(
+      let wsProvider = new WebsocketProvider(
         // "ws://localhost:1234",
         //  "wss://noosphere.glitch.me/",       // basic y-websocket
         "wss://yjs-leveldb.glitch.me/", // with leveldb
@@ -145,8 +163,16 @@ const plugin = {
         // 'wss://demos.yjs.dev',
         roomId, //'milkdown', // roomId
         roomDoc, // Doc
-        {awareness}
+        {awareness: awareness, connect: true}
       );
+
+      wsProvider.on('status', (payload) => {
+        if (payload.status) {
+          console.log("wsProvoder status", payload.status)
+          // this.status = payload.status;
+          store.commit('y/setStatus', payload.status)
+        }
+      });
 
 
       console.log('{connect}',roomId, rootDoc, roomDoc)
@@ -168,15 +194,17 @@ const plugin = {
           // connect yjs with milkdown
           .connect();
         });
+        Vue.prototype.$spinnerRemove(roomId)
+        user.rooms[roomId] = {date: Date.now()}
+        awareness.setLocalStateField('user', user)
+        store.commit('actor/setUser', user)
+        store.commit('actor/setRoomAddress', roomId)
       }else{
         console.log('{editor is null now}')
       }
 
       // user.roomId = roomId
-      user.rooms[roomId] = {date: Date.now()}
-      awareness.setLocalStateField('user', user)
-      store.commit('actor/setUser', user)
-      store.commit('actor/setRoomAddress', roomId)
+
 
     }
 

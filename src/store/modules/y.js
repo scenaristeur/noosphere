@@ -3,7 +3,8 @@
 const state = () => ({
   yDoc: null,
   awareness: null,
-  yMap: null
+  // yMap: null,
+  status: 'init'
 
 })
 
@@ -14,8 +15,8 @@ const mutations = {
   setAwareness(state, a){
     state.awareness = a
   },
-  setYmap(state, m){
-    state.yMap = m
+  setStatus(state, s){
+    state.status = s
   },
 
 }

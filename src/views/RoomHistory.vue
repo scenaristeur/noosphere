@@ -101,7 +101,7 @@ methods: {
   onRowSelected(r){
     if(r[0]!= undefined){
       this.user.roomId = r[0].roomId
-      this.$connect()
+      this.$connect('room history')
       this.$emit('hide')
       // v-b-toggle.sidebar-right
       // this.$bvSideBar.hide('sidebar-right')

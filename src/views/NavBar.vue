@@ -1,12 +1,15 @@
 <template>
   <div class="nav-bar">
-    <b-navbar toggleable="lg" type="dark" variant="info" fixed="top">
+    <b-navbar toggleable="lg" type="dark" :variant="status== 'connected' ? 'info' : 'warning'" fixed="top">
       <b-navbar-brand class="mr-1">
         <AddressInput />
 
       </b-navbar-brand>
-      <ToolBar />
+      <ToolBar v-if="status == 'connected'"/>
+      <div v-else>
 
+        websocket <b>{{ status}}</b>
+      </div>
 
       <!-- <b-button v-b-toggle.sidebar-manager size="sm">Manager</b-button> -->
 
@@ -55,6 +58,9 @@ export default {
     user(){
       return this.$store.state.actor.user
     },
+    status(){
+      return this.$store.state.y.status
+    }
   }
 }
 </script>

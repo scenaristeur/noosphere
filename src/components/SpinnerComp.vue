@@ -6,6 +6,7 @@
       <b-button variant="warning" disabled>
         <b-spinner small type="grow"></b-spinner>
         <b-badge v-b-modal.modal-tasks variant="primary">{{pendingTasks.length}}</b-badge>
+           {{ pendingTasks}}
       </b-button>
 
 
@@ -39,5 +40,6 @@ export default {
 #spinner{
   position: absolute;
   bottom: 0px;
+  z-index: 10
 }
 </style>

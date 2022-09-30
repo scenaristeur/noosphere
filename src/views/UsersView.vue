@@ -101,7 +101,7 @@ export default {
     onRowSelected(r){
       if(r[0]!= undefined){
         this.user.roomId = r[0].roomId
-        this.$connect()
+        this.$connect('user view row selected')
         this.$emit('hide')
       }
     },
@@ -124,7 +124,7 @@ export default {
     changeRoom(roomId){
     //  console.log(roomId)
       this.user.roomId = roomId
-      this.$connect()
+      this.$connect('user view change room')
       this.$emit('hide')
       this.$bvModal.hide('modal-currentUser')
     }

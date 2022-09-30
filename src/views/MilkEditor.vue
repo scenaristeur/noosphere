@@ -129,10 +129,10 @@ export default {
     //   rooms: {}
     // }
     // this.$store.commit('y/setAwareness', awareness)
-    console.log('this.roomId', this.user)
+    console.log('this.roomId', this.user.roomId)
     // if (this.user.roomId != undefined){
     //   this.roomId = this.user.roomId
-    this.$connect()
+    this.$connect('milk mounted')
     // }
 
 
@@ -144,17 +144,17 @@ export default {
 
 
   watch:{
-    roomAddress(){
-      this.roomId = this.roomAddress
-      console.log(this.roomId)
-      this.$connect()
-    }
+    // roomAddress(){
+    //   this.roomId = this.roomAddress
+    //   console.log(this.roomId)
+    //   this.$connect('milk watch')
+    // }
   },
 
   computed: {
-    roomAddress() {
-      return this.$store.state.actor.roomAddress
-    },
+    // roomAddress() {
+    //   return this.$store.state.actor.roomAddress
+    // },
     user() {
       return this.$store.state.actor.user
     },

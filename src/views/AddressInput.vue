@@ -40,7 +40,7 @@ export default {
       user.roomId = this.ra.trim()
       this.$store.commit('actor/setUser', user)
       // this.$openRoom(options)
-      this.$connect()
+      this.$connect('adressinput')
     }
   },
   watch:{

@@ -17,7 +17,7 @@ const plugin = {
       //  console.log(user)
       //await createProviders(ydoc, awareness, user)
       //  Vue.prototype.$createProvider()
-      Vue.prototype.$connect()
+     Vue.prototype.$connect('core')
 
       Vue.prototype.$ready()
 

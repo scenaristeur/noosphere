@@ -16,9 +16,11 @@ const state = () => ({
 
 const mutations = {
   spinnerAdd(state,t){
+    console.log("add spinner", t)
     state.pendingTasks.push(t)
   },
   spinnerRemove(state, t){
+    console.log("remove spinner", t)
     state.pendingTasks = state.pendingTasks.filter(x => x.id!=t.id )
   },
   // setQuery(state, q){
