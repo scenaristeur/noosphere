@@ -11,6 +11,49 @@ let channel = 'noosphere-demo'
 const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
+
+    Vue.prototype.$getPersistanceDB = async function(){
+
+      // Vue.prototype.$createYDoc()
+      let ydoc = new Y.Doc()
+      store.commit('y/setYdoc', ydoc)
+      let awareness = Vue.prototype.$createAwareness(ydoc)
+      console.log('{awareness}',awareness)
+
+      let indexeddbProvider = new IndexeddbPersistence(channel, ydoc)
+
+      indexeddbProvider.on('synced', async (data) => {
+        console.log('{$getPersistanceDB} synced', data)
+        // Vue.prototype.$getWebsocketProvider()
+        let user = Vue.prototype.$getUser()
+        console.log('{user}', user)
+        Vue.prototype.$userChanged()
+
+      })
+
+
+
+    }
+
+
+    // Vue.prototype.$getWebsocketProvider = async function(){
+    //   new WebrtcProvider(channel, ydoc, {awareness,
+    //     signaling: [
+    //       "wss://y-webrtc-signaling-eu.herokuapp.com",
+    //       "wss://y-webrtc-signaling-us.herokuapp.com",
+    //       "wss://signaling.yjs.dev"
+    //     ]})
+    //
+    //     // Sync clients with the y-websocket provider
+    //     // let websocketProvider =
+    //     new WebsocketProvider(
+    //       "wss://flame-long-base.glitch.me/",
+    //       // 'wss://demos.yjs.dev',
+    //       channel, ydoc, {awareness })
+    // }
+
+
+
     //  console.log("store",store)
 
     //     Vue.prototype.$editorToYMapBlocks = function (blocks){
@@ -69,11 +112,11 @@ const plugin = {
     //   }
     // }
 
-    Vue.prototype.$createYDoc = function(){
+    Vue.prototype.$createYDoc1 = function(){
       let ydoc = new Y.Doc()
-      console.log("REVOIR LA CREATION DU YDOC !!! en double avec l'editeur")
+      // console.log("REVOIR LA CREATION DU YDOC !!! en double avec l'editeur")
       store.commit('y/setYdoc', ydoc)
-      Vue.prototype.$createAwareness(ydoc)
+      //  Vue.prototype.$createAwareness(ydoc)
       //  console.log("{createYdoc}", ydoc)
       // ydoc.on('beforeTransaction', tr => {
       //   console.log('beforeTransaction',tr, tr.origin)
@@ -94,6 +137,9 @@ const plugin = {
     Vue.prototype.$createAwareness = function (ydoc){
       let awareness = new Awareness(ydoc)
       store.commit('y/setAwareness', awareness)
+      // let user = store.state.actor.user
+      // user.clientID = awareness.clientID
+      // store.commit('actor/setUser', user)
       awareness.on('change', ()/*changes*/ => {
         let users = store.state.actor.users
         console.log("users",users)
@@ -118,16 +164,16 @@ const plugin = {
     }
 
 
-Vue.prototype.$getEditorMap = async function(roomId){
-    let rootDoc = store.state.y.yDoc
-    console.log(rootDoc)
+    Vue.prototype.$getEditorMap = async function(roomId){
+      let rootDoc = store.state.y.yDoc
+      console.log(rootDoc)
       let ymap = rootDoc.getMap()
-          console.log(ymap)
+      console.log(ymap)
       let roomDoc = ymap.get(roomId)
       console.log ('{roomDoc}',roomDoc)
 
 
-}
+    }
     Vue.prototype.$connect = async function(source){
       console.log('connect from ',source)
       let rootDoc = store.state.y.yDoc

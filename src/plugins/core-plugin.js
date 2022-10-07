@@ -9,14 +9,15 @@ const plugin = {
 
     Vue.prototype.$coreInit = async function(options){
       console.log('{core options}', options)
+      Vue.prototype.$getPersistanceDB()
 
-      let user = Vue.prototype.$getUser()
-      console.log('{user}', user)
+
+
       // let route = await Vue.prototype.$getRouterParameters(options.route)
       // console.log(route)
 
 
-
+      
     }
 
 
