@@ -29,6 +29,11 @@ const plugin = {
         console.log('{user}', user)
         Vue.prototype.$userChanged()
 
+        if(store.state.actor.user.roomId != undefined && opts.router.history.current.name != 'editor'){
+          // console.log(opts.router.current.name)
+          opts.router.push('/editor')
+        }
+
       })
 
 
@@ -146,7 +151,7 @@ const plugin = {
         awareness.getStates().forEach(state => {
           console.log(state)
           if (state.user ) {
-            console.log('[state.user]',state.user)
+            console.log('[state.user]','name:',state.user.name, 'room:',state.user.roomId, 'clientID:',state.user.clientID)
             // console.log('mustupdate')
             let user = users[state.user.id]
             // console.log(state.user,user)
