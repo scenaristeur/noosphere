@@ -3,7 +3,7 @@
     roomId : {{roomId}}
     <!-- {{ ready}} -->
     <div ref="editor" class="editor" ></div>
-    {{ user }}
+    <!-- {{ user }} -->
   </div>
 </template>
 

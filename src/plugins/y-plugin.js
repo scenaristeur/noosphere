@@ -142,23 +142,25 @@ const plugin = {
     Vue.prototype.$createAwareness = function (ydoc){
       let awareness = new Awareness(ydoc)
       store.commit('y/setAwareness', awareness)
-      // let user = store.state.actor.user
+      let localUser = store.state.actor.user
       // user.clientID = awareness.clientID
       // store.commit('actor/setUser', user)
-    //  let d = Date.now()
+      //  let d = Date.now()
       awareness.on('change', ()/*changes*/ => {
+        console.log('awareness changed')
         let users = store.state.actor.users
         // console.log("users",users)
         awareness.getStates().forEach(state => {
-          // console.log(state)
+          console.log(state)
           if (state.user ) {
-          //  console.log('[state.user]',d,'name:',state.user.name, 'room:',state.user.roomId, 'clientID:',state.user.clientID)
+            //  console.log('[state.user]',d,'name:',state.user.name, 'room:',state.user.roomId, 'clientID:',state.user.clientID)
             // console.log('mustupdate')
             let user = users[state.user.id]
             // console.log(state.user,user)
 
             // if (user == undefined || Object.entries(state.user).toString() === Object.entries(user).toString() == false){
-            if (user == undefined || Object.entries(state.user).toString() === Object.entries(user).toString() == false){
+            // if (user == undefined || Object.entries(state.user).toString() === Object.entries(user).toString() == false){
+            if (user == undefined || state.user.id != localUser.id){
               store.commit('actor/setUserById', state.user)
             }
 

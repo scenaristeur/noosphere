@@ -47,10 +47,11 @@ const mutations = {
   },
   setUserById(state, u){
     //  console.log('[store setUserById]',u)
-    if (state.users[u.clientID] == undefined || state.users[u.clientID].roomId == undefined || state.users[u.clientID].roomId != u.roomId)
-    {state.users[u.clientID] = u
-      console.log(u.clientID)
-    }
+    // if (state.users[u.clientID] == undefined || state.users[u.clientID].roomId == undefined || state.users[u.clientID].roomId != u.roomId || state.users[u.clientID].name != u.name || state.users[u.clientID].color != u.color)
+    // {
+      state.users[u.clientID] = u
+      console.log(u.clientID, u.name,  u.roomId)
+    // }
   },
   setUsersUpdated(state, d){
     state.usersUpdated = d
