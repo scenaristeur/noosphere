@@ -38,7 +38,7 @@ const mutations = {
     }
   },
   setRoomAddress(state, r){
-  //  console.log('roomAddress', r)
+    //  console.log('roomAddress', r)
     state.roomAddress = r
   },
 
@@ -47,8 +47,10 @@ const mutations = {
   },
   setUserById(state, u){
     //  console.log('[store setUserById]',u)
-    state.users[u.clientID] = u
-     console.log(state.users)
+    if (state.users[u.clientID] == undefined || state.users[u.clientID].roomId == undefined || state.users[u.clientID].roomId != u.roomId)
+    {state.users[u.clientID] = u
+      console.log(u.clientID)
+    }
   },
   setUsersUpdated(state, d){
     state.usersUpdated = d

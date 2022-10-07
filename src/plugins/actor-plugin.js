@@ -41,6 +41,7 @@ const plugin = {
     Vue.prototype.$userChanged = async function(){
       let user = store.state.actor.user
       //  console.log('[user Changed]', user)
+      console.log('awareness',store.state.y.awareness.clientID)
       localStorage.setItem('noosphere-user', JSON.stringify(user));
       if (store.state.y.awareness != null){
         store.state.y.awareness.setLocalStateField('user', user)}

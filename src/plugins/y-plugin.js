@@ -145,17 +145,19 @@ const plugin = {
       // let user = store.state.actor.user
       // user.clientID = awareness.clientID
       // store.commit('actor/setUser', user)
+    //  let d = Date.now()
       awareness.on('change', ()/*changes*/ => {
         let users = store.state.actor.users
-        console.log("users",users)
+        // console.log("users",users)
         awareness.getStates().forEach(state => {
-          console.log(state)
+          // console.log(state)
           if (state.user ) {
-            console.log('[state.user]','name:',state.user.name, 'room:',state.user.roomId, 'clientID:',state.user.clientID)
+          //  console.log('[state.user]',d,'name:',state.user.name, 'room:',state.user.roomId, 'clientID:',state.user.clientID)
             // console.log('mustupdate')
             let user = users[state.user.id]
             // console.log(state.user,user)
 
+            // if (user == undefined || Object.entries(state.user).toString() === Object.entries(user).toString() == false){
             if (user == undefined || Object.entries(state.user).toString() === Object.entries(user).toString() == false){
               store.commit('actor/setUserById', state.user)
             }
@@ -233,6 +235,7 @@ const plugin = {
           console.log("wsProvoder status", payload.status)
           // this.status = payload.status;
           store.commit('y/setStatus', payload.status)
+          Vue.prototype.$userChanged()
         }
       });
 

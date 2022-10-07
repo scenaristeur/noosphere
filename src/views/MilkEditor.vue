@@ -132,7 +132,9 @@ export default {
     // console.log('this.roomId', this.user.roomId)
     // if (this.user.roomId != undefined){
     //   this.roomId = this.user.roomId
-    this.$connect('milk mounted')
+    //  this.$connect('milk mounted')
+    console.log('milk user', this.user)
+    if (this.user != null) this.$connect('milk mounted')
     // }
 
 
@@ -149,6 +151,9 @@ export default {
     //   console.log(this.roomId)
     //   this.$connect('milk watch')
     // }
+    user(){
+      this.$connect('milk watch user')
+    }
   },
 
   computed: {
