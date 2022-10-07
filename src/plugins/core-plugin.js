@@ -4,7 +4,35 @@ const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
     // console.log("store",store)
+
+
+
     Vue.prototype.$coreInit = async function(options){
+      console.log('{core options}', options)
+
+      let user = Vue.prototype.$getUser()
+      console.log('{user}', user)
+      // let route = await Vue.prototype.$getRouterParameters(options.route)
+      // console.log(route)
+
+
+
+    }
+
+
+    Vue.prototype.$getRouterParameters1 = async function(route){
+      console.log("{getRouterParameters}",opts.router, route)
+      await opts.router.onReady(async (router)=>{
+        console.log('[RRRRRouter]',router, route, route.name)
+        // return {router: router, route: route}
+      })
+
+    }
+
+
+
+    ///////////////////// OLD ///////////////////////////
+    Vue.prototype.$coreInit1 = async function(options){
       console.log('{core options}', options)
       Vue.prototype.$createYDoc()
       //let yDoc = store.state.y.yDoc
@@ -24,7 +52,7 @@ const plugin = {
 
     }
 
-    Vue.prototype.$getRouterParameters= async function( route){
+    Vue.prototype.$getRouterParameters = async function( route){
       console.log("{getRouterParameters}",opts.router, route)
       let user = store.state.actor.user
       await opts.router.onReady(async (router)=>{

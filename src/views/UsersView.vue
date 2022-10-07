@@ -22,7 +22,7 @@
     caption-top >
     <template #cell(name)="data">
       <template v-if="data.item.clientID == user.clientID">
-        <b-button v-b-modal.modal-me size="sm"
+        <b-button @click="openProfile" size="sm"
         variant="outline-primary">
         <span :style="'color:'+data.item.color"><b>{{data.item.name}}</b>
         </span>
@@ -45,14 +45,13 @@
 </b-table>
 
 
-<b-modal id="modal-me" title="Change your username and color" @ok="userChanged">
+<!-- <b-modal id="modal-me" title="Change your username and color" @ok="userChanged">
   <p class="my-4" v-if="user!=null">
     username<b-input v-model="user.name" placeholder="username" />
     color <b-input v-model="user.color" type="color" />
-    <!-- <b-button @click="userChanged" variant="info" size="sm">Update user</b-button> -->
     <b-button @click="randomUser" variant="outline-info" size="sm">Random user</b-button>
   </p>
-</b-modal>
+</b-modal> -->
 
 
 
@@ -127,6 +126,9 @@ export default {
       this.$connect('user view change room')
       this.$emit('hide')
       this.$bvModal.hide('modal-currentUser')
+    },
+    openProfile(){
+      this.$router.push('/profile')
     }
   },
   watch:{
