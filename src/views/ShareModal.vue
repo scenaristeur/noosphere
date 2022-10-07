@@ -91,19 +91,20 @@ export default {
         .share(share)
         .then(() => console.log('Successful share'))
         .catch(error => console.log('Error sharing', error));
-      } else {
+      }
+       // else {
 
-        let app = this
-        console.log(this.user)
+        // let app = this
+        // console.log(this.user)
 
         navigator.clipboard.writeText(this.url).then(function() {
           console.log('Async: Copying to clipboard was successful!');
-          app.showAlert()
+        //  app.showAlert()
         }, function(err) {
           console.error('Async: Could not copy text: ', err);
         });
 
-      }
+      // }
       await this.generateQR()
     },
     async generateQR(){
@@ -115,12 +116,12 @@ export default {
       // }
 
     },
-    countDownChanged(dismissCountDown) {
-      this.dismissCountDown = dismissCountDown
-    },
-    showAlert() {
-      this.dismissCountDown = this.dismissSecs
-    },
+    // countDownChanged(dismissCountDown) {
+    //   this.dismissCountDown = dismissCountDown
+    // },
+    // showAlert() {
+    //   this.dismissCountDown = this.dismissSecs
+    // },
     download(){
       console.log('todo')
     },

@@ -17,7 +17,8 @@ const plugin = {
       //  console.log(user)
       //await createProviders(ydoc, awareness, user)
       //  Vue.prototype.$createProvider()
-     Vue.prototype.$connect('core')
+      Vue.prototype.$connect('core')
+
 
       Vue.prototype.$ready()
 
@@ -29,7 +30,7 @@ const plugin = {
       await opts.router.onReady(async (router)=>{
         console.log('[RRRRRouter]',router)
         if(router != undefined && router.name == "share"){
-          //console.log(router.name)
+          console.log(router.name)
           // let dataTemp = await Vue.prototype.$getEditorMap(router.query.title)
           // // //console.log(router.query)
           // // //console.log(user)
@@ -58,10 +59,10 @@ const plugin = {
       }
       store.commit('actor/setUser', user)
       //  Vue.prototype.$userChanged()
-       console.log('{set local storage user, send awareness, open room}', user)
-      // if(user.isSharing == undefined ){
-      //   Vue.prototype.$connect()
-      // }
+      console.log('{set local storage user, send awareness, open room}', user)
+      if(user.isSharing == undefined ){
+        Vue.prototype.$connect('core')
+      }
 
     }
 

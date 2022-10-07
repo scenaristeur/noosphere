@@ -117,6 +117,17 @@ const plugin = {
       return awareness
     }
 
+
+Vue.prototype.$getEditorMap = async function(roomId){
+    let rootDoc = store.state.y.yDoc
+    console.log(rootDoc)
+      let ymap = rootDoc.getMap()
+          console.log(ymap)
+      let roomDoc = ymap.get(roomId)
+      console.log ('{roomDoc}',roomDoc)
+
+
+}
     Vue.prototype.$connect = async function(source){
       console.log('connect from ',source)
       let rootDoc = store.state.y.yDoc
