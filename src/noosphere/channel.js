@@ -39,7 +39,7 @@ class Channel extends Base {
     this.indexeddbProvider = new IndexeddbPersistence(this.id, this.rootDoc)
 
     this.indexeddbProvider.on('synced', async (data) => {
-      console.log('{$getPersistanceDB} synced'/*, data*/)
+      console.log('{$getPersistanceDB} synced', data)
       // Vue.prototype.$getWebsocketProvider()
       //let user = await Vue.prototype.$getUser(options)
       //console.log('{user}', user)
