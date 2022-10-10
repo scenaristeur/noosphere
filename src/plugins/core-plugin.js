@@ -1,4 +1,6 @@
-import { User, Channel, Room, Editor/*, Graph*/ } from '@/noosphere'
+import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
+  import { /*collaborative,*/collabServiceCtx } from '@milkdown/plugin-collaborative';
+
 
 const plugin = {
   install(Vue, opts = {}) {
@@ -36,17 +38,65 @@ const plugin = {
 
     Vue.prototype.$openRoom = async function(id){
       console.log(id)
-      if(opts.router.history.current.name != 'editor'){
-        opts.router.push('/editor')
-      }
+
       let channel = store.state.noosphere.channel
 
       let room = localUser.rooms[id] || new Room(
         {channel: channel, id:id, store: store}
       )
-      room.d()
-      let editor = new Editor()
-      editor.d()
+      if(opts.router.history.current.name != 'editor'){
+        opts.router.push('/editor')
+      }
+      // room.d()
+      store.commit('noosphere/setRoom',room)
+
+    }
+
+    Vue.prototype.$connectMilkdown = async function(options){
+      console.log(options)
+      let editor = store.state.editor.editor
+      let channel = store.state.noosphere.channel
+      let user = store.state.noosphere.localUser
+      let room = store.state.noosphere.room
+let roomDoc = room.roomDoc
+let awareness = channel.awareness
+
+
+      if(editor != null){
+        editor.action((ctx) => {
+          const collabService = ctx.get(collabServiceCtx);
+
+          collabService
+          .disconnect()
+          // bind doc and awareness
+          .bindDoc(roomDoc)
+          .setAwareness(awareness)
+          .connect();
+
+          // if (source.data != undefined){
+          //   console.log(source.data)
+          //   collabService.applyTemplate(source.data.result.content)
+          //   store.commit('editor/setParent', source.data.result.parent)
+          // }else{
+          //   store.commit('editor/setParent', null)
+          // }
+
+
+
+          // connect yjs with milkdown
+          // collabService.connect();
+        });
+
+        console.log("{EDITOR}", editor, roomDoc.toJSON())
+        // Vue.prototype.$spinnerRemove(roomId)
+        user.rooms[room.id] = {date: Date.now()}
+        awareness.setLocalStateField('user', user)
+        store.commit('noosphere/setLocalUser', user)
+        // store.commit('actor/setRoomAddress', roomId)
+      }else{
+        console.log('{editor is null now}')
+      }
+
     }
 
 

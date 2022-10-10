@@ -6,7 +6,7 @@
     <!-- content {{ markdownContent}} -->
     <!-- {{ user }} -->
 
-    <b-button v-if="parent != null" @click='open(parent)'>parent :  {{ parent}}</b-button>
+    <!-- <b-button v-if="parent != null" @click='open(parent)'>parent :  {{ parent}}</b-button> -->
 
   </div>
 </template>
@@ -39,7 +39,7 @@ export default {
   data(){
     return{
       roomId: null,
-      default: "### Welcome to the Noosphere \n1. Choose a room\n 2. click to edit",
+      default: "### Welcome to the Noosphere \n1. Choose a room in the top input bar\n 2. click to edit",
       // markdownContent : null
       // rootDoc: null,
       // user: null
@@ -143,20 +143,23 @@ export default {
     // if (this.user.roomId != undefined){
     //   this.roomId = this.user.roomId
     //  this.$connect('milk mounted')
-    console.log('milk user', this.user)
-    if (this.user != null) this.$connect('milk mounted')
+    // console.log('milk user', this.user)
+    // if (this.user != null) this.$connect('milk mounted')
     // }
+    let room = this.$store.state.noosphere.room
+    console.log('room', room)
+    this.$connectMilkdown('milkdown mounted')
 
 
   },
   methods:{
-    open(roomId){
-      console.log(roomId)
-      let user = this.user
-      user.roomId = roomId
-      this.$store.commit('actor/setUser', user)
-      this.$connect('editor parent')
-    }
+    // open(roomId){
+    //   console.log(roomId)
+    //   let user = this.user
+    //   user.roomId = roomId
+    //   this.$store.commit('actor/setUser', user)
+    //   this.$connect('editor parent')
+    // }
   },
 
 
@@ -167,8 +170,12 @@ export default {
     //   console.log(this.roomId)
     //   this.$connect('milk watch')
     // }
-    user(){
-      this.$connect('milk watch user')
+    // user(){
+    //   this.$connect('milk watch user')
+    // },
+    room(){
+      console.log(this.room)
+      this.$connectMilkdown('milk watch room')
     }
   },
 
@@ -176,21 +183,19 @@ export default {
     // roomAddress() {
     //   return this.$store.state.actor.roomAddress
     // },
-    user() {
-      return this.$store.state.actor.user
+    // user() {
+    //   return this.$store.state.noosphere.user
+    // },
+    room() {
+      return this.$store.state.noosphere.room
     },
-    rootDoc() {
-      return this.$store.state.y.yDoc
-    },
-    awareness() {
-      return this.$store.state.y.awareness
-    },
-    editor() {
-      return this.$store.state.editor.editor
-    },
-    parent() {
-      return this.$store.state.editor.parent
-    },
+
+    // editor() {
+    //   return this.$store.state.editor.editor
+    // },
+    // parent() {
+    //   return this.$store.state.editor.parent
+    // },
 
   }
 
