@@ -4,13 +4,12 @@ import * as Y from 'yjs'
 // import { WebrtcProvider } from 'y-webrtc'
 import { WebsocketProvider } from 'y-websocket'
 
-
 export { Room }
 
 class Room extends Base {
   constructor(options = {}) {
     super(options)
-    this.type = 'room'
+    this.group = 'room'
     this.init()
   }
 
@@ -47,7 +46,5 @@ class Room extends Base {
     });
 
   }
-
-
 
 }

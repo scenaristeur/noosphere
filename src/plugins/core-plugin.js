@@ -1,4 +1,4 @@
-import { User, Channel, Room/*, Graph*/ } from '@/noosphere'
+import { User, Channel, Room, Editor/*, Graph*/ } from '@/noosphere'
 
 const plugin = {
   install(Vue, opts = {}) {
@@ -36,9 +36,17 @@ const plugin = {
 
     Vue.prototype.$openRoom = async function(id){
       console.log(id)
+      if(opts.router.history.current.name != 'editor'){
+        opts.router.push('/editor')
+      }
       let channel = store.state.noosphere.channel
-      let room = localUser.rooms[id] || new Room({channel: channel, id:id, store: store})
+
+      let room = localUser.rooms[id] || new Room(
+        {channel: channel, id:id, store: store}
+      )
       room.d()
+      let editor = new Editor()
+      editor.d()
     }
 
 
