@@ -84,8 +84,8 @@ export default {
       this.updateUsers()
 
     },
-    usersUpdateDate(){
-      console.log(this.usersUpdateDate)
+    usersUpdated(){
+      console.log(this.usersUpdated)
       this.updateUsers()
       this.$forceUpdate()
     },
@@ -124,7 +124,7 @@ export default {
         return this.$store.state.actor.users;
       },
     },
-    usersUpdateDate() {
+    usersUpdated() {
       return this.$store.state.actor.usersUpdated
     },
     uploads() {
