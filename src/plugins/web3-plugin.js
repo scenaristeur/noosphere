@@ -24,7 +24,7 @@ const plugin = {
       for await (const item of client.list({ maxResults: 20 })) {
         uploads.push(item);
       }
-      // console.log(uploads)
+      console.log(uploads)
       // console.log("list")
       // this.uploads = uploads
       store.commit('web3/setUploads', uploads)
@@ -58,7 +58,7 @@ const plugin = {
         }
 
         const rootCid = await client.put([file], {
-          name: options.fileName+'_'+Date.now(),
+          name: options.fileName, //+'_'+Date.now(),
           maxRetries: 3,
           onRootCidReady,
           onStoredChunk

@@ -261,6 +261,8 @@ const plugin = {
           // connect yjs with milkdown
           .connect();
         });
+
+        console.log("{EDITOR}", editor, roomDoc.toJSON())
         Vue.prototype.$spinnerRemove(roomId)
         user.rooms[roomId] = {date: Date.now()}
         awareness.setLocalStateField('user', user)
@@ -271,9 +273,11 @@ const plugin = {
       }
 
       // user.roomId = roomId
-
-
     }
+
+
+
+
 
     Vue.prototype.$createProviderOLD = function(){
       //  console.log("create providers")

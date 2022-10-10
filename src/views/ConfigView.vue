@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <h1>This is an config page</h1>
-    <div>  {{ services}}</div>
+    <!-- <div>  {{ services}}</div> -->
     <!-- <div>
     <b-form-checkbox
     id="checkbox-1"
@@ -74,19 +74,12 @@
     </b-collapse>
   </b-card>
 
-  <b-card no-body class="mb-1">
+  <!-- <b-card no-body class="mb-1">
     <b-card-header header-tag="header" class="p-1" role="tab">
       <b-button block v-b-toggle.accordion-solid variant="info">
-        <!-- <b-form-checkbox
-        id="checkbox-2"
-        v-model="services"
-        name="checkbox-2"
-        value="solid"
-        size="lg"
-        @click.stop
-        >  -->
+
         Solid
-      <!-- </b-form-checkbox> -->
+
     </b-button>
   </b-card-header>
 
@@ -109,31 +102,13 @@
           </b-col>
           <a :href="pod_url" target="_blank">open</a>
         </b-row>
-        <!--
-
-        <b-row class="my-1">
-        <b-col sm="2">
-        <label for="input-small">Token:</label>
-      </b-col>
-      <b-col sm="10">
-      <b-input
-      v-model="token"
-      @input="tokenChanged"
-      size="sm"
-      placeholder="web3.storage token"
-      type="password" />
-    </b-col>
-  </b-row> -->
-
-
-
 
 
 
 </b-card-text>
 </b-card-body>
 </b-collapse>
-</b-card>
+</b-card> -->
 
 <!-- <b-card no-body class="mb-1">
 <b-card-header header-tag="header" class="p-1" role="tab">
@@ -181,8 +156,8 @@ export default {
   },
   async created(){
     this.token = this.$store.state.web3.token
-    this.$solidRoomList()
-    this.$solidCreateRoom('Room_'+Date.now())
+    // this.$solidRoomList()
+    // this.$solidCreateRoom('Room_'+Date.now())
   },
   methods:{
     async tokenChanged(){
@@ -190,10 +165,10 @@ export default {
       await this.$web3list(this.token)
       //console.log("Web3 uploads",uploads)
     },
-    async pod_urlChanged(){
-      console.log('pod_urlChanged', this.pod_url)
-      this.$solidRoomList()
-    }
+    // async pod_urlChanged(){
+    //   console.log('pod_urlChanged', this.pod_url)
+    //   this.$solidRoomList()
+    // }
   },
   watch:{
     web3Token(){
@@ -217,15 +192,15 @@ export default {
     //   },
     //
     // },
-    pod_url: {
-      get() {
-        return this.$store.state.util.pod_url;
-      },
-      set(pod_url) {
-        this.$store.commit('util/setPodUrl', pod_url)
-      },
-
-    },
+    // pod_url: {
+    //   get() {
+    //     return this.$store.state.util.pod_url;
+    //   },
+    //   set(pod_url) {
+    //     this.$store.commit('util/setPodUrl', pod_url)
+    //   },
+    //
+    // },
     web3Token(){
       return this.$store.state.web3.token
     },

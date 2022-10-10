@@ -71,11 +71,11 @@
 
 </b-card-group>
 
-<br>
+<!-- <br> -->
 <!-- <b-button @click="randomUser" variant="outline-info" size="sm">random user</b-button> -->
 
-<br>
-{{ user }}
+<!-- <br> -->
+<!-- {{ user }} -->
 </b-container>
 </template>
 

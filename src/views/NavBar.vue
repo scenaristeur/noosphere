@@ -22,7 +22,7 @@
           <b-nav-item to="/"><b-icon icon="house-fill" aria-hidden="true"></b-icon></b-nav-item>
           <MenuNew />
           <b-nav-item to="/profile">profile <b-icon icon="person" aria-hidden="true"></b-icon></b-nav-item>
-          <b-nav-item to="/config">config <b-icon icon="gear" aria-hidden="true"></b-icon></b-nav-item>
+          <!-- <b-nav-item to="/config">config <b-icon icon="gear" aria-hidden="true"></b-icon></b-nav-item> -->
           <b-nav-item to="/graph">network</b-nav-item>
 
           <b-nav-item-dropdown text="more" right>

@@ -35,23 +35,23 @@
       <b-button variant="info" class="m-3" size="sm" href="/room">Open or join a room</b-button>
       <b-button variant="info" class="m-3" size="sm" href="/editor">Start</b-button> -->
       Now
-      <router-link to="/user" class="m-2"><b-icon font-scale="1.5" icon="person" aria-hidden="true"></b-icon> Choose a user name</router-link><br>
+      <router-link to="/profile" class="m-2"><b-icon font-scale="1.5" icon="person" aria-hidden="true"></b-icon> Choose a user name</router-link><br>
       then
-      <router-link to="/room" class="m-2"><b-icon font-scale="1.5" icon="list-stars" aria-hidden="true"></b-icon> Open or join a room</router-link><br>
-      and
-      <router-link to="/editor" class="m-2"><b-icon font-scale="1.5" icon="pen" aria-hidden="true"></b-icon> Start noosphering</router-link> !
+      <router-link to="/room" class="m-2"><b-icon font-scale="1.5" icon="list-stars" aria-hidden="true"></b-icon> Open or join a room and <b-icon font-scale="1.5" icon="pen" aria-hidden="true"></b-icon> Start noosphering</router-link><br>
+      <!-- and
+      <router-link to="/editor" class="m-2"><b-icon font-scale="1.5" icon="pen" aria-hidden="true"></b-icon> Start noosphering</router-link> ! -->
 
       <!-- <hr>
       If you want to grab ideas near you and share located ones, you can activate/daesactivate your location in the
       <router-link to="/config" class="m-2"><b-icon font-scale="1.5" icon="gear" aria-hidden="true"></b-icon> Config</router-link> menu. -->
 
       <!-- <b-button variant="primary" href="/about">More Info</b-button> -->
-      <b-button variant="outline-info" class="m-3" size="sm" @click="toggleJumbo">Don't show this block next time</b-button>
+      <!-- <b-button variant="outline-info" class="m-3" size="sm" @click="toggleJumbo">Don't show this block next time</b-button> -->
     </div>
   </b-jumbotron>
   <hr>
 
-  <router-link to="/config" class="nav-item mx-2"><b-icon font-scale="1.5" icon="gear" aria-hidden="true"></b-icon> Config to get more config options</router-link>
+  <!-- <router-link to="/config" class="nav-item mx-2"><b-icon font-scale="1.5" icon="gear" aria-hidden="true"></b-icon> Config to get more config options</router-link> -->
 
   <hr>
 

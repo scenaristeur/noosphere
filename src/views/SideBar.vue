@@ -35,9 +35,9 @@
         <b-card-text>My favorites rooms</b-card-text>
       </b-tab>
 
-      <b-tab title="S">
+      <!-- <b-tab title="S">
         <b-card-text>The solid part </b-card-text>
-      </b-tab>
+      </b-tab> -->
 
       <template #tabs-end>
         <!-- <b-nav-item href="#" role="presentation" @click="() => {}">Another tab</b-nav-item>

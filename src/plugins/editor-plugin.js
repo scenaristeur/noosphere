@@ -21,6 +21,18 @@ const plugin = {
     //   //},
     // }
 
+    Vue.prototype.$serialize = function (roomId){
+      console.log('{serialize}', roomId)
+      let rootDoc = store.state.y.yDoc
+      Vue.prototype.$spinnerAdd(roomId)
+      let ymap = rootDoc.getMap()
+      console.log('ymap', ymap)
+      let roomDoc = ymap.get(roomId)
+      console.log ('{roomDoc}',roomDoc, roomDoc.toJSON())
+      Vue.prototype.$spinnerRemove(roomId)
+      return roomDoc.toJSON()
+    }
+
 
   }
 }
