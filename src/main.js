@@ -7,14 +7,14 @@ import store from './store'
 import CorePlugin from './plugins/core-plugin';
 Vue.use(CorePlugin, {store: store, router: router});
 
-import ActorPlugin from './plugins/actor-plugin';
-Vue.use(ActorPlugin, {store: store, router: router});
+// import ActorPlugin from './plugins/actor-plugin';
+// Vue.use(ActorPlugin, {store: store, router: router});
 
 // import EditorPlugin from './plugins/editor-plugin';
 // Vue.use(EditorPlugin, {store: store, router: router});
 
-import YPlugin from './plugins/y-plugin';
-Vue.use(YPlugin, {store: store, router: router});
+// import YPlugin from './plugins/y-plugin';
+// Vue.use(YPlugin, {store: store, router: router});
 
 import RoomPlugin from './plugins/room-plugin';
 Vue.use(RoomPlugin, {store: store, router: router});

@@ -42,6 +42,11 @@ class User extends Base {
     localStorage.setItem('noosphere-user', JSON.stringify(this));
   }
 
+  update(u){
+    Object.assign(this,u)
+    this.localStorageSave()
+  }
+
 
 
 }

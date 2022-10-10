@@ -9,11 +9,11 @@
       style="max-width: 20rem;"
       >
       <b-card-title>
-        username<b-input v-model="user.name" placeholder="username" />
+        username<b-input v-model="localUser.name" placeholder="username" />
       </b-card-title>
       <b-card-text>
         prefered color
-        <b-input v-model="user.color" type="color" />
+        <b-input v-model="localUser.color" type="color" />
         <!-- Some quick example text to build on the card title and make up the bulk of the card's content. -->
       </b-card-text>
 
@@ -91,13 +91,13 @@ export default {
     async randomUser(){
       let user = await this.$randomUser()
       console.log(user)
-      this.$store.commit('actor/setUser', user)
+      //this.$store.commit('noosphere/setLocalUser', user)
       // this.$userChanged()
       // this.userChanged()
     },
     save(){
-      this.$store.commit('actor/setUser', this.user)
-      this.$userChanged()
+
+      this.$userChanged({color: this.localUser.color, name: this.localUser.name})
       this.$router.push('/')
     },
     removeUser(){
@@ -117,16 +117,16 @@ export default {
     populateIdentity(data){
       console.log('populate', data)
       let user = JSON.parse(data)
-      this.$store.commit('actor/setUser', user)
-      this.$userChanged()
+      // this.$store.commit('noosphere/setLocalUser', user)
+      this.$userChanged(user)
     },
     download(){
-      console.log(this.user)
-      var contenu = JSON.stringify(this.user, null, 2) //`{"test": "json" }` //this.content
+      console.log(this.localUser)
+      var contenu = JSON.stringify(this.localUser, null, 2) //`{"test": "json" }` //this.content
       //console.log("todo: poser la question compresser",contenu)
       //  var format = "json" //this.format;
       //  console.log(contenu, format)
-      let suggested = this.user.name //"Brain_"+Date.now()
+      let suggested = this.localUser.name //"Brain_"+Date.now()
       var filename = prompt("Choose a name for the exported file :", suggested);
       if (filename == null || filename == "") {
         return;
@@ -167,8 +167,8 @@ export default {
     }
   },
   computed:{
-    user(){
-      return this.$store.state.actor.user
+    localUser(){
+      return this.$store.state.noosphere.localUser
     },
   }
 
