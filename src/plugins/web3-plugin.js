@@ -10,9 +10,9 @@ const plugin = {
       if (web3Token != null){
         await store.commit('web3/setToken', web3Token)
         store.commit('util/spinnerAdd', 'web3list')
-      //  let uploads =
+        //  let uploads =
         await Vue.prototype.$web3list(web3Token)
-      //  console.log("Web3 uploads",uploads)
+        //  console.log("Web3 uploads",uploads)
         store.commit('util/spinnerRemove', 'web3list')
       }
     }
@@ -102,7 +102,7 @@ const plugin = {
             var stringData = fileReader.result;
             console.log(" ---------------- File Content ----------------: ");
             console.log(stringData, progressEvent);
-            app.$loadCid({roomId: file.name.split(".json")[0], cid: file.cid, content: JSON.parse(stringData)})
+            app.$loadCid({roomId: file.name.split(".json")[0], cid: file.cid, result: JSON.parse(stringData)})
           }
 
           fileReader.onloadend = function(progressEvent) {
@@ -133,12 +133,15 @@ const plugin = {
       console.log(data)
       let user = store.state.actor.user
       user.roomId = data.roomId
-      let editorData = data.content
-      store.commit('editor/setEditorData', editorData)
+      // let editorData = data.content
+      // store.commit('editor/setEditorData', editorData)
       store.commit('actor/setUser', user)
-
-      Vue.prototype.$connect('web3')
+      //  await Vue.prototype.$applyUpdate(data.content)
+      await Vue.prototype.$connect({data: data, origin: 'web3.loadCid'})
       Vue.prototype.$spinnerRemove('web3 load')
+      console.log('{parent room}',data.result.parent)
+
+
     }
 
 

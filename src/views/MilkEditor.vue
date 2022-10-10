@@ -1,9 +1,13 @@
 <template>
   <div >
-    roomId : {{roomId}}
+    <!-- roomId : {{roomId}} -->
     <!-- {{ ready}} -->
     <div ref="editor" class="editor" ></div>
+    <!-- content {{ markdownContent}} -->
     <!-- {{ user }} -->
+
+    <b-button v-if="parent != null" @click='open(parent)'>parent :  {{ parent}}</b-button>
+
   </div>
 </template>
 
@@ -21,7 +25,7 @@ import { history } from '@milkdown/plugin-history';
 import { emoji } from '@milkdown/plugin-emoji';
 import { diagram } from '@milkdown/plugin-diagram';
 // import { gfm } from '@milkdown/preset-gfm';
-// import { listener, listenerCtx } from '@milkdown/plugin-listener';
+import { listener, listenerCtx } from '@milkdown/plugin-listener';
 
 // import {Awareness} from 'y-protocols/awareness'
 // import { WebrtcProvider } from 'y-webrtc'
@@ -36,6 +40,7 @@ export default {
     return{
       roomId: null,
       default: "### Welcome to the Noosphere \n1. Choose a room\n 2. click to edit",
+      // markdownContent : null
       // rootDoc: null,
       // user: null
       // ready: false
@@ -46,6 +51,11 @@ export default {
     .config((ctx) => {
       ctx.set(rootCtx, this.$refs.editor);
       ctx.set(defaultValueCtx, this.default);
+      ctx.get(listenerCtx).markdownUpdated((ctx, markdown/*, prevMarkdown*/) => {
+        // output = markdown;
+        // this.markdownContent = markdown
+        this.$store.commit('editor/setMarkdownContent', markdown)
+      });
       //   ctx.get(listenerCtx)
       //   .beforeMount((ctx) => {
       //     // before the editor mounts
@@ -89,7 +99,7 @@ export default {
     .use(history)
     .use(emoji)
     .use(diagram)
-    // .use(listener)
+    .use(listener)
     .create();
 
 
@@ -140,7 +150,13 @@ export default {
 
   },
   methods:{
-
+    open(roomId){
+      console.log(roomId)
+      let user = this.user
+      user.roomId = roomId
+      this.$store.commit('actor/setUser', user)
+      this.$connect('editor parent')
+    }
   },
 
 
@@ -171,6 +187,9 @@ export default {
     },
     editor() {
       return this.$store.state.editor.editor
+    },
+    parent() {
+      return this.$store.state.editor.parent
     },
 
   }

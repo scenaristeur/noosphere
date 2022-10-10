@@ -93,26 +93,28 @@ export default {
       console.log('populate')
       this.$store.commit('web3/resetPinMessages')
       let now = Date.now()
-      let data = this.$serialize(this.user.roomId)
+      //let data = this.$roomToJson(this.user.roomId)
 
       // let data = this.$store.state.editor.editorData
       // delete data.clientID
-      data.roomId = this.user.roomId
-      data.timestamp = now
-      data.creator = this.user.name
+      //  data.roomId = this.user.roomId
+      //  data.timestamp = now
+      //data.creator = this.user.name
       //let prefix = 'noos'
       let separator = '_'
       // this.fileName = prefix+separator+this.user.roomId+separator+Date.now()
       this.fileName = this.user.roomId+separator+now
-      data.filename = this.fileName
+      //data.filename = this.fileName
 
-      this.data = JSON.stringify(data, null, 2)
-
+      // this.data = JSON.stringify(data, null, 2)
+      this.data = this.$store.state.editor.markdownContent
+      console.log(this.data)
       // this.fileName = this.user.roomId
       this.cid = null
     },
     async pin(){
-      this.cid = await this.$web3Pin({data: this.data, fileName: this.fileName})
+      let data = {content: this.data, parent: this.user.roomId}
+      this.cid = await this.$web3Pin({data: JSON.stringify(data), fileName: this.fileName})
     },
     async tokenChanged(){
       localStorage.setItem('noosphere-web3storage-token', this.token);
@@ -144,6 +146,9 @@ export default {
     },
     messages(){
       return this.$store.state.web3.pinMessages
+    },
+    markdownContent(){
+      return this.$store.state.editor.markdownContent
     }
   }
 

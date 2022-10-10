@@ -1,15 +1,17 @@
 // import Vue from 'vue'
 
 const state = () => ({
-  editor: null
-    // editorData: null,
-    // editorDataDefault: {
-    //   "type" : "paragraph",
-    //   "data" : {
-    //     "text" : "Click to edit."
-    //   }
-    // },
-    // updates: null
+  editor: null,
+  markdownContent : null,
+  parent: null
+  // editorData: null,
+  // editorDataDefault: {
+  //   "type" : "paragraph",
+  //   "data" : {
+  //     "text" : "Click to edit."
+  //   }
+  // },
+  // updates: null
   // graph: null,
   // nodes: [],
   // links: [],
@@ -21,6 +23,14 @@ const state = () => ({
 const mutations = {
   setEditor(state, e){
     state.editor = e
+  },
+  setMarkdownContent(state,c){
+  //  console.log(c)
+    state.markdownContent = c
+  },
+  setParent(state, p){
+    console.log('parent', parent)
+    state.parent = p
   }
   // setEditorData(state, ed){
   //   console.log('{setEditorData}', ed)

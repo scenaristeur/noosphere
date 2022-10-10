@@ -183,6 +183,65 @@ const plugin = {
 
 
     }
+
+
+    // Vue.prototype.$roomToJson1 = function (roomId){
+    //   console.log('{serialize}', roomId)
+    //   let rootDoc = store.state.y.yDoc
+    //   Vue.prototype.$spinnerAdd(roomId)
+    //   let ymap = rootDoc.getMap()
+    //   console.log('ymap', ymap)
+    //   let roomDoc = ymap.get(roomId)
+    //   console.log ('{roomDoc}',roomDoc, roomDoc.toJSON())
+    //
+    //   // let state = Y.encodeStateAsUpdate(roomDoc)
+    //   // console.log(state)
+    //   Vue.prototype.$spinnerRemove(roomId)
+    //   // return state
+    //   return roomDoc.toJSON()
+    // }
+
+    // Vue.prototype.$applyUpdate1 = async function(jsonCid){
+    //   let roomId = store.state.actor.user.roomId
+    //   console.log('{jsonCid}', jsonCid)
+    //   let rootDoc = store.state.y.yDoc
+    //   console.log(rootDoc)
+    //   let ymap = rootDoc.getMap()
+    //   console.log(ymap)
+    //   let roomDoc = ymap.get(roomId)
+    //
+    //   if (roomDoc == undefined){
+    //     roomDoc = new Y.Doc()
+    //     //  roomDoc.getText().insert(0, 'some initial content')
+    //     ymap.set(roomId, roomDoc)
+    //   }
+    //   console.log ('{roomDoc}', roomId, roomDoc)
+    //
+    //   //  await roomDoc.whenLoaded
+    //   console.log('roomDoc loaded')
+    //
+    //   const state2 = Y.encodeStateAsUpdate(jsonCid)
+    //   Y.applyUpdate(roomDoc, state2)
+    //
+    //   //Y.applyUpdate(roomDoc, state)
+    //   // console.log('{JSON}', roomDoc.toJSON())
+    //   //
+    //   // ymap.set(roomId, roomDoc)
+    //
+    //   //  ymap.set(roomId, roomDoc)
+    //   // let currentState1 = Y.encodeStateAsUpdate(roomDoc)
+    //   // roomDoc.destroy()
+    //   // const stateVector1 = Y.encodeStateVectorFromUpdate(state)
+    //   // const diff1 = Y.diffUpdate(currentState1, stateVector1)
+    //   // currentState1 = Y.mergeUpdates([currentState1, diff1])
+    //   // Y.applyUpdate(roomDoc, currentState1)
+    //   // console.log(currentState1, stateVector1, diff1, roomDoc )
+    //
+    //
+    //
+    //
+    // }
+
     Vue.prototype.$connect = async function(source){
       console.log('connect from ',source)
       let rootDoc = store.state.y.yDoc
@@ -207,9 +266,6 @@ const plugin = {
       console.log ('{roomDoc}',roomDoc)
       if (roomDoc == undefined){
         // Client One
-
-
-
         roomDoc = new Y.Doc()
         //subDoc.getText().insert(0, 'some initial content')
         ymap.set(roomId, roomDoc)
@@ -217,6 +273,9 @@ const plugin = {
       // else{
       //
       // }
+
+
+
 
 
 
@@ -258,8 +317,19 @@ const plugin = {
           // bind doc and awareness
           .bindDoc(roomDoc)
           .setAwareness(awareness)
+
+          if (source.data != undefined){
+            console.log(source.data)
+            collabService.applyTemplate(source.data.result.content)
+            store.commit('editor/setParent', source.data.result.parent)
+          }else{
+            store.commit('editor/setParent', null)
+          }
+
+
+
           // connect yjs with milkdown
-          .connect();
+          collabService.connect();
         });
 
         console.log("{EDITOR}", editor, roomDoc.toJSON())
