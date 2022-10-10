@@ -12,7 +12,7 @@ const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
 
-    Vue.prototype.$getPersistanceDB = async function(){
+    Vue.prototype.$getPersistanceDB = async function(options){
 
       // Vue.prototype.$createYDoc()
       let ydoc = new Y.Doc()
@@ -25,7 +25,7 @@ const plugin = {
       indexeddbProvider.on('synced', async (data) => {
         console.log('{$getPersistanceDB} synced', data)
         // Vue.prototype.$getWebsocketProvider()
-        let user = Vue.prototype.$getUser()
+        let user = await Vue.prototype.$getUser(options)
         console.log('{user}', user)
         Vue.prototype.$userChanged()
 

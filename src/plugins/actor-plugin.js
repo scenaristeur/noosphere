@@ -3,7 +3,7 @@ const plugin = {
     let store = opts.store
     // console.log("store",store)
 
-    Vue.prototype.$getUser = function(){
+    Vue.prototype.$getUser = async function(options){
       //  console.log("awareness",awareness)
       let localuser = localStorage.getItem('noosphere-user')
       //  console.log('{localuser}',localuser)
@@ -17,7 +17,23 @@ const plugin = {
         //opts.router.push('/profile')
       }
       //  console.log("{getUser}", user)
+
+
+      await opts.router.onReady(async (router)=>{
+        console.log('[RRRRRouter]',router, options.route, options.route.name)
+        let roomQuery = options.route.query.room
+        console.log('[roomQuery]',roomQuery)
+        if (roomQuery != undefined){
+          user.roomId = roomQuery
+        }
+        // return {router: router, route: route}
+      })
+
+
+
+
       store.commit('actor/setUser', user)
+      console.log('[user]', user)
       return user
     }
 

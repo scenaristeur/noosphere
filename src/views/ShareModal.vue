@@ -69,7 +69,7 @@ export default {
   },
   methods:{
     async share(){
-      this.url = "http://scenaristeur.github.io/noosphere?room="+this.user.roomId
+      this.url = "https://scenaristeur.github.io/noosphere?room="+this.user.roomId
       let title = 'Noosphere'
       let text = "\nCheck this idea I want to share in Noosphere !\n\n  "
 

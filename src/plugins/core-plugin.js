@@ -9,19 +9,13 @@ const plugin = {
 
     Vue.prototype.$coreInit = async function(options){
       console.log('{core options}', options)
-      Vue.prototype.$getPersistanceDB()
-
-
-
+      Vue.prototype.$getPersistanceDB(options)
       // let route = await Vue.prototype.$getRouterParameters(options.route)
       // console.log(route)
-
-
-      
     }
 
 
-    Vue.prototype.$getRouterParameters1 = async function(route){
+    Vue.prototype.$getRouterParameters = async function(route){
       console.log("{getRouterParameters}",opts.router, route)
       await opts.router.onReady(async (router)=>{
         console.log('[RRRRRouter]',router, route, route.name)

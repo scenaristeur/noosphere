@@ -30,7 +30,7 @@
             <b-dropdown-item href="https://matrix.to/#/#noosphere:matrix.org" target="_blank"> Chat about Noosphere <b-icon icon="chat" aria-hidden="true"></b-icon> </b-dropdown-item>
             <b-dropdown-item href="#">
               <i><small>
-                version: glitch print2 awareness
+                version: glitch print2 awareness room in query
               </small></i>
             </b-dropdown-item>
           </b-nav-item-dropdown>
