@@ -29,7 +29,7 @@ const mutations = {
     state.markdownContent = c
   },
   setParent(state, p){
-    console.log('parent', parent)
+    console.log('parent', p)
     state.parent = p
   }
   // setEditorData(state, ed){

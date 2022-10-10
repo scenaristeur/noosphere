@@ -245,7 +245,7 @@ const plugin = {
     Vue.prototype.$connect = async function(source){
       console.log('connect from ',source)
       let rootDoc = store.state.y.yDoc
-      let awareness = Vue.prototype.$createAwareness(rootDoc)
+      let awareness = store.state.y.awareness //Vue.prototype.$createAwareness(rootDoc)
       let user = store.state.actor.user
       let editor = store.state.editor.editor
       let roomId = user.roomId
@@ -293,9 +293,11 @@ const plugin = {
 
       wsProvider.on('status', (payload) => {
         if (payload.status) {
-          console.log("wsProvoder status", payload.status)
+          console.log("--------------------------\nwsProvider status", payload.status, "\n--------------------------")
           // this.status = payload.status;
           store.commit('y/setStatus', payload.status)
+          user.status = payload.status
+          store.commit('actor/setUser', user)
           Vue.prototype.$userChanged()
         }
       });

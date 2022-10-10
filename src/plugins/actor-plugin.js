@@ -30,6 +30,9 @@ const plugin = {
       })
 
 
+      let awareness = store.state.y.awareness
+      awareness.clientID = user.clientID
+      store.commit('y/setAwareness', awareness)
 
 
       store.commit('actor/setUser', user)
