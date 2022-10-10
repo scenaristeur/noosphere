@@ -3,11 +3,6 @@ import { v4 as uuidv4 } from 'uuid';
 import * as Y from 'yjs'
 import {Awareness} from 'y-protocols/awareness'
 import { IndexeddbPersistence } from 'y-indexeddb'
-// import { WebrtcProvider } from 'y-webrtc'
-// import { WebsocketProvider } from 'y-websocket'
-
-
-
 
 export { Channel }
 
@@ -16,6 +11,7 @@ class Channel extends Base {
     super(options)
     this.id = options.id || uuidv4()
     this.group = 'channel'
+    this.created = Date.now()
     this.rootDoc = new Y.Doc()
     this.createAwareness()
     this.createIndexedDbProvider()

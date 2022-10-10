@@ -1,25 +1,44 @@
-import { User, Channel/*, Graph*/ } from '@/noosphere'
+import { User, Channel, Room/*, Graph*/ } from '@/noosphere'
 
 const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
+    let localUser = null
     // console.log("store",store)
 
 
 
     Vue.prototype.$coreInit = async function(options){
-      let localUser = new User()
-      localUser.debug()
-      let channel = new Channel({id: 'noosphere-demo'})
-      channel.debug()
+      localUser = new User()
+      localUser.d()
+
+
+      Vue.prototype.$newChannel({id: 'noosphere-demo'})
 
       store.commit('noosphere/setLocalUser',localUser)
-      store.commit('noosphere/setChannel',channel)
+
 
       console.log('{core options}', options)
       //Vue.prototype.$getPersistanceDB(options)
       // let route = await Vue.prototype.$getRouterParameters(options.route)
       // console.log(route)
+    }
+
+
+    Vue.prototype.$newChannel = async function(c){
+      let channel = new Channel(c)
+      store.commit('noosphere/setChannel',channel)
+      channel.d()
+      delete localUser.channels[channel.id]
+      localUser.channels[channel.id] = {channel}
+      localUser.d()
+    }
+
+    Vue.prototype.$openRoom = async function(id){
+      console.log(id)
+      let channel = store.state.noosphere.channel
+      let room = localUser.rooms[id] || new Room({channel: channel, id:id, store: store})
+      room.d()
     }
 
 

@@ -11,6 +11,7 @@
         websocket <b>{{ status}}</b>
       </div>
 
+
       <!-- <b-button v-b-toggle.sidebar-manager size="sm">Manager</b-button> -->
 
 
@@ -52,6 +53,7 @@ export default {
     'MenuNew': ()=>import('@/views/MenuNew'),
     'QrModal': ()=>import('@/views/QrModal'),
     'ToolBar': ()=>import('@/views/ToolBar'),
+
 
   },
   computed:{

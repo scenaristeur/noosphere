@@ -1,6 +1,9 @@
 <template>
-  <div class="home">
+  <div class="home text-light">
+
+    <ChannelView />
     <UsersView />
+
     <!-- <RoomCard /> -->
     <!-- <EditorView
     @userEvent="onUserEvent"
@@ -16,6 +19,7 @@ export default {
   components: {
     // 'RoomCard': ()=>import('@/views/RoomCard'),
     'UsersView': ()=>import('@/views/UsersView'),
+    'ChannelView': ()=>import('@/views/ChannelView'),
     // 'EditorView': ()=>import('@/views/EditorView'),
 
     // 'StorageView': ()=>import('@/views/StorageView'),

@@ -23,6 +23,10 @@ class User extends Base {
       Object.assign(this, this.randomUser())
       console.log('from random')
     }
+
+    this.rooms == undefined ? this.rooms =  {} : ""
+    this.channels == undefined ? this.channels = {} : ""
+
   }
 
   randomUser(){
@@ -31,7 +35,6 @@ class User extends Base {
       name: 'User_'+now,
       color: '#'+Math.floor(Math.random()*16777215).toString(16),
       created: now,
-      rooms: {}
     }
   }
 
@@ -39,6 +42,6 @@ class User extends Base {
     localStorage.setItem('noosphere-user', JSON.stringify(this));
   }
 
-  
+
 
 }

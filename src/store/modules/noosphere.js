@@ -2,7 +2,8 @@
 
 const state = () => ({
   localUser: null,
-  channel: null
+  channel: null,
+  room: null
 })
 
 const mutations = {
@@ -11,6 +12,9 @@ const mutations = {
   },
   setChannel(state, c){
     state.channel = c
+  },
+  setRoom(state, r){
+    state.room = r
   }
 
 }
