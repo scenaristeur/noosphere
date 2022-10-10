@@ -42,7 +42,7 @@ export default {
     this.$coreInit({name: "SuperCore", route: this.$route})
   },
   async mounted(){
-    this.$web3Init()
+    //this.$web3Init()
     //  console.log('token', web3Token)
   },
   methods:{

@@ -31,9 +31,9 @@ const plugin = {
 
 
       let awareness = store.state.y.awareness
-      awareness.clientID = user.clientID
-      store.commit('y/setAwareness', awareness)
-
+      // awareness.clientID = user.clientID
+      // store.commit('y/setAwareness', awareness)
+      user.clientID =  awareness.clientID
 
       store.commit('actor/setUser', user)
       console.log('[user]', user)
@@ -45,12 +45,13 @@ const plugin = {
       // if (awareness == undefined){
       //   awareness = store.state.y.awareness
       // }
-      let awareness = store.state.y.awareness
+      //let awareness = store.state.y.awareness
       let user = {
         name: 'User_'+Date.now(),
         color: '#'+Math.floor(Math.random()*16777215).toString(16),
-        clientID: awareness.clientID,
+
         //roomId: uuidv4(),
+        created: Date.now(),
         rooms: {}
       }
       //  store.commit('actor/setUser', user)

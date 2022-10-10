@@ -1,4 +1,4 @@
-
+import { User, Channel/*, Graph*/ } from '@/noosphere'
 
 const plugin = {
   install(Vue, opts = {}) {
@@ -8,8 +8,16 @@ const plugin = {
 
 
     Vue.prototype.$coreInit = async function(options){
+      let localUser = new User()
+      localUser.debug()
+      let channel = new Channel({id: 'noosphere-demo'})
+      channel.debug()
+
+      store.commit('noosphere/setLocalUser',localUser)
+      store.commit('noosphere/setChannel',channel)
+
       console.log('{core options}', options)
-      Vue.prototype.$getPersistanceDB(options)
+      //Vue.prototype.$getPersistanceDB(options)
       // let route = await Vue.prototype.$getRouterParameters(options.route)
       // console.log(route)
     }
