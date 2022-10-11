@@ -33,25 +33,41 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
         store.commit('noosphere/setChannel',channel)
         channel.d()
         delete localUser.channels[channel.id]
-        localUser.channels[channel.id] = {channel}
+        localUser.channels[channel.id] = channel.id
+        localUser.channel = channel
         localUser.localStorageSave()
+        // localUser.awarenessState = "$newChannel"
+        // channel.awareness.setLocalStateField('user', localUser)
         store.commit('noosphere/setLocalUser',localUser)
         localUser.d()
+        if(opts.router.history.current.name != 'editor'){
+          opts.router.push('/editor')
+        }
+        //Vue.prototype.$openRoom(channel.id)
       }
 
       Vue.prototype.$openRoom = async function(id){
         console.log(id)
 
-        let channel = store.state.noosphere.channel
+        // let channel = store.state.noosphere.channel
 
         let room = new Room(
-          {channel: channel, id:id, store: store}
+          {channel: localUser.channel, id:id, store: store}
         )
+
+        // delete localUser.rooms[id]
+        // localUser.rooms[id] = room.id
+        // localUser.room = room.id
+        // localUser.clientID = localUser.channel.awareness.clientID
+        localUser.localStorageSave()
+        // localUser.awarenessState = "$newRoom_"+room.id
+        localUser.channel.awareness.setLocalStateField('user', localUser)
+        store.commit('noosphere/setLocalUser',localUser)
+        // room.d()
+        store.commit('noosphere/setRoom',room)
         if(opts.router.history.current.name != 'editor'){
           opts.router.push('/editor')
         }
-        // room.d()
-        store.commit('noosphere/setRoom',room)
 
       }
 
