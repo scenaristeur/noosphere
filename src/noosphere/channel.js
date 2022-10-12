@@ -16,8 +16,8 @@ class Channel extends Base {
     this.rootDoc = new Y.Doc()
     this.createAwareness()
     this.createIndexedDbProvider()
-
-
+    // this.store.commit('noosphere/setChannel',channel)
+    this.d()
   }
   createAwareness(){
     this.awareness = new Awareness(this.rootDoc)

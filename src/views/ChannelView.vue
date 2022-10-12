@@ -1,6 +1,6 @@
 <template>
-  <div class="channel-view">
-    <b-button v-b-modal.modal-channel size='sm'>channel: {{channel.id}}</b-button>
+  <div class="channel-view" v-if="channel!= null">
+    <b-button v-b-modal.modal-channel size='sm' disabled>channel: {{channel.id}}</b-button>
 
     <b-modal id="modal-channel" title="Channel" ok-only @ok="changeChannel">
       <p class="my-4">

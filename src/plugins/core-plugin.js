@@ -10,11 +10,8 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
 
       Vue.prototype.$coreInit = async function(options){
         localUser = new User({store: store})
-
-
-
-        Vue.prototype.$newChannel({id: 'noosphere-demo'})
-
+        let channelID = localUser.channelID || 'noosphere-demo'
+        Vue.prototype.$newChannel({id: channelID})
         console.log('{core options}', options)
         //Vue.prototype.$getPersistanceDB(options)
         // let route = await Vue.prototype.$getRouterParameters(options.route)
@@ -25,24 +22,25 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
       Vue.prototype.$newChannel = async function(c){
         c.store = store
         let channel = new Channel(c)
-        store.commit('noosphere/setChannel',channel)
-        channel.d()
         localUser.addChannel(channel)
+        localUser.d()
+        if (localUser.roomID != null) Vue.prototype.$openRoom(localUser.roomID)
       }
 
       Vue.prototype.$openRoom = async function(id){
         console.log(id)
 
-        let channel = store.state.noosphere.channel
+        //let channel = store.state.noosphere.channel
+
 
         let room = new Room(
-          {channel: channel, id:id, store: store}
+          {id:id, channel: localUser.channel, store: store}
         )
         if(opts.router.history.current.name != 'editor'){
           opts.router.push('/editor')
         }
         // room.d()
-        store.commit('noosphere/setRoom',room)
+        localUser.addRoom(room)
 
       }
 
@@ -112,8 +110,7 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
 
       Vue.prototype.$userChanged = async function(u){
         console.log('[userChanged]',u)
-        localUser.update(u)
-        store.commit('noosphere/setLocalUser',localUser)
+        localUser.updateProfile(u)
       }
 
 

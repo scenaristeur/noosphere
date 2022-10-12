@@ -46,9 +46,9 @@ class User extends Base {
       color: this.color,
       clientID: this.clientID,
       channels: this.channels,
-      channel: channel_id,
+      channelID: channel_id,
       rooms: this.rooms,
-      room: room_id,
+      roomID: room_id,
     }
   }
 
@@ -56,6 +56,7 @@ class User extends Base {
     let lite = this.lite()
     localStorage.setItem('noosphere-user', JSON.stringify(lite))
     this.store.commit('noosphere/setLocalUser',lite)
+    console.log('save', this)
     if (this.channel != null) this.channel.awareness.setLocalStateField('user', lite)
     this.d()
   }
@@ -63,12 +64,21 @@ class User extends Base {
   addChannel(c){
     this.channel = c
     delete this.channels[c.id]
-    this.channels[c.id] = {id: c.id, data: Date.now()}
+    this.channels[c.id] = {id: c.id, date: Date.now()}
     this.clientID = this.channel.awareness.clientID
+    this.store.commit('noosphere/setChannel',c)
     this.save()
   }
 
-  update(u){
+  addRoom(r){
+    this.room = r
+    delete this.rooms[r.id]
+    this.rooms[r.id] = {id: r.id, date: Date.now()}
+    this.store.commit('noosphere/setRoom',r)
+    this.save()
+  }
+
+  updateProfile(u){
     Object.assign(this,u)
     this.save()
   }
