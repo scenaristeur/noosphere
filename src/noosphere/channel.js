@@ -27,6 +27,8 @@ class Channel extends Base {
         console.log('state',state)
         if (state.user ) {
           console.log('state.user', state.user)
+          this.store.commit('actor/setUserById', state.user)
+          this.store.commit('actor/setUsersUpdated', Date.now())
         }
       })
     })

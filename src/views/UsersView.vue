@@ -46,11 +46,11 @@
 
 
 <!-- <b-modal id="modal-me" title="Change your username and color" @ok="userChanged">
-  <p class="my-4" v-if="user!=null">
-    username<b-input v-model="user.name" placeholder="username" />
-    color <b-input v-model="user.color" type="color" />
-    <b-button @click="randomUser" variant="outline-info" size="sm">Random user</b-button>
-  </p>
+<p class="my-4" v-if="user!=null">
+username<b-input v-model="user.name" placeholder="username" />
+color <b-input v-model="user.color" type="color" />
+<b-button @click="randomUser" variant="outline-info" size="sm">Random user</b-button>
+</p>
 </b-modal> -->
 
 
@@ -60,8 +60,8 @@
     User <b>{{currentUser.name}}</b>
   </template>
   <ul v-if="currentUser.rooms != undefined">
-    <li v-for="room in Object.values(currentUser.rooms)" :key="room.roomId">
-      <b-button @click="changeRoom(room.roomId)" size="sm">{{room.roomId}}</b-button>
+    <li v-for="room in Object.keys(currentUser.rooms)" :key="room">
+      <b-button @click="changeRoom(room)" size="sm">{{room}}</b-button>
     </li>
   </ul>
 
@@ -83,7 +83,7 @@ export default {
           sortable: true
         },
         {
-          key: 'roomId',
+          key: 'roomID',
           label: 'room',
           sortable: true
         },
@@ -99,31 +99,33 @@ export default {
   methods:{
     onRowSelected(r){
       if(r[0]!= undefined){
-        this.user.roomId = r[0].roomId
-        this.$connect('user view row selected')
+        //this.user.roomId = r[0].roomId
+        // this.$connect('user view row selected')
+        this.$openRoom(r[0].roomID)
         this.$emit('hide')
       }
     },
-    userChanged(){
-      this.$store.commit('actor/setUser', this.user)
-      this.$userChanged()
-    },
-    async randomUser(){
-      this.currentUser = await this.$randomUser()
-    //  console.log(this.currentUser)
-      this.$store.commit('actor/setUser', this.currentUser)
-      // this.$userChanged()
-      // this.userChanged()
-    },
+    // userChanged(){
+    //   this.$store.commit('actor/setUser', this.user)
+    //   this.$userChanged()
+    // },
+    // async randomUser(){
+    //   this.currentUser = await this.$randomUser()
+    // //  console.log(this.currentUser)
+    //   this.$store.commit('actor/setUser', this.currentUser)
+    //   // this.$userChanged()
+    //   // this.userChanged()
+    // },
     openUserModal(user){
-    //  console.log(user)
+      //  console.log(user)
       this.currentUser = user
       this.$bvModal.show("modal-currentUser")
     },
     changeRoom(roomId){
-    //  console.log(roomId)
-      this.user.roomId = roomId
-      this.$connect('user view change room')
+      //  console.log(roomId)
+      //this.user.roomId = roomId
+      // this.$connect('user view change room')
+      this.$openRoom(roomId)
       this.$emit('hide')
       this.$bvModal.hide('modal-currentUser')
     },
@@ -133,7 +135,7 @@ export default {
   },
   watch:{
     usersUpdated(){
-    //  console.log(this.usersUpdated)
+      //  console.log(this.usersUpdated)
       this.$forceUpdate()
     }
   },
@@ -145,7 +147,7 @@ export default {
       },
     },
     user() {
-      return this.$store.state.actor.user
+      return this.$store.state.noosphere.localUser
     },
     usersUpdated() {
       return this.$store.state.actor.usersUpdated
@@ -160,6 +162,6 @@ export default {
 
 }
 .table{
-        max-height:"800px"
+  max-height:"800px"
 }
 </style>
