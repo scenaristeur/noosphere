@@ -25,8 +25,8 @@ Vue.use(Web3Plugin, {store: store, router: router});
 import GraphPlugin from './plugins/graph-plugin';
 Vue.use(GraphPlugin, {store: store, router: router});
 
-import SolidPlugin from './plugins/solid-plugin';
-Vue.use(SolidPlugin, {store: store, router: router});
+// import SolidPlugin from './plugins/solid-plugin';
+// Vue.use(SolidPlugin, {store: store, router: router});
 
 import UtilPlugin from './plugins/util-plugin';
 Vue.use(UtilPlugin, {store: store, router: router});

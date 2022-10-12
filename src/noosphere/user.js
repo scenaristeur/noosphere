@@ -10,7 +10,8 @@ class User extends Base {
     // this.color = options.color || localStorageUser.color || '#'+Math.floor(Math.random()*16777215).toString(16)
     // this.created = options.created || localStorageUser.created || now
     // this.rooms = options.rooms || localStorageUser.rooms || {}
-    this.localStorageSave()
+    this.save()
+
 
   }
 
@@ -23,10 +24,8 @@ class User extends Base {
       Object.assign(this, this.randomUser())
       console.log('from random')
     }
-
     this.rooms == undefined ? this.rooms =  {} : ""
     this.channels == undefined ? this.channels = {} : ""
-
   }
 
   randomUser(){
@@ -38,13 +37,40 @@ class User extends Base {
     }
   }
 
-  localStorageSave(){
-    localStorage.setItem('noosphere-user', JSON.stringify(this));
+  lite(){
+    let room_id = this.store.state.noosphere.room ? this.store.state.noosphere.room.id : null
+    let channel_id = this.store.state.noosphere.channel ? this.store.state.noosphere.channel.id : null
+
+    return {
+      name: this.name,
+      color: this.color,
+      clientID: this.clientID,
+      channels: this.channels,
+      channel: channel_id,
+      rooms: this.rooms,
+      room: room_id,
+    }
+  }
+
+  save(){
+    let lite = this.lite()
+    localStorage.setItem('noosphere-user', JSON.stringify(lite))
+    this.store.commit('noosphere/setLocalUser',lite)
+    if (this.channel != null) this.channel.awareness.setLocalStateField('user', lite)
+    this.d()
+  }
+
+  addChannel(c){
+    this.channel = c
+    delete this.channels[c.id]
+    this.channels[c.id] = {id: c.id, data: Date.now()}
+    this.clientID = this.channel.awareness.clientID
+    this.save()
   }
 
   update(u){
     Object.assign(this,u)
-    this.localStorageSave()
+    this.save()
   }
 
 

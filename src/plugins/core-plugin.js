@@ -8,18 +8,12 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
       let localUser = null
       // console.log("store",store)
 
-
-
       Vue.prototype.$coreInit = async function(options){
-        localUser = new User()
-        store.commit('noosphere/setLocalUser',localUser)
-        localUser.d()
+        localUser = new User({store: store})
+
 
 
         Vue.prototype.$newChannel({id: 'noosphere-demo'})
-
-
-
 
         console.log('{core options}', options)
         //Vue.prototype.$getPersistanceDB(options)
@@ -29,14 +23,11 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
 
 
       Vue.prototype.$newChannel = async function(c){
+        c.store = store
         let channel = new Channel(c)
         store.commit('noosphere/setChannel',channel)
         channel.d()
-        delete localUser.channels[channel.id]
-        localUser.channels[channel.id] = {channel}
-        localUser.localStorageSave()
-        store.commit('noosphere/setLocalUser',localUser)
-        localUser.d()
+        localUser.addChannel(channel)
       }
 
       Vue.prototype.$openRoom = async function(id){
