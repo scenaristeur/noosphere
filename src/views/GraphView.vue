@@ -47,12 +47,12 @@ export default {
           indexR === -1 ? this.nodes.push(room) : Object.assign(this.nodes[indexR], room)
           // console.log(this.nodes)
           let link = {source: user.id, target: room.id, group: "visited", label: "visited", color: 'blue'}
-          if (room.id == user.roomId){
+          if (room.id == user.roomID){
             link.group = "current"
             link.label = "current"
             link.color = "red"
             console.log('#link',link)
-            //  Object.assign(this.nodes[user.roomId], {color: 'red', group: 'occuped'})
+            //  Object.assign(this.nodes[user.roomID], {color: 'red', group: 'occuped'})
           }
           // else{
           //   link.label = "room"
@@ -91,13 +91,14 @@ export default {
     },
     currentNode(){
       console.log(this.currentNode)
-      let user = this.$store.state.actor.user
+      // let user = this.$store.state.actor.user
       switch (this.currentNode.group) {
         case "room":
 
-        user.roomId = this.currentNode.id
-        this.$store.commit('actor/setUser', user)
-        this.$connect('graphview')
+        // user.roomID = this.currentNode.id
+        // this.$store.commit('actor/setUser', user)
+        // this.$connect('graphview')
+        this.$openRoom(this.currentNode.id)
         break;
         case "user":
 

@@ -47,12 +47,20 @@ const mutations = {
     state.users = u
   },
   setUserById(state, u){
-    //  console.log('[store setUserById]',u)
-    // if (state.users[u.clientID] == undefined || state.users[u.clientID].roomId == undefined || state.users[u.clientID].roomId != u.roomId || state.users[u.clientID].name != u.name || state.users[u.clientID].color != u.color)
-    // {
-    state.users[u.clientID] = u
-    console.log(u.clientID, u.name,  u.roomId)
-    // }
+
+    let mustUpdate = state.users[u.clientID] == undefined || state.users[u.clientID].roomID == undefined || state.users[u.clientID].roomID != u.roomID || state.users[u.clientID].name != u.name || state.users[u.clientID].color != u.color
+
+
+    if (mustUpdate)
+    {
+      console.log('[store setUserById]',mustUpdate, state.users[u.clientID], u)
+      state.users[u.clientID] = u
+      console.log(u.clientID, u.name,  u.roomId)
+      this.commit('actor/setUsersUpdated', Date.now())
+
+    }else{
+      console.log(".")
+    }
   },
   setUsersUpdated(state, d){
     state.usersUpdated = d
