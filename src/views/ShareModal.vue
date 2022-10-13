@@ -13,8 +13,8 @@
 
       <b-button @click="saveQR" disabled size="sm" variant="info">copy url</b-button> -->
       <div id="printable">
-        <!-- Let's talk about <b><u>{{user.roomId}}</u></b> at : <br>
-        Discutons de <b><u>{{user.roomId}}</u></b> à l'adresse :
+        <!-- Let's talk about <b><u>{{user.roomID}}</u></b> at : <br>
+        Discutons de <b><u>{{user.roomID}}</u></b> à l'adresse :
         <hr> -->
         {{this.url}}
         <br>
@@ -69,7 +69,7 @@ export default {
   },
   methods:{
     async share(){
-      this.url = "https://scenaristeur.github.io/noosphere?room="+this.user.roomId
+      this.url = "https://scenaristeur.github.io/noosphere?room="+this.localUser.roomID
       let title = 'Noosphere'
       let text = "\nCheck this idea I want to share in Noosphere !\n\n  "
 
@@ -95,7 +95,7 @@ export default {
        // else {
 
         // let app = this
-        // console.log(this.user)
+        // console.log(this.localUser)
 
         navigator.clipboard.writeText(this.url).then(function() {
           console.log('Async: Copying to clipboard was successful!');
@@ -109,7 +109,7 @@ export default {
     },
     async generateQR(){
       // if (this.QRsrc == null){
-      this.url = 'https://scenaristeur.github.io/noosphere/?room='+this.user.roomId
+      this.url = 'https://scenaristeur.github.io/noosphere/?room='+this.localUser.roomID
       this.QRsrc = await QRCode.toDataURL(this.url, {color: {light: '#98faf5'}})
       // }else{
       //   this.QRsrc = null
@@ -144,9 +144,9 @@ let annonce = {fr: "Parlons de", en: "Let's talk about"}
       let divName = 'printable'
       var mywindow = window.open('', 'PRINT', 'height=400,width=600');
 
-      mywindow.document.write('<html><head><title>' + this.user.roomId + '</title>');
+      mywindow.document.write('<html><head><title>' + this.localUser.roomID + '</title>');
       mywindow.document.write('</head><body >');
-      mywindow.document.write("<h2>"+annonce[lang]+" " + this.user.roomId  + "</h1>");
+      mywindow.document.write("<h2>"+annonce[lang]+" " + this.localUser.roomID  + "</h1>");
       mywindow.document.write(document.getElementById(divName).innerHTML);
       mywindow.document.write('</body></html>');
 
@@ -160,8 +160,8 @@ let annonce = {fr: "Parlons de", en: "Let's talk about"}
     }
   },
   computed: {
-    user() {
-      return this.$store.state.actor.user
+    localUser() {
+      return this.$store.state.noosphere.localUser
     },
   }
 

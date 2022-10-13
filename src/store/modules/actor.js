@@ -6,6 +6,7 @@ const state = () => ({
   usersUpdated: null,
   roomAddress: '',
   historyUpdated: null,
+  modalUser : null
   // graph: null,
   // nodes: [],
   // links: [],
@@ -49,13 +50,17 @@ const mutations = {
     //  console.log('[store setUserById]',u)
     // if (state.users[u.clientID] == undefined || state.users[u.clientID].roomId == undefined || state.users[u.clientID].roomId != u.roomId || state.users[u.clientID].name != u.name || state.users[u.clientID].color != u.color)
     // {
-      state.users[u.clientID] = u
-      console.log(u.clientID, u.name,  u.roomId)
+    state.users[u.clientID] = u
+    console.log(u.clientID, u.name,  u.roomId)
     // }
   },
   setUsersUpdated(state, d){
     state.usersUpdated = d
   },
+
+  setModalUser(state, u){
+    state.modalUser = u
+  }
   // setGraph(state, g){
   //   state.graph = g
   // },

@@ -1,6 +1,7 @@
 <template>
   <b-container fluid class="room-history" v-if="user != null">
 
+    {{ user .rooms}}
     <b-col lg="6" class="my-1">
       <b-form-group
       label="Filter"
@@ -73,7 +74,7 @@ export default {
       filter: null,
       fields: [
         {
-          key: 'roomId',
+          key: 'id',
           label: 'room',
           sortable: true
         },
@@ -82,8 +83,8 @@ export default {
           label: 'date',
           // formatter: this.formatter,
           formatter: value => {
-             return this.$secondsToHms((new Date()-value)/1000) //value.charAt(0).toUpperCase()
-           },
+            return this.$secondsToHms((new Date()-value)/1000) //value.charAt(0).toUpperCase()
+          },
           sortable: true
         },
         {key: 'delete',
@@ -100,8 +101,8 @@ methods: {
   // },
   onRowSelected(r){
     if(r[0]!= undefined){
-      this.user.roomId = r[0].roomId
-      this.$connect('room history')
+      this.$openRoom(r[0].id)
+      // this.$connect('room history')
       this.$emit('hide')
       // v-b-toggle.sidebar-right
       // this.$bvSideBar.hide('sidebar-right')
@@ -123,7 +124,7 @@ computed: {
   user: {
     cache: false,
     get() {
-      return this.$store.state.actor.user;
+      return this.$store.state.noosphere.localUser;
     },
   },
   historyUpdated() {

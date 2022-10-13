@@ -6,7 +6,7 @@
 
 
     <b-table
-    v-if="user != null"
+    v-if="localUser != null"
     small
     hover
     selectable
@@ -21,7 +21,7 @@
     class="table"
     caption-top >
     <template #cell(name)="data">
-      <template v-if="data.item.clientID == user.clientID">
+      <template v-if="data.item.clientID == localUser.clientID">
         <b-button @click="openProfile" size="sm"
         variant="outline-primary">
         <span :style="'color:'+data.item.color"><b>{{data.item.name}}</b>
@@ -35,7 +35,7 @@
   </template>
   <template #cell(rooms)="data">
     <!-- {{Object.keys(data.item.rooms)}} -->
-    <b-button size="sm" @click="openUserModal(data.item)">{{Object.keys(data.item.rooms).length}}</b-button>
+    <b-button size="sm" v-b-modal.modal-modalUser @click="openUserModal(data.item)">{{Object.keys(data.item.rooms).length}}</b-button>
 
 
   </template>
@@ -55,19 +55,7 @@ color <b-input v-model="user.color" type="color" />
 
 
 
-<b-modal id="modal-currentUser" ok-only size="lg">
-  <template #modal-title>
-    User <b>{{currentUser.name}}</b>
-  </template>
-  <ul v-if="currentUser.rooms != undefined">
-    <li v-for="room in Object.keys(currentUser.rooms)" :key="room">
-      <b-button @click="changeRoom(room)" size="sm">{{room}}</b-button>
-    </li>
-  </ul>
 
-
-  <!-- <p class="my-4">  {{currentUser}}</p> -->
-</b-modal>
 
 </b-container>
 </template>
@@ -93,7 +81,7 @@ export default {
           sortable: true
         },
       ],
-      currentUser: {}
+      // currentUser: {}
     }
   },
   methods:{
@@ -116,19 +104,12 @@ export default {
     //   // this.$userChanged()
     //   // this.userChanged()
     // },
-    openUserModal(user){
+    openUserModal(u){
       //  console.log(user)
-      this.currentUser = user
-      this.$bvModal.show("modal-currentUser")
+      this.$store.commit('actor/setModalUser',u)
+      this.$bvModal.show("modal-modalUser")
     },
-    changeRoom(roomId){
-      //  console.log(roomId)
-      //this.user.roomId = roomId
-      // this.$connect('user view change room')
-      this.$openRoom(roomId)
-      this.$emit('hide')
-      this.$bvModal.hide('modal-currentUser')
-    },
+
     openProfile(){
       this.$router.push('/profile')
     }
@@ -146,7 +127,7 @@ export default {
         return this.$store.state.actor.users;
       },
     },
-    user() {
+    localUser() {
       return this.$store.state.noosphere.localUser
     },
     usersUpdated() {

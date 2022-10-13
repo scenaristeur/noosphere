@@ -64,16 +64,17 @@ class User extends Base {
   addChannel(c){
     this.channel = c
     delete this.channels[c.id]
-    this.channels[c.id] = {id: c.id, date: Date.now()}
+    this.channels[c.id] = {id: c.id, date: Date.now(), }
     this.clientID = this.channel.awareness.clientID
     this.store.commit('noosphere/setChannel',c)
     this.save()
   }
 
   addRoom(r){
+    console.log("add", r)
     this.room = r
     delete this.rooms[r.id]
-    this.rooms[r.id] = {id: r.id, date: Date.now()}
+    this.rooms[r.id] = {id: r.id, date: Date.now(), type: 'room'}
     this.store.commit('noosphere/setRoom',r)
     this.save()
   }

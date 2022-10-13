@@ -26,6 +26,7 @@
 
         <!-- <b-card-text>The users</b-card-text> -->
         <UsersView @hide="hide" />
+        <UserRooms @hide="hide" />
       </b-tab>
 
       <b-tab>
@@ -36,17 +37,17 @@
       </b-tab>
 
       <!-- <b-tab title="S">
-        <b-card-text>The solid part </b-card-text>
-      </b-tab> -->
+      <b-card-text>The solid part </b-card-text>
+    </b-tab> -->
 
-      <template #tabs-end>
-        <!-- <b-nav-item href="#" role="presentation" @click="() => {}">Another tab</b-nav-item>
-        <li role="presentation" class="nav-item align-self-center">Plain text</li> -->
-        <b-nav-item to="/graph" class="nav-item mx-2">net</b-nav-item>
-      </template>
+    <template #tabs-end>
+      <!-- <b-nav-item href="#" role="presentation" @click="() => {}">Another tab</b-nav-item>
+      <li role="presentation" class="nav-item align-self-center">Plain text</li> -->
+      <b-nav-item to="/graph" class="nav-item mx-2">net</b-nav-item>
+    </template>
 
-    </b-tabs>
-  </b-sidebar>
+  </b-tabs>
+</b-sidebar>
 </template>
 
 <script>
@@ -56,12 +57,13 @@ export default {
     'UsersView': ()=>import('@/views/UsersView'),
     'RoomHistory': ()=>import('@/views/RoomHistory'),
     'Web3Uploads': ()=>import('@/views/Web3Uploads'),
+    'UserRooms': ()=>import('@/views/UserRooms'),
     // 'QrView': ()=>import('@/views/QrView'),
     // 'UserView': ()=>import('@/views/UserView'),
   },
   methods:{
     hide(){
-    this.$refs.sidebar.hide()
+      this.$refs.sidebar.hide()
     }
   }
 

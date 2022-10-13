@@ -17,6 +17,7 @@
   <Web3Modal />
   <ShareModal />
 
+
 </div>
 </template>
 
@@ -31,6 +32,7 @@ export default {
     'SideBar': ()=>import('@/views/SideBar'),
     'Web3Modal': ()=>import('@/views/Web3Modal'),
     'ShareModal': ()=>import('@/views/ShareModal'),
+
     // 'UserView': ()=>import('@/views/UserView'),
   },
   data() {

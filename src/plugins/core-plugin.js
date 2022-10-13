@@ -82,10 +82,11 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
 
           console.log("{EDITOR}", editor, roomDoc.toJSON())
           // Vue.prototype.$spinnerRemove(roomId)
-          user.rooms[room.id] = {date: Date.now()}
-          awareness.setLocalStateField('user', user)
-          store.commit('noosphere/setLocalUser', user)
+          //user.rooms[room.id] = {date: Date.now()}
+          // awareness.setLocalStateField('user', user)
+          // store.commit('noosphere/setLocalUser', user)
           // store.commit('actor/setRoomAddress', roomId)
+          //Vue.prototype.$openRoom()
         }else{
           console.log('{something is null now}')
         }
