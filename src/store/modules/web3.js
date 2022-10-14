@@ -3,7 +3,7 @@
 const state = () => ({
   token: null,
   uploads: [],
-    pinMessages: [],
+  pinMessages: [],
   // graph: null,
   // nodes: [],
   // links: [],

@@ -94,7 +94,7 @@ export default {
       if(r[0]!= undefined){
         //this.user.roomId = r[0].roomId
         // this.$connect('user view row selected')
-        this.$openRoom(r[0].roomID)
+        this.$openRoom({id: r[0].roomID})
         this.$emit('hide')
       }
     },

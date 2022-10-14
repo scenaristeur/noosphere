@@ -32,7 +32,7 @@ export default {
     },
     async openRoom(){
       let id = this.ra.trim()
-      id.length > 0 ? await this.$openRoom(id) : alert("RoomId must be at least one character !")
+      id.length > 0 ? await this.$openRoom({id: id}) : alert("RoomId must be at least one character !")
     },
     // openRoom1(){
     //   let user = this.user

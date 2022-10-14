@@ -53,7 +53,7 @@ export default {
         this.$nextTick(() => {
           this.$bvModal.hide('modal-qrscan')
         })
-            this.$openRoom(roomID)
+            this.$openRoom({id: roomID})
       },
       onHidden(){
         console.log('onHidden', this.scanner.html5Qrcode)

@@ -131,13 +131,14 @@ const plugin = {
 
     Vue.prototype.$loadCid = async function(data){
       console.log(data)
-      let user = store.state.actor.user
-      user.roomId = data.roomId
+      //  let user = store.state.actor.user
+      //user.roomId = data.roomId
       // let editorData = data.content
       // store.commit('editor/setEditorData', editorData)
-      store.commit('actor/setUser', user)
+      //  store.commit('actor/setUser', user)
       //  await Vue.prototype.$applyUpdate(data.content)
-      await Vue.prototype.$connect({data: data, origin: 'web3.loadCid'})
+      //  await Vue.prototype.$connect({data: data, origin: 'web3.loadCid'})
+      Vue.prototype.$openRoom({id: data.roomId, content: data.result.content})
       Vue.prototype.$spinnerRemove('web3 load')
       console.log('{parent room}',data.result.parent)
 

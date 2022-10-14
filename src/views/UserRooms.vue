@@ -22,7 +22,7 @@ export default {
       //  console.log(roomId)
       //this.user.roomId = roomId
       // this.$connect('user view change room')
-      this.$openRoom(roomId)
+      this.$openRoom({id: roomId})
       this.$emit('hide')
       this.$bvModal.hide('modal-modalUser')
     },

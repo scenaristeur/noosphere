@@ -85,6 +85,7 @@ export default {
   },
   async created(){
     this.token = this.$store.state.web3.token
+    console.log(this.token)
     // this.$solidRoomList()
     // this.$solidCreateRoom('Room_'+Date.now())
   },
@@ -103,7 +104,8 @@ export default {
       //let prefix = 'noos'
       let separator = '_'
       // this.fileName = prefix+separator+this.user.roomId+separator+Date.now()
-      this.fileName = this.user.roomId+separator+now
+      console.log(this.user)
+      this.fileName = this.user.roomID+separator+now
       //data.filename = this.fileName
 
       // this.data = JSON.stringify(data, null, 2)
@@ -113,7 +115,7 @@ export default {
       this.cid = null
     },
     async pin(){
-      let data = {content: this.data, parent: this.user.roomId}
+      let data = {content: this.data, parent: this.user.roomID}
       this.cid = await this.$web3Pin({data: JSON.stringify(data), fileName: this.fileName})
     },
     async tokenChanged(){
@@ -142,7 +144,7 @@ export default {
       return this.$store.state.web3.token
     },
     user() {
-      return this.$store.state.actor.user
+      return this.$store.state.noosphere.localUser
     },
     messages(){
       return this.$store.state.web3.pinMessages

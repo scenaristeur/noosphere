@@ -6,6 +6,7 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
     install(Vue, opts = {}) {
       let store = opts.store
       let localUser = null
+      let editorData = null
       // console.log("store",store)
 
       Vue.prototype.$coreInit = async function(options){
@@ -26,11 +27,14 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
         localUser.addChannel(channel)
         localUser.d()
         if (localUser.route.query.room != undefined) localUser.roomID = localUser.route.query.room
-        if (localUser.roomID != null) Vue.prototype.$openRoom(localUser.roomID)
+        if (localUser.roomID != null) Vue.prototype.$openRoom({id: localUser.roomID})
       }
 
-      Vue.prototype.$openRoom = async function(id){
-        console.log(id)
+      Vue.prototype.$openRoom = async function(params){
+        let id = params.id
+        console.log("{'openROOM params'}", params)
+        params.content != undefined ? editorData = params.content : editorData = null
+
 
         //let channel = store.state.noosphere.channel
 
@@ -48,6 +52,7 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
 
       Vue.prototype.$connectMilkdown = async function(options){
         console.log(options)
+        console.log("{EDITORDATA}", editorData)
         let editor = store.state.editor.editor
         let channel = store.state.noosphere.channel
         let user = store.state.noosphere.localUser
@@ -66,7 +71,12 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
             // bind doc and awareness
             .bindDoc(roomDoc)
             .setAwareness(awareness)
-            .connect();
+            // .connect();
+
+            if(editorData != null){
+              collabService.applyTemplate(editorData)
+              editorData = null
+            }
 
             // if (source.data != undefined){
             //   console.log(source.data)
@@ -79,7 +89,7 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
 
 
             // connect yjs with milkdown
-            // collabService.connect();
+            collabService.connect();
           });
 
           console.log("{EDITOR}", editor, roomDoc.toJSON())

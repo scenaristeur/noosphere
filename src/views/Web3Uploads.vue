@@ -124,7 +124,7 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.state.actor.user
+      return this.$store.state.noosphere.localUser
     },
     uploads() {
       return this.$store.state.web3.uploads

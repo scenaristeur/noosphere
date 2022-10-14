@@ -98,7 +98,7 @@ export default {
         // user.roomID = this.currentNode.id
         // this.$store.commit('actor/setUser', user)
         // this.$connect('graphview')
-        this.$openRoom(this.currentNode.id)
+        this.$openRoom({id: this.currentNode.id})
         break;
         case "user":
 

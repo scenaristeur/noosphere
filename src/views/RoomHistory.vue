@@ -101,7 +101,7 @@ methods: {
   // },
   onRowSelected(r){
     if(r[0]!= undefined){
-      this.$openRoom(r[0].id)
+      this.$openRoom({id: r[0].id})
       // this.$connect('room history')
       this.$emit('hide')
       // v-b-toggle.sidebar-right

@@ -31,7 +31,7 @@
             <b-dropdown-item href="https://matrix.to/#/#noosphere:matrix.org" target="_blank"> Chat about Noosphere <b-icon icon="chat" aria-hidden="true"></b-icon> </b-dropdown-item>
             <b-dropdown-item href="#">
               <i><small>
-                version: awareness & qr
+                version: awareness & qr & fix web3
               </small></i>
             </b-dropdown-item>
           </b-nav-item-dropdown>
