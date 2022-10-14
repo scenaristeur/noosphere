@@ -135,6 +135,7 @@ class Channel extends Base {
     if (type == 'main'){
       this.wsProvider = wsProvider
     }else{
+      this.roomWsProvider != undefined ? this.roomWsProvider.destroy() : ""
       this.roomWsProvider = wsProvider
     }
 
