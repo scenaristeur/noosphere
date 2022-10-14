@@ -1,5 +1,5 @@
 import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
-  import { /*collaborative,*/collabServiceCtx } from '@milkdown/plugin-collaborative';
+  import { /*collaborative,*/collabServiceCtx } from '@milkdown/plugin-collaborative'
 
 
   const plugin = {
@@ -13,7 +13,7 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
         // console.log("ROUTE", route)
         localUser = new User({store: store, route: options.route})
         let channelID = localUser.channelID || 'noosphere-demo'
-        Vue.prototype.$newChannel({id: channelID})
+        Vue.prototype.$newChannel({id: channelID, user: localUser})
         console.log('{core options}', options)
         //Vue.prototype.$getPersistanceDB(options)
 

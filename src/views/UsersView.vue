@@ -76,6 +76,11 @@ export default {
           sortable: true
         },
         {
+          key: 'clientID',
+          label: 'clientID',
+          sortable: true
+        },
+        {
           key: 'rooms',
           label: 'rooms',
           sortable: true
