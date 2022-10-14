@@ -44,16 +44,16 @@ export default {
         console.warn(`Code scan error = ${error}`);
         //this.scanner = error
       },
-      openRoom(roomId){
-        console.log(roomId, this.scanner)
-              let user = this.user
-        user.roomId = roomId
-        this.$store.commit('actor/setUser', user)
+      openRoom(roomID){
+        console.log(roomID, this.scanner)
+        //       let user = this.user
+        // user.roomId = roomId
+        // this.$store.commit('actor/setUser', user)
 
         this.$nextTick(() => {
           this.$bvModal.hide('modal-qrscan')
         })
-            this.$connect('qr modal')
+            this.$openRoom(roomID)
       },
       onHidden(){
         console.log('onHidden', this.scanner.html5Qrcode)
