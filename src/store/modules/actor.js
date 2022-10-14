@@ -46,7 +46,19 @@ const mutations = {
   setUsers(state, u){
     state.users = u
   },
-  setUserById(state, u){
+  updateUsersStates(state, states){
+    console.log(states)
+    // let clientIDs = Object.keys(states.users)
+    // console.log("clientsIDs",clientIDs)
+    state.users = states.users
+    //this.commit('actor/setUsersUpdated', Date.now())
+
+
+  },
+
+
+
+  setUserByIdOLD(state, u){
 
     let mustUpdate = state.users[u.clientID] == undefined || state.users[u.clientID].roomID == undefined || state.users[u.clientID].roomID != u.roomID || state.users[u.clientID].name != u.name || state.users[u.clientID].color != u.color
 

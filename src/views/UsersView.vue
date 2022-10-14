@@ -76,13 +76,13 @@ export default {
           sortable: true
         },
         {
-          key: 'clientID',
-          label: 'clientID',
+          key: 'rooms',
+          label: 'rooms',
           sortable: true
         },
         {
-          key: 'rooms',
-          label: 'rooms',
+          key: 'clientID',
+          label: 'clientID',
           sortable: true
         },
       ],

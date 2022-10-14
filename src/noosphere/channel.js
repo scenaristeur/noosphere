@@ -26,23 +26,25 @@ class Channel extends Base {
 
 
 
+
     this.awareness = new Awareness(this.rootDoc)
 
-console.log("must fusion user clientID", userHasClientId, this.awareness.clientID)
-
-this.awareness.clientID = userHasClientId
-//     awarenessProtocol.removeAwarenessStates(
-//
-// )
-
+    // console.log("must fusion user clientID or remove old", userHasClientId, this.awareness.clientID)
+    //
+    // // this.awareness.clientID = userHasClientId
+    // //     awarenessProtocol.removeAwarenessStates(
+    // //
+    // // )
+    //
     // let awarenessClientExists = this.awareness.meta.userHasClientId
     //
     // console.log('awarenessClientExists', awarenessClientExists)
     //
     // if(awarenessClientExists != undefined){
     //   this.awareness.clientID = userHasClientId
-    // }
     //
+    // }
+
 
 
 
@@ -50,14 +52,18 @@ this.awareness.clientID = userHasClientId
     console.log("Awareness outdatedTime", this.awareness)
     this.awareness.on('change', changes => {
       console.log('changes', changes)
+      let usersStates = {changes: changes, users: {}}
       this.awareness.getStates().forEach(state => {
         console.log('state',state)
         if (state.user ) {
           console.log('state.user', state.user)
-          this.store.commit('actor/setUserById', state.user)
-
+          //  this.store.commit('actor/setUserById', state.user)
+          usersStates.users[state.user.clientID] = state.user
+          console.log(usersStates)
         }
       })
+      console.log(usersStates)
+      this.store.commit('actor/updateUsersStates', usersStates)
     })
   }
 
