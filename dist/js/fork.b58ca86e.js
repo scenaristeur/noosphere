@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunknoosphere"]=self["webpackChunknoosphere"]||[]).push([[589],{7609:function(e,n,r){r.r(n),r.d(n,{default:function(){return l}});var s=function(){var e=this,n=e._self._c;return n("div",{staticClass:"fork-view"})},t=[],u={name:"ForkView"},f=u,o=r(1001),i=(0,o.Z)(f,s,t,!1,null,"f98149f6",null),l=i.exports}}]);
+//# sourceMappingURL=fork.b58ca86e.js.map

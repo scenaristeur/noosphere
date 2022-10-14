@@ -64,15 +64,17 @@ export default {
     },
     randomRoom(){
       console.log('random')
-      this.user.roomId = this.$random()
-      this.$store.commit('actor/setUser', this.user)
-      this.$connect('menu random')
+      // let roomId = this.$random()
+      // this.$store.commit('actor/setUser', this.user)
+      // this.$connect('menu random')
+      this.$openRoom({id: this.$random()})
     },
     nowRoom(){
       console.log('now')
-      this.user.roomId = Date.now()
-      this.$store.commit('actor/setUser', this.user)
-      this.$connect('menu now')
+      // let roomId = Date.now()
+      this.$openRoom({id: Date.now()})
+      // this.$store.commit('actor/setUser', this.user)
+      // this.$connect('menu now')
     }
   },
   watch:{
