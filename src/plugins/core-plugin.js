@@ -9,13 +9,14 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
       // console.log("store",store)
 
       Vue.prototype.$coreInit = async function(options){
-        localUser = new User({store: store})
+        // let route = await Vue.prototype.$getRouterParameters(options.route)
+        // console.log("ROUTE", route)
+        localUser = new User({store: store, route: options.route})
         let channelID = localUser.channelID || 'noosphere-demo'
         Vue.prototype.$newChannel({id: channelID})
         console.log('{core options}', options)
         //Vue.prototype.$getPersistanceDB(options)
-        // let route = await Vue.prototype.$getRouterParameters(options.route)
-        // console.log(route)
+
       }
 
 
@@ -24,6 +25,7 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
         let channel = new Channel(c)
         localUser.addChannel(channel)
         localUser.d()
+        if (localUser.route.query.room != undefined) localUser.roomID = localUser.route.query.room
         if (localUser.roomID != null) Vue.prototype.$openRoom(localUser.roomID)
       }
 
@@ -94,13 +96,13 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
       }
 
 
-      Vue.prototype.$getRouterParameters = async function(route){
+      Vue.prototype.$getRouterParameters11 = async function(route){
         console.log("{getRouterParameters}",opts.router, route)
         await opts.router.onReady(async (router)=>{
           console.log('[RRRRRouter]',router, route, route.name)
           // return {router: router, route: route}
+          return route.query
         })
-
       }
 
       Vue.prototype.$removeUser = async function(){
@@ -138,7 +140,7 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
 
       }
 
-      Vue.prototype.$getRouterParameters = async function( route){
+      Vue.prototype.$getRouterParameters1 = async function( route){
         console.log("{getRouterParameters}",opts.router, route)
         let user = store.state.actor.user
         await opts.router.onReady(async (router)=>{
