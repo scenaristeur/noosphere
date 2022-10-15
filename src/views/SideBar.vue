@@ -31,6 +31,15 @@
 
       <b-tab>
         <template #title>
+          <!-- <b-icon font-scale="1.5" icon="star" aria-hidden="true"></b-icon> -->
+          All
+        </template>
+        <AllRooms @hide="hide" />
+      </b-tab>
+
+
+      <b-tab>
+        <template #title>
           <b-icon font-scale="1.5" icon="star" aria-hidden="true"></b-icon>
         </template>
         <b-card-text>My favorites rooms</b-card-text>
@@ -58,6 +67,7 @@ export default {
     'RoomHistory': ()=>import('@/views/RoomHistory'),
     'Web3Uploads': ()=>import('@/views/Web3Uploads'),
     'UserRooms': ()=>import('@/views/UserRooms'),
+    'AllRooms': ()=>import('@/views/AllRooms'),
     // 'QrView': ()=>import('@/views/QrView'),
     // 'UserView': ()=>import('@/views/UserView'),
   },
