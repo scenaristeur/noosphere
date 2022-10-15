@@ -22,6 +22,9 @@ class Room extends Base {
       this.ymap.set(this.id, this.roomDoc)
     }
 
+
+  //  roomsArray.insert(0, this.id)
+
     this.channel.flush(({doc: this.roomDoc, roomID: this.id, type: 'room'}))
 
 

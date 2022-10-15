@@ -23,10 +23,6 @@ class Channel extends Base {
   createAwareness(){
     let userHasClientId = this.user.clientID
 
-
-
-
-
     this.awareness = new Awareness(this.rootDoc)
 
     // console.log("must fusion user clientID or remove old", userHasClientId, this.awareness.clientID)
@@ -44,6 +40,37 @@ class Channel extends Base {
     //   this.awareness.clientID = userHasClientId
     //
     // }
+
+    this.roomList = this.rootDoc.getMap('allrooms')
+
+
+    this.roomList.observe(ymapEvent => {
+      ymapEvent.target === this.roomList // => true
+      console.log("this.roomList has changed", this.roomList.toJSON())
+      let rooms = Array.from(this.roomList.values()).sort((a,b) => b.date - a.date)
+      this.store.commit('noosphere/setAllRooms', rooms)
+
+      // // Find out what changed:
+      // // Option 1: A set of keys that changed
+      // ymapEvent.keysChanged // => Set<strings>
+      // // Option 2: Compute the differences
+      // ymapEvent.changes.keys // => Map<string, { action: 'add'|'update'|'delete', oldValue: any}>
+      //
+      // // sample code.
+      // ymapEvent.changes.keys.forEach((change, key) => {
+      //   if (change.action === 'add') {
+      //     console.log(`Property "${key}" was added. Initial value: "${this.roomList.get(key)}".`)
+      //   } else if (change.action === 'update') {
+      //     console.log(`Property "${key}" was updated. New value: "${this.roomList.get(key)}". Previous value: "${change.oldValue}".`)
+      //   } else if (change.action === 'delete') {
+      //     console.log(`Property "${key}" was deleted. New value: undefined. Previous value: "${this.roomList.oldValue}".`)
+      //   }
+      // })
+    })
+
+    // ymap.set('key', 'value') // => Property "key" was added. Initial value: "value".
+    // ymap.set('key', 'new') // => Property "key" was updated. New value: "new". Previous value: "value".
+    // ymap.delete('key') // => Property "key" was deleted. New value: undefined. Previous Value: "new".
 
 
 
@@ -74,7 +101,6 @@ class Channel extends Base {
     this.indexeddbProvider.on('synced', async (data) => {
       console.log('{$getPersistanceDB} synced', data)
 
-
       this.flush({doc: this.rootDoc, roomID: this.id, type: 'main'})
 
       // Vue.prototype.$getWebsocketProvider()
@@ -99,6 +125,8 @@ class Channel extends Base {
     let roomID = params.roomID
     let type = params.type
 
+
+
     if(this.roomWsProvider != undefined) this.roomWsProvider.destroy()
 
     let wsProvider = new WebsocketProvider(
@@ -111,6 +139,8 @@ class Channel extends Base {
       doc, //this.rootDoc, // Doc
       {awareness: awareness, connect: true}
     );
+
+
 
 
 
@@ -137,9 +167,19 @@ class Channel extends Base {
     }else{
       this.roomWsProvider != undefined ? this.roomWsProvider.destroy() : ""
       this.roomWsProvider = wsProvider
+      this.addToRoomList(roomID)
     }
 
 
+
+
+
+
+  }
+
+  addToRoomList(roomID){
+    this.roomList.set(roomID, {roomID: roomID, date: Date.now()})
+    console.log("add to room List", this.roomList.toJSON(), roomID)
 
   }
 
