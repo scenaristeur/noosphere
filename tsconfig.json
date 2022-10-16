@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "esnext",
+    // activation de la déduction stricte pour les propriétés de données sur `this`
+    "strict": true,
+    //"module": "esnext",
+        "module": "es2015",
     "baseUrl": "./",
     "moduleResolution": "node",
     "paths": {

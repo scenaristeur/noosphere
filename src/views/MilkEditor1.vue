@@ -27,14 +27,6 @@ import { diagram } from '@milkdown/plugin-diagram';
 // import { gfm } from '@milkdown/preset-gfm';
 import { listener, listenerCtx } from '@milkdown/plugin-listener';
 
-import { AtomList/*, createNode */} from "@milkdown/utils";
-import { ld } from '@/milkdown-plugins/plugin-ld/index.ts';
-import { iframe } from '@/milkdown-plugins/plugin-iframe/index.ts';
-
-
-console.log("---------",ld, iframe)
-const iframePlugin = AtomList.create([iframe()]);
-
 // import {Awareness} from 'y-protocols/awareness'
 // import { WebrtcProvider } from 'y-webrtc'
 
@@ -108,7 +100,6 @@ export default {
     .use(emoji)
     .use(diagram)
     .use(listener)
-    .use(iframePlugin)
     .create();
 
 
