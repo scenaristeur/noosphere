@@ -8,6 +8,15 @@ cd noosphere
 - https://milkdown.dev/collaborative-editing
 - https://milkdown.dev/online-demo
 - https://milkdown.dev/vue2
+- nes theme https://codesandbox.io/s/b0zmy?file=/src/color.ts:0-579
+- switch theme https://codesandbox.io/s/milkdown-switch-theme-ljqzjd
+
+
+
+# plugin-ld
+- use with :ld{src="https://milkdown.dev/}
+
+
 
 dependencies
 "@editorjs/editorjs": "^2.25.0",

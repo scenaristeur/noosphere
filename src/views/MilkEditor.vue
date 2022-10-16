@@ -32,8 +32,9 @@ import { ld } from '@/milkdown-plugins/plugin-ld/index.ts';
 import { iframe } from '@/milkdown-plugins/plugin-iframe/index.ts';
 
 
-console.log("---------",ld, iframe)
+// console.log("---------",ld, iframe)
 const iframePlugin = AtomList.create([iframe()]);
+const ldPlugin = AtomList.create([ld()]);
 
 // import {Awareness} from 'y-protocols/awareness'
 // import { WebrtcProvider } from 'y-webrtc'
@@ -109,6 +110,7 @@ export default {
     .use(diagram)
     .use(listener)
     .use(iframePlugin)
+    .use(ldPlugin)
     .create();
 
 
