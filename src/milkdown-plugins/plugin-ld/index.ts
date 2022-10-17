@@ -25,7 +25,7 @@ export const ld = createNode(() => ({
     atom: true,
     parseDOM: [
       {
-        tag: "iframe",
+        tag: "triple",
         getAttrs: (dom) => {
           if (!(dom instanceof HTMLElement)) {
             throw new Error();
@@ -39,10 +39,12 @@ export const ld = createNode(() => ({
         }
       }
     ],
-    toDOM: (node) => ["iframe", { ...node.attrs, class: "iframe" }, 0],
+    // toDOM: (node) => ["iframe", { ...node.attrs, class: "iframe" }, 0],
+    toDOM: (node) => ["triple", { ...node.attrs, class: "triple" }, 0],
     parseMarkdown: {
       match: (node) => {
-        return node.type === "textDirective" && node.name === "iframe";
+        // return node.type === "textDirective" && node.name === "iframe";
+        return node.type === "textDirective" && node.name === "triple";
       },
       runner: (state, node, type) => {
         state.addNode(type, {
@@ -57,7 +59,7 @@ export const ld = createNode(() => ({
       match: (node) => node.type.name === id,
       runner: (state, node) => {
         state.addNode("textDirective", undefined, undefined, {
-          name: "iframe",
+          name: "ld",
           attributes: {
             src: node.attrs.src,
             subject: node.attrs.subject,
