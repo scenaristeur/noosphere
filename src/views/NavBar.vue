@@ -5,12 +5,11 @@
         <AddressInput />
 
       </b-navbar-brand>
-      <ToolBar v-if="status == 'connected'"/>
-      <div v-else>
 
+      <div  v-if="status != 'connected'">
         websocket <b>{{ status}}</b>
       </div>
-
+    <ToolBar/>I
 
       <!-- <b-button v-b-toggle.sidebar-manager size="sm">Manager</b-button> -->
 

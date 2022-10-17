@@ -14,7 +14,10 @@ export const ld = createNode(() => ({
   id,
   schema: () => ({
     attrs: {
-      src: { default: null }
+      src: {default: null},
+      subject: { default: null },
+      predicate: { default: null },
+      object: { default: null}
     },
     group: "inline",
     inline: true,
@@ -28,7 +31,10 @@ export const ld = createNode(() => ({
             throw new Error();
           }
           return {
-            src: dom.getAttribute("src")
+            src: dom.getAttribute("src"),
+            subject: dom.getAttribute("subject"),
+            predicate: dom.getAttribute("predicate"),
+            object: dom.getAttribute("object")
           };
         }
       }
@@ -39,7 +45,12 @@ export const ld = createNode(() => ({
         return node.type === "textDirective" && node.name === "iframe";
       },
       runner: (state, node, type) => {
-        state.addNode(type, { src: (node.attributes as { src: string }).src });
+        state.addNode(type, {
+          src: (node.attributes as { src: string }).src,
+          subject: (node.attributes as { subject: string }).subject,
+          predicate: (node.attributes as { predicate: string }).predicate,
+          object: (node.attributes as { object: string }).object
+        });
       }
     },
     toMarkdown: {
@@ -48,7 +59,10 @@ export const ld = createNode(() => ({
         state.addNode("textDirective", undefined, undefined, {
           name: "iframe",
           attributes: {
-            src: node.attrs.src
+            src: node.attrs.src,
+            subject: node.attrs.subject,
+            predicate: node.attrs.predicate,
+            object: node.attrs.object
           }
         });
       }
@@ -56,14 +70,18 @@ export const ld = createNode(() => ({
   }),
   inputRules: (nodeType) => [
     new InputRule(
-      /:ld\{src="(?<src>[^"]+)?"?\}/,
+      // /:ld\{src="(?<src>[^"]+)?"?\}/,
+      /:ld\{(?<subject>[^,]+),(?<predicate>[^,]+),(?<object>[^,]+),(?<src>[^,]+)\}/,
+
       (state, match, start, end) => {
-        const [okay, src = ""] = match;
+        console.log(state, match, start, end)
+        const [okay, subject = "", predicate = "", object = "", src = ""] = match;
         const { tr } = state;
         if (okay) {
-          tr.replaceWith(start, end, nodeType.create({ src }));
+          tr.replaceWith(start, end, nodeType.create({ subject: subject, predicate: predicate, object: object, src: src }));
         }
-
+        console.log("TR",tr)
+        alert(tr)
         return tr;
       }
     )
