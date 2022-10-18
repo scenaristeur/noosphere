@@ -39,8 +39,18 @@ export const ld = createNode(() => ({
         }
       }
     ],
-    // toDOM: (node) => ["iframe", { ...node.attrs, class: "iframe" }, 0],
-    toDOM: (node) => ["triple", { ...node.attrs, class: "triple" }, 0],
+    toDOM: (node) => ["div", { ...node.attrs, class: "triple" }, 0, node.attrs],
+    // toDOM: (node) => [
+    //   "triple", { ...node.attrs, class: "triple" },
+    //   "subject", { ...node.attrs, class: "subject" },
+    //   "triple", { ...node.attrs, class: "triple" },
+    //   "triple", { ...node.attrs, class: "triple" },
+    //   "triple", { ...node.attrs, class: "triple" },
+    //    0
+    //
+    //
+    //
+    // ],
     parseMarkdown: {
       match: (node) => {
         // return node.type === "textDirective" && node.name === "iframe";

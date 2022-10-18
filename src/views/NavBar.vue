@@ -3,13 +3,13 @@
     <b-navbar toggleable="lg" type="dark" :variant="status== 'connected' ? 'info' : 'warning'" fixed="top">
       <b-navbar-brand class="mr-1">
         <AddressInput />
-
+        <div  v-if="status != 'connected'">
+          websocket <b>{{ status}}</b>
+        </div>
       </b-navbar-brand>
 
-      <div  v-if="status != 'connected'">
-        websocket <b>{{ status}}</b>
-      </div>
-    <ToolBar/>I
+
+    <ToolBar/>
 
       <!-- <b-button v-b-toggle.sidebar-manager size="sm">Manager</b-button> -->
 
