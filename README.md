@@ -3,6 +3,39 @@
 vue create noosphere
 cd noosphere
 
+
+```mermaid
+
+
+graph TD
+    Start[Open Noosphere] --> | fa:fa-user check user| localstorage{localstorage}
+    Start -->|https://scenaristeur.github.io/noosphere| C{Check route}
+    localstorage -->|new user| randomUser[create random user]
+    localstorage -->|exist| getUser[getUser]
+    getUser -->|getRoomID|openRoom
+
+
+    C -->|/share?title=the_title&url=http...| sharing(sharing page)
+    C -->|/?room=roomID| openRoom("openRoom(roomID)")
+
+    sharing -->|build content & roomID|openRoom("openRoom(roomID)")
+
+    openRoom -->| |Editor(Editor)
+
+```
+
+---
+
+[![](https://mermaid.ink/img/pako:eNp9ksFugzAMhl_FyqFqpRbuSF0P7Q47bJPW7VSqKQUXokKCjKNtgr77kgBTd9jIwX9s57MT3InM5CgSUZBsSnjdpRrct2dJfHhuUMOTMW1TIuERVqs76OEsk7Nc2RYJshKzC3jZQ2UyWbVsSBbY3W6uN0iP6Evmpk3iuM1QS1Ito6WoUFzaU6RMrKeCPWy7bahAxvLEuUUHnMaPsQWSOjf1m9OHjFAyjp4QPv5xHD9dBz0UyOHgaMfscRcSnX4xpn7Y9ca9i5ep9svnbUNG3JaScMOKK1xzie9BzSxVa3_nKIp68ClKF_PRQuP6WPyCbMih1zSUgqnWPBU_cogtUrGY6k80DzhZVeWQGc2oGWZAv5v-HzSFAgn6-1y5p5oPJrQplqJGqqXK3dB03pMKd9UaU5E4mUu6pCLVV5cnLZv9l85EwmRxKWyTu3-yU9LNWi3cEFWt82JgPw5TGIbx-g3J4OY1?type=png)](https://mermaid-js.github.io/mermaid-live-editor/edit#pako:eNp9ksFugzAMhl_FyqFqpRbuSF0P7Q47bJPW7VSqKQUXokKCjKNtgr77kgBTd9jIwX9s57MT3InM5CgSUZBsSnjdpRrct2dJfHhuUMOTMW1TIuERVqs76OEsk7Nc2RYJshKzC3jZQ2UyWbVsSBbY3W6uN0iP6Evmpk3iuM1QS1Ito6WoUFzaU6RMrKeCPWy7bahAxvLEuUUHnMaPsQWSOjf1m9OHjFAyjp4QPv5xHD9dBz0UyOHgaMfscRcSnX4xpn7Y9ca9i5ep9svnbUNG3JaScMOKK1xzie9BzSxVa3_nKIp68ClKF_PRQuP6WPyCbMih1zSUgqnWPBU_cogtUrGY6k80DzhZVeWQGc2oGWZAv5v-HzSFAgn6-1y5p5oPJrQplqJGqqXK3dB03pMKd9UaU5E4mUu6pCLVV5cnLZv9l85EwmRxKWyTu3-yU9LNWi3cEFWt82JgPw5TGIbx-g3J4OY1)
+
+
+https://mermaid-js.github.io/mermaid-live-editor/edit#pako:eNp9ksFugzAMhl_FyqFqpRbuSF0P7Q47bJPW7VSqKQUXokKCjKNtgr77kgBTd9jIwX9s57MT3InM5CgSUZBsSnjdpRrct2dJfHhuUMOTMW1TIuERVqs76OEsk7Nc2RYJshKzC3jZQ2UyWbVsSBbY3W6uN0iP6Evmpk3iuM1QS1Ito6WoUFzaU6RMrKeCPWy7bahAxvLEuUUHnMaPsQWSOjf1m9OHjFAyjp4QPv5xHD9dBz0UyOHgaMfscRcSnX4xpn7Y9ca9i5ep9svnbUNG3JaScMOKK1xzie9BzSxVa3_nKIp68ClKF_PRQuP6WPyCbMih1zSUgqnWPBU_cogtUrGY6k80DzhZVeWQGc2oGWZAv5v-HzSFAgn6-1y5p5oPJrQplqJGqqXK3dB03pMKd9UaU5E4mUu6pCLVV5cnLZv9l85EwmRxKWyTu3-yU9LNWi3cEFWt82JgPw5TGIbx-g3J4OY1
+
+
+
+
+
+
 # voir milkdown
 - https://stackblitz.com/edit/milkdown-collab-4htabc
 - https://milkdown.dev/collaborative-editing

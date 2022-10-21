@@ -74,7 +74,7 @@ class Channel extends Base {
 
     this.roomList.observe(ymapEvent => {
       ymapEvent.target === this.roomList // => true
-    //  console.log("this.roomList has changed", this.roomList.toJSON())
+      //  console.log("this.roomList has changed", this.roomList.toJSON())
       let rooms = Array.from(this.roomList.values()).sort((a,b) => b.date - a.date)
       this.store.commit('noosphere/setAllRooms', rooms)
 
@@ -102,13 +102,16 @@ class Channel extends Base {
   }
 
   createIndexedDbProvider(){
-
+    this.flush({doc: this.rootDoc, roomID: this.id, type: 'main'})
     this.indexeddbProvider = new IndexeddbPersistence(this.id, this.rootDoc)
 
     this.indexeddbProvider.on('synced', async () => {
-    //  console.log('{$getPersistanceDB} synced', data)
+      console.log('{$getPersistanceDB} synced', /*data*/)
 
-      this.flush({doc: this.rootDoc, roomID: this.id, type: 'main'})
+
+
+      // cette ligne arrive après le flush de room ??? et empeche la mise à jour via ?room=XXX
+
 
       // Vue.prototype.$getWebsocketProvider()
       //let user = await Vue.prototype.$getUser(options)
@@ -134,7 +137,7 @@ class Channel extends Base {
 
 
 
-    if(this.roomWsProvider != undefined) this.roomWsProvider.destroy()
+    //    if(this.roomWsProvider != undefined) this.roomWsProvider.destroy()
 
     let wsProvider = new WebsocketProvider(
       // "ws://localhost:1234",
@@ -170,6 +173,7 @@ class Channel extends Base {
     });
 
     if (type == 'main'){
+      this.wsProvider != undefined ? this.wsProvider.destroy() : ""
       this.wsProvider = wsProvider
     }else{
       this.roomWsProvider != undefined ? this.roomWsProvider.destroy() : ""
@@ -178,7 +182,7 @@ class Channel extends Base {
     }
 
 
-
+    console.log(this)
 
 
 
@@ -186,7 +190,7 @@ class Channel extends Base {
 
   addToRoomList(roomID){
     this.roomList.set(roomID, {roomID: roomID, date: Date.now()})
-  //  console.log("add to room List", this.roomList.toJSON(), roomID)
+    //  console.log("add to room List", this.roomList.toJSON(), roomID)
 
   }
 
