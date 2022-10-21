@@ -19,6 +19,13 @@ cd noosphere
 - prosemirror custom element https://github.com/guardian/prosemirror-elements & https://github.com/guardian/prosemirror-elements/blob/main/docs/quick-start.md
 
 
+```
+:ld{"subject", "predicate", "object", "graph/source"
+
+```
+
+
+
 
 dependencies
 "@editorjs/editorjs": "^2.25.0",
