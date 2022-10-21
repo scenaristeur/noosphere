@@ -15,6 +15,8 @@ cd noosphere
 
 # plugin-ld
 - use with :ld{src="https://milkdown.dev/}
+- prosemirror createa plugin https://runkit.com/taktran/prosemirror-playground-creating-a-plugin
+- prosemirror custom element https://github.com/guardian/prosemirror-elements & https://github.com/guardian/prosemirror-elements/blob/main/docs/quick-start.md
 
 
 
