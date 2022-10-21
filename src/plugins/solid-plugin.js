@@ -52,16 +52,16 @@ const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
 
-    Vue.prototype.$solidCreateRoom = async function(roomId){
+    Vue.prototype.$solidCreateRoom = async function(roomID){
       let pod_url = store.state.util.pod_url
-      console.log(roomId)
+      console.log(roomID)
 
       let room = {
         '@context': {
           dct: 'http://purl.org/dc/terms/',
           '@base': pod_url
         },
-        '@id': roomId,
+        '@id': roomID,
         created: Date.now(),
         creator: store.state.actor.user.name
       }
@@ -75,7 +75,7 @@ const plugin = {
       //   "url": "http://www.janedoe.com"
       // }
       //
-      let path = pod_url+roomId
+      let path = pod_url+roomID
 
 
 

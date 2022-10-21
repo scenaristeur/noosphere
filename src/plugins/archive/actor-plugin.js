@@ -24,7 +24,7 @@ const plugin = {
     //     let roomQuery = options.route.query.room
     //     console.log('[roomQuery]',roomQuery)
     //     if (roomQuery != undefined){
-    //       user.roomId = roomQuery
+    //       user.roomID = roomQuery
     //     }
     //     // return {router: router, route: route}
     //   })
@@ -50,7 +50,7 @@ const plugin = {
     //     name: 'User_'+Date.now(),
     //     color: '#'+Math.floor(Math.random()*16777215).toString(16),
     //
-    //     //roomId: uuidv4(),
+    //     //roomID: uuidv4(),
     //     created: Date.now(),
     //     rooms: {}
     //   }
@@ -66,7 +66,7 @@ const plugin = {
     //   if (store.state.y.awareness != null){
     //     store.state.y.awareness.setLocalStateField('user', user)}
     //     //  console.log("[user changed]"/*, this.awareness*/, user)
-    //     store.commit('actor/setUserById', user)
+    //     store.commit('actor/setUserByID', user)
     //   }
 
       Vue.prototype.$removeUser = async function(){

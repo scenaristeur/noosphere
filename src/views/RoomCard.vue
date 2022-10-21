@@ -13,10 +13,10 @@
     <b-card-text>
 
       <b-input-group class="mt-3">
-        <b-input v-model="user.roomId" placeholder="roomId | random | QR"
+        <b-input v-model="user.roomID" placeholder="roomID | random | QR"
         @keyup.enter="openRoom" />
         <b-input-group-append>
-          <b-button class="text-warning" variant="outline-warning" @click="user.roomId = ''" size="sm">X</b-button>
+          <b-button class="text-warning" variant="outline-warning" @click="user.roomID = ''" size="sm">X</b-button>
 
         </b-input-group-append>
       </b-input-group>
@@ -30,18 +30,18 @@
       >
       is a public room
     </b-form-checkbox>
-    <b-button v-if="user.roomId.length !=0" size="sm" variant="info" @click="openRoom">Go</b-button>
+    <b-button v-if="user.roomID.length !=0" size="sm" variant="info" @click="openRoom">Go</b-button>
 
 
-    <span v-if="user.roomId.length ==0">
-      <b-button  size="sm" variant="outline-info" @click="generateId">Randomize roomId</b-button> or
-      <b-button  size="sm" variant="outline-info" @click="nowId">Now roomId</b-button> or
+    <span v-if="user.roomID.length ==0">
+      <b-button  size="sm" variant="outline-info" @click="generateID">Randomize roomID</b-button> or
+      <b-button  size="sm" variant="outline-info" @click="nowID">Now roomID</b-button> or
     </span>
 
-    <!-- <b-button v-else size="sm" variant="outline-info" @click="user.roomId = ''">Reset roomId</b-button> -->
+    <!-- <b-button v-else size="sm" variant="outline-info" @click="user.roomID = ''">Reset roomID</b-button> -->
 
 
-    <QrView @roomIdChanged="onRoomIdChanged"/>
+    <QrView @roomIDChanged="onRoomIDChanged"/>
 
   </b-card-text>
 
@@ -74,13 +74,13 @@ export default {
           sortable: true
         },
         {
-          key: 'roomId',
+          key: 'roomID',
           label: 'room',
           sortable: true
         },],
         // username: "",
         // usercolor: null,
-        // roomId: null,
+        // roomID: null,
         yarray: null,
         newVal: 3,
         ymap: null,
@@ -114,7 +114,7 @@ export default {
       //   // if (user != undefined){
       //   //   this.username = user.name
       //   //   this.usercolor = user.color
-      //   //   this.roomId = user.roomId
+      //   //   this.roomID = user.roomID
       //   //   this.updateUser()
       //   // }
       //
@@ -128,12 +128,12 @@ open(){
   this.$store.commit('actor/setUser', this.user)
   this.openRoom()
 },
-      generateId(){
-        this.user.roomId = uuidv4()
+      generateID(){
+        this.user.roomID = uuidv4()
 this.open()
       },
-      nowId(){
-        this.user.roomId = Date.now()
+      nowID(){
+        this.user.roomID = Date.now()
         this.open()
       },
 
@@ -142,9 +142,9 @@ this.open()
 
       },
 
-      onRoomIdChanged(roomId){
-        console.log('[roomId changed]', roomId)
-        this.user.roomId = roomId
+      onRoomIDChanged(roomID){
+        console.log('[roomID changed]', roomID)
+        this.user.roomID = roomID
       this.open()
         this.$forceUpdate()
       }

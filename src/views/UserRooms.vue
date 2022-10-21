@@ -18,11 +18,11 @@
 export default {
   name: 'UserRooms',
   methods:{
-    changeRoom(roomId){
-      //  console.log(roomId)
-      //this.user.roomId = roomId
+    changeRoom(roomID){
+      //  console.log(roomID)
+      //this.user.roomID = roomID
       // this.$connect('user view change room')
-      this.$openRoom({id: roomId})
+      this.$openRoom({id: roomID})
       this.$emit('hide')
       this.$bvModal.hide('modal-modalUser')
     },

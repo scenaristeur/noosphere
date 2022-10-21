@@ -1,6 +1,6 @@
 <template>
   <div >
-    <!-- roomId : {{roomId}} -->
+    <!-- roomID : {{roomID}} -->
     <!-- {{ ready}} -->
     <div ref="editor" class="editor" ></div>
     <!-- content {{ markdownContent}} -->
@@ -38,7 +38,7 @@ export default {
   name: 'MilkEditor',
   data(){
     return{
-      roomId: null,
+      roomID: null,
       default: "### Welcome to the Noosphere \n1. Choose a room in the top input bar\n 2. click to edit",
       // markdownContent : null
       // rootDoc: null,
@@ -124,7 +124,7 @@ export default {
     //     //  console.log(state)
     //     if (state.user) {
     //       console.log('[state.user]',state.user)
-    //       this.$store.commit('actor/setUserById', state.user)
+    //       this.$store.commit('actor/setUserByID', state.user)
     //     }
     //   })
     //   this.$store.commit('actor/setUsersUpdated', Date.now())
@@ -135,13 +135,13 @@ export default {
     //   name: 'User_RAND_'+Date.now(),
     //   color: '#'+Math.floor(Math.random()*16777215).toString(16),
     //   clientID: awareness.clientID,
-    //   //roomId: uuidv4(),
+    //   //roomID: uuidv4(),
     //   rooms: {}
     // }
     // this.$store.commit('y/setAwareness', awareness)
-    // console.log('this.roomId', this.user.roomId)
-    // if (this.user.roomId != undefined){
-    //   this.roomId = this.user.roomId
+    // console.log('this.roomID', this.user.roomID)
+    // if (this.user.roomID != undefined){
+    //   this.roomID = this.user.roomID
     //  this.$connect('milk mounted')
     // console.log('milk user', this.user)
     // if (this.user != null) this.$connect('milk mounted')
@@ -153,10 +153,10 @@ export default {
 
   },
   methods:{
-    // open(roomId){
-    //   console.log(roomId)
+    // open(roomID){
+    //   console.log(roomID)
     //   let user = this.user
-    //   user.roomId = roomId
+    //   user.roomID = roomID
     //   this.$store.commit('actor/setUser', user)
     //   this.$connect('editor parent')
     // }
@@ -166,8 +166,8 @@ export default {
 
   watch:{
     // roomAddress(){
-    //   this.roomId = this.roomAddress
-    //   console.log(this.roomId)
+    //   this.roomID = this.roomAddress
+    //   console.log(this.roomID)
     //   this.$connect('milk watch')
     // }
     // user(){

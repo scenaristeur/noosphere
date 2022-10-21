@@ -48,7 +48,7 @@ class CollabManager {
         //  console.log(state)
         if (state.user) {
           console.log('[state.user]',state.user)
-          // store.commit('actor/setUserById', state.user)
+          // store.commit('actor/setUserByID', state.user)
         }
       })
       // store.commit('actor/setUsersUpdated', Date.now())
@@ -126,9 +126,9 @@ indexeddbProvider.on('synced', async () => {
       this.flush(template);
     }
 
-    openRoom(roomId) {
-      console.log(roomId)
-      this.room = roomId //this.room === 'milkdown' ? 'sandbox' : 'milkdown';
+    openRoom(roomID) {
+      console.log(roomID)
+      this.room = roomID //this.room === 'milkdown' ? 'sandbox' : 'milkdown';
       // if (room$) {
       //     room$.textContent = this.room;
       // }

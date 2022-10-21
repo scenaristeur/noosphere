@@ -19,23 +19,23 @@
 
 
 
-        <div v-if="user.roomId.length ==0">
-          <b-button  size="sm" variant="info" @click="generateId">Randomize roomId</b-button> or
+        <div v-if="user.roomID.length ==0">
+          <b-button  size="sm" variant="info" @click="generateID">Randomize roomID</b-button> or
 
         </div>
         <div v-else>
-          <b-button size="sm" variant="outline-info" @click="user.roomId = ''">Clear</b-button>
+          <b-button size="sm" variant="outline-info" @click="user.roomID = ''">Clear</b-button>
 
         </div>
 
 
-        <b-input v-model="user.roomId" placeholder="roomId | random | QR" />
+        <b-input v-model="user.roomID" placeholder="roomID | random | QR" />
 
-        <span v-if="this.user.roomId.length !=0">
+        <span v-if="this.user.roomID.length !=0">
           <b-button size="sm" variant="info" @click="openRoom">Go</b-button> and
         </span>
 
-        <QrView :roomId="user.roomId" @roomIdChanged="onRoomIdChanged"/>
+        <QrView :roomID="user.roomID" @roomIDChanged="onRoomIDChanged"/>
         <!-- <hr>
 
 
@@ -68,7 +68,7 @@
               </div>
             </b-button></td>
             <td v-else>  <div :style="'color:'+u.color"><b>{{u.name}}</b></div> </td>
-            <td><a :href="'?room='+u.roomId">{{u.roomId}}</a></td>
+            <td><a :href="'?room='+u.roomID">{{u.roomID}}</a></td>
           </tr>
         </table>
 
@@ -145,7 +145,7 @@ export default {
       users: {},
       // username: "",
       // usercolor: null,
-      // roomId: null,
+      // roomID: null,
       yarray: null,
       newVal: 3,
       ymap: null,
@@ -197,7 +197,7 @@ export default {
     }
 
 
-    this.user.roomId = this.$route.query.room || this.user.roomId || uuidv4()
+    this.user.roomID = this.$route.query.room || this.user.roomID || uuidv4()
 
 
 
@@ -255,7 +255,7 @@ export default {
         name: 'User_'+Date.now(),
         color: '#'+Math.floor(Math.random()*16777215).toString(16),
         clientID: awareness.clientID,
-        roomId: '',
+        roomID: '',
         rooms: []
       }
 
@@ -281,7 +281,7 @@ export default {
     //   // if (user != undefined){
     //   //   this.username = user.name
     //   //   this.usercolor = user.color
-    //   //   this.roomId = user.roomId
+    //   //   this.roomID = user.roomID
     //   //   this.updateUser()
     //   // }
     //
@@ -296,16 +296,16 @@ export default {
       this.awareness.setLocalStateField('user', this.user)
       console.log("[user changed]"/*, this.awareness*/, this.user)
     },
-    generateId(){
-      this.user.roomId = uuidv4()
+    generateID(){
+      this.user.roomID = uuidv4()
       this.openRoom()
     },
 
     openRoom(){
       this.userChanged()
-      this.ymap = this.ydoc.getMap(this.user.roomId)
+      this.ymap = this.ydoc.getMap(this.user.roomID)
 
-      console.log("[openRoom]", this.user.roomId)
+      console.log("[openRoom]", this.user.roomID)
       //this.updateUser()
 
       // let editorData = this.ymap.get('editor_map')
@@ -424,9 +424,9 @@ export default {
       this.ymap.set('editor_map', data)
       this.$forceUpdate()
     },
-    onRoomIdChanged(roomId){
-      console.log('[roomId changed]', roomId)
-      this.user.roomId = roomId
+    onRoomIDChanged(roomID){
+      console.log('[roomID changed]', roomID)
+      this.user.roomID = roomID
       this.openRoom()
     }
   },

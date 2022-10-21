@@ -24,17 +24,17 @@
       <hr>
       <b-row class="my-1">
         <b-col sm="3">
-          <label for="roomId"><code>roomId</code>:</label>
+          <label for="roomID"><code>roomID</code>:</label>
         </b-col>
         <b-col sm="9">
           <b-form-input
-          id="roomId"
-          placeHolder="roomId"
-          v-model="roomId"
+          id="roomID"
+          placeHolder="roomID"
+          v-model="roomID"
 
           ></b-form-input>
         </b-col>
-        <!--  @input="changeRoomId"-->
+        <!--  @input="changeRoomID"-->
 
       </b-row>
       <hr>
@@ -54,18 +54,18 @@
 
 
 <!-- <div v-if="dataTemp!= undefined">
-Room with id {{roomId}} exist ->
-<b-button  @click="append" size="sm" variant="info">Append to room</b-button> or change roomId above.
+Room with id {{roomID}} exist ->
+<b-button  @click="append" size="sm" variant="info">Append to room</b-button> or change roomID above.
 </div>
 <div v-else> -->
-<!-- Room with id {{roomId}} does not exist -> -->
-<b-button @click="create" size="sm" variant="info">Add to room with id {{roomId}}</b-button>
+<!-- Room with id {{roomID}} does not exist -> -->
+<b-button @click="create" size="sm" variant="info">Add to room with id {{roomID}}</b-button>
 <!-- </div> -->
 </b-container>
 
 <!-- <div v-if="dataTemp != undefined">
 <hr><hr>
-Found in room <b>{{roomId}}</b> :<br>{{ dataTemp.blocks}}
+Found in room <b>{{roomID}}</b> :<br>{{ dataTemp.blocks}}
 </div> -->
 <!-- <hr>
 title: "title",
@@ -100,14 +100,14 @@ export default {
       query: null,
       // fields: {},
       // dataTemp: undefined,
-      roomId: null
+      roomID: null
     }
   },
   created(){
     console.log(this.$route.query)
     this.query = this.$route.query
     this.query["more comment"] == undefined ? this.query["more comment"] = '' : ''
-    this.roomId = this.$route.query.title
+    this.roomID = this.$route.query.title
     // this.getDataTemp()
   },
   // mounted(){
@@ -115,7 +115,7 @@ export default {
   // },
   methods: {
     // async getDataTemp(){
-    //   //this.dataTemp = await this.$getEditorMap(this.roomId)
+    //   //this.dataTemp = await this.$getEditorMap(this.roomID)
     //   console.log('{dataTemp}',this.dataTemp)
     // },
     // async append(){
@@ -152,11 +152,11 @@ export default {
     //   this.dataTemp.blocks = dataBlocks
     //   let data = this.dataTemp
     //
-    //   console.log("append", this.query, data, this.roomId)
-    //   this.user.roomId = this.roomId
+    //   console.log("append", this.query, data, this.roomID)
+    //   this.user.roomID = this.roomID
     //   await this.$store.commit('actor/setUser', this.user)
     //
-    //   //await this.$saveMap(this.roomId,data)
+    //   //await this.$saveMap(this.roomID,data)
     //
     //   await this.$connect('share view append')
     //   this.$store.commit('editor/setEditorData', data)
@@ -176,7 +176,7 @@ export default {
       );
       console.log("content", content)
       // let content = JSON.stringify(this.query)
-      this.$openRoom({id: this.roomId, content: JSON.stringify(content)})
+      this.$openRoom({id: this.roomID, content: JSON.stringify(content)})
 
       // let data = {
       //   // "time" : 1550476186479,
@@ -211,18 +211,18 @@ export default {
       //   // "version" : "2.8.1"
       // }
 
-      // console.log("create", this.query, data, this.roomId)
-      //this.user.roomId = this.roomId
+      // console.log("create", this.query, data, this.roomID)
+      //this.user.roomID = this.roomID
       // await this.$store.commit('actor/setUser', this.user)
 
-      //await this.$saveMap(this.rotitle_not_existomId,data)
+      //await this.$saveMap(this.rotitle_not_existomID,data)
 
       // await this.$connect('share view create')
       // this.$store.commit('editor/setEditorData', data)
 
 
     },
-    // changeRoomId(){
+    // changeRoomID(){
     //   this.getDataTemp()
     // }
   },

@@ -54,7 +54,7 @@ const plugin = {
         .width(size.w)
         .height(size.h)
         //.backgroundColor('#eafaff')
-        // .nodeId('id')
+        // .nodeID('id')
         .nodeLabel('name')
         .nodeAutoColorBy("type")
         //.nodeRelSize(5)

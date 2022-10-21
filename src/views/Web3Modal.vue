@@ -94,16 +94,16 @@ export default {
       console.log('populate')
       this.$store.commit('web3/resetPinMessages')
       let now = Date.now()
-      //let data = this.$roomToJson(this.user.roomId)
+      //let data = this.$roomToJson(this.user.roomID)
 
       // let data = this.$store.state.editor.editorData
       // delete data.clientID
-      //  data.roomId = this.user.roomId
+      //  data.roomID = this.user.roomID
       //  data.timestamp = now
       //data.creator = this.user.name
       //let prefix = 'noos'
       let separator = '_'
-      // this.fileName = prefix+separator+this.user.roomId+separator+Date.now()
+      // this.fileName = prefix+separator+this.user.roomID+separator+Date.now()
       console.log(this.user)
       this.fileName = this.user.roomID+separator+now
       //data.filename = this.fileName
@@ -111,7 +111,7 @@ export default {
       // this.data = JSON.stringify(data, null, 2)
       this.data = this.$store.state.editor.markdownContent
       console.log(this.data)
-      // this.fileName = this.user.roomId
+      // this.fileName = this.user.roomID
       this.cid = null
     },
     async pin(){

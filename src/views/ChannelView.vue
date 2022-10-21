@@ -4,8 +4,8 @@
 
     <b-modal id="modal-channel" title="Channel" ok-only @ok="changeChannel">
       <p class="my-4">
-        <b-input v-model="channelId" type="search" placeholder="channel" @keyup.enter="changeChannel" />
-        <b-button @click='channelId = "noosphere-demo"'>Default</b-button>
+        <b-input v-model="channelID" type="search" placeholder="channel" @keyup.enter="changeChannel" />
+        <b-button @click='channelID = "noosphere-demo"'>Default</b-button>
         <!-- <b-button @click="changeChannel()">Change</b-button> -->
 
       </p>
@@ -18,18 +18,18 @@ export default {
   name: 'ChannelView',
   data(){
     return{
-      channelId : "noosphere-demo"
+      channelID : "noosphere-demo"
     }
   },
   methods:{
     changeChannel(){
-      this.$newChannel({id: this.channelId})
+      this.$newChannel({id: this.channelID})
       this.$bvModal.hide('modal-channel')
     }
   },
   watch:{
     channel(){
-      this.channelId = this.channel.id
+      this.channelID = this.channel.id
     }
   },
   computed: {

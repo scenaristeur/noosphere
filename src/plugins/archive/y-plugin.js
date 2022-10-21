@@ -29,7 +29,7 @@ const plugin = {
     //     console.log('{user}', user)
     //     Vue.prototype.$userChanged()
     //
-    //     if(store.state.actor.user.roomId != undefined && opts.router.history.current.name != 'editor'){
+    //     if(store.state.actor.user.roomID != undefined && opts.router.history.current.name != 'editor'){
     //       // console.log(opts.router.current.name)
     //       opts.router.push('/editor')
     //     }
@@ -153,7 +153,7 @@ const plugin = {
     //     awareness.getStates().forEach(state => {
     //       console.log(state)
     //       if (state.user ) {
-    //         //  console.log('[state.user]',d,'name:',state.user.name, 'room:',state.user.roomId, 'clientID:',state.user.clientID)
+    //         //  console.log('[state.user]',d,'name:',state.user.name, 'room:',state.user.roomID, 'clientID:',state.user.clientID)
     //         // console.log('mustupdate')
     //         let user = users[state.user.id]
     //         // console.log(state.user,user)
@@ -161,7 +161,7 @@ const plugin = {
     //         // if (user == undefined || Object.entries(state.user).toString() === Object.entries(user).toString() == false){
     //         // if (user == undefined || Object.entries(state.user).toString() === Object.entries(user).toString() == false){
     //         if (user == undefined || state.user.id != localUser.id){
-    //           store.commit('actor/setUserById', state.user)
+    //           store.commit('actor/setUserByID', state.user)
     //         }
     //
     //
@@ -173,49 +173,49 @@ const plugin = {
     // }
 
 
-    Vue.prototype.$getEditorMap = async function(roomId){
+    Vue.prototype.$getEditorMap = async function(roomID){
       let rootDoc = store.state.y.yDoc
       console.log(rootDoc)
       let ymap = rootDoc.getMap()
       console.log(ymap)
-      let roomDoc = ymap.get(roomId)
+      let roomDoc = ymap.get(roomID)
       console.log ('{roomDoc}',roomDoc)
 
 
     }
 
 
-    // Vue.prototype.$roomToJson1 = function (roomId){
-    //   console.log('{serialize}', roomId)
+    // Vue.prototype.$roomToJson1 = function (roomID){
+    //   console.log('{serialize}', roomID)
     //   let rootDoc = store.state.y.yDoc
-    //   Vue.prototype.$spinnerAdd(roomId)
+    //   Vue.prototype.$spinnerAdd(roomID)
     //   let ymap = rootDoc.getMap()
     //   console.log('ymap', ymap)
-    //   let roomDoc = ymap.get(roomId)
+    //   let roomDoc = ymap.get(roomID)
     //   console.log ('{roomDoc}',roomDoc, roomDoc.toJSON())
     //
     //   // let state = Y.encodeStateAsUpdate(roomDoc)
     //   // console.log(state)
-    //   Vue.prototype.$spinnerRemove(roomId)
+    //   Vue.prototype.$spinnerRemove(roomID)
     //   // return state
     //   return roomDoc.toJSON()
     // }
 
     // Vue.prototype.$applyUpdate1 = async function(jsonCid){
-    //   let roomId = store.state.actor.user.roomId
+    //   let roomID = store.state.actor.user.roomID
     //   console.log('{jsonCid}', jsonCid)
     //   let rootDoc = store.state.y.yDoc
     //   console.log(rootDoc)
     //   let ymap = rootDoc.getMap()
     //   console.log(ymap)
-    //   let roomDoc = ymap.get(roomId)
+    //   let roomDoc = ymap.get(roomID)
     //
     //   if (roomDoc == undefined){
     //     roomDoc = new Y.Doc()
     //     //  roomDoc.getText().insert(0, 'some initial content')
-    //     ymap.set(roomId, roomDoc)
+    //     ymap.set(roomID, roomDoc)
     //   }
-    //   console.log ('{roomDoc}', roomId, roomDoc)
+    //   console.log ('{roomDoc}', roomID, roomDoc)
     //
     //   //  await roomDoc.whenLoaded
     //   console.log('roomDoc loaded')
@@ -226,9 +226,9 @@ const plugin = {
     //   //Y.applyUpdate(roomDoc, state)
     //   // console.log('{JSON}', roomDoc.toJSON())
     //   //
-    //   // ymap.set(roomId, roomDoc)
+    //   // ymap.set(roomID, roomDoc)
     //
-    //   //  ymap.set(roomId, roomDoc)
+    //   //  ymap.set(roomID, roomDoc)
     //   // let currentState1 = Y.encodeStateAsUpdate(roomDoc)
     //   // roomDoc.destroy()
     //   // const stateVector1 = Y.encodeStateVectorFromUpdate(state)
@@ -248,8 +248,8 @@ const plugin = {
     //   let awareness = store.state.y.awareness //Vue.prototype.$createAwareness(rootDoc)
     //   let user = store.state.actor.user
     //   let editor = store.state.editor.editor
-    //   let roomId = user.roomId
-    //   Vue.prototype.$spinnerAdd(roomId)
+    //   let roomID = user.roomID
+    //   Vue.prototype.$spinnerAdd(roomID)
     //
     //   if(opts.router.history.current.name != 'editor'){
     //     opts.router.push('/editor')
@@ -262,13 +262,13 @@ const plugin = {
     //   console.log('awareness clientID', awareness.clientID)
     //   let ymap = rootDoc.getMap()
     //   console.log('ymap', ymap)
-    //   let roomDoc = ymap.get(roomId)
+    //   let roomDoc = ymap.get(roomID)
     //   console.log ('{roomDoc}',roomDoc)
     //   if (roomDoc == undefined){
     //     // Client One
     //     roomDoc = new Y.Doc()
     //     //subDoc.getText().insert(0, 'some initial content')
-    //     ymap.set(roomId, roomDoc)
+    //     ymap.set(roomID, roomDoc)
     //   }
     //   // else{
     //   //
@@ -286,7 +286,7 @@ const plugin = {
     //     "wss://yjs-leveldb.glitch.me/", // with leveldb
     //     // "wss://yjs-websocket--1234.local-corp.webcontainer.io",
     //     // 'wss://demos.yjs.dev',
-    //     roomId, //'milkdown', // roomId
+    //     roomID, //'milkdown', // roomID
     //     roomDoc, // Doc
     //     {awareness: awareness, connect: true}
     //   );
@@ -303,7 +303,7 @@ const plugin = {
     //   });
     //
     //
-    //   console.log('{connect}',roomId, rootDoc, roomDoc)
+    //   console.log('{connect}',roomID, rootDoc, roomDoc)
     //
     //
     //
@@ -335,16 +335,16 @@ const plugin = {
     //     });
     //
     //     console.log("{EDITOR}", editor, roomDoc.toJSON())
-    //     Vue.prototype.$spinnerRemove(roomId)
-    //     user.rooms[roomId] = {date: Date.now()}
+    //     Vue.prototype.$spinnerRemove(roomID)
+    //     user.rooms[roomID] = {date: Date.now()}
     //     awareness.setLocalStateField('user', user)
     //     store.commit('actor/setUser', user)
-    //     store.commit('actor/setRoomAddress', roomId)
+    //     store.commit('actor/setRoomAddress', roomID)
     //   }else{
     //     console.log('{editor is null now}')
     //   }
     //
-    //   // user.roomId = roomId
+    //   // user.roomID = roomID
     // }
 
 

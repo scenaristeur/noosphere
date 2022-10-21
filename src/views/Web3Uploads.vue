@@ -48,18 +48,18 @@
   <template #cell(delete)="data">
     <!-- {{data}} -->
     <div style="float:right">
-      <b-button size="sm" @click="trash(data.item.roomId)" variant="outline-info">
+      <b-button size="sm" @click="trash(data.item.roomID)" variant="outline-info">
         <b-icon icon="trash" variant="danger" aria-hidden="true"></b-icon>
       </b-button>
     </div>
   </template>
 
-  <!-- <template #cell(roomId)="data">
+  <!-- <template #cell(roomID)="data">
   # TODO
-  _rowVariant when = user.roomId
+  _rowVariant when = user.roomID
 </template> -->
 <!--    @filtered="onFiltered"
-filter-included-fields="['roomId']"-->
+filter-included-fields="['roomID']"-->
 <template #table-caption>Web3 uploads
   <div v-if="uploads == undefined || uploads.length == 0">
     see <router-link to="/config" class="nav-item mx-2"><b-icon font-scale="1.5" icon="gear" aria-hidden="true"></b-icon>Web3 Storage Config </router-link>
@@ -108,16 +108,16 @@ export default {
       this.$web3Load(r[0].cid)
       this.$emit('hide')
       // if(r[0]!= undefined){
-      //   this.user.roomId = r[0].roomId
+      //   this.user.roomID = r[0].roomID
       //   this.$openRoom()
       // }
     },
     openCid(){
       this.$web3Load(this.cidToOpen)
     },
-    // trash(roomId){
-    //   console.log(roomId)
-    //   this.$store.commit('actor/removeRoomIdFromHistory', roomId)
+    // trash(roomID){
+    //   console.log(roomID)
+    //   this.$store.commit('actor/removeRoomIDFromHistory', roomID)
     //   this.$forceUpdate()
     //   this.$userChanged()
     // }

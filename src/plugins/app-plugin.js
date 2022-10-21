@@ -37,7 +37,7 @@ const plugin = {
         name: 'User_'+Date.now(),
         color: '#'+Math.floor(Math.random()*16777215).toString(16),
         clientID: awareness.clientID,
-        //roomId: uuidv4(),
+        //roomID: uuidv4(),
         rooms: {}
       }
       //  store.commit('core/setUser', user)
@@ -46,8 +46,8 @@ const plugin = {
 
 
 
-    Vue.prototype.$getEditorMap = async function(roomId){
-      let ymapTemp = store.state.core.yDoc.getMap(roomId)
+    Vue.prototype.$getEditorMap = async function(roomID){
+      let ymapTemp = store.state.core.yDoc.getMap(roomID)
       let data = await ymapTemp.get('editor_map')
       console.log('{{editorDataTemp}}',data)
       return data

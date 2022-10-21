@@ -32,16 +32,16 @@ export default {
     },
     async openRoom(){
       let id = this.ra.trim()
-      id.length > 0 ? await this.$openRoom({id: id}) : alert("RoomId must be at least one character !")
+      id.length > 0 ? await this.$openRoom({id: id}) : alert("RoomID must be at least one character !")
     },
     // openRoom1(){
     //   let user = this.user
     //   let options = this.options
     //   if (this.options!= undefined && this.options.mode == 'fork'){
-    //     options.parent = this.user.roomId
+    //     options.parent = this.user.roomID
     //     options.user = user.name
     //   }
-    //   user.roomId = this.ra.trim()
+    //   user.roomID = this.ra.trim()
     //   this.$store.commit('actor/setUser', user)
     //   // this.$openRoom(options)
     //   this.$connect('adressinput')

@@ -35,7 +35,7 @@ class Room extends Base {
     //   "wss://yjs-leveldb.glitch.me/", // with leveldb
     //   // "wss://yjs-websocket--1234.local-corp.webcontainer.io",
     //   // 'wss://demos.yjs.dev',
-    //   this.id, //'milkdown', // roomId
+    //   this.id, //'milkdown', // roomID
     //   this.roomDoc, // Doc
     //   {awareness: awareness, connect: true}
     // );

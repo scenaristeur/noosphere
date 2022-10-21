@@ -23,14 +23,14 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
 
       Vue.prototype.$newChannel = async function(c){
         c.store = store
-        console.log('opts.router', opts.router.history.current.name, opts.router)
+      //  console.log('opts.router', opts.router.history.current.name, opts.router)
 
 
         await opts.router.onReady(async (router)=>{
 
           let channel = new Channel(c)
           localUser.addChannel(channel)
-          localUser.d()
+        //  localUser.d()
           console.log('[RRRRRouter]',router)
           // return {router: router, route: route}
           // return route.query
@@ -38,7 +38,7 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
           if(router != undefined && router.name == 'share'){
             console.log('SHAREPAGE', router.query)
           }else{
-            console.log("pas share page", localUser)
+            // console.log("pas share page", localUser)
             if (localUser.route.query.room != undefined) localUser.roomID = localUser.route.query.room
             if (localUser.roomID != null) Vue.prototype.$openRoom({id: localUser.roomID})
           }
@@ -75,17 +75,17 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
 
       Vue.prototype.$connectMilkdown = async function(options){
         console.log(options)
-        console.log("{EDITORDATA}", editorData)
+      //  console.log("{EDITORDATA}", editorData)
         let editor = store.state.editor.editor
         let channel = store.state.noosphere.channel
-        let user = store.state.noosphere.localUser
+      //  let user = store.state.noosphere.localUser
         let room = store.state.noosphere.room
 
 
         if(editor != null && room != null){
           let roomDoc = room.roomDoc
           let awareness = channel.awareness
-          console.log(editor, channel, user, room, roomDoc, awareness)
+        //  console.log(editor, channel, user, room, roomDoc, awareness)
           editor.action((ctx) => {
             const collabService = ctx.get(collabServiceCtx);
 
@@ -115,12 +115,12 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
             collabService.connect();
           });
 
-          console.log("{EDITOR}", editor, roomDoc.toJSON())
-          // Vue.prototype.$spinnerRemove(roomId)
+        //  console.log("{EDITOR}", editor, roomDoc.toJSON())
+          // Vue.prototype.$spinnerRemove(roomID)
           //user.rooms[room.id] = {date: Date.now()}
           // awareness.setLocalStateField('user', user)
           // store.commit('noosphere/setLocalUser', user)
-          // store.commit('actor/setRoomAddress', roomId)
+          // store.commit('actor/setRoomAddress', roomID)
           //Vue.prototype.$openRoom()
         }else{
           console.log('{something is null now}')
@@ -129,14 +129,14 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
       }
 
 
-      Vue.prototype.$getRouterParameters11 = async function(route){
-        console.log("{getRouterParameters}",opts.router, route)
-        await opts.router.onReady(async (router)=>{
-          console.log('[RRRRRouter]',router, route, route.name)
-          // return {router: router, route: route}
-          return route.query
-        })
-      }
+      // Vue.prototype.$getRouterParameters11 = async function(route){
+      //   console.log("{getRouterParameters}",opts.router, route)
+      //   await opts.router.onReady(async (router)=>{
+      //     console.log('[RRRRRouter]',router, route, route.name)
+      //     // return {router: router, route: route}
+      //     return route.query
+      //   })
+      // }
 
       Vue.prototype.$removeUser = async function(){
         localStorage.removeItem('noosphere-user');
@@ -188,7 +188,7 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
           }else{
             // if router is undefined we use route
             //console.log(route.query)
-            route.query.room != undefined ? user.roomId = route.query.room : ''
+            route.query.room != undefined ? user.roomID = route.query.room : ''
           }
 
 
@@ -203,8 +203,8 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
       Vue.prototype.$ready = function(){
         let user = store.state.actor.user
         //  console.log(user.isSharing)
-        if(user.isSharing == undefined && user.roomId == undefined){
-          user.roomId = Vue.prototype.$random()
+        if(user.isSharing == undefined && user.roomID == undefined){
+          user.roomID = Vue.prototype.$random()
         }
         store.commit('actor/setUser', user)
         //  Vue.prototype.$userChanged()

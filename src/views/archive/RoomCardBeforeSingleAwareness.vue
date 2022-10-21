@@ -19,12 +19,12 @@
 
 
 
-        <div v-if="roomId.length ==0">
-          <b-button  size="sm" variant="info" @click="generateId">Randomize roomId</b-button> or
+        <div v-if="roomID.length ==0">
+          <b-button  size="sm" variant="info" @click="generateID">Randomize roomID</b-button> or
 
         </div>
         <div v-else>
-          <b-button size="sm" variant="outline-info" @click="roomId = ''">Clear</b-button>
+          <b-button size="sm" variant="outline-info" @click="roomID = ''">Clear</b-button>
 
         </div>
 
@@ -32,9 +32,9 @@
 
 
 
-        <b-input v-model="roomId" placeholder="roomId | random | QR" />
+        <b-input v-model="roomID" placeholder="roomID | random | QR" />
 
-        <span v-if="roomId.length !=0">
+        <span v-if="roomID.length !=0">
           <b-button size="sm" variant="info" @click="openRoom">Go</b-button> and
           <b-button size="sm" variant="info" @click="generateQR">Share</b-button> or
         </span>
@@ -81,7 +81,7 @@
           v-for="u in users" :key="u.clientID" >
           <!-- <div :style="'color'+u.color;">• {{u.name}}</div> -->
           {{u.name}} ({{u.way}})
-          <a :href="'https://scenaristeur.github.io/noosphere/?room='+u.roomId">{{u.roomId}}</a>
+          <a :href="'https://scenaristeur.github.io/noosphere/?room='+u.roomID">{{u.roomID}}</a>
           <!-- {{u}} -->
         </div>
         <!-- strings.push(`<div style="color:${state.user.color};">• ${state.user.name}</div>`) -->
@@ -142,7 +142,7 @@ export default {
       users: {},
       username: "",
       usercolor: null,
-      roomId: null,
+      roomID: null,
       yarray: null,
       newVal: 3,
       ymap: null,
@@ -181,7 +181,7 @@ export default {
   },
   created(){
     yService.log("RoomCard created")
-    this.roomId = this.$route.query.room || uuidv4()
+    this.roomID = this.$route.query.room || uuidv4()
     this.ydoc = new Y.Doc()
 
     // this allows you to instantly get the (cached) documents data
@@ -237,7 +237,7 @@ export default {
       if (user != undefined){
         this.username = user.name
         this.usercolor = user.color
-        this.roomId = user.roomId
+        this.roomID = user.roomID
         this.updateUser()
       }
 
@@ -304,7 +304,7 @@ export default {
         // Define a color that should be associated to the user:
         color: this.usercolor, // should be a hex color
         clientID: this.clientID,
-        roomId: this.roomId
+        roomID: this.roomID
       }
       console.log(user)
       localStorage.setItem('noosphere-user', JSON.stringify(user));
@@ -313,12 +313,12 @@ export default {
       user.way = 'websocket'
       this.websocketAwareness.setLocalStateField('user', user)
     },
-    generateId(){
-      this.roomId = uuidv4()
+    generateID(){
+      this.roomID = uuidv4()
     },
     async generateQR(){
 
-      this.url = 'https://scenaristeur.github.io/noosphere/?room='+this.roomId
+      this.url = 'https://scenaristeur.github.io/noosphere/?room='+this.roomID
       // var myHeaders = new Headers();
       //
       // var myInit = { method: 'GET',
@@ -363,7 +363,7 @@ export default {
         console.log(`Code matched = ${decodedText}`, decodedResult);
         let eq_splitted = decodedText.split('=')
         if(eq_splitted[0] == 'https://scenaristeur.github.io/noosphere/?room'){
-          this.roomId=eq_splitted[1]
+          this.roomID=eq_splitted[1]
           // this.$refs.reader.innerHTML = ""
           // this.$refs.reader.style = ""
           // this.toggle_qr_scanner()
@@ -398,7 +398,7 @@ export default {
         console.log('todo', this.QRsrc)
       },
       openRoom(){
-        this.ymap = this.ydoc.getMap(this.roomId)
+        this.ymap = this.ydoc.getMap(this.roomID)
 
         this.updateUser()
 

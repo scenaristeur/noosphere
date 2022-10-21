@@ -18,21 +18,21 @@ const state = () => ({
 const mutations = {
   setUser(state, u){
     state.user = u
-    if (u != null && u.roomId != null){
-      this.commit('actor/updateRoomHistory', u.roomId)
+    if (u != null && u.roomID != null){
+      this.commit('actor/updateRoomHistory', u.roomID)
     }
   },
-  removeRoomIdFromHistory(state, roomId){
-    //  console.log(roomId)
-    delete state.user.rooms[roomId]
+  removeRoomIDFromHistory(state, roomID){
+    //  console.log(roomID)
+    delete state.user.rooms[roomID]
     state.historyUpdated = Date.now()
     // console.log("deleted", state.user.rooms)
   },
-  updateRoomHistory(state,roomId){
-    if (roomId.length > 0){
-      this.commit('actor/removeRoomIdFromHistory', roomId)
-      this.commit('actor/setRoomAddress', roomId)
-      state.user.rooms[roomId] = {roomId: roomId, date: Date.now()}
+  updateRoomHistory(state,roomID){
+    if (roomID.length > 0){
+      this.commit('actor/removeRoomIDFromHistory', roomID)
+      this.commit('actor/setRoomAddress', roomID)
+      state.user.rooms[roomID] = {roomID: roomID, date: Date.now()}
       //  console.log("[history]", state.user.rooms)
       Vue.prototype.$userChanged()
       state.historyUpdated = Date.now()
@@ -47,7 +47,7 @@ const mutations = {
     state.users = u
   },
   updateUsersStates(state, states){
-    console.log(states)
+    //console.log(states)
     // let clientIDs = Object.keys(states.users)
     // console.log("clientsIDs",clientIDs)
     state.users = states.users
@@ -58,16 +58,16 @@ const mutations = {
 
 
 
-  setUserByIdOLD(state, u){
+  setUserByIDOLD(state, u){
 
     let mustUpdate = state.users[u.clientID] == undefined || state.users[u.clientID].roomID == undefined || state.users[u.clientID].roomID != u.roomID || state.users[u.clientID].name != u.name || state.users[u.clientID].color != u.color
 
 
     if (mustUpdate)
     {
-      console.log('[store setUserById]',mustUpdate, state.users[u.clientID], u)
+      console.log('[store setUserByID]',mustUpdate, state.users[u.clientID], u)
       state.users[u.clientID] = u
-      console.log(u.clientID, u.name,  u.roomId)
+      console.log(u.clientID, u.name,  u.roomID)
       this.commit('actor/setUsersUpdated', Date.now())
 
     }else{

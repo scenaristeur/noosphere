@@ -11,7 +11,7 @@ class Base {
     // updating with options
     Object.assign(this, options);
   }
-  d(){
+  log(){
     if (debug == true) {
       console.log('[debug]',this.group, this)
     }

@@ -6,7 +6,7 @@
     <!-- Editor
     <b-button @click="save">Save</b-button> -->
     <div id="editorjs"  class="text-light"></div>
-    <div v-if="user!= null" >room: <b>{{user.roomId}}</b></div>
+    <div v-if="user!= null" >room: <b>{{user.roomID}}</b></div>
     <!--  {{editorData}} -->
   </b-container>
 </template>
@@ -52,7 +52,7 @@ export default {
     //  yService.log("EditorView created")
     this.editor = new EditorJS({
       /**
-      * Id of Element that should contain the Editor
+      * ID of Element that should contain the Editor
       */
       holder: 'editorjs',
       blocks: [],
@@ -175,7 +175,7 @@ export default {
         // let e ={
         //   block: block,
         //   event: event,
-        //   roomId: app.user.roomId
+        //   roomID: app.user.roomID
         // }
         // app.$propagateEvent(e)
 
@@ -226,7 +226,7 @@ export default {
   mounted(){
 
     // let app = this
-    // const editorElement = document.getElementById('editorjs') // your "holder" ID
+    // const editorElement = document.getElementByID('editorjs') // your "holder" ID
     // editorElement.addEventListener('click', (e) => {
     //   // your logic
     //   //console.log("click",e)

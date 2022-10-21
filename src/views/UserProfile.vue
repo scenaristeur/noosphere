@@ -21,7 +21,7 @@
     </b-card>
 
     <b-card
-    bg-variant="info" text-variant="white" header="Identity Manager"
+    bg-variant="info" text-variant="white" header="IDentity Manager"
     class="text-center mb-2"
     tag="article"
     style="max-width: 20rem;"
@@ -114,7 +114,7 @@ export default {
       // console.log(result)
       // return result
     },
-    populateIdentity(data){
+    populateIDentity(data){
       console.log('populate', data)
       let user = JSON.parse(data)
       // this.$store.commit('noosphere/setLocalUser', user)
@@ -163,7 +163,7 @@ export default {
   watch:{
     identityFile(){
       console.log(this.identityFile)
-      this.upload(this.identityFile, this.populateIdentity)
+      this.upload(this.identityFile, this.populateIDentity)
     }
   },
   computed:{

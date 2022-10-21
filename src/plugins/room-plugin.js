@@ -5,7 +5,7 @@ const plugin = {
 
     // Vue.prototype.$openRoom2 = async function(options){
     //   let user = store.state.actor.user
-    //   let ymap = store.state.y.yDoc.getMap(user.roomId)
+    //   let ymap = store.state.y.yDoc.getMap(user.roomID)
     //   let ymapData = await ymap.get('editor_map')
     //   console.log('openRoom', options, user, ymap, ymapData)
     //   console.log('ymapData', ymapData)
@@ -21,19 +21,19 @@ const plugin = {
     //     ymapData.blocks.unshift({
     //       "type" : "header",
     //       "data" : {
-    //         "text" : user.roomId,
+    //         "text" : user.roomID,
     //         "level" : 2
     //       }
     //     })
     //     ymapData.creator = user.clientID
     //     ymapData.action = "create"
-    //     ymapData.roomId = user.roomId
+    //     ymapData.roomID = user.roomID
     //   //  ymap.set('editor_map', ymapData)
     //     ymapData.source = 'creation'
     //   }else{
     //     console.log('not undefined')
     //     ymapData.source = 'exist'
-    //     ymapData.roomId == undefined ? ymapData.roomId = user.roomId : ""
+    //     ymapData.roomID == undefined ? ymapData.roomID = user.roomID : ""
     //   }
     //   console.log('ymapReady', ymapData)
     //   store.commit('editor/setEditorData', ymapData)
@@ -49,12 +49,12 @@ const plugin = {
       //  console.log('Store editorData', store.state.editor.editorData)
 
       let user = store.state.actor.user
-      let ymap = store.state.y.yDoc.getMap(user.roomId)
+      let ymap = store.state.y.yDoc.getMap(user.roomID)
 
       //  console.log('ymap', ymap)
       store.commit('y/setYmap', ymap)
-      store.commit('actor/updateRoomHistory', user.roomId)
-      //  console.log("[openRoom]", user.roomId)
+      store.commit('actor/updateRoomHistory', user.roomID)
+      //  console.log("[openRoom]", user.roomID)
 
       Vue.prototype.$setYMapObserver()
 
@@ -89,7 +89,7 @@ const plugin = {
         tempData.blocks.unshift({
           "type" : "header",
           "data" : {
-            "text" : user.roomId,
+            "text" : user.roomID,
             "level" : 2
           }
         })

@@ -19,10 +19,10 @@ class User extends Base {
     let localStorageUser = JSON.parse(localStorage.getItem('noosphere-user'))
     if (localStorageUser != undefined && localStorageUser != null ){
       Object.assign(this, localStorageUser)
-      console.log('from localstorage')
+      // console.log('from localstorage')
     }else{
       Object.assign(this, this.randomUser())
-      console.log('from random')
+      // console.log('from random')
     }
     this.rooms == undefined ? this.rooms =  {} : ""
     this.channels == undefined ? this.channels = {} : ""
@@ -56,9 +56,9 @@ class User extends Base {
     let lite = this.lite()
     localStorage.setItem('noosphere-user', JSON.stringify(lite))
     this.store.commit('noosphere/setLocalUser',lite)
-    console.log('save', this)
+    // console.log('save', this)
     if (this.channel != null) this.channel.awareness.setLocalStateField('user', lite)
-    this.d()
+  //  this.d()
   }
 
   addChannel(c){
@@ -71,7 +71,7 @@ class User extends Base {
   }
 
   addRoom(r){
-    console.log("add", r)
+  //  console.log("add", r)
     this.room = r
     delete this.rooms[r.id]
     this.rooms[r.id] = {id: r.id, date: Date.now(), type: 'room'}

@@ -18,35 +18,63 @@ class Channel extends Base {
     this.createAwareness()
     this.createIndexedDbProvider()
     // this.store.commit('noosphere/setChannel',channel)
-    this.d()
+    //  this.log()
   }
   createAwareness(){
-    let userHasClientId = this.user.clientID
+    // let userHasClientID = this.user.clientID
 
     this.awareness = new Awareness(this.rootDoc)
 
-    // console.log("must fusion user clientID or remove old", userHasClientId, this.awareness.clientID)
+    // console.log("must fusion user clientID or remove old", userHasClientID, this.awareness.clientID)
     //
-    // // this.awareness.clientID = userHasClientId
+    // // this.awareness.clientID = userHasClientID
     // //     awarenessProtocol.removeAwarenessStates(
     // //
     // // )
     //
-    // let awarenessClientExists = this.awareness.meta.userHasClientId
+    // let awarenessClientExists = this.awareness.meta.userHasClientID
     //
     // console.log('awarenessClientExists', awarenessClientExists)
     //
     // if(awarenessClientExists != undefined){
-    //   this.awareness.clientID = userHasClientId
+    //   this.awareness.clientID = userHasClientID
     //
     // }
+
+
+
+    // ymap.set('key', 'value') // => Property "key" was added. Initial value: "value".
+    // ymap.set('key', 'new') // => Property "key" was updated. New value: "new". Previous value: "value".
+    // ymap.delete('key') // => Property "key" was deleted. New value: undefined. Previous Value: "new".
+
+
+
+
+    // console.log('user local clientID', userHasClientID, this.user.name)
+    // console.log("Awareness outdatedTime clientID", this.awareness.clientID)
+    this.awareness.on('change', changes => {
+      this.logChanges(changes)
+      let usersStates = {changes: changes, users: {}}
+      this.awareness.getStates().forEach(state => {
+        this.logState(state)
+        if (state.user ) {
+          //console.log('state.user', state.user)
+          //  this.store.commit('actor/setUserByID', state.user)
+          usersStates.users[state.user.clientID] = state.user
+          //console.log(usersStates)
+        }
+      })
+      //console.log(usersStates)
+      this.store.commit('actor/updateUsersStates', usersStates)
+    })
+
 
     this.roomList = this.rootDoc.getMap('allrooms')
 
 
     this.roomList.observe(ymapEvent => {
       ymapEvent.target === this.roomList // => true
-      console.log("this.roomList has changed", this.roomList.toJSON())
+    //  console.log("this.roomList has changed", this.roomList.toJSON())
       let rooms = Array.from(this.roomList.values()).sort((a,b) => b.date - a.date)
       this.store.commit('noosphere/setAllRooms', rooms)
 
@@ -68,38 +96,17 @@ class Channel extends Base {
       // })
     })
 
-    // ymap.set('key', 'value') // => Property "key" was added. Initial value: "value".
-    // ymap.set('key', 'new') // => Property "key" was updated. New value: "new". Previous value: "value".
-    // ymap.delete('key') // => Property "key" was deleted. New value: undefined. Previous Value: "new".
 
 
 
-
-    console.log('user clientID', userHasClientId)
-    console.log("Awareness outdatedTime", this.awareness)
-    this.awareness.on('change', changes => {
-      console.log('changes', changes)
-      let usersStates = {changes: changes, users: {}}
-      this.awareness.getStates().forEach(state => {
-        console.log('state',state)
-        if (state.user ) {
-          console.log('state.user', state.user)
-          //  this.store.commit('actor/setUserById', state.user)
-          usersStates.users[state.user.clientID] = state.user
-          console.log(usersStates)
-        }
-      })
-      console.log(usersStates)
-      this.store.commit('actor/updateUsersStates', usersStates)
-    })
   }
 
   createIndexedDbProvider(){
 
     this.indexeddbProvider = new IndexeddbPersistence(this.id, this.rootDoc)
 
-    this.indexeddbProvider.on('synced', async (data) => {
-      console.log('{$getPersistanceDB} synced', data)
+    this.indexeddbProvider.on('synced', async () => {
+    //  console.log('{$getPersistanceDB} synced', data)
 
       this.flush({doc: this.rootDoc, roomID: this.id, type: 'main'})
 
@@ -108,7 +115,7 @@ class Channel extends Base {
       //console.log('{user}', user)
       //Vue.prototype.$userChanged()
 
-      // if(store.state.actor.user.roomId != undefined && opts.router.history.current.name != 'editor'){
+      // if(store.state.actor.user.roomID != undefined && opts.router.history.current.name != 'editor'){
       //   // console.log(opts.router.current.name)
       //   opts.router.push('/editor')
       // }
@@ -135,7 +142,7 @@ class Channel extends Base {
       "wss://yjs-leveldb.glitch.me/", // with leveldb
       // "wss://yjs-websocket--1234.local-corp.webcontainer.io",
       // 'wss://demos.yjs.dev',
-      roomID , //'milkdown', // roomId
+      roomID , //'milkdown', // roomID
       doc, //this.rootDoc, // Doc
       {awareness: awareness, connect: true}
     );
@@ -179,8 +186,21 @@ class Channel extends Base {
 
   addToRoomList(roomID){
     this.roomList.set(roomID, {roomID: roomID, date: Date.now()})
-    console.log("add to room List", this.roomList.toJSON(), roomID)
+  //  console.log("add to room List", this.roomList.toJSON(), roomID)
 
+  }
+
+  logState(state){
+
+    if(state.user){
+      console.log("--", state.user.clientID, state.user.name,  state.user.roomID)
+    }else{
+      console.log("-",state)
+    }
+  }
+
+  logChanges(c){
+    console.log('-- --add',c.added, 'up',c.updated, 'rem',c.removed)
   }
 
 

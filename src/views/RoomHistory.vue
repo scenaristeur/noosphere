@@ -49,18 +49,18 @@
 <template #cell(delete)="data">
   <!-- {{data}} -->
   <div style="float:right">
-    <b-button size="sm" @click="trash(data.item.roomId)" variant="outline-info">
+    <b-button size="sm" @click="trash(data.item.roomID)" variant="outline-info">
       <b-icon icon="trash" variant="danger" aria-hidden="true"></b-icon>
     </b-button>
   </div>
 </template>
 
-<!-- <template #cell(roomId)="data">
+<!-- <template #cell(roomID)="data">
 # TODO
-_rowVariant when = user.roomId
+_rowVariant when = user.roomID
 </template> -->
 <!--    @filtered="onFiltered"
-filter-included-fields="['roomId']"-->
+filter-included-fields="['roomID']"-->
 <!-- <template #table-caption>My Room History</template> -->
 </b-table>
 </b-container>
@@ -108,9 +108,9 @@ methods: {
       // this.$bvSideBar.hide('sidebar-right')
     }
   },
-  trash(roomId){
-    console.log(roomId)
-    this.$store.commit('actor/removeRoomIdFromHistory', roomId)
+  trash(roomID){
+    console.log(roomID)
+    this.$store.commit('actor/removeRoomIDFromHistory', roomID)
     this.$forceUpdate()
     this.$userChanged()
   }

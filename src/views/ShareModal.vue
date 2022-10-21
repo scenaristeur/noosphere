@@ -129,7 +129,7 @@ export default {
     },
     print1() {
       let divName = 'printable'
-      var printContents = document.getElementById(divName).innerHTML;
+      var printContents = document.getElementByID(divName).innerHTML;
       var originalContents = document.body.innerHTML;
 
       document.body.innerHTML = printContents;
@@ -149,7 +149,7 @@ let annonce = {fr: "Parlons de", en: "Let's talk about"}
       mywindow.document.write('<html><head><title>' + this.localUser.roomID + '</title>');
       mywindow.document.write('</head><body >');
       mywindow.document.write("<h2>"+annonce[lang]+" " + this.localUser.roomID  + "</h1>");
-      mywindow.document.write(document.getElementById(divName).innerHTML);
+      mywindow.document.write(document.getElementByID(divName).innerHTML);
       mywindow.document.write('</body></html>');
 
       //  mywindow.document.close(); // necessary for IE >= 10

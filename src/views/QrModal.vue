@@ -31,7 +31,7 @@ export default {
         console.log(`Code matched = ${decodedText}`, decodedResult);
         let eq_splitted = decodedText.split('=')
         if(eq_splitted[0] == 'https://scenaristeur.github.io/noosphere/?room'){
-          //  this.$emit('roomIdChanged', eq_splitted[1])
+          //  this.$emit('roomIDChanged', eq_splitted[1])
           this.openRoom(eq_splitted[1])
         }else{
           console.log("i don't know what to do with", eq_splitted)
@@ -47,7 +47,7 @@ export default {
       openRoom(roomID){
         console.log(roomID, this.scanner)
         //       let user = this.user
-        // user.roomId = roomId
+        // user.roomID = roomID
         // this.$store.commit('actor/setUser', user)
 
         this.$nextTick(() => {

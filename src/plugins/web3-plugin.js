@@ -40,7 +40,7 @@ const plugin = {
         return
       }else {
         localStorage.setItem('noosphere-web3storage-token', token);
-        //  console.log(token, this.user.roomId, options.data)
+        //  console.log(token, this.user.roomID, options.data)
         let file = new File([options.data], options.fileName+'.json')
         console.log(file)
         store.commit('web3/addPinMessage', "[pinning]: "+options.fileName)
@@ -102,7 +102,7 @@ const plugin = {
             var stringData = fileReader.result;
             console.log(" ---------------- File Content ----------------: ");
             console.log(stringData, progressEvent);
-            app.$loadCid({roomId: file.name.split(".json")[0], cid: file.cid, result: JSON.parse(stringData)})
+            app.$loadCid({roomID: file.name.split(".json")[0], cid: file.cid, result: JSON.parse(stringData)})
           }
 
           fileReader.onloadend = function(progressEvent) {
@@ -132,13 +132,13 @@ const plugin = {
     Vue.prototype.$loadCid = async function(data){
       console.log(data)
       //  let user = store.state.actor.user
-      //user.roomId = data.roomId
+      //user.roomID = data.roomID
       // let editorData = data.content
       // store.commit('editor/setEditorData', editorData)
       //  store.commit('actor/setUser', user)
       //  await Vue.prototype.$applyUpdate(data.content)
       //  await Vue.prototype.$connect({data: data, origin: 'web3.loadCid'})
-      Vue.prototype.$openRoom({id: data.roomId, content: data.result.content})
+      Vue.prototype.$openRoom({id: data.roomID, content: data.result.content})
       Vue.prototype.$spinnerRemove('web3 load')
       console.log('{parent room}',data.result.parent)
 

@@ -1,6 +1,6 @@
 <template>
   <div class="qr-view">
-    <!-- <span v-if="roomId.length !=0">
+    <!-- <span v-if="roomID.length !=0">
       <b-button size="sm" variant="outline-info" @click="generateQR">Qr Share</b-button> or
     </span> -->
     <b-button size="sm" variant="outline-info" @click="toggle_qr_scanner">Qr scan</b-button>
@@ -16,7 +16,7 @@ import {Html5QrcodeScanner} from "html5-qrcode"
 
 export default {
   name: 'QrView',
-  // props:['roomId'],
+  // props:['roomID'],
   data(){
     return{
 
@@ -46,7 +46,7 @@ export default {
         console.log(`Code matched = ${decodedText}`, decodedResult);
         let eq_splitted = decodedText.split('=')
         if(eq_splitted[0] == 'https://scenaristeur.github.io/noosphere/?room'){
-          this.$emit('roomIdChanged', eq_splitted[1])
+          this.$emit('roomIDChanged', eq_splitted[1])
         }else{
           console.log("i don't know what to do with", eq_splitted)
         }

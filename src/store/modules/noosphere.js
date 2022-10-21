@@ -18,7 +18,7 @@ const mutations = {
     state.room = r
   },
   setAllRooms(state, ar){
-    console.log(ar)
+  //  console.log(ar)
     state.allRooms = ar;
   }
 

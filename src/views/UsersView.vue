@@ -92,7 +92,7 @@ export default {
   methods:{
     onRowSelected(r){
       if(r[0]!= undefined){
-        //this.user.roomId = r[0].roomId
+        //this.user.roomID = r[0].roomID
         // this.$connect('user view row selected')
         this.$openRoom({id: r[0].roomID})
         this.$emit('hide')

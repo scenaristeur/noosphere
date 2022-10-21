@@ -16,21 +16,21 @@
 
 
 
-    <div v-if="roomId.length ==0">
-      <b-button  size="sm" variant="info" @click="generateId">Randomize roomId</b-button> or
+    <div v-if="roomID.length ==0">
+      <b-button  size="sm" variant="info" @click="generateID">Randomize roomID</b-button> or
       <b-button size="sm" variant="outline-info" @click="toggle_qr_scanner">Join with QR</b-button>
     </div>
     <div v-else>
-      <b-button size="sm" variant="outline-info" @click="roomId = ''">Clear</b-button>
+      <b-button size="sm" variant="outline-info" @click="roomID = ''">Clear</b-button>
 
     </div>
 
 
 
 
-    <b-input v-model="roomId" placeholder="roomId | random | QR" />
+    <b-input v-model="roomID" placeholder="roomID | random | QR" />
 
-    <div v-if="roomId.length !=0">
+    <div v-if="roomID.length !=0">
       <b-button size="sm" variant="info" @click="openRoom">Go</b-button> and
       <b-button size="sm" variant="info" @click="generateQR">Share</b-button>
 
@@ -98,7 +98,7 @@ export default {
   name: 'RoomCard',
   data(){
     return{
-      roomId: null,
+      roomID: null,
       yarray: null,
       newVal: 3,
       ymap: null,
@@ -111,7 +111,7 @@ export default {
     }
   },
   created(){
-    this.roomId = this.$route.query.room || uuidv4()
+    this.roomID = this.$route.query.room || uuidv4()
     this.ydoc = new Y.Doc()
 
     // this allows you to instantly get the (cached) documents data
@@ -140,12 +140,12 @@ export default {
     })
   },
   methods:{
-    generateId(){
-      this.roomId = uuidv4()
+    generateID(){
+      this.roomID = uuidv4()
     },
     async generateQR(){
 
-      this.url = 'https://scenaristeur.github.io/noosphere/?room='+this.roomId
+      this.url = 'https://scenaristeur.github.io/noosphere/?room='+this.roomID
       // var myHeaders = new Headers();
       //
       // var myInit = { method: 'GET',
@@ -184,7 +184,7 @@ export default {
         console.log(`Code matched = ${decodedText}`, decodedResult);
         let eq_splitted = decodedText.split('=')
         if(eq_splitted[0] == 'https://scenaristeur.github.io/noosphere/?room'){
-          this.roomId=eq_splitted[1]
+          this.roomID=eq_splitted[1]
           this.openRoom()
           this.toggle_qr_scanner()
         }else{
@@ -202,7 +202,7 @@ export default {
         console.log('todo', this.QRsrc)
       },
       openRoom(){
-        this.ymap = this.ydoc.getMap(this.roomId)
+        this.ymap = this.ydoc.getMap(this.roomID)
 
         // observe changes of the sum
         // let app = this

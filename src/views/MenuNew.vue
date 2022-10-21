@@ -3,14 +3,14 @@
 
 
     <!-- <b-dropdown-form> -->
-    <!-- <b-form-group label="RoomId" label-for="dropdown-form-roomId" @submit.stop.prevent> -->
+    <!-- <b-form-group label="RoomID" label-for="dropdown-form-roomID" @submit.stop.prevent> -->
     <!-- <b-form-input
-    id="dropdown-form-roomId"
+    id="dropdown-form-roomID"
     size="sm"
-    v-model="roomId"
-    placeholder="roomId"
+    v-model="roomID"
+    placeholder="roomID"
     ></b-form-input> -->
-    <b-dropdown-group id="dropdown-group-1" header="Specify roomId" class="m-3" >
+    <b-dropdown-group id="dropdown-group-1" header="Specify roomID" class="m-3" >
       <div class="text-dark">
         <b-form-radio-group
         id="radio-mode"
@@ -34,9 +34,9 @@
     <b-dropdown-item-button variant="primary">Fork current room</b-dropdown-item-button> -->
     <b-dropdown-divider></b-dropdown-divider>
   </b-dropdown-group>
-  <b-dropdown-group id="dropdown-group-2" header="Generated roomId" class="m-3 p-3">
+  <b-dropdown-group id="dropdown-group-2" header="Generated roomID" class="m-3 p-3">
     <b-dropdown-item href="#" v-b-modal.modal-qrscan>from QR code</b-dropdown-item>
-    <b-dropdown-item @click="randomRoom">random Id</b-dropdown-item>
+    <b-dropdown-item @click="randomRoom">random ID</b-dropdown-item>
     <b-dropdown-item href="#" @click="nowRoom">now (id = timestamp)</b-dropdown-item>
   </b-dropdown-group>
 
@@ -54,7 +54,7 @@ export default {
   },
   data(){
     return{
-      roomId: this.$random(),
+      roomID: this.$random(),
       mode: 'empty'
     }
   },
@@ -64,14 +64,14 @@ export default {
     },
     randomRoom(){
       console.log('random')
-      // let roomId = this.$random()
+      // let roomID = this.$random()
       // this.$store.commit('actor/setUser', this.user)
       // this.$connect('menu random')
       this.$openRoom({id: this.$random()})
     },
     nowRoom(){
       console.log('now')
-      // let roomId = Date.now()
+      // let roomID = Date.now()
       this.$openRoom({id: Date.now()})
       // this.$store.commit('actor/setUser', this.user)
       // this.$connect('menu now')
