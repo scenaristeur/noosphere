@@ -15,7 +15,7 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
         localUser = new User({store: store, route: options.route})
         let channelID = localUser.channelID || 'noosphere-demo'
         Vue.prototype.$newChannel({id: channelID, user: localUser})
-        console.log('{core options}', options)
+        console.log('{core options}', options, opts.router)
         //Vue.prototype.$getPersistanceDB(options)
 
       }
@@ -23,11 +23,34 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
 
       Vue.prototype.$newChannel = async function(c){
         c.store = store
-        let channel = new Channel(c)
-        localUser.addChannel(channel)
-        localUser.d()
-        if (localUser.route.query.room != undefined) localUser.roomID = localUser.route.query.room
-        if (localUser.roomID != null) Vue.prototype.$openRoom({id: localUser.roomID})
+        console.log('opts.router', opts.router.history.current.name, opts.router)
+
+
+        await opts.router.onReady(async (router)=>{
+
+          let channel = new Channel(c)
+          localUser.addChannel(channel)
+          localUser.d()
+          console.log('[RRRRRouter]',router)
+          // return {router: router, route: route}
+          // return route.query
+
+          if(router != undefined && router.name == 'share'){
+            console.log('SHAREPAGE', router.query)
+          }else{
+            console.log("pas share page", localUser)
+            if (localUser.route.query.room != undefined) localUser.roomID = localUser.route.query.room
+            if (localUser.roomID != null) Vue.prototype.$openRoom({id: localUser.roomID})
+          }
+
+
+        })
+
+
+
+
+
+
       }
 
       Vue.prototype.$openRoom = async function(params){

@@ -12,7 +12,9 @@
         </b-col>
         <b-col sm="9">
           <b-form-input
+          class = "fields"
           :id="`share-field-${field}`"
+          :name="`${field}`"
           :placeholder="field"
           :value="value"
           ></b-form-input>
@@ -29,9 +31,10 @@
           id="roomId"
           placeHolder="roomId"
           v-model="roomId"
-          @input="changeRoomId"
+
           ></b-form-input>
         </b-col>
+        <!--  @input="changeRoomId"-->
 
       </b-row>
       <hr>
@@ -50,20 +53,20 @@
 
 
 
-<div v-if="dataTemp!= undefined">
-  Room with id {{roomId}} exist ->
-  <b-button  @click="append" size="sm" variant="info">Append to room</b-button> or change roomId above.
+<!-- <div v-if="dataTemp!= undefined">
+Room with id {{roomId}} exist ->
+<b-button  @click="append" size="sm" variant="info">Append to room</b-button> or change roomId above.
 </div>
-<div v-else>
-  Room with id {{roomId}} does not exist ->
-  <b-button @click="create" size="sm" variant="info">Create a new Room </b-button> or change roomId to append to an existing room.
-</div>
+<div v-else> -->
+<!-- Room with id {{roomId}} does not exist -> -->
+<b-button @click="create" size="sm" variant="info">Add to room with id {{roomId}}</b-button>
+<!-- </div> -->
 </b-container>
 
-<div v-if="dataTemp != undefined">
-  <hr><hr>
-  Found in room <b>{{roomId}}</b> :<br>{{ dataTemp.blocks}}
-</div>
+<!-- <div v-if="dataTemp != undefined">
+<hr><hr>
+Found in room <b>{{roomId}}</b> :<br>{{ dataTemp.blocks}}
+</div> -->
 <!-- <hr>
 title: "title",
 text: "text",
@@ -95,8 +98,8 @@ export default {
   data(){
     return{
       query: null,
-      fields: [],
-      dataTemp: undefined,
+      // fields: {},
+      // dataTemp: undefined,
       roomId: null
     }
   },
@@ -105,120 +108,134 @@ export default {
     this.query = this.$route.query
     this.query["more comment"] == undefined ? this.query["more comment"] = '' : ''
     this.roomId = this.$route.query.title
-    this.getDataTemp()
+    // this.getDataTemp()
   },
   // mounted(){
   //   this.getDataTemp()
   // },
   methods: {
-    async getDataTemp(){
-      this.dataTemp = await this.$getEditorMap(this.roomId)
-      console.log('{dataTemp}',this.dataTemp)
-    },
-    async append(){
-
-      let newBlocks = [
-        {
-          "type" : "header",
-          "data" : {
-            "text" : this.query.title,
-            "level" : 2
-          }
-        },
-        {
-          "type" : "paragraph",
-          "data" : {
-            "text" : this.query.text
-          }
-        },
-
-        {
-          "type" : "paragraph",
-          "data" : {
-            "text" : "<a href='"+this.query.url+"'>"+this.query.url+"</a>"
-          }
-        },
-        {
-          "type" : "paragraph",
-          "data" : {
-            "text" : this.query['more_comment']
-          }
-        }
-      ]
-      let dataBlocks = this.dataTemp.blocks.concat(newBlocks);
-      this.dataTemp.blocks = dataBlocks
-      let data = this.dataTemp
-
-      console.log("append", this.query, data, this.roomId)
-      this.user.roomId = this.roomId
-      await this.$store.commit('actor/setUser', this.user)
-
-      //await this.$saveMap(this.roomId,data)
-
-      await this.$connect('share view append')
-      this.$store.commit('editor/setEditorData', data)
-
-    },
+    // async getDataTemp(){
+    //   //this.dataTemp = await this.$getEditorMap(this.roomId)
+    //   console.log('{dataTemp}',this.dataTemp)
+    // },
+    // async append(){
+    //
+    //   let newBlocks = [
+    //     {
+    //       "type" : "header",
+    //       "data" : {
+    //         "text" : this.query.title,
+    //         "level" : 2
+    //       }
+    //     },
+    //     {
+    //       "type" : "paragraph",
+    //       "data" : {
+    //         "text" : this.query.text
+    //       }
+    //     },
+    //
+    //     {
+    //       "type" : "paragraph",
+    //       "data" : {
+    //         "text" : "<a href='"+this.query.url+"'>"+this.query.url+"</a>"
+    //       }
+    //     },
+    //     {
+    //       "type" : "paragraph",
+    //       "data" : {
+    //         "text" : this.query['more_comment']
+    //       }
+    //     }
+    //   ]
+    //   let dataBlocks = this.dataTemp.blocks.concat(newBlocks);
+    //   this.dataTemp.blocks = dataBlocks
+    //   let data = this.dataTemp
+    //
+    //   console.log("append", this.query, data, this.roomId)
+    //   this.user.roomId = this.roomId
+    //   await this.$store.commit('actor/setUser', this.user)
+    //
+    //   //await this.$saveMap(this.roomId,data)
+    //
+    //   await this.$connect('share view append')
+    //   this.$store.commit('editor/setEditorData', data)
+    //
+    // },
     async create(){
+      let content = {}
+      let fieldsList = document.querySelectorAll('.fields');
+      console.log(fieldsList)
 
-      let data = {
-        // "time" : 1550476186479,
-        "blocks" : [
-          {
-            "type" : "header",
-            "data" : {
-              "text" : this.query.title,
-              "level" : 2
-            }
-          },
-          {
-            "type" : "paragraph",
-            "data" : {
-              "text" : this.query.text
-            }
-          },
+      fieldsList.forEach(
+        function(node) {
+          content[node.name] = node.value
+          // text += index + " " + node;
 
-          {
-            "type" : "paragraph",
-            "data" : {
-              "text" : "<a href='"+this.query.url+"'>"+this.query.url+"</a>"
-            }
-          },
-          {
-            "type" : "paragraph",
-            "data" : {
-              "text" : this.query['more_comment']
-            }
-          }
-        ],
-        // "version" : "2.8.1"
-      }
+        }
+      );
+      console.log("content", content)
+      // let content = JSON.stringify(this.query)
+      this.$openRoom({id: this.roomId, content: JSON.stringify(content)})
 
-      console.log("create", this.query, data, this.roomId)
-      this.user.roomId = this.roomId
-      await this.$store.commit('actor/setUser', this.user)
+      // let data = {
+      //   // "time" : 1550476186479,
+      //   "blocks" : [
+      //     {
+      //       "type" : "header",
+      //       "data" : {
+      //         "text" : this.query.title,
+      //         "level" : 2
+      //       }
+      //     },
+      //     {
+      //       "type" : "paragraph",
+      //       "data" : {
+      //         "text" : this.query.text
+      //       }
+      //     },
+      //
+      //     {
+      //       "type" : "paragraph",
+      //       "data" : {
+      //         "text" : "<a href='"+this.query.url+"'>"+this.query.url+"</a>"
+      //       }
+      //     },
+      //     {
+      //       "type" : "paragraph",
+      //       "data" : {
+      //         "text" : this.query['more_comment']
+      //       }
+      //     }
+      //   ],
+      //   // "version" : "2.8.1"
+      // }
+
+      // console.log("create", this.query, data, this.roomId)
+      //this.user.roomId = this.roomId
+      // await this.$store.commit('actor/setUser', this.user)
 
       //await this.$saveMap(this.rotitle_not_existomId,data)
 
-      await this.$connect('share view create')
-      this.$store.commit('editor/setEditorData', data)
+      // await this.$connect('share view create')
+      // this.$store.commit('editor/setEditorData', data)
 
 
     },
-    changeRoomId(){
-      this.getDataTemp()
-    }
+    // changeRoomId(){
+    //   this.getDataTemp()
+    // }
   },
-  watch:{
-    user(){
-      this.getDataTemp()
-    }
-  },
-  computed: {
-    user() {
-      return this.$store.state.actor.user
-    }
-  }
+  // watch:{
+  //   // user(){
+  //   //   this.getDataTemp()
+  //   // }
+  // },
+  // computed: {
+  //   user() {
+  //     return this.$store.state.actor.user
+  //   }
+  // }
 }
 
 </script>
