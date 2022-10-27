@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-modal id="modal-share" @shown="share" ok-only>
+    <b-modal id="modal-share" @shown="share" ok-only size="lg">
       <template #modal-title>
         <h2>Share</h2>
         <b-button @click="print('fr')" size="sm" variant="info">print french QR</b-button>
@@ -12,45 +12,55 @@
       <!-- <b-button @click="saveQR" disabled size="sm" variant="info">save QR</b-button>
 
       <b-button @click="saveQR" disabled size="sm" variant="info">copy url</b-button> -->
+
+      <b-alert show>The url of this room has been copied to your clipboard, you can paste it with <b>Ctrl+v</b> in any other app to share it !</b-alert>
+      <b-alert show>L'url de cette room a été copié dans votre presse-papier, vous pouvez la copier avec <b>Ctrl+v</b> dans n'importe quelle autre appli pour la partager !</b-alert>
+
+
       <div id="printable">
         <!-- Let's talk about <b><u>{{user.roomID}}</u></b> at : <br>
         Discutons de <b><u>{{user.roomID}}</u></b> à l'adresse :
         <hr> -->
-        {{this.url}}
-        <br>
+
         <!-- <hr> -->
-        <img :src="QRsrc" width="280px" />
+        <center>
+          <img :src="QRsrc" width="75%" />
+          <hr>
+          <h3 style="width:100%" >
+            <!-- {{this.url}} <br>or<br> -->
+            {{encodeURI(this.url)}}
+          </h3>
+          <hr>
+        </center>
+
 
       </div>
 
-      <p>
-        the url has been copied to your clipboard, you can paste it with Ctrl+v in any other app to share it</p>
-
-        <br>
-
-
-        <!-- </div> -->
 
 
 
-      </b-modal>
-      <!-- <b-alert
-      id="shareAlert"
-      :show="dismissCountDown"
-      dismissible
-      variant="info"
-      @dismissed="dismissCountDown=0"
-      @dismiss-count-down="countDownChanged"
-      >
-      <p><b>{{url}}</b> has been copied to your clipboard, you can paste it in any other app to share it {{ dismissCountDown }} ...</p>
-      <b-progress
-      variant="warning"
-      :max="dismissSecs"
-      :value="dismissCountDown"
-      height="4px"
-      ></b-progress>
-    </b-alert> -->
-  </div>
+      <!-- </div> -->
+
+
+
+    </b-modal>
+    <!-- <b-alert
+    id="shareAlert"
+    :show="dismissCountDown"
+    dismissible
+    variant="info"
+    @dismissed="dismissCountDown=0"
+    @dismiss-count-down="countDownChanged"
+    >
+    <p><b>{{url}}</b> has been copied to your clipboard, you can paste it in any other app to share it {{ dismissCountDown }} ...</p>
+    <b-progress
+    variant="warning"
+    :max="dismissSecs"
+    :value="dismissCountDown"
+    height="4px"
+    ></b-progress>
+  </b-alert> -->
+</div>
 </template>
 
 <script>
@@ -110,7 +120,7 @@ export default {
     async generateQR(){
       // if (this.QRsrc == null){
       this.url = 'https://scenaristeur.github.io/noosphere/?room='+this.localUser.roomID
-      this.QRsrc = await QRCode.toDataURL(this.url, {color: {light: '#98faf5'}})
+      this.QRsrc = await QRCode.toDataURL(encodeURI(this.url), {color: {light: '#98faf5'}})
       // }else{
       //   this.QRsrc = null
       // }
@@ -138,7 +148,7 @@ export default {
     },
     print(lang)
     {
-      let annonce = {fr: "Parlons de", en: "Let's talk about"}
+      let annonce = {fr: "Parlons de :<br>", en: "Let's talk about :<br>"}
       let text = {en: "Share & grab ideas !", fr:"Attrape des idées et partage les tiennes !"}
       let title = "NOOSPHERE"
 
@@ -149,9 +159,9 @@ export default {
       mywindow.document.write('<html><head><title>' + this.localUser.roomID + '</title>');
       mywindow.document.write('</head><body >');
       mywindow.document.write("<h1>"+title+ "</h1>");
-      mywindow.document.write("<h2>"+annonce[lang]+" " + this.localUser.roomID  + "</h2>");
-      mywindow.document.write(document.getElementById(divName).innerHTML);
       mywindow.document.write("<h2>"+text[lang]+"</h2>");
+      mywindow.document.write(document.getElementById(divName).innerHTML);
+      mywindow.document.write("<h2>"+annonce[lang]+" " + this.localUser.roomID  + "</h2>");
       mywindow.document.write('</body></html>');
 
       //  mywindow.document.close(); // necessary for IE >= 10
