@@ -71,8 +71,8 @@ export default {
     async share(){
       this.url = "https://scenaristeur.github.io/noosphere?room="+this.localUser.roomID
       let title = 'Noosphere'
-      let text = `[en] Share & grad ideas in <a href="https://scenaristeur.github.io/noosphere/about" >Noosphere</a> !\n
-      [fr] Attrape des idées et partage les tiennes dans la <a href="https://scenaristeur.github.io/noosphere/about" >Noosphere</a> !\n
+      let text = `[en] Share & grad ideas !\n
+      [fr] Attrape des idées et partage les tiennes !\n
       `
 
       if (navigator && navigator.share) {

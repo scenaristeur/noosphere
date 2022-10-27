@@ -30,7 +30,7 @@
             <b-dropdown-item href="https://matrix.to/#/#noosphere:matrix.org" target="_blank"> Chat about Noosphere <b-icon icon="chat" aria-hidden="true"></b-icon> </b-dropdown-item>
             <b-dropdown-item href="#">
               <i><small>
-                version: all rooms share / ld and share / ID en maj
+                version: 27/10 - no link share
               </small></i>
             </b-dropdown-item>
           </b-nav-item-dropdown>
