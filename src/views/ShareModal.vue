@@ -71,9 +71,7 @@ export default {
     async share(){
       this.url = "https://scenaristeur.github.io/noosphere?room="+this.localUser.roomID
       let title = 'Noosphere'
-      let text = `[en] Share & grad ideas !\n
-      [fr] Attrape des idées et partage les tiennes !\n
-      `
+      let text = `[en] Share & grab ideas !\n[fr] Attrape des idées et partage les tiennes !\n\n`
 
       if (navigator && navigator.share) {
         let share = {
@@ -94,17 +92,17 @@ export default {
         .then(() => console.log('Successful share'))
         .catch(error => console.log('Error sharing', error));
       }
-       // else {
+      // else {
 
-        // let app = this
-        // console.log(this.localUser)
+      // let app = this
+      // console.log(this.localUser)
 
-        navigator.clipboard.writeText(this.url).then(function() {
-          console.log('Async: Copying to clipboard was successful!');
+      navigator.clipboard.writeText(this.url).then(function() {
+        console.log('Async: Copying to clipboard was successful!');
         //  app.showAlert()
-        }, function(err) {
-          console.error('Async: Could not copy text: ', err);
-        });
+      }, function(err) {
+        console.error('Async: Could not copy text: ', err);
+      });
 
       // }
       await this.generateQR()
@@ -129,7 +127,7 @@ export default {
     },
     print1() {
       let divName = 'printable'
-      var printContents = document.getElementByID(divName).innerHTML;
+      var printContents = document.getElementById(divName).innerHTML;
       var originalContents = document.body.innerHTML;
 
       document.body.innerHTML = printContents;
@@ -140,7 +138,9 @@ export default {
     },
     print(lang)
     {
-let annonce = {fr: "Parlons de", en: "Let's talk about"}
+      let annonce = {fr: "Parlons de", en: "Let's talk about"}
+      let text = {en: "Share & grab ideas !", fr:"Attrape des idées et partage les tiennes !"}
+      let title = "NOOSPHERE"
 
 
       let divName = 'printable'
@@ -148,8 +148,10 @@ let annonce = {fr: "Parlons de", en: "Let's talk about"}
 
       mywindow.document.write('<html><head><title>' + this.localUser.roomID + '</title>');
       mywindow.document.write('</head><body >');
-      mywindow.document.write("<h2>"+annonce[lang]+" " + this.localUser.roomID  + "</h1>");
-      mywindow.document.write(document.getElementByID(divName).innerHTML);
+      mywindow.document.write("<h1>"+title+ "</h1>");
+      mywindow.document.write("<h2>"+annonce[lang]+" " + this.localUser.roomID  + "</h2>");
+      mywindow.document.write(document.getElementById(divName).innerHTML);
+      mywindow.document.write("<h2>"+text[lang]+"</h2>");
       mywindow.document.write('</body></html>');
 
       //  mywindow.document.close(); // necessary for IE >= 10

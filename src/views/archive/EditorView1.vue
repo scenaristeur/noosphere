@@ -226,7 +226,7 @@ export default {
   mounted(){
 
     // let app = this
-    // const editorElement = document.getElementByID('editorjs') // your "holder" ID
+    // const editorElement = document.getElementById('editorjs') // your "holder" ID
     // editorElement.addEventListener('click', (e) => {
     //   // your logic
     //   //console.log("click",e)
