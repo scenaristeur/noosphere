@@ -1,6 +1,7 @@
 const publicPath = process.env.NODE_ENV === 'production' ? '/noosphere/' : '/'
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
+
   publicPath: publicPath,
   pwa: {
     name: 'Noosphere',
@@ -31,6 +32,9 @@ module.exports = defineConfig({
   }*/
 },
 configureWebpack: {
+  experiments: {
+    topLevelAwait: true
+  },
   module:{
     rules:[{
       loader: 'ts-loader',

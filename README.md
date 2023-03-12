@@ -194,3 +194,19 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### update outdated
+https://www.carlrippon.com/upgrading-npm-dependencies/
+````
+npx npm-check-updates -u
+npm install
+```
+
+
+### install ipfs-core error
+````
+configureWebpack: {
+  experiments: {
+    topLevelAwait: true
+  },
+```

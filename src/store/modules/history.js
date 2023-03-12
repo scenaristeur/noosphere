@@ -1,10 +1,11 @@
 // import Vue from 'vue'
-import * as IPFS from 'ipfs-core'
-const ipfs = await IPFS.create()
+
 
 
 
 const state = () => ({
+  ipfs: null,
+  cid: null
   /*  editor: null,
    markdownContent : null,
    parent: null */
@@ -25,18 +26,19 @@ const state = () => ({
 })
 
 const mutations = {
-  /*   setEditor(state, e){
-  
-      state.editor = e
-    },
-    setMarkdownContent(state,c){
-      console.log(c)
-      state.markdownContent = c
-    },
-    setParent(state, p){
-      console.log('parent', p)
-      state.parent = p
-    } */
+  setIpfs(state, i) {
+
+    state.ipfs = i
+  },
+  /*
+  setMarkdownContent(state,c){
+    console.log(c)
+    state.markdownContent = c
+  },
+  setParent(state, p){
+    console.log('parent', p)
+    state.parent = p
+  } */
   // setEditorData(state, ed){
   //   console.log('{setEditorData}', ed)
   //   state.editorData = ed
@@ -62,11 +64,17 @@ const mutations = {
 
 const actions = {
   async push(context, step) {
-    console.log("step", step)
-    const { cid1 } = await ipfs.add('Hello world')
-    console.info(cid1)
-    const { cid } = await ipfs.add(step)
-    console.info("step cid", cid)
+    let ipfs = context.state.ipfs
+    console.log("step", ipfs, step)
+    if (ipfs != null) {
+   /*    const  cid1  = await ipfs.add('Hello world')
+      console.info(cid1) */
+      const  cid  = await ipfs.add(step.markdown)
+      console.info("step cid",step.room, cid)
+      cid.step = step
+      context.state.cid = cid
+    }
+
   }
   // async pushCommandHistory(context, c){
   //   context.commit('setCommand', c)

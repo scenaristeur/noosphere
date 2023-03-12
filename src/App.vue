@@ -16,6 +16,7 @@
   <SideBar />
   <Web3Modal />
   <ShareModal />
+  <IpfsInfo />
 
 
 </div>
@@ -32,6 +33,7 @@ export default {
     'SideBar': ()=>import('@/views/SideBar'),
     'Web3Modal': ()=>import('@/views/Web3Modal'),
     'ShareModal': ()=>import('@/views/ShareModal'),
+    'IpfsInfo': ()=>import('@/views/IpfsInfo'),
 
     // 'UserView': ()=>import('@/views/UserView'),
   },
