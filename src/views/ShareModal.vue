@@ -26,10 +26,9 @@
         <center>
           <img :src="QRsrc" width="75%" />
           <hr>
-          <h3 style="width:100%" >
+          
             <!-- {{this.url}} <br>or<br> -->
-            {{encodeURI(this.url)}}
-          </h3>
+            <h3 style="width:100%" >{{encodeURI(this.url)}}</h3>
           <hr>
         </center>
 
