@@ -1,9 +1,13 @@
 // import Vue from 'vue'
+import * as IPFS from 'ipfs-core'
+const ipfs = await IPFS.create()
+
+
 
 const state = () => ({
-  editor: null,
-  markdownContent : null,
-  parent: null
+  /*  editor: null,
+   markdownContent : null,
+   parent: null */
   // editorData: null,
   // editorDataDefault: {
   //   "type" : "paragraph",
@@ -21,18 +25,18 @@ const state = () => ({
 })
 
 const mutations = {
-  setEditor(state, e){
-
-    state.editor = e
-  },
-  setMarkdownContent(state,c){
-    //console.log(c)
-    state.markdownContent = c
-  },
-  setParent(state, p){
-    console.log('parent', p)
-    state.parent = p
-  }
+  /*   setEditor(state, e){
+  
+      state.editor = e
+    },
+    setMarkdownContent(state,c){
+      console.log(c)
+      state.markdownContent = c
+    },
+    setParent(state, p){
+      console.log('parent', p)
+      state.parent = p
+    } */
   // setEditorData(state, ed){
   //   console.log('{setEditorData}', ed)
   //   state.editorData = ed
@@ -57,6 +61,13 @@ const mutations = {
 }
 
 const actions = {
+  async push(context, step) {
+    console.log("step", step)
+    const { cid1 } = await ipfs.add('Hello world')
+    console.info(cid1)
+    const { cid } = await ipfs.add(step)
+    console.info("step cid", cid)
+  }
   // async pushCommandHistory(context, c){
   //   context.commit('setCommand', c)
   //   context.commit('pushHistory',c)

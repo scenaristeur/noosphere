@@ -9,6 +9,7 @@ import room from './modules/room'
 import util from './modules/util'
 import network from './modules/network'
 import noosphere from './modules/noosphere'
+import history from './modules/history'
 
 Vue.use(Vuex)
 
@@ -22,6 +23,6 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    core, network, actor, editor, y, room, web3, util, noosphere
+    core, network, actor, editor, y, room, web3, util, noosphere, history
   }
 })

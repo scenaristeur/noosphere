@@ -3,6 +3,8 @@
     <!-- roomID : {{roomID}} -->
     <!-- {{ ready}} -->
     <div ref="editor" class="editor" ></div>
+
+   Ariane <ArianeHistory /> modifs
     <!-- content {{ markdownContent}} -->
     <!-- {{ user }} -->
 
@@ -12,6 +14,7 @@
 </template>
 
 <script>
+
 import { defaultValueCtx, Editor, rootCtx } from '@milkdown/core';
 import { nord } from '@milkdown/theme-nord';
 import { commonmark } from '@milkdown/preset-commonmark';
@@ -45,6 +48,9 @@ const ldPlugin = AtomList.create([ld()]);
 
 export default {
   name: 'MilkEditor',
+  components: {
+    'ArianeHistory': ()=>import('@/components/ArianeHistory'),
+  },
   data(){
     return{
       roomID: null,
@@ -64,6 +70,9 @@ export default {
         // output = markdown;
         // this.markdownContent = markdown
         this.$store.commit('editor/setMarkdownContent', markdown)
+
+        let step = {room: this.$store.state.noosphere.room, markdown: markdown}
+        this.$store.dispatch('history/push', step)
       });
       //   ctx.get(listenerCtx)
       //   .beforeMount((ctx) => {

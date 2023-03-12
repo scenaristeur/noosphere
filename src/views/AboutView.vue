@@ -29,7 +29,17 @@
           <br>
           -> <a href="https://en.wikipedia.org/wiki/Noosphere" target="_blank">Noosphere article on Wikipedia en</a>
         </p>
-      </i>  </small>
+        <p>
+          PHILOS. [Chez Teilhard de Chardin] ,,Couche pensante (humaine) de la Terre, constituant un règne nouveau, un tout spécifique et organique`` (C. Cuénot, Nouv. Lex. Teilhard de Chardin, Paris, éd. du Seuil, 1968). Malgré ses liaisons organiques, (...) la biosphère ne formait encore qu'un assemblage de lignes divergentes, libres aux extrémités. Sous l'effet de la Réflexion (...) les chaînes se ferment; et la Noosphère tend à se constituer en un seul système clos, −où chaque élément pour soi voit, sent, désire, souffre les mêmes choses que tous les autres à la fois. Une collectivité harmonisée des consciences, équivalente à une sorte de super-conscience (Teilhard de Ch.,Phénom. hum.,1955, p.279).
+REM.
+Noosphérique, adj.Relatif à la noosphère. Nous n'avons encore aucune idée de la grandeur possible des effets «noosphériques». La résonance de vibrations humaines par millions! Toute une nappe de conscience pressant sur l'Avenir en même temps! Le produit collectif et additif d'un million d'années de Pensée! (Teilhard de Ch.,Phénom. hum.,1955p.318).
+Prononc.: [nɔ ɔsfε:ʀ]. Étymol. et Hist. 1925 (Teilhard de Ch., Vision du Passé, L'hominisation, [éd. du Seuil, t.3, 1957] p.89 d'apr. M.-C. Deckers, Le Vocab. de T. de Chardin, p.196). Formé du gr. ν ο ́ ο ς forme non contracte de ν ο υ ̃ ς «intelligence, esprit» et de sphère*. Fréq. abs. littér.: 42.
+-> <a href="https://www.cnrtl.fr/definition/noosph%C3%A8re#:~:text=f%C3%A9m.-,NOOSPH%C3%88RE%2C%20subst.,sp%C3%A9cifique%20et%20organique%60%60%20(C." target="_blank">cnrtl</a>       
+
+
+</p>
+      </i>  
+    </small>
 
       <!-- <b-button variant="info" class="m-3"  size="sm" href="/user">Choose a user name</b-button>
       <b-button variant="info" class="m-3" size="sm" href="/room">Open or join a room</b-button>
