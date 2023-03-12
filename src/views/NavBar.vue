@@ -4,7 +4,8 @@
       <b-navbar-brand class="mr-1">
         <AddressInput />
         <div  v-if="status != 'connected'">
-          websocket <b>{{ status}}</b>
+          <small> connecting to websocket server please wait : {{ status}}
+          </small>
         </div>
       </b-navbar-brand>
 

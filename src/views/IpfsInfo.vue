@@ -1,13 +1,13 @@
 <template>
   <div>
-    <h3>{{ status }}</h3>
+    <div>{{ status }}</div>
     <div v-if="online" class="ipfs-info">
-      <h3>
+  <!--     <h3>
         ID: <span id="ipfs-info-id">{{ id }}</span>
-      </h3>
-      <h3>
+      </h3> -->
+      <small>
         Agent version: <span id="ipfs-info-agent">{{ agentVersion }}</span>
-      </h3>
+      </small>
     </div>
   </div>
   </template>

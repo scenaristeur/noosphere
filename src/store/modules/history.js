@@ -27,7 +27,6 @@ const state = () => ({
 
 const mutations = {
   setIpfs(state, i) {
-
     state.ipfs = i
   },
   /*

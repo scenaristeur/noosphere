@@ -1,11 +1,12 @@
 <template lang="">
     <div id="ariane">
         <div v-if="cid != null">
-            History 
+            History<br> 
+             cid:
             <a 
             :href="'https://ipfs.io/ipfs/'+ cid.path"
              target="_blank">
-             {{cid.path}}
+             ...{{cid.path.slice(-10)}}
             </a>
         </div>
     </div>
