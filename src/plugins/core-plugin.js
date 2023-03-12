@@ -63,7 +63,7 @@ import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
 
 
         let room = new Room(
-          {id:id, channel: localUser.channel, store: store}
+          {id:id, channel: localUser.channel, store: store, history: []}
         )
         if(opts.router.history.current.name != 'editor'){
           opts.router.push('/editor')

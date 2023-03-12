@@ -72,6 +72,7 @@ const actions = {
       console.info("step cid",step.room, cid)
       cid.step = step
       context.state.cid = cid
+      context.dispatch("noosphere/addHistory", cid, { root: true });
     }
 
   }

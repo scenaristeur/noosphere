@@ -25,6 +25,11 @@ const mutations = {
 }
 
 const actions = {
+  addHistory(context,cid){
+    console.log("Add history", cid)
+    context.state.room.history.push({time: Date.now(), cid: cid.path})
+    console.log(context.state.room.history)
+  }
   // async pushCommandHistory(context, c){
   //   context.commit('setCommand', c)
   //   context.commit('pushHistory',c)
