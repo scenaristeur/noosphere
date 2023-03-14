@@ -1,5 +1,5 @@
 import { User, Channel, Room, /*Editor*//*, Graph*/ } from '@/noosphere'
-  import { /*collaborative,*/collabServiceCtx } from '@milkdown/plugin-collaborative'
+  import { /*collaborative,*/collabServiceCtx } from '@milkdown/plugin-collab'
 
 
   const plugin = {
